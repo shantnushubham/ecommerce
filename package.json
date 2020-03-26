@@ -1,0 +1,38 @@
+{
+  "name": "react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "mongoose": "^5.9.6",
+    "morgan": "^1.10.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "serve-favicon": "^2.5.0"
+  },
+  "scripts": {
+    "start": "node scripts/customized-config start",
+    "build": "node scripts/customized-config build",
+    "serve": "node ./bin/www",
+    "https": "node ./bin/ww2",
+    "httpsn": "nodemon ./bin/ww2",
+    "server": "nodemon ./bin/www",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "compression-webpack-plugin": "^3.1.0",
+    "https": "^1.0.0",
+    "image-webpack-loader": "^6.0.0",
+    "nodemon": "^2.0.2",
+    "rewire": "^5.0.0"
+  }
+}
