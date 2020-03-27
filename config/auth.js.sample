@@ -1,0 +1,12 @@
+module.exports = {
+    'googleAuth':{
+        'clientID':'',
+        'clientSecret': '',
+        'callbackURL':''
+    },
+    'facebookAuth': {
+        'clientID': '',
+        'clientSecret': '',
+        'callbackURL': ''
+    }
+};

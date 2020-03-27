@@ -5,8 +5,16 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors')
 var mongoose = require('mongoose');
+const flash = require("connect-flash");
+const passport = require("passport");
+const GoogleStrategy = require('passport-google-oauth20');
+const FacebookStrategy = require('passport-facebook');
+const LocalStrategy = require("passport-local").Strategy;
+const compression = require("compression");
+
 var routes = require('./routes/routes')
-var fs = require('fs');
+var User = require('./models/User/User');
+const OAuthCredentials = require('./config/auth');
 
 var app = express();
 
@@ -23,14 +31,154 @@ mongoose
   .catch(err => console.error(err));
 
 app.use(logger('dev'));
-app.use(bodyParser.json({limit: '8mb'}));
-app.use(bodyParser.urlencoded({limit: '8mb', extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 if (process.env.REACT_APP_SERVER_ENVIORNMENT !== 'dev') {
   app.use(favicon(path.join(__dirname, 'build/favicon.ico')));
 }
 app.use(express.static(path.join(__dirname, 'build')));
+app.use(compression());
+app.use(require("cookie-parser")());
+app.use(flash());
+app.use(require("express-session")({
+    secret: 'Bingo',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 6000000
+    }
+}));
 
 app.use(cors());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.use(
+  new GoogleStrategy({
+      clientID:OAuthCredentials.googleAuth.clientID,
+      clientSecret:OAuthCredentials.googleAuth.clientSecret,
+      callbackURL:OAuthCredentials.googleAuth.callbackURL
+  },(accessToken, refreshToken, profile, done)=>{
+      process.nextTick(function() {
+          User.findOne({"email": profile.emails[0].value}, function(err, founduser){
+              if (err) {
+                  return done(err);
+              } else {
+                  if (founduser) {
+                      return done(null, founduser);
+                  } else {
+                      User.findOne({ 'googleUserId' : profile.id }, function(err, user) {
+                          if (err)
+                              return done(err);
+                          if (user) {
+                              // if a user is found, log them in
+                              return done(null, user);
+                          } else {
+                              // if the user isnt in our database, create a new user
+                              var newUser = new User();
+                              // set all of the relevant information
+                              newUser.googleUserId    = profile.id;
+                              newUser.name  = profile.displayName;
+                              newUser.email = profile.emails[0].value; // pull the first email
+                              newUser.username = profile.emails[0].value;
+                              newUser.phone = 0;
+                              // save the user
+
+                              User.create(new User(newUser), function(err) {
+                                  if (err)
+                                      throw err;
+                                  // Email.sendSignupEmail(profile.emails[0].value, function(rspp){
+                                      console.log(rspp);
+                                      return done(null, newUser);
+                                  // });
+                              });
+                          }
+                      });
+                  }
+              }
+          });
+          // try to find the user based on their google id
+      });
+  })
+);
+
+passport.use(new FacebookStrategy({
+      clientID: OAuthCredentials.facebookAuth.clientID,
+      clientSecret: OAuthCredentials.facebookAuth.clientSecret,
+      callbackURL: OAuthCredentials.facebookAuth.callbackURL,
+      profileFields: ['id', 'displayName', 'email']
+  },
+  function(accessToken, refreshToken, profile, done) {
+      User.findOne({ 'facebookId' : profile.id }, function(err, user) {
+          if (err)
+              return done(err);
+          if (user) {
+              // if a user is found, log them in
+              return done(null, user);
+          } else {
+              // if the user isnt in our database, create a new user
+
+              var newUser = new User();
+              // set all of the relevant information
+              newUser.facebookId    = profile.id;
+              newUser.name  = profile.displayName;
+              newUser.email = profile['_json']['email']; // pull the first email
+              newUser.username = profile['_json']['email'];
+              newUser.phone = 0;
+              // save the user
+
+              User.create(new User(newUser), function(err) {
+                  if (err)
+                      throw err;
+
+
+                  // Email.sendSignupEmail(profile['_json']['email'], function(rspp){
+                      console.log(rspp);
+                      return done(null, newUser);
+                  // });
+
+              });
+          }
+      });
+  }
+));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use(function(req, res, next){
+  if (req.isAuthenticated()) {
+      res.locals.currentUser = req.user;
+      res.locals.success = req.flash('success');
+      res.locals.error = req.flash('error');
+  } else {
+      res.locals.currentUser = "";
+      res.locals.success = req.flash('success');
+      res.locals.error = req.flash('error');
+  }
+  next();
+});
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+
 
 app.get("/static/*.js", function(req, res, next) {
   req.url = req.url + ".gz";
