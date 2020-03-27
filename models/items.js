@@ -1,7 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const shortid = require("shortid");
 var itemsSchema  = new mongoose.Schema({
     
+    iid:{
+        type: String,
+        required: true,
+        default:mongoose.Types.ObjectId
+    },
     active: {
         type: Boolean,
         required: true,
@@ -15,12 +21,25 @@ var itemsSchema  = new mongoose.Schema({
         type:String,
         required:true
     },
-    category_id:{
-        type:ObjectId,
+    category:{
+        type:String,
         required:true,
-
+        default:"spice"
     },
-
+    stockCount:{
+        type:Number,
+    },
+    image:{
+        type:String
+    },
+    discount:{
+        type:Number,
+        default:0
+    },
+    sale:{
+        type:Boolean,
+        default:false
+    }
 
 });
 
