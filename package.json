@@ -22,7 +22,7 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
+    "react-scripts": "1.1.4",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "serve-favicon": "^2.5.0"
@@ -42,7 +42,7 @@
     "https": "^1.0.0",
     "image-webpack-loader": "^6.0.0",
     "nodemon": "^2.0.2",
-    "rewire": "^5.0.0"
+    "rewire": "^4.0.1"
   },
   "browserslist": [
     ">0.2%",
