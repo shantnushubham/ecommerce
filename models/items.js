@@ -26,9 +26,6 @@ var itemsSchema  = new mongoose.Schema({
         required:true,
         default:"spice"
     },
-    stockCount:{
-        type:Number,
-    },
     image:{
         type:String
     },
@@ -39,7 +36,12 @@ var itemsSchema  = new mongoose.Schema({
     sale:{
         type:Boolean,
         default:false
-    }
+    },
+    dateCreated: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
 
 });
 
