@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
-
-// const shortid = require("shortid");
+const shortid = require("shortid");
 
 var itemsSchema  = new mongoose.Schema({
     iid:{
         type: String,
         required: true,
-        default:mongoose.Types.ObjectId
+        default:shortid.generate
     },
     name:{
         type:String,

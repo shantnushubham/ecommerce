@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+var shortid = require("shortid");
 
 // status
 // 0: pending
@@ -8,6 +9,11 @@ const mongoose = require("mongoose");
 // 4:cancelled
 
 var orderSchema  = new mongoose.Schema({
+    id:{
+        type: String,
+        default: shortid.generate,
+        required: true
+    },
     itemId:{
         type: mongoose.Types.ObjectId,
         ref: 'item'
@@ -39,10 +45,8 @@ var orderSchema  = new mongoose.Schema({
     approvedDate:{
         type: Date,
     },
-    paymentBankDetail:{
-        type: mongoose.Types.ObjectId,
-        required: true,
-        ref: 'bank_details'
+    transaction_id:{
+        type: String
     }
 });
 
