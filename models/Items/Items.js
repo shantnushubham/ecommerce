@@ -17,7 +17,7 @@ var itemsSchema  = new mongoose.Schema({
         default: true
     },
     price:{
-        type:String,
+        type:Number,
         required:true,
     },
     category:{

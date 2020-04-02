@@ -12,6 +12,12 @@ const FacebookStrategy = require('passport-facebook');
 const LocalStrategy = require("passport-local").Strategy;
 const compression = require("compression");
 
+const session = require('express-session');
+const redis = require('redis');
+const redisClient = redis.createClient();
+const redisStore = require('connect-redis')(session);
+
+
 var routes = require('./routes/routes')
 var User = require('./models/User/User');
 const OAuthCredentials = require('./config/auth');
@@ -29,6 +35,20 @@ mongoose
   .connect("mongodb://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/" + dbName, { useUnifiedTopology: true, useCreateIndex: true, promiseLibrary: require("bluebird"), useNewUrlParser: true })
   .then(() => console.log("connection succesful"))
   .catch(err => console.error(err));
+
+// reddis setup
+redisClient.on('error', (err) => {
+    console.log('Redis error: ', err);
+});
+
+app.use(session({
+    secret: 'RedisSessionStorage',
+    name: '_redisPractice',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
+    store: new redisStore({ host: 'localhost', port: 6379, client: redisClient, ttl: 86400 }),
+}));
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
