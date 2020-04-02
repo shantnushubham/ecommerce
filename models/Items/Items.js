@@ -25,9 +25,6 @@ var itemsSchema  = new mongoose.Schema({
         required:true,
         ref: 'category',
     },
-    stockCount:{
-        type:Number,
-    },
     image:{
         type:String
     },
@@ -46,7 +43,13 @@ var itemsSchema  = new mongoose.Schema({
     reviews:[{
         type: mongoose.Types.ObjectId,
         ref: 'review'
-    }]
+    }],
+    dateCreated: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+
 });
 
 module.exports = mongoose.model("item", itemsSchema);
