@@ -16,7 +16,8 @@ var userSchema  = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     defaultDeliveryAddress:{
         type: mongoose.Types.ObjectId,
