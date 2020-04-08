@@ -19,6 +19,7 @@
     "moment": "^2.24.0",
     "mongo-connect": "0.0.6",
     "mongoose": "^5.9.6",
+    "mongoose-morgan": "^1.0.13",
     "morgan": "^1.10.0",
     "node-cron": "^2.0.3",
     "nodemailer": "^6.4.6",

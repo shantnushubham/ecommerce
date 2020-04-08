@@ -5,6 +5,8 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors')
 var mongoose = require('mongoose');
+var mongooseMorgan = require('mongoose-morgan');
+
 const flash = require("connect-flash");
 const passport = require("passport");
 const GoogleStrategy = require('passport-google-oauth20');
@@ -39,6 +41,18 @@ app.set("views", __dirname+"/views");
 //   .then(() => console.log("connection succesful"))
 //   .catch(err => console.error(err));
 mongoose.connect('mongodb://localhost:27017/foxmula', { useUnifiedTopology: true, useNewUrlParser: true });
+
+app.use(mongooseMorgan({
+    collection: 'Log',
+    connectionString: 'mongodb://localhost:27017/foxmula',
+  },
+  {
+    skip: function (req, res) {
+        return res.statusCode < 400;
+    }
+  },
+  'dev'
+));
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
