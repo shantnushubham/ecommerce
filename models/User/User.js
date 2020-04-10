@@ -16,8 +16,25 @@ var userSchema  = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
+    defaultDeliveryAddress:{
+        type: mongoose.Types.ObjectId,
+        ref: 'delivery_address'
+    },
+    deliveryAddress:[{
+        type: mongoose.Types.ObjectId,
+        ref: 'delivery_address'
+    }],
+    orders:[{
+        type: mongoose.Types.ObjectId,
+        ref: 'order'
+    }],
+    cancelledOrder:[{
+        type: mongoose.Types.ObjectId,
+        ref: 'cancelled_order'
+    }],
     googleUserId: {
         type: String
     },

@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+
 var itemsMetaSchema  = new mongoose.Schema({
-    
     iid:{
         type: String,
         required: true,
@@ -17,10 +16,7 @@ var itemsMetaSchema  = new mongoose.Schema({
     },
     color:{
         type:String,
-        
-    },
-    
-
+    }
 });
 
-module.exports = mongoose.model("itemsMeta", itemsSchema,"itemsMeta");
+module.exports = mongoose.model("items_metadata", itemsMetaSchema);

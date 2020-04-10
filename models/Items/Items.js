@@ -1,12 +1,15 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 const shortid = require("shortid");
+
 var itemsSchema  = new mongoose.Schema({
-    
     iid:{
         type: String,
         required: true,
-        default:mongoose.Types.ObjectId
+        default:shortid.generate
+    },
+    name:{
+        type:String,
+        required:true
     },
     active: {
         type: Boolean,
@@ -14,20 +17,20 @@ var itemsSchema  = new mongoose.Schema({
         default: true
     },
     price:{
-        type:String,
+        type:Number,
         required:true,
-    },
-    name:{
-        type:String,
-        required:true
     },
     category:{
-        type:String,
+        type:mongoose.Types.ObjectId,
         required:true,
-        default:"spice"
+        ref: 'category',
     },
     image:{
         type:String
+    },
+    metadata:{
+        type: mongoose.Types.ObjectId,
+        ref: 'items_metadata'
     },
     discount:{
         type:Number,
@@ -37,6 +40,10 @@ var itemsSchema  = new mongoose.Schema({
         type:Boolean,
         default:false
     },
+    reviews:[{
+        type: mongoose.Types.ObjectId,
+        ref: 'review'
+    }],
     dateCreated: {
         type: Date,
         required: true,
@@ -45,4 +52,4 @@ var itemsSchema  = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model("items", itemsSchema,"items");
+module.exports = mongoose.model("item", itemsSchema);
