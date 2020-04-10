@@ -11,16 +11,14 @@ const GoogleStrategy = require('passport-google-oauth20');
 const FacebookStrategy = require('passport-facebook');
 const LocalStrategy = require("passport-local").Strategy;
 const compression = require("compression");
-
-// const session = require('express-session');
-// const redis = require('redis');
-// const redisClient = redis.createClient();
-// const redisStore = require('connect-redis')(session);
-
+const session=require("express-session")
+var MongoStore  = require('connect-mongo')(session)
+require('dotenv').config()
 
 var routes = require('./routes/routes')
+var cartRoutes=require('./routes/cart')
 var User = require('./models/User/User');
-const OAuthCredentials = require('./config/auth');
+// const OAuthCredentials = require('./config/auth');
 
 var app = express();
 
@@ -31,24 +29,16 @@ var dbName = process.env.DB_NAME;
 var dbUser = process.env.DB_USERNAME;
 var dbPass = process.env.DB_PASSWORD;
 var dbPort = process.env.DB_PORT || "27017";
-mongoose
-  .connect("mongodb://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/" + dbName, { useUnifiedTopology: true, useCreateIndex: true, promiseLibrary: require("bluebird"), useNewUrlParser: true })
-  .then(() => console.log("connection succesful"))
-  .catch(err => console.error(err));
 
-// reddis setup
-// redisClient.on('error', (err) => {
-//     console.log('Redis error: ', err);
-// });
-
-// app.use(session({
-//     secret: 'RedisSessionStorage',
-//     name: '_redisPractice',
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
-//     store: new redisStore({ host: 'localhost', port: 6379, client: redisClient, ttl: 86400 }),
-// }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
+app.set("views", __dirname+"/views");
+// mongoose
+//   .connect("mongodb://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/" + dbName, { useUnifiedTopology: true, useCreateIndex: true, promiseLibrary: require("bluebird"), useNewUrlParser: true })
+//   .then(() => console.log("connection succesful"))
+//   .catch(err => console.error(err));
+mongoose.connect('mongodb://localhost:27017/foxmula', { useUnifiedTopology: true, useNewUrlParser: true });
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -56,19 +46,19 @@ app.use(bodyParser.urlencoded({extended: true}));
 if (process.env.REACT_APP_SERVER_ENVIORNMENT !== 'dev') {
   app.use(favicon(path.join(__dirname, 'build/favicon.ico')));
 }
-app.use(express.static(path.join(__dirname, 'build')));
+
 app.use(compression());
-app.use(require("cookie-parser")());
+// app.use(require("cookie-parser")());
 app.use(flash());
-app.use(require("express-session")({
-    secret: 'Bingo',
+app.use(session({
+    secret: 'my-secret',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: {
-        expires: 6000000
+        maxAge: 1000 * 60 * 60 * 24 * 7 * 3 // two weeks
     }
 }));
-
 app.use(cors());
 
 app.use(function(req, res, next) {
@@ -84,95 +74,95 @@ app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
 
-passport.use(
-  new GoogleStrategy({
-      clientID:OAuthCredentials.googleAuth.clientID,
-      clientSecret:OAuthCredentials.googleAuth.clientSecret,
-      callbackURL:OAuthCredentials.googleAuth.callbackURL
-  },(accessToken, refreshToken, profile, done)=>{
-      process.nextTick(function() {
-          User.findOne({"email": profile.emails[0].value}, function(err, founduser){
-              if (err) {
-                  return done(err);
-              } else {
-                  if (founduser) {
-                      return done(null, founduser);
-                  } else {
-                      User.findOne({ 'googleUserId' : profile.id }, function(err, user) {
-                          if (err)
-                              return done(err);
-                          if (user) {
-                              // if a user is found, log them in
-                              return done(null, user);
-                          } else {
-                              // if the user isnt in our database, create a new user
-                              var newUser = new User();
-                              // set all of the relevant information
-                              newUser.googleUserId    = profile.id;
-                              newUser.name  = profile.displayName;
-                              newUser.email = profile.emails[0].value; // pull the first email
-                              newUser.username = profile.emails[0].value;
-                              newUser.phone = 0;
-                              // save the user
+// passport.use(
+//   new GoogleStrategy({
+//       clientID:OAuthCredentials.googleAuth.clientID,
+//       clientSecret:OAuthCredentials.googleAuth.clientSecret,
+//       callbackURL:OAuthCredentials.googleAuth.callbackURL
+//   },(accessToken, refreshToken, profile, done)=>{
+//       process.nextTick(function() {
+//           User.findOne({"email": profile.emails[0].value}, function(err, founduser){
+//               if (err) {
+//                   return done(err);
+//               } else {
+//                   if (founduser) {
+//                       return done(null, founduser);
+//                   } else {
+//                       User.findOne({ 'googleUserId' : profile.id }, function(err, user) {
+//                           if (err)
+//                               return done(err);
+//                           if (user) {
+//                               // if a user is found, log them in
+//                               return done(null, user);
+//                           } else {
+//                               // if the user isnt in our database, create a new user
+//                               var newUser = new User();
+//                               // set all of the relevant information
+//                               newUser.googleUserId    = profile.id;
+//                               newUser.name  = profile.displayName;
+//                               newUser.email = profile.emails[0].value; // pull the first email
+//                               newUser.username = profile.emails[0].value;
+//                               newUser.phone = 0;
+//                               // save the user
 
-                              User.create(new User(newUser), function(err) {
-                                  if (err)
-                                      throw err;
-                                  // Email.sendSignupEmail(profile.emails[0].value, function(rspp){
-                                      console.log(rspp);
-                                      return done(null, newUser);
-                                  // });
-                              });
-                          }
-                      });
-                  }
-              }
-          });
-          // try to find the user based on their google id
-      });
-  })
-);
+//                               User.create(new User(newUser), function(err) {
+//                                   if (err)
+//                                       throw err;
+//                                   // Email.sendSignupEmail(profile.emails[0].value, function(rspp){
+//                                       console.log(rspp);
+//                                       return done(null, newUser);
+//                                   // });
+//                               });
+//                           }
+//                       });
+//                   }
+//               }
+//           });
+//           // try to find the user based on their google id
+//       });
+//   })
+// );
 
-passport.use(new FacebookStrategy({
-      clientID: OAuthCredentials.facebookAuth.clientID,
-      clientSecret: OAuthCredentials.facebookAuth.clientSecret,
-      callbackURL: OAuthCredentials.facebookAuth.callbackURL,
-      profileFields: ['id', 'displayName', 'email']
-  },
-  function(accessToken, refreshToken, profile, done) {
-      User.findOne({ 'facebookId' : profile.id }, function(err, user) {
-          if (err)
-              return done(err);
-          if (user) {
-              // if a user is found, log them in
-              return done(null, user);
-          } else {
-              // if the user isnt in our database, create a new user
+// passport.use(new FacebookStrategy({
+//       clientID: OAuthCredentials.facebookAuth.clientID,
+//       clientSecret: OAuthCredentials.facebookAuth.clientSecret,
+//       callbackURL: OAuthCredentials.facebookAuth.callbackURL,
+//       profileFields: ['id', 'displayName', 'email']
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//       User.findOne({ 'facebookId' : profile.id }, function(err, user) {
+//           if (err)
+//               return done(err);
+//           if (user) {
+//               // if a user is found, log them in
+//               return done(null, user);
+//           } else {
+//               // if the user isnt in our database, create a new user
 
-              var newUser = new User();
-              // set all of the relevant information
-              newUser.facebookId    = profile.id;
-              newUser.name  = profile.displayName;
-              newUser.email = profile['_json']['email']; // pull the first email
-              newUser.username = profile['_json']['email'];
-              newUser.phone = 0;
-              // save the user
+//               var newUser = new User();
+//               // set all of the relevant information
+//               newUser.facebookId    = profile.id;
+//               newUser.name  = profile.displayName;
+//               newUser.email = profile['_json']['email']; // pull the first email
+//               newUser.username = profile['_json']['email'];
+//               newUser.phone = 0;
+//               // save the user
 
-              User.create(new User(newUser), function(err) {
-                  if (err)
-                      throw err;
+//               User.create(new User(newUser), function(err) {
+//                   if (err)
+//                       throw err;
 
 
-                  // Email.sendSignupEmail(profile['_json']['email'], function(rspp){
-                      console.log(rspp);
-                      return done(null, newUser);
-                  // });
+//                   // Email.sendSignupEmail(profile['_json']['email'], function(rspp){
+//                       console.log(rspp);
+//                       return done(null, newUser);
+//                   // });
 
-              });
-          }
-      });
-  }
-));
+//               });
+//           }
+//       });
+//   }
+// ));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -198,7 +188,9 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
-
+app.get('/testingpage',function(req,res){
+    res.render('test')
+})
 
 app.get("/static/*.js", function(req, res, next) {
   req.url = req.url + ".gz";
@@ -207,7 +199,8 @@ app.get("/static/*.js", function(req, res, next) {
   next();
 });
 
-app.use('/', routes);
+// app.use('/', routes);
+app.use(cartRoutes)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -227,4 +220,14 @@ app.use(function(err, req, res, next) {
   res.render("error");
 });
 
-module.exports = app;
+// const cron = require("node-cron");
+// cron.schedule("*/2 * * * * *", function() {
+    
+//     console.log("Running Cron Job");
+// })
+
+ 
+
+app.listen(3000, process.env.IP, function(){
+    console.log("Server is up and running! Go ahead make your move.");
+});
