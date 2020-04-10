@@ -7,7 +7,6 @@
     "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
-    "connect-redis": "^4.0.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "cron": "^1.8.2",
@@ -28,33 +27,18 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.0.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-redux": "^7.2.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "1.1.4",
-    "redis": "^3.0.2",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
     "serve-favicon": "^2.5.0",
     "shortid": "^2.2.15"
   },
   "scripts": {
-    "start": "node scripts/customized-config start",
-    "build": "node scripts/customized-config build",
     "serve": "node ./bin/www",
     "https": "node ./bin/ww2",
     "httpsn": "nodemon ./bin/ww2",
-    "server": "nodemon ./bin/www",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "server": "nodemon ./bin/www"
   },
   "devDependencies": {
-    "compression-webpack-plugin": "^3.1.0",
     "https": "^1.0.0",
-    "image-webpack-loader": "^6.0.0",
-    "nodemon": "^2.0.2",
-    "rewire": "^4.0.1"
+    "nodemon": "^2.0.2"
   },
   "browserslist": [
     ">0.2%",
