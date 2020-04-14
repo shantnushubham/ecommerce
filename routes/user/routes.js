@@ -3,7 +3,7 @@ var router = express.Router()
 var cors = require('cors')
 
 // Controllers
-var userControl = require('../../controllers/api/user/userController')
+var UserControl = require('../../controllers/api/user/userController')
 
 // Middlewares
 var UserMiddleware = require('../../Middlewares/user/middleware')
@@ -14,13 +14,18 @@ var corsOptions = require('../config/cors')
 router.use('/', cors(corsOptions))
 
 // -> /api/user
-router.get('/getUserById', UserMiddleware.verifyUser, userControl.getUserById)
-router.post('/addUserAddress', UserMiddleware.verifyUser, userControl.addUserAddress)
-router.put('/updateUserData', UserMiddleware.verifyUser, userControl.updateUserData)
-router.put('/makeDefaultAddress', UserMiddleware.verifyUser, userControl.makeAdressToDefaultAddress)
-router.put('/updateAddress', UserMiddleware.verifyUser, userControl.updateUserAddress)
-router.delete('/deleteUser', UserMiddleware.verifyUser, userControl.deleteUserById)
-router.delete('/deleteAddress', UserMiddleware.verifyUser, userControl.deleteAddress)
+router.post('/login', UserControl.login)
+router.post('/register', UserControl.register)
+
+
+// -> /api/user
+router.get('/getUserById', UserMiddleware.verifyUser, UserControl.getUserById)
+router.post('/addUserAddress', UserMiddleware.verifyUser, UserControl.addUserAddress)
+router.put('/updateUserData', UserMiddleware.verifyUser, UserControl.updateUserData)
+router.put('/makeDefaultAddress', UserMiddleware.verifyUser, UserControl.makeAdressToDefaultAddress)
+router.put('/updateAddress', UserMiddleware.verifyUser, UserControl.updateUserAddress)
+router.delete('/deleteUser', UserMiddleware.verifyUser, UserControl.deleteUserById)
+router.delete('/deleteAddress', UserMiddleware.verifyUser, UserControl.deleteAddress)
 
 
 

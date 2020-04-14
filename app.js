@@ -8,10 +8,6 @@ var mongoose = require('mongoose');
 var mongooseMorgan = require('mongoose-morgan');
 
 const flash = require("connect-flash");
-const passport = require("passport");
-const GoogleStrategy = require('passport-google-oauth20');
-const FacebookStrategy = require('passport-facebook');
-const LocalStrategy = require("passport-local").Strategy;
 const compression = require("compression");
 const session=require("express-session")
 var MongoStore  = require('connect-mongo')(session)
@@ -21,38 +17,18 @@ var routes = require('./routes/routes')
 var cartRoutes=require('./routes/cart')
 var User = require('./models/User/User');
 // const OAuthCredentials = require('./config/auth');
+mongoose.Promise = require('bluebird');
 
 var app = express();
 
 // mongoose setup
-mongoose.Promise = require('bluebird');
-var dbHost = process.env.DB_HOST || 'localhost';
-var dbName = process.env.DB_NAME;
-var dbUser = process.env.DB_USERNAME;
-var dbPass = process.env.DB_PASSWORD;
-var dbPort = process.env.DB_PORT || "27017";
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/public"));
+app.set('view engine', 'ejs');
+// app.use(express.static(__dirname + "/public"));
 app.set("views", __dirname+"/views");
-// mongoose
-//   .connect("mongodb://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/" + dbName, { useUnifiedTopology: true, useCreateIndex: true, promiseLibrary: require("bluebird"), useNewUrlParser: true })
-//   .then(() => console.log("connection succesful"))
-//   .catch(err => console.error(err));
-mongoose.connect('mongodb://localhost:27017/foxmula', { useUnifiedTopology: true, useNewUrlParser: true });
 
-app.use(mongooseMorgan({
-    collection: 'Log',
-    connectionString: 'mongodb://localhost:27017/foxmula',
-  },
-  {
-    skip: function (req, res) {
-        return res.statusCode < 400;
-    }
-  },
-  'dev'
-));
+mongoose.connect('mongodb://localhost:27017/foxmula', { useUnifiedTopology: true, useNewUrlParser: true });
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -83,128 +59,18 @@ app.use(function(req, res, next) {
 });
 
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.use(new LocalStrategy(User.authenticate()));
-
-// passport.use(
-//   new GoogleStrategy({
-//       clientID:OAuthCredentials.googleAuth.clientID,
-//       clientSecret:OAuthCredentials.googleAuth.clientSecret,
-//       callbackURL:OAuthCredentials.googleAuth.callbackURL
-//   },(accessToken, refreshToken, profile, done)=>{
-//       process.nextTick(function() {
-//           User.findOne({"email": profile.emails[0].value}, function(err, founduser){
-//               if (err) {
-//                   return done(err);
-//               } else {
-//                   if (founduser) {
-//                       return done(null, founduser);
-//                   } else {
-//                       User.findOne({ 'googleUserId' : profile.id }, function(err, user) {
-//                           if (err)
-//                               return done(err);
-//                           if (user) {
-//                               // if a user is found, log them in
-//                               return done(null, user);
-//                           } else {
-//                               // if the user isnt in our database, create a new user
-//                               var newUser = new User();
-//                               // set all of the relevant information
-//                               newUser.googleUserId    = profile.id;
-//                               newUser.name  = profile.displayName;
-//                               newUser.email = profile.emails[0].value; // pull the first email
-//                               newUser.username = profile.emails[0].value;
-//                               newUser.phone = 0;
-//                               // save the user
-
-//                               User.create(new User(newUser), function(err) {
-//                                   if (err)
-//                                       throw err;
-//                                   // Email.sendSignupEmail(profile.emails[0].value, function(rspp){
-//                                       console.log(rspp);
-//                                       return done(null, newUser);
-//                                   // });
-//                               });
-//                           }
-//                       });
-//                   }
-//               }
-//           });
-//           // try to find the user based on their google id
-//       });
-//   })
-// );
-
-// passport.use(new FacebookStrategy({
-//       clientID: OAuthCredentials.facebookAuth.clientID,
-//       clientSecret: OAuthCredentials.facebookAuth.clientSecret,
-//       callbackURL: OAuthCredentials.facebookAuth.callbackURL,
-//       profileFields: ['id', 'displayName', 'email']
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//       User.findOne({ 'facebookId' : profile.id }, function(err, user) {
-//           if (err)
-//               return done(err);
-//           if (user) {
-//               // if a user is found, log them in
-//               return done(null, user);
-//           } else {
-//               // if the user isnt in our database, create a new user
-
-//               var newUser = new User();
-//               // set all of the relevant information
-//               newUser.facebookId    = profile.id;
-//               newUser.name  = profile.displayName;
-//               newUser.email = profile['_json']['email']; // pull the first email
-//               newUser.username = profile['_json']['email'];
-//               newUser.phone = 0;
-//               // save the user
-
-//               User.create(new User(newUser), function(err) {
-//                   if (err)
-//                       throw err;
-
-
-//                   // Email.sendSignupEmail(profile['_json']['email'], function(rspp){
-//                       console.log(rspp);
-//                       return done(null, newUser);
-//                   // });
-
-//               });
-//           }
-//       });
-//   }
-// ));
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-app.use(function(req, res, next){
-  if (req.isAuthenticated()) {
-      res.locals.currentUser = req.user;
-      res.locals.success = req.flash('success');
-      res.locals.error = req.flash('error');
-  } else {
-      res.locals.currentUser = "";
-      res.locals.success = req.flash('success');
-      res.locals.error = req.flash('error');
-  }
-  next();
+app.get('/', function(req, res) {
+  res.render('index');
 });
 
-passport.serializeUser(function(user, cb) {
-  cb(null, user);
-});
-
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
+app.get('/register', function(req, res) {
+  res.render('register');
 });
 
 app.get('/testingpage',function(req,res){
     res.render('test')
 })
+
 
 app.get("/static/*.js", function(req, res, next) {
   req.url = req.url + ".gz";
@@ -213,7 +79,7 @@ app.get("/static/*.js", function(req, res, next) {
   next();
 });
 
-// app.use('/', routes);
+app.use('/', routes);
 app.use(cartRoutes)
 
 // catch 404 and forward to error handler
@@ -234,13 +100,6 @@ app.use(function(err, req, res, next) {
   res.render("error");
 });
 
-// const cron = require("node-cron");
-// cron.schedule("*/2 * * * * *", function() {
-    
-//     console.log("Running Cron Job");
-// })
-
- 
 
 app.listen(3000, process.env.IP, function(){
     console.log("Server is up and running! Go ahead make your move.");
