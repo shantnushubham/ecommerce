@@ -19,6 +19,7 @@ require('dotenv').config()
 
 var routes = require('./routes/routes')
 var cartRoutes=require('./routes/cart')
+var adminroutes=require('./routes/admin')
 var User = require('./models/User/User');
 // const OAuthCredentials = require('./config/auth');
 
@@ -215,6 +216,7 @@ app.get("/static/*.js", function(req, res, next) {
 
 // app.use('/', routes);
 app.use(cartRoutes)
+app.use(adminroutes)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

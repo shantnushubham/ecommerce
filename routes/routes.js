@@ -8,7 +8,7 @@ var userRoutes = require('./user/routes');
 var viewController = require('../controllers/view_controller');
 
 // -> /api
-router.use('/api/user', userRoutes);
+// router.use('/api/user', userRoutes);
 
 // -> /*
 router.get('/*', viewController);
