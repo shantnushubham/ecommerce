@@ -1,14 +1,20 @@
 var express = require('express');
 var router = express.Router();
-
-// Routes
-var userRoutes = require('./user/routes');
+const { forwardAuthenticated, ensureAuthenticated } = require('../Middlewares/user/middleware');
 
 // Controllers
 var viewController = require('../controllers/view_controller');
 
-// -> /api
-router.use('/api/user', userRoutes);
+router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
+
+router.get('/dashboard', ensureAuthenticated, (req, res) =>
+  res.render('dashboard', {
+    user: req.user
+  })
+);
+
+// -> /users
+router.use('/users', require('./user/routes'));
 
 // -> /*
 router.get('/*', viewController);

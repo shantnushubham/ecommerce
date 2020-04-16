@@ -1,36 +1,48 @@
 
-    <!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-    
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </head>
-
-
-
-<body class="container">
-    <form action="/api/user/register" method="POST">
-        <div class="form-group">
-          <input type="email" name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" required>
+      <form action="/users/register" method="POST">
+        <div>
+          <label for="name">Name</label>
+          <input
+            type="name"
+            id="name"
+            name="name"
+            placeholder="Enter Name"
+            value="<%= typeof name != 'undefined' ? name : '' %>"
+          />
         </div>
-        <div class="form-group">
-            <input type="text" name="name" class="form-control" aria-describedby="emailHelp" placeholder="Enter name" required>
-          </div>
-        <div class="form-group">
-            <input type="number" name="phone" class="form-control" aria-describedby="emailHelp" placeholder="Enter phone number">
-          </div>
-        <div class="form-group">
-          <input type="password" name="password" class="form-control" placeholder="Password" required>
+        <div>
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter Email"
+            value="<%= typeof email != 'undefined' ? email : '' %>"
+          />
         </div>
-        <div class="form-group">
-            <input type="password" name="confirmPassword" class="form-control" placeholder="Comfirm Password" required>
-          </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div >
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Create Password"
+            value="<%= typeof password != 'undefined' ? password : '' %>"
+          />
+        </div>
+        <div >
+          <label for="password2">Confirm Password</label>
+          <input
+            type="password"
+            id="password2"
+            name="password2"
+            placeholder="Confirm Password"
+            value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+          />
+        </div>
+        <button type="submit" >
+          Register
+        </button>
       </form>
-
-</body>
-</html>
+      <p>Have An Account? <a href="/users/login">Login</a></p>
+  

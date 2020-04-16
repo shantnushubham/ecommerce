@@ -1,77 +1,87 @@
 var User = require("../../../models/User/User")
 var UserAddress = require("../../../models/User/DeliveryAddress")
-var Generator = require("../../common/Generator")
-var mailer = require("../../common/Mailer")
+// var Generator = require("../../common/Generator")
+// var mailer = require("../../common/Mailer")
 
-exports.register = function (req, res) {
-    if (req.body && req.body.email && req.body.name && req.body.password) {
-        if(req.body.password === req.body.confirmPassword){
-            if (req.body.name) {
-                req.body.name = req.body.name.trim()
-            }
-            if (req.body.email) {
-                req.body.email = req.body.email.toLowerCase()
-                req.body.email = req.body.email.trim()
-            }
-            var otp = Generator.generateOTP()
-            var data = {
-                name: req.body.name,
-                email: req.body.email,
-                phone: req.body.phone || null,
-                password: req.body.password,
-                otp: otp
-            }
-            var newUser = User(data)
-            console.log(newUser)
-            newUser.save(function (err, user) {
-                // console.log(user,"save parameter")
-                if (err) {
-                    console.log(err)
-                    return res.status(400).json({ success: false, message: 'Email already exists', already: true })
-                } else if (!user) {
-                    return res.json({ success: false, message: 'Unable to save' })
-                } else {
-                    mailer.Register({
-                        name: user.name,
-                        email: user.email,
-                        otp: otp
-                    });
-                    res.json({ success: true, message: 'Successfully Registered!!' })
-                }
-            })
-        }
-        else return res.json({success: false, message: 'Password doesn\'t match'})
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
+
+exports.register = (req, res) => {
+    const { name, email, password, password2 } = req.body;
+    let errors = [];
+  
+    if (!name || !email || !password || !password2) {
+      errors.push({ msg: 'Please enter all fields' });
     }
+  
+    if (password != password2) {
+      errors.push({ msg: 'Passwords do not match' });
+    }
+  
+    if (password.length < 6) {
+      errors.push({ msg: 'Password must be at least 6 characters' });
+    }
+  
+    if (errors.length > 0) {
+      res.render('register', {
+        errors,
+        name,
+        email,
+        password,
+        password2
+      });
+    } else {
+      User.findOne({ email: email }).then(user => {
+        if (user) {
+          errors.push({ msg: 'Email already exists' });
+          res.render('register', {
+            errors,
+            name,
+            email,
+            password,
+            password2
+          });
+        } else {
+          const newUser = new User({
+            name,
+            email,
+            password
+          });
+  
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) throw err;
+              newUser.password = hash;
+              newUser
+                .save()
+                .then(user => {
+                  req.flash(
+                    'success_msg',
+                    'You are now registered and can log in'
+                  );
+                  res.redirect('/users/login');
+                })
+                .catch(err => console.log(err));
+            });
+          });
+        }
+      });
+    }
+  }
+
+exports.login = (req, res, next) => {
+    passport.authenticate('local', {
+      successRedirect: '/dashboard',
+      failureRedirect: '/users/login',
+      failureFlash: true
+    })(req, res, next);
 }
 
-exports.login = (req, res) => {
-    if (req.body) {
-        if (req.body.email) {
-            req.body.email = req.body.email.toLowerCase()
-            req.body.email = req.body.email.trim()
-        }
-        if (req.body.email && req.body.password) {
-            User.findOne({email: req.body.email})
-                .select('email verified name username phone password')
-                .exec(function (err, user) {
-                    if (err) return res.status(400).send({ success: false, message: 'Authentication failed. Error.' })
-                    if (!user) {
-                        return res.status(400).send({ success: false, message: 'No user found with this email.', notExists: true })
-                    } else {
-                        user.comparePassword(req.body.password, (err, isMatch)  => {
-                            console.log(isMatch)
-                            console.log(err)
-                            if (isMatch && !err) {
-                                if (user.verified) return res.json({ success: true, message: 'Successfully Authenticated', body: body, verified: true })
-                                else return res.json({ success: false, message: 'Email Not Verified', verified: false })
-                            } 
-                            else return res.json({ success: false, message: 'Wrong password.' })
-                        })
-                    }
-                })
-        } else return res.status(400).send({ success: false, message: 'Invalid Data' })
-    } else return res.status(400).send({ success: false, message: 'Invalid Data' })
-}
+exports.logout = (req, res) => {
+    req.logout();
+    req.flash('success_msg', 'You are logged out');
+    res.redirect('/users/login');
+  }
 
 exports.getUserById = (req, res) => {
     User.findOne({_id: req.params.id})
