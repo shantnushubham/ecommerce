@@ -7,9 +7,9 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 exports.register = (req, res) => {
-    const { name, email, password, password2 } = req.body;
+    const { name, email, phone, password, password2 } = req.body;
     let errors = [];
-  
+    
     if (!name || !email || !password || !password2) {
       errors.push({ msg: 'Please enter all fields' });
     }
@@ -45,6 +45,7 @@ exports.register = (req, res) => {
           const newUser = new User({
             name,
             email,
+            phone,
             password
           });
   
