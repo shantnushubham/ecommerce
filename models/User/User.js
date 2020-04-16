@@ -1,8 +1,6 @@
 var mongoose = require("mongoose");
 var bcrypt = require('bcrypt-nodejs')
 
-var passportLocalMongoose = require("passport-local-mongoose");
-
 var UserSchema  = new mongoose.Schema({
     name: {
         type: String,
@@ -22,6 +20,9 @@ var UserSchema  = new mongoose.Schema({
     verified: {
         type: Boolean,
         default: false
+    },
+    password: {
+        type: String
     },
     defaultDeliveryAddress:{
         type: mongoose.Types.ObjectId,
@@ -56,11 +57,13 @@ var UserSchema  = new mongoose.Schema({
     resetPasswordExpires: {
         type: String
     },
+    otp: {
+        type: String
+    }
 });
 
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save', (next) => {
     var user = this
-    if (this.isModified('password') || this.isNew) {
         bcrypt.genSalt(10, function (err, salt) {
             if (err) {
                 return next(err)
@@ -69,17 +72,17 @@ UserSchema.pre('save', function (next) {
                 if (err) {
                     return next(err)
                 }
+                console.log(hash)
                 user.password = hash
                 next()
             })
         })
-    } else {
-        return next()
-    }
+   
 })
 
-UserSchema.methods.comparePassword = function (pass, callback) {
-    bcrypt.compare(pass, this.password, function (err, isMatch) {
+UserSchema.methods.comparePassword =  (pass, callback) => {
+    console.log(pass, this.password, 'df')
+    bcrypt.compare(pass, this.password, (err, isMatch) => {
         if (err)
             return callback(err)
         callback(null, isMatch)
@@ -87,5 +90,4 @@ UserSchema.methods.comparePassword = function (pass, callback) {
 }
 
 
-UserSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model("User", UserSchema);

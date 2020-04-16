@@ -17,12 +17,12 @@ exports.register = function (req, res) {
             var data = {
                 name: req.body.name,
                 email: req.body.email,
-                phone: req.body.phone,
+                phone: req.body.phone || null,
                 password: req.body.password,
                 otp: otp
             }
             var newUser = User(data)
-            // console.log(newUser)
+            console.log(newUser)
             newUser.save(function (err, user) {
                 // console.log(user,"save parameter")
                 if (err) {
@@ -52,18 +52,20 @@ exports.login = (req, res) => {
         }
         if (req.body.email && req.body.password) {
             User.findOne({email: req.body.email})
-                .select('email verified name username phone')
+                .select('email verified name username phone password')
                 .exec(function (err, user) {
                     if (err) return res.status(400).send({ success: false, message: 'Authentication failed. Error.' })
                     if (!user) {
                         return res.status(400).send({ success: false, message: 'No user found with this email.', notExists: true })
                     } else {
-                        User.comparePassword(req.body.password, function (err, isMatch) {
+                        user.comparePassword(req.body.password, (err, isMatch)  => {
+                            console.log(isMatch)
+                            console.log(err)
                             if (isMatch && !err) {
                                 if (user.verified) return res.json({ success: true, message: 'Successfully Authenticated', body: body, verified: true })
                                 else return res.json({ success: false, message: 'Email Not Verified', verified: false })
                             } 
-                            else return res.json({ success: false, message: 'Wrong password.', mismatch: true })
+                            else return res.json({ success: false, message: 'Wrong password.' })
                         })
                     }
                 })

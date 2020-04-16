@@ -5,11 +5,13 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors')
 var mongoose = require('mongoose');
-var mongooseMorgan = require('mongoose-morgan');
 
 const flash = require("connect-flash");
 const compression = require("compression");
 const session=require("express-session")
+const LocalStrategy = require("passport-local").Strategy;
+const passport = require("passport");
+
 var MongoStore  = require('connect-mongo')(session)
 require('dotenv').config()
 
@@ -23,7 +25,6 @@ var app = express();
 
 // mongoose setup
 
-app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 // app.use(express.static(__dirname + "/public"));
 app.set("views", __dirname+"/views");
@@ -58,6 +59,35 @@ app.use(function(req, res, next) {
   next();
 });
 
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use(function(req, res, next){
+    if (req.isAuthenticated()) {
+        res.locals.currentUser = req.user;
+        res.locals.success = req.flash('success');
+        res.locals.error = req.flash('error');
+    } else {
+        res.locals.currentUser = "";
+        res.locals.success = req.flash('success');
+        res.locals.error = req.flash('error');
+    }
+    next();
+});
+
+passport.serializeUser(function(user, cb) {
+    cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+    cb(null, obj);
+});
 
 app.get('/', function(req, res) {
   res.render('index');
