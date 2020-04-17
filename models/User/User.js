@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var bcrypt = require('bcrypt-nodejs')
+var mongooseHistory = require('mongoose-history')
 
 var UserSchema  = new mongoose.Schema({
     name: {
@@ -81,6 +82,6 @@ UserSchema.methods.comparePassword =  (pass, callback) => {
         callback(null, isMatch)
     })
 }
-
+UserSchema.plugin(mongooseHistory)
 
 module.exports = mongoose.model("User", UserSchema);

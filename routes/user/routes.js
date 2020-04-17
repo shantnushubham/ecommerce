@@ -3,7 +3,7 @@ var router = express.Router()
 
 const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares/user/middleware');
 
-var UserControl = require('../../controllers/api/user/userController')
+var UserControl = require('../../controllers/user/userController')
 
 router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
