@@ -1,6 +1,5 @@
 var mongoose = require("mongoose");
 var bcrypt = require('bcrypt-nodejs')
-var mongooseHistory = require('mongoose-history')
 
 var UserSchema  = new mongoose.Schema({
     name: {
@@ -17,6 +16,10 @@ var UserSchema  = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
+    },
+    verified: {
+        type: Boolean,
+        default: false
     },
     password: {
         type: String
@@ -53,6 +56,9 @@ var UserSchema  = new mongoose.Schema({
     },
     resetPasswordExpires: {
         type: String
+    },
+    otp: {
+        type: String
     }
 });
 
@@ -83,6 +89,5 @@ UserSchema.methods.comparePassword =  (pass, callback) => {
     })
 }
 
-UserSchema.plugin(mongooseHistory)
 
 module.exports = mongoose.model("User", UserSchema);

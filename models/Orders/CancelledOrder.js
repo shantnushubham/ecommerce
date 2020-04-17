@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-var mongooseHistory = require('mongoose-history')
 
 // refundStatus
 // 0 : pending
@@ -20,7 +19,5 @@ var cancelledOrderSchema  = new mongoose.Schema({
         type: String
     }
 });
-
-cancelledOrderSchema.plugin(mongooseHistory)
 
 module.exports = mongoose.model("cancelled_order", cancelledOrderSchema);

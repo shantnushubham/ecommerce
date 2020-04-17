@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 var shortid = require("shortid");
-var mongooseHistory = require('mongoose-history')
 
 // status
 // 0: pending
@@ -50,7 +49,5 @@ var orderSchema  = new mongoose.Schema({
         type: String
     }
 });
-
-orderSchema.plugin(mongooseHistory)
 
 module.exports = mongoose.model("order", orderSchema);

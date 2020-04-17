@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-var mongooseHistory = require('mongoose-history')
 
 var itemsMetaSchema  = new mongoose.Schema({
     iid:{
@@ -19,7 +18,5 @@ var itemsMetaSchema  = new mongoose.Schema({
         type:String,
     }
 });
-
-itemsMetaSchema.plugin(mongooseHistory)
 
 module.exports = mongoose.model("items_metadata", itemsMetaSchema);

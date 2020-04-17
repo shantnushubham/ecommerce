@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-var mongooseHistory = require('mongoose-history')
 
 var reviewSchema  = new mongoose.Schema({
     orderId:{
@@ -17,7 +16,5 @@ var reviewSchema  = new mongoose.Schema({
         type: String
     }
 });
-
-reviewSchema.plugin(mongooseHistory)
 
 module.exports = mongoose.model("review", reviewSchema);
