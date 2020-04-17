@@ -7,59 +7,20 @@ const session = require('express-session');
 
 const app = express();
 var MongoStore  = require('connect-mongo')(session)
-<<<<<<< HEAD
-require('dotenv').config()
 
-var routes = require('./routes/routes')
-var cartRoutes=require('./routes/cart')
-var adminroutes=require('./routes/admin')
-var User = require('./models/User/User');
 // Passport Config
 require('./config/passport')(passport);
-// const OAuthCredentials = require('./config/auth');
 
-var app = express();
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/newSpice', { useFindAndModify: false ,useUnifiedTopology: true, useNewUrlParser: true });
 
-// mongoose setup
-mongoose.Promise = require('bluebird');
-var dbHost = process.env.DB_HOST || 'localhost';
-var dbName = process.env.DB_NAME;
-var dbUser = process.env.DB_USERNAME;
-var dbPass = process.env.DB_PASSWORD;
-var dbPort = process.env.DB_PORT || "27017";
+// EJS
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/public"));
-app.set("views",path.join(__dirname, 'views'));
-console.log(path.join(__dirname, 'views'));
-
-
-mongoose.connect('mongodb://localhost:27017/newSpice', { useUnifiedTopology: true, useNewUrlParser: true });
-
-app.use(mongooseMorgan({
-    collection: 'Log',
-    connectionString: 'mongodb://localhost:27017/foxmula',
-  },
-  {
-    skip: function (req, res) {
-        return res.statusCode < 400;
-    }
-  },
-  'dev'
-));
-
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-// if (process.env.REACT_APP_SERVER_ENVIORNMENT !== 'dev') {
-//   app.use(favicon(path.join(__dirname, 'build/favicon.ico')));
-// }
-
-app.use(compression());
+// Express body parser
 app.use(express.urlencoded({ extended: true }));
-// app.use(require("cookie-parser")());
-app.use(flash());
+
 app.use(session({
   secret: 'my-secret',
   resave: false,
