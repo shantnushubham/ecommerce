@@ -3,7 +3,7 @@ var router = express.Router()
 var cors = require('cors')
 
 // Controllers
-var userControl = require('../../controllers/api/user/userController')
+var userControl = require('../../controllers/user/userController')
 
 // Middlewares
 var UserMiddleware = require('../../Middlewares/user/middleware')

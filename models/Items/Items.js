@@ -52,4 +52,4 @@ var itemsSchema  = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model("item", itemsSchema);
+module.exports = mongoose.model("items", itemsSchema,"items");

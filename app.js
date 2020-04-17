@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors')
 var mongoose = require('mongoose');
 var mongooseMorgan = require('mongoose-morgan');
+var path =require('path')
 
 const flash = require("connect-flash");
 const passport = require("passport");
@@ -36,11 +37,10 @@ var dbPort = process.env.DB_PORT || "27017";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
-app.set("views", __dirname+"/views");
-// mongoose
-//   .connect("mongodb://" + dbUser + ":" + dbPass + "@" + dbHost + ":" + dbPort + "/" + dbName, { useUnifiedTopology: true, useCreateIndex: true, promiseLibrary: require("bluebird"), useNewUrlParser: true })
-//   .then(() => console.log("connection succesful"))
-//   .catch(err => console.error(err));
+app.set("views",path.join(__dirname, 'views'));
+console.log(path.join(__dirname, 'views'));
+
+
 mongoose.connect('mongodb://localhost:27017/foxmula', { useUnifiedTopology: true, useNewUrlParser: true });
 
 app.use(mongooseMorgan({

@@ -1,5 +1,5 @@
-var User = require("../../../models/User/User")
-var UserAddress = require("../../../models/User/DeliveryAddress")
+var User = require("../../models/User/User")
+var UserAddress = require("../../models/User/DeliveryAddress")
 
 exports.getUserById = (req, res) => {
     User.findOne({_id: req.params.id})

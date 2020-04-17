@@ -1,5 +1,5 @@
-var itemModel=require("../../models/items")
-var itemMetaModel=require("../../models/itemMetadata")
+var itemModel=require("../../models/Items/Items")
+var itemMetaModel=require("../../models/Items/ItemMetadata")
 var itemservices=require('../../openServices/items')
 var mongoose=require("mongoose")
 
