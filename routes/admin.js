@@ -13,6 +13,27 @@ app.post('/admin/createItem',adminController.createItem)
 app.get('admin/setDiscount',function(req,res){
     res.render('setDiscount')
 })
+
+app.get('/',function(req,res){
+    res.render('index')
+})
+
+app.get('/404',function(req,res){
+    res.render('404')
+})
+
+app.get('/items',function(req,res){
+    res.render('items')
+})
+
+app.get('/itempage',function(req,res){
+    res.render('itempage')
+})
+
+app.get('/checkout',function(req,res){
+    res.render('checkout')
+})
+
 app.post('/admin/setDiscount',adminController.setDiscount)
 app.get('/admin/items/:iid/activate',adminController.activateItem)
 app.get('/admin/items/:iid/deactivate',adminController.deactivateItem)
