@@ -1,157 +1,193 @@
-var itemMetaModel=require("../../models/Items/ItemMetadata")
-var itemmodel=require('../../models/Items/Items')
-var cartservices=require('../../openServices/cart')
-var mongoose=require("mongoose")
+var itemMetaModel = require("../../models/Items/ItemMetadata")
+var itemmodel = require('../../models/Items/Items')
+var cartmodel = require('../../models/cart/cart')
+var cartservices = require('../../openServices/cart')
+var mongoose = require("mongoose")
+var middleware = require('../../Middlewares/user/middleware')
+
 //get items from cart
-exports.getAllItems=function(req,res){
-    var cart=req.session.cart
-    var cartlisting=[]
-    cart.forEach(element => {
-        itemmodel.findOne({iid:element.itemID},function(err,founditem){
-            if(err)
-            {}
-            else{
-                var itemdata={
-                    itemID:element.iid,
-                    itemName:founditem.name,
-                    quantity:element.quantity,
-                    price:founditem.price,
-                    image:founditem.image,
-                    uid:'xyz',
-                }
-                cartlisting.push(itemdata)
-                
-            }
-        })
-    });
-    cartlisting=cartservices.verifyCart(cartlisting,'xyz')
-    console.log(req.session)
-    console.log(cartlisting)
-    res.render('test')
-    // res.render('cartpage',cartlisting)
+exports.getAllItems = function (req, res) {
     
+    var cartlisting = []
+    cartservices.getUserCartItems('xyz',function(cartitem){
+        if(cartitem.success==false)
+        {
+            req.flash('error','error in fetching cart')
+            res.render('cartpage',{cart:cartlisting})
+        }
+        else
+        {
+            cartitem.items.forEach(element => {
+                itemmodel.findOne({ iid: element.iid }, function (err, founditem) {
+                    if (err) {
+                        req.flash('error','error in fetching cart')
+                        res.render('cartpage',{cart:cartlisting})
+                     }
+                    else {
+                        var itemdata = {
+                            itemID: element.iid,
+                            itemName: founditem.name,
+                            quantity: element.quantity,
+                            price: founditem.price,
+                            image: founditem.image,
+                            uid: 'xyz',
+                        }
+                        cartlisting.push(itemdata)
+        
+                    }
+                })
+            });
+        }
+    })
+   
+    cartlisting = cartservices.verifyCart(cartlisting, 'xyz')
+    res.render('cartpage',{cart:cartlisting})
+
 }
 
 // remove double entry
 //add to cart
-exports.addItem=function(req,res){
-    if(!req.session.cart)
-    {
-        req.session.cart=[]
-    }
-    
-    // var item=req.body.itemID
-    var item='123'
-    var found=false
-    for(var i=0;i<req.session.cart.length;i++){
-        
-       if(req.session.cart[i].itemID==item)
-       {
-        found=true
-        req.session.cart[i].quantity++
-       }
-    }
-    if(!found)
-    {
-        
-    var cartitem={
-        // itemID:req.params.iid,
-        itemID:'123',
-        quantity:1,
-        uid:'xyz',
-        
-    }
-    req.session.cart.push(cartitem)
-    }
-    console.log(req.session)
-    // res.redirect('/items')
-    res.render('test')
-    
+exports.addItem = function (req, res) {
+    itemmodel.findOne({ iid: req.params.iid, active: true }, function (err, founditem) {
+        if (err) {
+            req.flash('error', 'could not find any item by that name')
+            res.redirect('/items')
+        }
+        else {
+            if (middleware.isEmpty(founditem)) {
+                req.flash('error', 'could not find any item by that name')
+                res.redirect('/items')
+            }
+            else {
+                cartservices.checkCartForItem(founditem.iid, 'xyz', function (cartItem) {
+                    if (cartItem.success == false) {
+                        req.flash('error', 'trouble in fetching cart')
+                        res.redirect('/items')
+                    }
+                    else {
+                        if (cartitem.found == true) {
+                            req.flash('success', 'You already have this item in your cart')
+                            res.redirect('/cartpage')
+                        }
+                        else {
+                            cartservices.addToCart(founditem.iid,'xyz',req.body.quantity,function(addedCart){
+                                if(addedCart.success==false)
+                                {
+                                    req.flash('error',addedCart.message)
+                                    res.redirect('/items')
+                                }
+                                else
+                                {
+                                    req.flash('success','added to cart')
+                                    res.redirect('/items')
+                                }
+                            })
+
+                        }
+
+                    }
+                })
+
+            }
+        }
+    })
+
+
 }
 
 //call logger?
 
 //update count of item
-exports.updateCart=function(req,res){
-    console.log(req.session)
-    if(!req.session.cart)
-    {
-        req.session.cart=[]
-    }
-    // var newCart=req.body.cart
-    var newCart=[
+exports.getUpdateCart=function(req,res){
+    var cartlisting = []
+    cartservices.getUserCartItems('xyz',function(cartitem){
+        if(cartitem.success==false)
         {
-            itemID:'123',quantity:7,uid:'xxyz'
-        },
-        {
-            itemID:'127',quantity:6,uid:'xyz'
-        },
-        {
-            itemID:'122',quantity:4,uid:'xyz'
-        },
-    ]
-    console.log(newCart)
-    console.log(req.session.cart.length)
-    for(var i=0;i<newCart.length;i++)
-    {
-        for(var j=0;j<req.session.cart.length;j++){
-            console.log(req.session.cart[j].itemID+"  "+newCart[i].itemID)
-            if(req.session.cart[j].itemID==newCart[i].itemID){
-                if(newCart[i].quantity<=0)
-                {
-                    req.session.cart.splice(j,1)
-                }
-                else{
-                req.session.cart[j].quantity=newCart[i].quantity
-                    console.log('changed='+req.session.cart)
-            }
-            }
+            req.flash('error','error in fetching cart')
+            res.render('cartpage',{cart:cartlisting})
         }
-    }
-    // res.redirect('/cartpage')
-    console.log(req.session)
-    res.render('test')
+        else
+        {
+            cartitem.items.forEach(element => {
+                itemmodel.findOne({ iid: element.iid }, function (err, founditem) {
+                    if (err) {
+                        req.flash('error','error in fetching cart')
+                        res.render('cartpage',{cart:cartlisting})
+                     }
+                    else {
+                        var itemdata = {
+                            itemID: element.iid,
+                            itemName: founditem.name,
+                            quantity: element.quantity,
+                            price: founditem.price,
+                            image: founditem.image,
+                            uid: 'xyz',
+                        }
+                        cartlisting.push(itemdata)
+        
+                    }
+                })
+            });
+        }
+    })
    
-    
+    cartlisting = cartservices.verifyCart(cartlisting, 'xyz')
+    res.render('updateCart',{cart:cartlisting})
+}
+
+exports.updateCart = function (req, res) {
+   var errolist=[]
+   var errorFlag=false
+    req.body.cart.forEach(element => {
+        cartservices.updateQuantity(element.iid,'xyz',element.quantity,function(updatedCart){
+            if(updatedCart.success==false){
+                errolist.push('error for element with iid'+element.iid)
+                errorFlag=true
+            }
+            
+        })
+    });
+    if(errorFlag){
+        console.log(errorlist);
+        }
+        res.redirect('/cartpage')
+
+
 }
 //clear cart
-exports.clearCart=function(req,res){
-    req.session.cart=[]
-    // res.redirect('/cartpage')
-    console.log(req.session)
-    res.render('test')
+exports.clearCart = function (req, res) {
+   cartservices.clearCart('xyz',function(updatedCart){
+    if(updatedCart.success==false)
+    {
+        req.flash('error','error in clearing cart. please try again')
+        res.redirect('/cartpage')
+    }
+    else
+    {
+        res.redirect('/cartpage')
+    }
+   })
 }
 
-exports.verify=function(req,res){
+exports.verify = function (req, res) {
     console.log(req.session.cart)
-    var newCart=[
+    var newCart = [
         {
-            itemID:'123',quantity:7,uid:'xxyz'
+            itemID: '123', quantity: 7, uid: 'xxyz'
         },
         {
-            itemID:'127',quantity:6,uid:'xyz'
+            itemID: '127', quantity: 6, uid: 'xyz'
         },
         {
-            itemID:'122',quantity:4,uid:'xyz'
+            itemID: '122', quantity: 4, uid: 'xyz'
         },
     ]
-    console.log(cartservices.verifyCart(newCart,'xyz'))
+    console.log(cartservices.verifyCart(newCart, 'xyz'))
 }
 
-exports.checkout=function(req,res){
-    if(!req.session.cart)
-    req.session.cart=[]
-    else{
-        if(req.session.cart.length==0)
-        {
-            //send back to add item page
-        }
-        else{
-            var decidedCart=cartservices.verifyCart(req.session.cart)
-            res.render('checkout',{decidedCart:decidedCart})
-        }
-    }
-    
+exports.checkout = function (req, res) {
+   
+
 }
 
 //pages needed
@@ -161,5 +197,5 @@ exports.checkout=function(req,res){
  * item page
  * item listing page
  * checkout page
- * 
+ *
  */

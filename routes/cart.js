@@ -19,13 +19,10 @@ app.get('/additem/:iid',function(req,res){
     res.render('test')
 })
 app.get('/cartpage',cartController.getAllItems)
-app.get('/updateCart',cartController.updateCart)
+app.get('/updateCart',cartController.getUpdateCart)
+app.post('/updateCart',cartController.updateCart)
 app.get('/clearcart',cartController.clearCart)
-app.get('/add',cartController.addItem)
-app.get('/verify',cartController.verify)
-app.get('/show',function(req,res){
-    console.log(req.session)
-    console.log(req.sessionID);
-    res.render('test')
-})
+app.get('/add/:iid',cartController.addItem)
+// app.get('/verify',cartController.verify)
+
 module.exports=app

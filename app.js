@@ -41,7 +41,7 @@ app.set("views",path.join(__dirname, 'views'));
 console.log(path.join(__dirname, 'views'));
 
 
-mongoose.connect('mongodb://localhost:27017/foxmula', { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/spiceWebsite', { useUnifiedTopology: true, useNewUrlParser: true });
 
 app.use(mongooseMorgan({
     collection: 'Log',
