@@ -19,4 +19,4 @@ var itemsMetaSchema  = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model("items_metadata", itemsMetaSchema);
+module.exports = mongoose.model("items_metadata", itemsMetaSchema,"itemsMeta");

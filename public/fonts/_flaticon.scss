@@ -1,0 +1,116 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 30/10/2019 08:21
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff2") format("woff2"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-right-arrow:before { content: "\f100"; }
+.flaticon-left-arrow:before { content: "\f101"; }
+.flaticon-shopping-cart:before { content: "\f102"; }
+.flaticon-phone-call:before { content: "\f103"; }
+.flaticon-arrow-pointing-to-right:before { content: "\f104"; }
+.flaticon-right-arrow-forward:before { content: "\f105"; }
+.flaticon-avatar:before { content: "\f106"; }
+.flaticon-timetable:before { content: "\f107"; }
+.flaticon-clock-circular-outline:before { content: "\f108"; }
+.flaticon-clock:before { content: "\f109"; }
+.flaticon-meeting:before { content: "\f10a"; }
+.flaticon-meeting-1:before { content: "\f10b"; }
+.flaticon-group-meeting:before { content: "\f10c"; }
+.flaticon-teamwork:before { content: "\f10d"; }
+.flaticon-play-button:before { content: "\f10e"; }
+.flaticon-cloche:before { content: "\f10f"; }
+.flaticon-atmospheric:before { content: "\f110"; }
+.flaticon-money-bag:before { content: "\f111"; }
+.flaticon-like:before { content: "\f112"; }
+.flaticon-heart:before { content: "\f113"; }
+.flaticon-comment:before { content: "\f114"; }
+.flaticon-quotation:before { content: "\f115"; }
+.flaticon-quotation-1:before { content: "\f116"; }
+.flaticon-menu-button:before { content: "\f117"; }
+.flaticon-menu:before { content: "\f118"; }
+.flaticon-right:before { content: "\f119"; }
+.flaticon-right-1:before { content: "\f11a"; }
+.flaticon-contract:before { content: "\f11b"; }
+.flaticon-facebook:before { content: "\f11c"; }
+.flaticon-instagram:before { content: "\f11d"; }
+.flaticon-linkedin:before { content: "\f11e"; }
+.flaticon-twitter:before { content: "\f11f"; }
+.flaticon-youtube:before { content: "\f120"; }
+.flaticon-view:before { content: "\f121"; }
+.flaticon-arrows:before { content: "\f122"; }
+.flaticon-arrow-pointing-to-right-1:before { content: "\f123"; }
+.flaticon-right-arrow-1:before { content: "\f124"; }
+.flaticon-next:before { content: "\f125"; }
+    
+    $font-Flaticon-right-arrow: "\f100";
+    $font-Flaticon-left-arrow: "\f101";
+    $font-Flaticon-shopping-cart: "\f102";
+    $font-Flaticon-phone-call: "\f103";
+    $font-Flaticon-arrow-pointing-to-right: "\f104";
+    $font-Flaticon-right-arrow-forward: "\f105";
+    $font-Flaticon-avatar: "\f106";
+    $font-Flaticon-timetable: "\f107";
+    $font-Flaticon-clock-circular-outline: "\f108";
+    $font-Flaticon-clock: "\f109";
+    $font-Flaticon-meeting: "\f10a";
+    $font-Flaticon-meeting-1: "\f10b";
+    $font-Flaticon-group-meeting: "\f10c";
+    $font-Flaticon-teamwork: "\f10d";
+    $font-Flaticon-play-button: "\f10e";
+    $font-Flaticon-cloche: "\f10f";
+    $font-Flaticon-atmospheric: "\f110";
+    $font-Flaticon-money-bag: "\f111";
+    $font-Flaticon-like: "\f112";
+    $font-Flaticon-heart: "\f113";
+    $font-Flaticon-comment: "\f114";
+    $font-Flaticon-quotation: "\f115";
+    $font-Flaticon-quotation-1: "\f116";
+    $font-Flaticon-menu-button: "\f117";
+    $font-Flaticon-menu: "\f118";
+    $font-Flaticon-right: "\f119";
+    $font-Flaticon-right-1: "\f11a";
+    $font-Flaticon-contract: "\f11b";
+    $font-Flaticon-facebook: "\f11c";
+    $font-Flaticon-instagram: "\f11d";
+    $font-Flaticon-linkedin: "\f11e";
+    $font-Flaticon-twitter: "\f11f";
+    $font-Flaticon-youtube: "\f120";
+    $font-Flaticon-view: "\f121";
+    $font-Flaticon-arrows: "\f122";
+    $font-Flaticon-arrow-pointing-to-right-1: "\f123";
+    $font-Flaticon-right-arrow-1: "\f124";
+    $font-Flaticon-next: "\f125";

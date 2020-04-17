@@ -1,4 +1,5 @@
 var express = require('express');
+var cartController= require('../controllers/cart/cartController')
 var app = express();
 
 app.get('/additem/:iid',function(req,res){
@@ -15,6 +16,16 @@ app.get('/additem/:iid',function(req,res){
     }
     req.session.cart.push(cartitem)
     console.log(req.session)
+    res.render('test')
+})
+app.get('/cartpage',cartController.getAllItems)
+app.get('/updateCart',cartController.updateCart)
+app.get('/clearcart',cartController.clearCart)
+app.get('/add',cartController.addItem)
+app.get('/verify',cartController.verify)
+app.get('/show',function(req,res){
+    console.log(req.session)
+    console.log(req.sessionID);
     res.render('test')
 })
 module.exports=app
