@@ -7,14 +7,14 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 exports.register = (req, res) => {
-    const { name, email, phone, password, password2 } = req.body;
+    const { name, email, phone, password, confirmPassword } = req.body;
     let errors = [];
     
-    if (!name || !email || !password || !password2) {
+    if (!name || !email || !password || !confirmPassword) {
       errors.push({ msg: 'Please enter all fields' });
     }
   
-    if (password != password2) {
+    if (password != confirmPassword) {
       errors.push({ msg: 'Passwords do not match' });
     }
   
@@ -28,7 +28,7 @@ exports.register = (req, res) => {
         name,
         email,
         password,
-        password2
+        confirmPassword
       });
     } else {
       User.findOne({ email: email }).then(user => {
@@ -39,7 +39,7 @@ exports.register = (req, res) => {
             name,
             email,
             password,
-            password2
+            confirmPassword
           });
         } else {
           const newUser = new User({

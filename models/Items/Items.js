@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const shortid = require("shortid");
+var mongooseHistory = require('mongoose-history')
 
 var itemsSchema  = new mongoose.Schema({
     iid:{
@@ -51,5 +52,7 @@ var itemsSchema  = new mongoose.Schema({
     },
 
 });
+
+itemsSchema.plugin(mongooseHistory)
 
 module.exports = mongoose.model("item", itemsSchema);

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+var mongooseHistory = require('mongoose-history')
 
 var deliveryAddressSchema  = new mongoose.Schema({
     locality:{
@@ -32,5 +33,7 @@ var deliveryAddressSchema  = new mongoose.Schema({
         required: true
     }
 });
+
+deliveryAddressSchema.plugin(mongooseHistory)
 
 module.exports = mongoose.model("delivery_address", deliveryAddressSchema);
