@@ -25,6 +25,7 @@ app.get('/add',cartController.addItem)
 app.get('/verify',cartController.verify)
 app.get('/show',function(req,res){
     console.log(req.session)
+    console.log(req.sessionID);
     res.render('test')
 })
 module.exports=app

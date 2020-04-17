@@ -71,7 +71,8 @@ app.use(session({
     saveUninitialized: true,
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7 * 3 // two weeks
+        maxAge: 1000 * 60 * 60 * 24 * 7 * 3 ,// two weeks
+        secure:true
     }
 }));
 app.use(cors());
@@ -206,6 +207,7 @@ passport.deserializeUser(function(obj, cb) {
 app.get('/testingpage',function(req,res){
     res.render('test')
 })
+
 
 app.get("/static/*.js", function(req, res, next) {
   req.url = req.url + ".gz";
