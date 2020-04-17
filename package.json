@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
@@ -13,6 +15,7 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.0.2",
     "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.0",
     "fs": "0.0.1-security",
     "moment": "^2.24.0",
@@ -33,12 +36,11 @@
   "scripts": {
     "serve": "node ./bin/www",
     "https": "node ./bin/ww2",
-    "httpsn": "nodemon ./bin/ww2",
-    "server": "nodemon ./bin/www"
+    "server": "nodemon app.js"
   },
   "devDependencies": {
     "https": "^1.0.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.3"
   },
   "browserslist": [
     ">0.2%",

@@ -4,8 +4,8 @@ var mongoose = require("mongoose");
 // actionType 0 = get, 1 = post, 2 = put, 3 = delete
 
 var logSchema  = new mongoose.Schema({
-        responseId: {
-            type: String
+        responseTime: {
+            type: Number
         },
         httpMethod: {
             type: String

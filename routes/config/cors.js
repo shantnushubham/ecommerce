@@ -1,6 +1,6 @@
 // Whitelist
 
- var whitelist = ['https://'];
+ var whitelist = ['https://localhost:3000'];
 
 if (process.env.REACT_APP_SERVER_ENVIORNMENT === 'dev') {
   whitelist = ['http://localhost:'+process.env.PORT, 'https://localhost:'+process.env.PORT, 'http://localhost:'+process.env.REACT_APP_SERVER_PORT, 'https://localhost:'+process.env.REACT_APP_SERVER_PORT, 'http://localhost:80'];

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 exports.verifyUser = (req, res, next) => {
     console.log('user verified');
@@ -20,3 +21,19 @@ exports.isEmpty = function(obj) {
 
     return true;
 }
+module.exports = {
+  ensureAuthenticated: function(req, res, next) {
+    if (req.isAuthenticated()) {
+      console.log('auth')
+      return next();
+    }
+    req.flash('error_msg', 'Please log in to view that resource');
+    res.redirect('/users/login');
+  },
+  forwardAuthenticated: function(req, res, next) {
+    if (!req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect('/dashboard');      
+  }
+};

@@ -1,26 +1,24 @@
 var express = require('express')
 var router = express.Router()
-var cors = require('cors')
 
-// Controllers
-var userControl = require('../../controllers/user/userController')
+const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares/user/middleware');
 
-// Middlewares
-var UserMiddleware = require('../../Middlewares/user/middleware')
-// CORS Config
-var corsOptions = require('../config/cors')
+var UserControl = require('../../controllers/api/user/userController')
 
-// Routes
-router.use('/', cors(corsOptions))
+router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
+router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
 
-// -> /api/user
-router.get('/getUserById', UserMiddleware.verifyUser, userControl.getUserById)
-router.post('/addUserAddress', UserMiddleware.verifyUser, userControl.addUserAddress)
-router.put('/updateUserData', UserMiddleware.verifyUser, userControl.updateUserData)
-router.put('/makeDefaultAddress', UserMiddleware.verifyUser, userControl.makeAdressToDefaultAddress)
-router.put('/updateAddress', UserMiddleware.verifyUser, userControl.updateUserAddress)
-router.delete('/deleteUser', UserMiddleware.verifyUser, userControl.deleteUserById)
-router.delete('/deleteAddress', UserMiddleware.verifyUser, userControl.deleteAddress)
+router.post('/register', UserControl.register);
+router.post('/login', UserControl.login);
+router.get('/logout', UserControl.logout);
+
+router.get('/getUserById', ensureAuthenticated, UserControl.getUserById)
+router.post('/addUserAddress', ensureAuthenticated, UserControl.addUserAddress)
+router.put('/updateUserData', ensureAuthenticated, UserControl.updateUserData)
+router.put('/makeDefaultAddress', ensureAuthenticated, UserControl.makeAdressToDefaultAddress)
+router.put('/updateAddress', ensureAuthenticated, UserControl.updateUserAddress)
+router.delete('/deleteUser', ensureAuthenticated, UserControl.deleteUserById)
+router.delete('/deleteAddress', ensureAuthenticated, UserControl.deleteAddress)
 
 
 
