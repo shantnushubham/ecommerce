@@ -12,7 +12,7 @@ var MongoStore  = require('connect-mongo')(session)
 require('./config/passport')(passport);
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/foxmula', { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/newSpice', { useFindAndModify: false ,useUnifiedTopology: true, useNewUrlParser: true });
 
 // EJS
 app.use(expressLayouts);
@@ -30,6 +30,13 @@ app.use(session({
       maxAge: 1000 * 60 * 60 * 24 * 7 * 3 // two weeks
   }
 }));
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // Passport middleware
 app.use(passport.initialize());
