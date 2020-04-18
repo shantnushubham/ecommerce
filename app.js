@@ -1,45 +1,41 @@
 const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
+// const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
-
+const bodyParser=require('body-parser')
+const path=require('path')
+const mongooseMorgan=require('mongoose-morgan')
+const compression= require('compression')
 const app = express();
 var MongoStore  = require('connect-mongo')(session)
-<<<<<<< HEAD
+
 require('dotenv').config()
 
 var routes = require('./routes/routes')
 var cartRoutes=require('./routes/cart')
 var adminroutes=require('./routes/admin')
+var itemRoutes=require('./routes/items')
 var User = require('./models/User/User');
 // Passport Config
 require('./config/passport')(passport);
 // const OAuthCredentials = require('./config/auth');
 
-var app = express();
 
-// mongoose setup
-mongoose.Promise = require('bluebird');
-var dbHost = process.env.DB_HOST || 'localhost';
-var dbName = process.env.DB_NAME;
-var dbUser = process.env.DB_USERNAME;
-var dbPass = process.env.DB_PASSWORD;
-var dbPort = process.env.DB_PORT || "27017";
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.set("views",path.join(__dirname, 'views'));
-console.log(path.join(__dirname, 'views'));
+
 
 
 mongoose.connect('mongodb://localhost:27017/newSpice', { useUnifiedTopology: true, useNewUrlParser: true });
 
 app.use(mongooseMorgan({
     collection: 'Log',
-    connectionString: 'mongodb://localhost:27017/foxmula',
+    connectionString: 'mongodb://localhost:27017/newSpice',
   },
   {
     skip: function (req, res) {
@@ -49,12 +45,9 @@ app.use(mongooseMorgan({
   'dev'
 ));
 
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-// if (process.env.REACT_APP_SERVER_ENVIORNMENT !== 'dev') {
-//   app.use(favicon(path.join(__dirname, 'build/favicon.ico')));
-// }
+// app.use(logger('dev'));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(compression());
 app.use(express.urlencoded({ extended: true }));
@@ -93,7 +86,9 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', require('./routes/routes'));
-app.use(require('./routes/cart'))
+app.use(cartRoutes)
+app.use(adminroutes)
+app.use(itemRoutes)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

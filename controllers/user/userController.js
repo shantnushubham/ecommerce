@@ -1,5 +1,5 @@
-var User = require("../../../models/User/User")
-var UserAddress = require("../../../models/User/DeliveryAddress")
+var User = require("../../models/User/User")
+var UserAddress = require("../../models/User/DeliveryAddress")
 // var Generator = require("../../common/Generator")
 // var mailer = require("../../common/Mailer")
 
