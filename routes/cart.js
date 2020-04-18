@@ -22,7 +22,7 @@ app.get('/cartpage',cartController.getAllItems)
 app.get('/updateCart',cartController.getUpdateCart)
 app.post('/updateCart',cartController.updateCart)
 app.get('/clearcart',cartController.clearCart)
-app.get('/add/:iid',cartController.addItem)
+app.post('/add/:iid',cartController.addItem)
 // app.get('/verify',cartController.verify)
 
 module.exports=app

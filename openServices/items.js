@@ -1,5 +1,5 @@
 var itemMetaModel=require("../models/Items/ItemMetadata")
-var itemmodel=require('../models/Items/Items')
+var itemModel=require('../models/Items/Items')
 var mongoose=require("mongoose")
 class items{
     constructor()
@@ -10,20 +10,22 @@ class items{
         itemModel.find({},function(err,foundItems,next){
             if(err)
             {console.log(err)
-             callback({err:err})
+             callback({success:false,err:err})
             }
             else
-            callback({foundItems,err:null});
+            callback({success:true,foundItems,err:null});
         })
     }
 
     getItemById(iid,callback){
         itemModel.findOne({iid:iid},function(err,foundItem){
-            if(err)res.send({err:err})
+            if(err)callback({success:false,err:err})
             itemMetaModel.findOne({iid:foundItem.iid},function(err,foundMeta){
-                if(err)res.send({err:err})
-                var totalDetails={...foundItem,...foundMeta}
-                res.send({totalDetails,err:null})
+                if(err)callback({success:false,err:err})
+                console.log(foundItem);
+                console.log(foundMeta);
+                var totalDetails={...foundItem._doc,...foundMeta._doc}
+                callback({success:true,totalDetails,err:null})
                 
                 
             })
@@ -34,10 +36,10 @@ class items{
         itemModel.find({category:category},function(err,foundItem){
             if(err)
             {console.log(err)
-             res.send({err:err})
+            callback({success:false,err:err})
             }
             else
-            res.send({foundItems,err:null});
+            callback({success:true,foundItems,err:null});
         });
     }
 
@@ -45,10 +47,10 @@ class items{
         itemModel.find({active:status},function(err,foundItem){
             if(err)
             {console.log(err)
-             res.send({err:err})
+             callback({success:false,err:err})
             }
             else
-            res.send({foundItems,err:null});
+            callback({success:true,foundItems,err:null});
         });
     }
 
@@ -56,10 +58,10 @@ class items{
         itemModel.create(data,function(err,newItem){
             if(err){
                 console.log(err)
-                res.send({err:"trouble creating item"})
+                callback({success:false,err:"trouble creating item"})
             }
             else
-            res.send({item:newItem,err:null})
+            callback({success:true,item:newItem,err:null})
         })
     }
 
@@ -69,11 +71,11 @@ class items{
         if(err)
         {
             console.log(err)
-            res.send({err:"trouble creating new item"})
+            callback({success:false,err:"trouble creating new item"})
         }
         else
         {
-            res.send({err:null,item:newItem})
+            callback({success:true,err:null,item:newItem})
         }
     });
     }
@@ -83,11 +85,11 @@ class items{
             if(err)
             {
                 console.log(err)
-                res.send({err:"trouble creating new item"})
+                callback({success:false,err:"trouble creating new item"})
             }
             else
             {
-                res.send({err:null,item:newItem})
+                callback({success:true,err:null,item:newItem})
             }
         });
     }
@@ -97,11 +99,11 @@ class items{
             if(err)
             {
                 console.log(err)
-                res.send({err:"trouble creating new item"})
+                callback({success:false,err:"trouble creating new item"})
             }
             else
             {
-                res.send({err:null,item:newItem})
+                callback({success:true,err:null,item:newItem})
             }
         });
     }

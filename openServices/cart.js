@@ -24,7 +24,7 @@ class cart {
 
     verifyCart(cart, uid) {
         var i = 0
-        for (i = 0; i < cart.length(); i++) {
+        for (i = 0; i < cart.length; i++) {
             var element = cart[i];
             if (element.uid != uid)
                 cart.splice(i, 1)
@@ -52,23 +52,28 @@ class cart {
     }
 
     updateQuantity(iid, uid, quantity, callback) {
+        console.log(quantity);
         cartmodel.findOne({ iid: iid, uid: uid }, function (err, foundItem) {
             if (err) {
+                console.log(err);
                 callback({ success: false, found: false })
 
             }
             else {
                 if (functions.isEmpty(foundItem)) {
+                    console.log('not in cart');
                     callback({ success: false, found: false,message:'item with iid'+iid+' does not exist in cart' })
                 }
                 else {
-                    itemmodel.findOne({ iid: req.params.iid, active: true }, function (err, founditem) {
+                    itemmodel.findOne({ iid: iid, active: true }, function (err, founditem) {
                         if (err) {
+                            console.log(err);
                             callback({ success: false, message: 'could not find any item by that name' })
             
                         }
                         else {
-                            if (middleware.isEmpty(founditem)) {
+                            if (functions.isEmpty(founditem)) {
+                                console.log('unavailable item');
                                 callback({ success: false, message: 'could not find any item by that name' })
             
                             }
@@ -76,24 +81,29 @@ class cart {
                                 
                                 if(quantity==0)
                                 {
+
                                     cartmodel.deleteOne({iid:founditem.iid,uid:uid},function(err,deleted){
                                         if (err) {
+                                            console.log(err);
                                             callback({ success: false, message: 'error in adding to cart' })
                 
                                         }
                                         else {
+                                            console.log('success deleting');
                                             callback({ success: true, item: deleted })
                                         }
                                     })
                                 }
                                 else
                                 {
-                                cartmodel.findOneAndUpdate({iid:founditem.iid},{'$set':{quantity:quantity}}, function (err, addedItem) {
+                                cartmodel.findOneAndUpdate({iid:founditem.iid,uid:uid},{'$set':{quantity:quantity}}, function (err, addedItem) {
                                     if (err) {
+                                        console.log(err);
                                         callback({ success: false, message: 'error in adding to cart' })
             
                                     }
                                     else {
+                                        console.log('success');
                                         callback({ success: true, item: addedItem })
                                     }
                                 })
@@ -111,13 +121,13 @@ class cart {
     }
 
     addToCart(iid, uid, quantity,callback) {
-        itemmodel.findOne({ iid: req.params.iid, active: true }, function (err, founditem) {
+        itemmodel.findOne({ iid: iid, active: true }, function (err, founditem) {
             if (err) {
                 callback({ success: false, message: 'could not find any item by that name' })
 
             }
             else {
-                if (middleware.isEmpty(founditem)) {
+                if (functions.isEmpty(founditem)) {
                     callback({ success: false, message: 'could not find any item by that name' })
 
                 }
@@ -133,6 +143,7 @@ class cart {
                     }
                     cartmodel.create(cartelement, function (err, addedItem) {
                         if (err) {
+                            console.log(err);
                             callback({ success: false, message: 'error in adding to cart' })
 
                         }

@@ -17,6 +17,10 @@ var cartSchema  = new mongoose.Schema({
     image:{
         type:String
     },
+    quantity:{
+        type:Number,
+        required:true
+    },
     dateCreated: {
         type: Date,
         required: true,
@@ -25,4 +29,4 @@ var cartSchema  = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model("carts", cartSchema,"items");
+module.exports = mongoose.model("carts", cartSchema,"cart");

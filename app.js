@@ -85,7 +85,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/', require('./routes/routes'));
+// app.use('/', require('./routes/routes'));
 app.use(cartRoutes)
 app.use(adminroutes)
 app.use(itemRoutes)
