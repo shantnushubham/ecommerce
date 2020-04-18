@@ -1,15 +1,4 @@
-<<<<<<< HEAD
 
-
-exports.verifyUser = (req, res, next) => {
-    console.log('user verified');
-    return next();
-}
-
-
-=======
-
->>>>>>> db69da877f7ce58fcd05f49a2de3a4e86555c619
 module.exports = {
   ensureAuthenticated: function(req, res, next) {
     if (req.isAuthenticated()) {
