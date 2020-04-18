@@ -11,6 +11,7 @@ const compression= require('compression')
 const app = express();
 var MongoStore  = require('connect-mongo')(session)
 
+
 require('dotenv').config()
 
 var routes = require('./routes/routes')
@@ -19,7 +20,7 @@ var adminroutes=require('./routes/admin')
 var itemRoutes=require('./routes/items')
 var User = require('./models/User/User');
 // Passport Config
-require('./config/passport')(passport);
+// require('./config/passport')(passport);
 // const OAuthCredentials = require('./config/auth');
 
 
@@ -50,9 +51,9 @@ app.use(mongooseMorgan({
 // app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(compression());
-app.use(express.urlencoded({ extended: true }));
-// app.use(require("cookie-parser")());
-app.use(flash());
+
+
+
 app.use(session({
   secret: 'my-secret',
   resave: false,
@@ -89,6 +90,33 @@ app.use(function(req, res, next) {
 app.use(cartRoutes)
 app.use(adminroutes)
 app.use(itemRoutes)
+app.get('/auth/google', passport.authenticate('google',{
+  scope:[
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email'
+  ]
+}));
+
+app.get('/auth/google/callback', 
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    function(req, res) {
+        res.redirect('/');
+    }
+);
+
+app.get('/auth/facebook',
+  passport.authenticate('facebook', {
+      scope: 'email'
+  }));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { successRedirect: '/',
+                                      failureRedirect: '/login' })
+);
+
+
+app.use('/', require('./routes/routes'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -5,6 +5,7 @@ var UserAddress = require("../../models/User/DeliveryAddress")
 
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 exports.register = (req, res) => {
     const { name, email, password, password2 } = req.body;
@@ -90,17 +91,17 @@ exports.getUserById = (req, res) => {
         // .populate('defaultDeliveryAddress deliveryAddress', 'locality landmark state district pincode contact')
         // .populate('orders', 'itemId quantity')
         .exec((err, user) => {
-            if(err) res.status(400).send({err: err})
-            else if(!user) res.send({success:false, message: 'User not found'})
-            res.send({success: true, body: user})
+            if(err) return res.status(400).send({err: err})
+            else if(!user) return res.send({success:false, message: 'User not found'})
+            return res.send({success: true, body: user})
         })
     }
 }
 
 exports.deleteUserById = (req, res) => {
     User.findOneAndRemove({_id: req.user._id}, err => {
-        if(err) res.status(400).send({error:err})
-        res.send({success: true, message: 'Account Deleted'})
+        if(err) return res.status(400).send({error:err})
+        return res.send({success: true, message: 'Account Deleted'})
     })
 }
 
@@ -108,71 +109,123 @@ exports.updateUserData = (req, res) => {
     if(req && req.user && req.body){
         const updatedData = req.body
         User.findOneAndUpdate({_id: req.user._id}, updatedData, {new: true} )
-            .then( data => res.send({success: true, message: 'Data Updated', body: data})
-        )
+            .then( (err, data) => {
+                if(err) return res.status(400).send({ success: false, errors: "unable to update User address"})
+                return res.send({success: true, message: 'Data Updated', body: data})
+            })
     }
-    else res.send({success: false, message: "data insufficient"})
+    else return res.send({success: false, message: "data insufficient"})
 }
+
+// exports.addUserAddress = (req, res) => {
+//     if(req && req.user && req.body){
+//       var address = new UserAddress(req.body)
+//       address.save((err, result) => {
+//           if(err) res.status(400).send({error:err})
+//           else if(!result) res.json({success: false, message: 'Unable to save'});
+
+//           User.findOneAndUpdate({ _id: req.user._id}, { $addToSet: { deliveryAddress: result._id }, defaultDeliveryAddress: result._id }, {new: true})
+//           .select('name email phone username')
+//           .populate('defaultDeliveryAddress deliveryAddress', 'locality landmark state district pincode contact')
+//               .then((err, data) => {
+//                 if(err) return res.status(400).send({ success: false, errors: "unable to add User address"})
+//                 return res.send({success: true, message: 'Address Added', body: data})
+//               })
+//       })
+//     }
+//     else return res.send({success: false, message: "data insufficient"})
+// }
 
 exports.addUserAddress = (req, res) => {
-    if(req && req.user && req.body){
-      var address = new UserAddress(req.body)
-      address.save((err, result) => {
-          if(err) res.status(400).send({error:err})
-          else if(!result) res.json({success: false, message: 'Unable to save'});
+  if(req && req.user && req.body){
+    var address = new UserAddress(req.body)
+    address.save((err, result) => {
+        if(err) return res.status(400).send({error:err})
+        else if(!result) return res.json({success: false, message: 'Unable to save'});
 
-          User.findOneAndUpdate({ _id: req.user._id}, { $addToSet: { deliveryAddress: result._id }, defaultDeliveryAddress: result._id }, {new: true})
-          .select('name email phone username')
-          .populate('defaultDeliveryAddress deliveryAddress', 'locality landmark state district pincode contact')
-              .then(data => res.send({success: true, message: 'Address Added', body: data})
-              )
-      })
-    }
-    else res.send({success: false, message: "data insufficient"})
+        User.findOneAndUpdate({ _id: req.user._id}, { $addToSet: { deliveryAddress: {_id: result._id} }, defaultDeliveryAddress: result._id }, {new: true})
+        .select('name email phone username')
+        .populate('defaultDeliveryAddress deliveryAddress', 'locality landmark state district pincode contact')
+            .then(data => res.send({success: true, message: 'Address Added', body: data})
+            )
+    })
+  }
+  else res.send({success: false, message: "data insufficient"})
 }
 
+
 exports.updateUserAddress = (req, res) => {
-  console.log(req.body)
-  console.log(req.query)
   if(req && req.query && req.body){
     const updatedData = req.body;
     UserAddress.findByIdAndUpdate({_id: req.query.id}, updatedData, {new: true} )
       .select('locality email landmark state district pincode contact country')
-        .then( data => res.send({success: true, message: 'Address Updated', body: data})
+        .then( (err, data) => {
+          if(err) return res.status(400).send({ success: false, errors: "unable to update User address"})
+          return res.send({success: true, message: 'Address Updated', body: data})
+        }
     )
   }
-    else res.send({success: false, message: "data insufficient"})
+    else return res.send({success: false, message: "data insufficient"})
 }
 
 exports.deleteAddress = (req, res) => {
-    const addressId = req.body.addressId;
-    UserAddress.findOneAndRemove({_id: addressId}, err => {
-        if(err) res.status(400).send({error:err})
-        User.findOne({ _id: user.defaultDeliveryAddress })
-            .select('defaultDeliveryAddress')
-            .exec( (err, results) => {
-                if (err) return res.state(400).send({ success: false, message: 'unable to remove participant' });
+  console.log(req.user)
+  console.log(req.body)
+  if(req && req.body && req.body.addressId){
+    const addressId = new Object(req.body.addressId);
+    if(addressId === req.user.defaultDeliveryAddress){
+        return res.json({ success: false, message: "Default Address Can't be deleted. You can update it or set other addressas default address and delete it" });
+    }
+    else {
+      UserAddress.findOneAndRemove({_id: addressId}, err => {
+          if (err) {
+            console.log(err)
+            return res.status(400).send({ success: false, message: 'wrong address id' });
+          }
+          User.findOneAndUpdate({ _id: req.user.id}, { $pull: { deliveryAddress: addressId }})
+            .then((err, data) => {
+              if (err) {
+                console.log(err)
+                return res.status(400).send({ success: false, message: 'unable to address id', error: err });
+              }
+              return res.json({ success: true, body: data, message: 'address removed from user' });
+        });
+      })
+    }
+    // UserAddress.findOneAndRemove({_id: addressId}, err => {
+    //     if(err) res.status(400).send({error:err})
+    //     User.findOne({ _id: req.user._id })
+    //         .select('defaultDeliveryAddress')
+    //         .exec( (err, results) => {
+    //           console.log('hell')
+    //             if (err) return res.state(400).send({ success: false, message: 'unable to remove participant' });
 
-                if (results && results._id === req.user._id) return res.json({ success: false, message: "Default Address Can't be deleted. You can update it." });
+    //             if (results && results._id === req.user._id) return res.json({ success: false, message: "Default Address Can't be deleted. You can update it." });
 
-                else {
+    //             else {
+    //               console.log('hell', results)
 
-                    User.findOneAndUpdate({ email: results.email}, { $pull: { deliveryAddress: addressId } }, (err) => {
-                        if (err) return res.state(400).send({ success: false, message: 'unable to remove participant' });
-                        res.json({ success: true, message: 'event removes from participant' });
-                    });
-                }
-            })
-    })
+    //                 User.findOneAndUpdate({ email: results.email}, { $pull: { deliveryAddress: addressId } }, (err) => {
+    //                     if (err) return res.state(400).send({ success: false, message: 'unable to remove participant' });
+    //                     res.json({ success: true, message: 'event removes from participant' });
+    //                 });
+    //             }
+    //         })
+    // })
+  }
+    else { return res.send({success: false, message: "data insufficient"}) }
 }
 
 exports.makeAdressToDefaultAddress = (req, res) => {
-    const addressId = req.body.addressId;
-
-    User.findByIdAndUpdate({_id: req.user.id}, { defaultDeliveryAddress: addressId }, {new: true} )
-        .then((err, data) => {
-        if(err) res.status(400).send({error:err})
-        res.send({success: true, message: 'Updated default address.', body: data})
-    })
+    if(req && req.body && req.body.addressId){
+      const addressId = req.body.addressId;
+      User.findByIdAndUpdate({_id: req.user.id}, { defaultDeliveryAddress: addressId }, {new: true} )
+        .select('name email phone username')
+          .populate('defaultDeliveryAddress', 'locality landmark state district pincode contact')
+          .then(data => 
+            res.send({success: true, message: 'Updated default address.', body: data})
+          )
+    }
+    else return res.send({success: false, message: "data insufficient"})
 }
 
