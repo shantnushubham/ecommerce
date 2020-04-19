@@ -1,25 +1,58 @@
 const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
+// const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
-
+const bodyParser=require('body-parser')
+const path=require('path')
+const mongooseMorgan=require('mongoose-morgan')
+const compression= require('compression')
 const app = express();
 var MongoStore  = require('connect-mongo')(session)
 
+
+require('dotenv').config()
+
+var routes = require('./routes/routes')
+var cartRoutes=require('./routes/cart')
+var adminroutes=require('./routes/admin')
+var itemRoutes=require('./routes/items')
+var User = require('./models/User/User');
 // Passport Config
-require('./config/passport')(passport);
+// require('./config/passport')(passport);
+// const OAuthCredentials = require('./config/auth');
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/newSpice', { useFindAndModify: false ,useUnifiedTopology: true, useNewUrlParser: true });
 
-// EJS
-app.use(expressLayouts);
-app.set('view engine', 'ejs');
 
-// Express body parser
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
+app.set("views",path.join(__dirname, 'views'));
+
+
+
+mongoose.connect('mongodb://localhost:27017/newSpice', { useUnifiedTopology: true, useNewUrlParser: true });
+
+app.use(mongooseMorgan({
+    collection: 'Log',
+    connectionString: 'mongodb://localhost:27017/newSpice',
+  },
+  {
+    skip: function (req, res) {
+        return res.statusCode < 400;
+    }
+  },
+  'dev'
+));
+
+// app.use(logger('dev'));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(compression());
+
+
 
 app.use(session({
   secret: 'my-secret',
@@ -53,6 +86,10 @@ app.use(function(req, res, next) {
   next();
 });
 
+// app.use('/', require('./routes/routes'));
+app.use(cartRoutes)
+app.use(adminroutes)
+app.use(itemRoutes)
 app.get('/auth/google', passport.authenticate('google',{
   scope:[
       'https://www.googleapis.com/auth/userinfo.profile',
@@ -79,7 +116,7 @@ app.get('/auth/facebook/callback',
 
 
 app.use('/', require('./routes/routes'));
-app.use(require('./routes/cart'))
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

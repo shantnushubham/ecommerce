@@ -1,110 +1,114 @@
-var itemMetaModel=require("../models/Items/ItemMetadata")
-var itemmodel=require('../models/Items/Items')
-var mongoose=require("mongoose")
-class items{
-    constructor()
-    {
+var itemMetaModel = require("../models/Items/ItemMetadata")
+var itemModel = require('../models/Items/Items')
+var mongoose = require("mongoose")
+class items {
+    constructor() {
 
     }
-    getAllItems(callback){
-        itemModel.find({},function(err,foundItems,next){
-            if(err)
-            {console.log(err)
-             callback({err:err})
+    getAllItems(callback) {
+        itemModel.find({}, function (err, foundItems, next) {
+            if (err) {
+                console.log(err)
+                callback({ success: false, err: err })
             }
             else
-            callback({foundItems,err:null});
+                callback({ success: true, foundItems, err: null });
         })
     }
 
-    getItemById(iid,callback){
-        itemModel.findOne({iid:iid},function(err,foundItem){
-            if(err)res.send({err:err})
-            itemMetaModel.findOne({iid:foundItem.iid},function(err,foundMeta){
-                if(err)res.send({err:err})
-                var totalDetails={...foundItem,...foundMeta}
-                res.send({totalDetails,err:null})
-                
-                
+    getItemById(iid, callback) {
+        itemModel.findOne({ iid: iid }, function (err, foundItem) {
+            if (err) callback({ success: false, err: err })
+            itemMetaModel.findOne({ iid: foundItem.iid }, function (err, foundMeta) {
+                if (err) callback({ success: false, err: err })
+                // console.log(foundItem);
+                // console.log(foundMeta);
+                var totalDetails = {
+                    active: foundItem.active,
+                    iid: foundItem.iid,
+                    name: foundItem.name,
+                    price: foundItem.price,
+                    image: foundItem.image,
+                    discount: foundItem.discount,
+                    content: foundMeta.content,
+                    weight: foundMeta.weight,
+                    color: foundMeta.color
+                }
+                console.log(totalDetails);
+                callback({ success: true, totalDetails, err: null })
             })
         })
     }
 
-    getItemByCategory(category,callback){
-        itemModel.find({category:category},function(err,foundItem){
-            if(err)
-            {console.log(err)
-             res.send({err:err})
-            }
-            else
-            res.send({foundItems,err:null});
-        });
-    }
-
-    getItemByStatus(status,callback){
-        itemModel.find({active:status},function(err,foundItem){
-            if(err)
-            {console.log(err)
-             res.send({err:err})
-            }
-            else
-            res.send({foundItems,err:null});
-        });
-    }
-
-    createItem(data,callback){
-        itemModel.create(data,function(err,newItem){
-            if(err){
+    getItemByCategory(category, callback) {
+        itemModel.find({ category: category }, function (err, foundItem) {
+            if (err) {
                 console.log(err)
-                res.send({err:"trouble creating item"})
+                callback({ success: false, err: err })
             }
             else
-            res.send({item:newItem,err:null})
+                callback({ success: true, foundItems, err: null });
+        });
+    }
+
+    getItemByStatus(status, callback) {
+        itemModel.find({ active: status }, function (err, foundItem) {
+            if (err) {
+                console.log(err)
+                callback({ success: false, err: err })
+            }
+            else
+                callback({ success: true, foundItems, err: null });
+        });
+    }
+
+    createItem(data, callback) {
+        itemModel.create(data, function (err, newItem) {
+            if (err) {
+                console.log(err)
+                callback({ success: false, err: "trouble creating item" })
+            }
+            else
+                callback({ success: true, item: newItem, err: null })
         })
     }
 
-    setDiscount(discount,iid,callback){
-        var sale=parseFloat(discount)>0?true:false;
-    itemModel.findOneAndUpdate({iid:iid},{$set:{sale:sale,discount:discount}},function(err,newItem){
-        if(err)
-        {
-            console.log(err)
-            res.send({err:"trouble creating new item"})
-        }
-        else
-        {
-            res.send({err:null,item:newItem})
-        }
-    });
-    }
-
-    deactivateItem(iid,callback){
-        itemModel.findOneAndUpdate({iid:iid},{$set:{active:false}},function(err,newItem){
-            if(err)
-            {
+    setDiscount(discount, iid, callback) {
+        var sale = parseFloat(discount) > 0 ? true : false;
+        itemModel.findOneAndUpdate({ iid: iid }, { $set: { sale: sale, discount: discount } }, function (err, newItem) {
+            if (err) {
                 console.log(err)
-                res.send({err:"trouble creating new item"})
+                callback({ success: false, err: "trouble creating new item" })
             }
-            else
-            {
-                res.send({err:null,item:newItem})
+            else {
+                callback({ success: true, err: null, item: newItem })
             }
         });
     }
 
-    activateItem(iid,callback){
-        itemModel.findOneAndUpdate({iid:iid},{$set:{active:true}},function(err,newItem){
-            if(err)
-            {
+    deactivateItem(iid, callback) {
+        itemModel.findOneAndUpdate({ iid: iid }, { $set: { active: false } }, function (err, newItem) {
+            if (err) {
                 console.log(err)
-                res.send({err:"trouble creating new item"})
+                callback({ success: false, err: "trouble creating new item" })
             }
-            else
-            {
-                res.send({err:null,item:newItem})
+            else {
+                callback({ success: true, err: null, item: newItem })
+            }
+        });
+    }
+
+    activateItem(iid, callback) {
+        itemModel.findOneAndUpdate({ iid: iid }, { $set: { active: true } }, function (err, newItem) {
+            if (err) {
+                console.log(err)
+                callback({ success: false, err: "trouble creating new item" })
+            }
+            else {
+                callback({ success: true, err: null, item: newItem })
             }
         });
     }
 
 }
-module.exports=new items()
+module.exports = new items()

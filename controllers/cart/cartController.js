@@ -8,40 +8,23 @@ var middleware = require('../../Middlewares/user/middleware')
 //get items from cart
 exports.getAllItems = function (req, res) {
     
-    var cartlisting = []
-    cartservices.getUserCartItems('xyz',function(cartitem){
-        if(cartitem.success==false)
-        {
+    cartmodel.aggregate([
+        { $match : { uid:'xyz' } },
+        { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'items' } }]).exec(function(err,found){
+        if(err){
+            console.log(err);
             req.flash('error','error in fetching cart')
-            res.render('cartpage',{cart:cartlisting})
+            res.redirect('/items')
         }
-        else
-        {
-            cartitem.items.forEach(element => {
-                itemmodel.findOne({ iid: element.iid }, function (err, founditem) {
-                    if (err) {
-                        req.flash('error','error in fetching cart')
-                        res.render('cartpage',{cart:cartlisting})
-                     }
-                    else {
-                        var itemdata = {
-                            itemID: element.iid,
-                            itemName: founditem.name,
-                            quantity: element.quantity,
-                            price: founditem.price,
-                            image: founditem.image,
-                            uid: 'xyz',
-                        }
-                        cartlisting.push(itemdata)
+        else{
         
-                    }
-                })
-            });
-        }
+        cartlisting = cartservices.verifyCart(found, 'xyz')
+         console.log(cartlisting);   
+        res.render('cartpage',{cart:cartlisting})
+    }
     })
    
-    cartlisting = cartservices.verifyCart(cartlisting, 'xyz')
-    res.render('cartpage',{cart:cartlisting})
+  
 
 }
 
@@ -50,34 +33,41 @@ exports.getAllItems = function (req, res) {
 exports.addItem = function (req, res) {
     itemmodel.findOne({ iid: req.params.iid, active: true }, function (err, founditem) {
         if (err) {
+            console.log(err);
             req.flash('error', 'could not find any item by that name')
             res.redirect('/items')
         }
         else {
             if (middleware.isEmpty(founditem)) {
+                console.log('empty');
                 req.flash('error', 'could not find any item by that name')
                 res.redirect('/items')
             }
             else {
                 cartservices.checkCartForItem(founditem.iid, 'xyz', function (cartItem) {
                     if (cartItem.success == false) {
+                        console.log('trouble in fetching cart');
                         req.flash('error', 'trouble in fetching cart')
                         res.redirect('/items')
                     }
                     else {
-                        if (cartitem.found == true) {
+                        if (cartItem.found == true) {
+                            console.log('success already');
                             req.flash('success', 'You already have this item in your cart')
                             res.redirect('/cartpage')
                         }
                         else {
+                            console.log(req.body);
                             cartservices.addToCart(founditem.iid,'xyz',req.body.quantity,function(addedCart){
                                 if(addedCart.success==false)
                                 {
+                                    console.log(addedCart.message);
                                     req.flash('error',addedCart.message)
                                     res.redirect('/items')
                                 }
                                 else
                                 {
+                                    console.log('success');
                                     req.flash('success','added to cart')
                                     res.redirect('/items')
                                 }
@@ -137,10 +127,17 @@ exports.getUpdateCart=function(req,res){
 
 exports.updateCart = function (req, res) {
    var errolist=[]
+  console.log(req.body);
    var errorFlag=false
-    req.body.cart.forEach(element => {
-        cartservices.updateQuantity(element.iid,'xyz',element.quantity,function(updatedCart){
+   var cart=req.body
+   var ids=Object.keys(cart)
+   console.log(ids);
+   console.log('here');
+    ids.forEach(element => {
+        console.log(cart[element]);
+        cartservices.updateQuantity(element,'xyz',cart[element],function(updatedCart){
             if(updatedCart.success==false){
+                console.log('error');
                 errolist.push('error for element with iid'+element.iid)
                 errorFlag=true
             }
@@ -156,6 +153,7 @@ exports.updateCart = function (req, res) {
 }
 //clear cart
 exports.clearCart = function (req, res) {
+    
    cartservices.clearCart('xyz',function(updatedCart){
     if(updatedCart.success==false)
     {
