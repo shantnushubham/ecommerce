@@ -18,9 +18,6 @@ app.get('/',function(req,res){
     res.render('index')
 })
 
-
-
-
 app.post('/admin/setDiscount',adminController.setDiscount)
 app.get('/admin/items/:iid/activate',adminController.activateItem)
 app.get('/admin/items/:iid/deactivate',adminController.deactivateItem)
