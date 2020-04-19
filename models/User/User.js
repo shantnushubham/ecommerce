@@ -1,8 +1,14 @@
 var mongoose = require("mongoose");
 var bcrypt = require('bcrypt-nodejs')
+const shortid = require("shortid");
 var mongooseHistory = require('mongoose-history')
 
 var UserSchema  = new mongoose.Schema({
+    uuid:{
+        type: String,
+        required: true,
+        default:shortid.generate
+    },
     name: {
         type: String,
         required: true
