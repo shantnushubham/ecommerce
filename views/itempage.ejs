@@ -269,7 +269,7 @@
 		<div class="page-title-area item-bg-5">
 			<div class="container">
 				<div class="page-title-content">
-					<h2>Shop Details</h2>
+					<h2><%= item.name %></h2>
 					<ul>
 						<li>
 							<a href="index.html">
@@ -296,10 +296,10 @@
 
 					<div class="col-lg-6 col-md-12">
 						<div class="product-details-desc">
-							<h3>Red Side Book</h3>
+							<h3><%= item.name %></h3>
 
 							<div class="price">
-								<span class="new-price">$14.00</span>
+								<span class="new-price">Rs. <%= item.price %></span>
 								<span class="old-price">$20.00</span>
 							</div>
 
@@ -314,7 +314,7 @@
 								<a href="#" class="rating-count">3 reviews</a>
 							</div>
 
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+							<p><%= item.content %></p>
 
 							<div class="product-add-to-cart">
 								<div class="input-counter">

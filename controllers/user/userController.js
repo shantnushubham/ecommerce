@@ -86,7 +86,7 @@ exports.logout = (req, res) => {
 
 exports.getUserById = (req, res) => {
     if(req && req.user){
-      User.findOne({_id: req.user._id})
+      User.findOne({uuid: req.user.uuid})
         .select('name email phone username')
         // .populate('defaultDeliveryAddress deliveryAddress', 'locality landmark state district pincode contact')
         // .populate('orders', 'itemId quantity')
@@ -99,7 +99,7 @@ exports.getUserById = (req, res) => {
 }
 
 exports.deleteUserById = (req, res) => {
-    User.findOneAndRemove({_id: req.user._id}, err => {
+    User.findOneAndRemove({uuid: req.user.uuid}, err => {
         if(err) return res.status(400).send({error:err})
         return res.send({success: true, message: 'Account Deleted'})
     })
@@ -108,9 +108,8 @@ exports.deleteUserById = (req, res) => {
 exports.updateUserData = (req, res) => {
     if(req && req.user && req.body){
         const updatedData = req.body
-        User.findOneAndUpdate({_id: req.user._id}, updatedData, {new: true} )
-            .then( (err, data) => {
-                if(err) return res.status(400).send({ success: false, errors: "unable to update User address"})
+        User.findOneAndUpdate({uuid: req.user.uuid}, updatedData, {new: true} )
+            .then( (data) => {
                 return res.send({success: true, message: 'Data Updated', body: data})
             })
     }
@@ -124,7 +123,7 @@ exports.updateUserData = (req, res) => {
 //           if(err) res.status(400).send({error:err})
 //           else if(!result) res.json({success: false, message: 'Unable to save'});
 
-//           User.findOneAndUpdate({ _id: req.user._id}, { $addToSet: { deliveryAddress: result._id }, defaultDeliveryAddress: result._id }, {new: true})
+//           User.findOneAndUpdate({ uuid: req.user.uuid}, { $addToSet: { deliveryAddress: result._id }, defaultDeliveryAddress: result._id }, {new: true})
 //           .select('name email phone username')
 //           .populate('defaultDeliveryAddress deliveryAddress', 'locality landmark state district pincode contact')
 //               .then((err, data) => {
@@ -143,7 +142,7 @@ exports.addUserAddress = (req, res) => {
         if(err) return res.status(400).send({error:err})
         else if(!result) return res.json({success: false, message: 'Unable to save'});
 
-        User.findOneAndUpdate({ _id: req.user._id}, { $addToSet: { deliveryAddress: {_id: result._id} }, defaultDeliveryAddress: result._id }, {new: true})
+        User.findOneAndUpdate({ uuid: req.user.uuid}, { $addToSet: { deliveryAddress: {_id: result._id} }, defaultDeliveryAddress: result._id }, {new: true})
         .select('name email phone username')
         .populate('defaultDeliveryAddress deliveryAddress', 'locality landmark state district pincode contact')
             .then(data => res.send({success: true, message: 'Address Added', body: data})
@@ -159,8 +158,7 @@ exports.updateUserAddress = (req, res) => {
     const updatedData = req.body;
     UserAddress.findByIdAndUpdate({_id: req.query.id}, updatedData, {new: true} )
       .select('locality email landmark state district pincode contact country')
-        .then( (err, data) => {
-          if(err) return res.status(400).send({ success: false, errors: "unable to update User address"})
+        .then( (data) => {
           return res.send({success: true, message: 'Address Updated', body: data})
         }
     )
@@ -182,7 +180,7 @@ exports.deleteAddress = (req, res) => {
             console.log(err)
             return res.status(400).send({ success: false, message: 'wrong address id' });
           }
-          User.findOneAndUpdate({ _id: req.user.id}, { $pull: { deliveryAddress: addressId }})
+          User.findOneAndUpdate({ uuid: req.user.uuid}, { $pull: { deliveryAddress: addressId }})
             .then((err, data) => {
               if (err) {
                 console.log(err)
@@ -219,7 +217,7 @@ exports.deleteAddress = (req, res) => {
 exports.makeAdressToDefaultAddress = (req, res) => {
     if(req && req.body && req.body.addressId){
       const addressId = req.body.addressId;
-      User.findByIdAndUpdate({_id: req.user.id}, { defaultDeliveryAddress: addressId }, {new: true} )
+      User.findByIdAndUpdate({uuid: req.user.uuid}, { defaultDeliveryAddress: addressId }, {new: true} )
         .select('name email phone username')
           .populate('defaultDeliveryAddress', 'locality landmark state district pincode contact')
           .then(data => 
