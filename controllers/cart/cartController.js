@@ -11,7 +11,12 @@ exports.getAllItems = function (req, res) {
     
     cartmodel.aggregate([
         { $match : { uid:'xyz' } },
-        { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'items' } }]).exec(function(err,found){
+        { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
+        { $project: { 
+            "quantity": "$quantity", 
+            "uid": "$uid", 
+            "item": { "$arrayElemAt": [ "$item", 0 ] } 
+        }} ]).exec(function(err,found){
         if(err){
             console.log(err);
             req.flash('error','error in fetching cart')
@@ -20,7 +25,10 @@ exports.getAllItems = function (req, res) {
         else{
         
         cartlisting = cartservices.verifyCart(found, 'xyz')
-         console.log(cartlisting);   
+        //  console.log(cartlisting);   
+         cartlisting.forEach(element => {
+             console.log(element);
+         });
         res.render('cartpage',{cart:cartlisting})
     }
     })
@@ -152,7 +160,8 @@ ids.forEach(obj => promiseArr.push( cartservices.updateCart(obj,'xyz',cart[obj])
     //     console.log(errorlist);
     //     }
     
-    Promise.all(promiseArr).then((respo) =>{console.log('render');
+    Promise.all(promiseArr).then((respo) =>{
+        console.log('updated');
     console.log(respo);
     res.redirect('/cartpage')} ).catch(err => {
         console.log(err);
