@@ -4,6 +4,7 @@ var cartmodel = require('../../models/cart/cart')
 var cartservices = require('../../openServices/cart')
 var mongoose = require("mongoose")
 var middleware = require('../../Middlewares/user/middleware')
+var async= require('async')
 
 //get items from cart
 exports.getAllItems = function (req, res) {
@@ -132,22 +133,32 @@ exports.updateCart = function (req, res) {
    var cart=req.body
    var ids=Object.keys(cart)
    console.log(ids);
-   console.log('here');
-    ids.forEach(element => {
-        console.log(cart[element]);
-        cartservices.updateQuantity(element,'xyz',cart[element],function(updatedCart){
-            if(updatedCart.success==false){
-                console.log('error');
-                errolist.push('error for element with iid'+element.iid)
-                errorFlag=true
-            }
+   
+    // ids.forEach(element => {
+    //     console.log(cart[element]);
+    //      cartservices.updateCart(element,'xyz',cart[element],function(updatedCart){
+    //         if(updatedCart.success==false){
+    //             console.log('error');
+    //             errolist.push('error for element with iid'+element.iid)
+    //             errorFlag=true
+    //         }
             
-        })
-    });
-    if(errorFlag){
-        console.log(errorlist);
-        }
-        res.redirect('/cartpage')
+    //     })
+    // });
+    
+ids.forEach(obj => promiseArr.push( cartservices.updateCart(obj,'xyz',cart[obj])));
+
+    // if(errorFlag){
+    //     console.log(errorlist);
+    //     }
+    
+    Promise.all(promiseArr).then((respo) =>{console.log('render');
+    console.log(respo);
+    res.redirect('/cartpage')} ).catch(err => {
+        console.log(err);
+res.redirect('/cartpage')
+})
+    
 
 
 }

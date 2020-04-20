@@ -120,6 +120,83 @@ class cart {
         })
     }
 
+  updateCart(iid, uid, quantity){
+        
+        console.log(quantity);
+        return new Promise((resolve,reject)=>{
+            cartmodel.findOne({ iid: iid, uid: uid }).then( function(foundItem) {
+            
+            
+                if (functions.isEmpty(foundItem)) {
+                    console.log('not in cart');
+                    // callback({ success: false, found: false,message:'item with iid'+iid+' does not exist in cart' })
+                    reject()
+                }
+                else {
+                    itemmodel.findOne({ iid: iid, active: true }).then(function ( founditem) {
+                        
+                            if (functions.isEmpty(founditem)) {
+                                console.log('unavailable item');
+                                // callback({ success: false, message: 'could not find any item by that name' })
+                                reject()
+            
+                            }
+                            else {
+                                
+                                if(quantity==0)
+                                {
+
+                                    cartmodel.deleteOne({iid:founditem.iid,uid:uid}).then(function(deleted){
+                                        
+                                        
+                                            console.log('success deleting');
+                                            // callback({ success: true, item: deleted })
+                                            resolve()
+                                        
+                                    }).catch(function(err){
+                                        console.log(err);
+                                        // callback({success:false})
+                                        reject()
+                                    })
+                                }
+                                else
+                                {
+                                cartmodel.findOneAndUpdate({iid:founditem.iid,uid:uid},{'$set':{quantity:quantity}}).then(function ( addedItem) {
+                                    
+                                    
+                                        console.log('success');
+                                        // callback({ success: true, item: addedItem })
+                                        resolve()
+                                    
+                                }).catch(function(err){
+                                    console.log(err);
+                                    // callback({success:false})
+                                    reject()
+                                })
+                            }
+            
+            
+                            }
+                        
+            
+                    }).catch(function(err){
+                        console.log(err);
+                        // callback({success:false})
+                        reject()
+                    })
+
+                }
+            
+        }).catch(function(err){
+            console.log(err);
+            // callback({success:false})
+            reject()
+        })
+        })
+       
+        
+    }
+
     addToCart(iid, uid, quantity,callback) {
         itemmodel.findOne({ iid: iid, active: true }, function (err, founditem) {
             if (err) {
