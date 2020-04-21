@@ -9,7 +9,7 @@ router.get('/login', forwardAuthenticated, (req, res) => res.render('login2'));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register2'));
 
 router.post('/register', forwardAuthenticated, UserControl.register);
-router.post('/login', forwardAuthenticated, UserControl.login);
+router.post('/login', UserControl.login);
 router.get('/logout', ensureAuthenticated, UserControl.logout);
 
 router.get('/getUserById', ensureAuthenticated, UserControl.getUserById)
