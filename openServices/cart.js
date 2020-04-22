@@ -121,11 +121,10 @@ class cart {
     }
 
   updateCart(iid, uid, quantity){
-        
-        console.log(quantity);
+        iid= iid.trim()
+        uid=uid.trim()
         return new Promise((resolve,reject)=>{
             cartmodel.findOne({ iid: iid, uid: uid }).then( function(foundItem) {
-            
             
                 if (functions.isEmpty(foundItem)) {
                     console.log('not in cart');
