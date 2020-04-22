@@ -5,12 +5,12 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares
 
 var UserControl = require('../../controllers/user/userController')
 
-router.get('/login', forwardAuthenticated, (req, res) => res.render('login2'));
-router.get('/register', forwardAuthenticated, (req, res) => res.render('register2'));
+router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
+router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
 
-router.post('/register', forwardAuthenticated, UserControl.register);
+router.post('/register', UserControl.register);
 router.post('/login', UserControl.login);
-router.get('/logout', ensureAuthenticated, UserControl.logout);
+router.get('/logout', UserControl.logout);
 
 
 router.get('/getUserById', ensureAuthenticated, UserControl.getUserById)

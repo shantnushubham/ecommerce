@@ -98,6 +98,7 @@ exports.addItem = function (req, res) {
 
 //update count of item
 exports.getUpdateCart=function(req,res){
+    console.log('getting cart');
     var cartlisting = []
     cartservices.getUserCartItems('xyz',function(cartitem){
         if(cartitem.success==false)
@@ -136,7 +137,7 @@ exports.getUpdateCart=function(req,res){
 
 exports.updateCart = function (req, res) {
    var errolist=[]
-  console.log(req.body);
+   console.log(req.body);
    var errorFlag=false
    var cart=req.body
    var ids=Object.keys(cart)
@@ -153,8 +154,8 @@ exports.updateCart = function (req, res) {
             
     //     })
     // });
-    
-ids.forEach(obj => promiseArr.push( cartservices.updateCart(obj,'xyz',cart[obj])));
+    var promiseArr=[]
+ids.forEach(obj => promiseArr.push( cartservices.updateCart(obj,'xyz',cart[obj]) ) ) ;
 
     // if(errorFlag){
     //     console.log(errorlist);
@@ -167,6 +168,7 @@ ids.forEach(obj => promiseArr.push( cartservices.updateCart(obj,'xyz',cart[obj])
         console.log(err);
 res.redirect('/cartpage')
 })
+// res.redirect('/cartpage');
     
 
 
