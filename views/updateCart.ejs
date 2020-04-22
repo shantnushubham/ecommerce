@@ -298,7 +298,8 @@
 										<th scope="col">Product</th>
 										<th scope="col">Name</th>
 										<th scope="col">Unit Price</th>
-										<!-- <th scope="col">Quantity</th> -->
+										<th scope="col">Quantity</th>
+										<th scope="col">Total</th>
 									</tr>
 								</thead>
 
@@ -315,13 +316,33 @@
 										<td class="product-name">
 											<a href="#"><%= cartlisting[i].item.name %></a>
 										</td>
-										<% x = x + parseInt(cartlisting[i].item.price) %>
+										<% x = x + parseInt(cartlisting[i].item.price) * parseInt(cartlisting[i].quantity) %>
 
 										<td class="product-price">
 											<span class="unit-amount">Rs. <%= cartlisting[i].item.price %></span>
 										</td>
-										<% } %>
+
+										<td class="product-quantity">
+											<div class="input-counter">
+												<span class="minus-btn">
+													<i class="fa fa-minus"></i>
+												</span>
+												<input type="text" value="<%= cartlisting[i].quantity %>" name = "changedQuantity">
+												<span class="plus-btn">
+													<i class="fa fa-plus"></i>
+												</span>
+											</div>
+										</td>
+
+										<td class="product-subtotal">
+											<span class="subtotal-amount">Rs. <%= parseInt(cartlisting[i].item.price) * parseInt(cartlisting[i].quantity) %></span>
+
+											<a href="#" class="remove">
+												<i class="fa fa-trash-o"></i>
+											</a>
+										</td>
 									</tr>
+									<% } %>
 								</tbody>
 							</table>
 						</div>
@@ -338,7 +359,7 @@
 								</div>
 
 								<div class="col-lg-5 col-sm-5 col-md-5 text-right">
-									<a href="/updatecart" class=" default-btn">
+									<a href="#" class=" default-btn">
 										Update Cart
 										<i class="flaticon-right-arrow-forward"></i>
 									</a>
