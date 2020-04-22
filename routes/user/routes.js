@@ -12,6 +12,7 @@ router.post('/register', forwardAuthenticated, UserControl.register);
 router.post('/login', UserControl.login);
 router.get('/logout', ensureAuthenticated, UserControl.logout);
 
+
 router.get('/getUserById', ensureAuthenticated, UserControl.getUserById)
 router.post('/addUserAddress', ensureAuthenticated, UserControl.addUserAddress)
 router.put('/updateUserData', ensureAuthenticated, UserControl.updateUserData)

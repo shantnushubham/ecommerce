@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var bcrypt = require('bcrypt-nodejs')
 const shortid = require("shortid");
 var mongooseHistory = require('mongoose-history')
+const crypto = require('crypto');
 
 var UserSchema  = new mongoose.Schema({
     uuid:{
@@ -81,13 +82,18 @@ UserSchema.pre('save', (next) => {
 })
 
 UserSchema.methods.comparePassword =  (pass, callback) => {
-    console.log(pass, this.password, 'df')
     bcrypt.compare(pass, this.password, (err, isMatch) => {
         if (err)
             return callback(err)
         callback(null, isMatch)
     })
 }
+
+UserSchema.methods.generatePasswordReset = function() {
+    this.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+    this.resetPasswordExpires = Date.now() + 3600000; //expires in an hour
+};
+
 UserSchema.plugin(mongooseHistory)
 
 module.exports = mongoose.model("User", UserSchema);

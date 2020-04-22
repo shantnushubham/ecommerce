@@ -6,6 +6,9 @@ var UserAddress = require("../../models/User/DeliveryAddress")
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 var ObjectId = require('mongoose').Types.ObjectId;
+var sendgrid = require("@sendgrid/mail");
+var auth = require("../../config/auth");
+sendgrid.setApiKey(auth.sendgrid.apiKey);
 
 exports.register = (req, res) => {
     const { name, email, password, password2 } = req.body;
@@ -84,6 +87,94 @@ exports.logout = (req, res) => {
     req.flash('success_msg', 'You are logged out');
     res.redirect('/users/login');
   }
+
+  exports.recover = (req, res) => {
+    User.findOne({email: req.body.email})
+        .then(user => {
+            if (!user) return res.status(401).json({message: 'The email address ' + req.body.email + ' is not associated with any account. Double-check your email address and try again.'});
+
+            user.generatePasswordReset();
+            user.save()
+                .then(user => {
+                    // send email
+                    let link = "http://" + req.headers.host + "/reset/" + user.resetPasswordToken;
+                    const mailOptions = {
+                        to: user.email,
+                        from: 'support@inversion.co.in',
+                        subject: "Password change request",
+                        text: `Hi ${user.username} \n 
+                    Please click on the following link ${link} to reset your password. \n\n 
+                    If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+                    };
+                    sendgrid.send(mailOptions, (error, result) => {
+                        if (error) {
+                          console.log(error)
+                          return res.status(500).json({message: error.message});
+                        }
+                        req.flash(
+                          'success_msg',
+                          'A reset email has been sent to ' + user.email + '.' 
+                        );
+                        res.redirect('/recover');
+                    });
+                })
+                .catch(err => res.status(500).json({message: err.message}));
+        })
+        .catch(err => res.status(500).json({message: err.message}));
+};
+
+exports.reset = (req, res, next) => {
+    User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now()}})
+        .then((user) => {
+            if (!user) return res.status(401).json({msg: 'Password reset token is invalid or has expired.'});
+
+            //Redirect user to form with the email address
+            return next();
+        })
+        .catch(err => {
+          console.log(err)
+          return res.status(500).json({msg: err.message})});
+};
+
+
+exports.resetPassword = (req, res) => {
+  console.log(req.body)
+    if(req && req.body && req.body.password && req.body.password2){
+      if(req.body.password === req.body.password2){
+        User.findOne({resetPasswordToken: req.body.token, resetPasswordExpires: {$gt: Date.now()}})
+        .then((user) => {
+            if (!user) return res.status(401).json({msg: 'Password reset token is invalid or has expired.'});
+
+            //Set the new password
+            user.password = req.body.password;
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+
+            // Save
+            user.save((err) => {
+                if (err) return res.status(500).json({msg: err.message});
+
+                // send email
+                const mailOptions = {
+                    to: user.email,
+                    from: 'support@inversion.co.in',
+                    subject: "Your password has been changed",
+                    text: `Hi ${user.username} \n 
+                    This is a confirmation that the password for your account ${user.email} has just been changed.\n`
+                };
+
+                sendgrid.send(mailOptions, (error, result) => {
+                    if (error) return res.status(500).json({msg: error.message});
+
+                    req.flash('success_msg', 'password changed successfully');
+                    res.redirect('/users/login');
+                });
+            });
+        });
+      }
+      else return res.status(200).json({success: false, msg: 'Pasword doesn\'t matched'});
+    }
+};
 
 exports.getUserById = (req, res) => {
     if(req && req.user){
