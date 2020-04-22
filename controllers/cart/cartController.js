@@ -136,7 +136,7 @@ exports.getUpdateCart=function(req,res){
 
 exports.updateCart = function (req, res) {
    var errolist=[]
-  console.log(req.body);
+   console.log(req.body);
    var errorFlag=false
    var cart=req.body
    var ids=Object.keys(cart)
@@ -167,6 +167,7 @@ ids.forEach(obj => promiseArr.push( cartservices.updateCart(obj,'xyz',cart[obj])
         console.log(err);
 res.redirect('/cartpage')
 })
+// res.redirect('/cartpage');
     
 
 
