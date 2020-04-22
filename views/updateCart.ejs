@@ -290,7 +290,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 col-md-12">
-					<form method="POST" action="/updateCart"> 
+					<form method="POST" action="/updateCart">
 						<div class="cart-table table-responsive">
 							<table class="table table-bordered">
 								<thead>
@@ -327,7 +327,9 @@
 												<span class="minus-btn">
 													<i class="fa fa-minus"></i>
 												</span>
-												<input class = "quantity" type="text" value="<%= cartlisting[i].quantity %>" name = "<%= cartlisting[i].item.iid %>">
+												<input class="quantity" type="text" min="0"
+													value="<%= cartlisting[i].quantity %>"
+													name="<%= cartlisting[i].item.iid %>" , id="number">
 												<span class="plus-btn">
 													<i class="fa fa-plus"></i>
 												</span>
@@ -335,7 +337,8 @@
 										</td>
 
 										<td class="product-subtotal">
-											<span class="subtotal-amount">Rs. <%= parseInt(cartlisting[i].item.price) * parseInt(cartlisting[i].quantity) %></span>
+											<span class="subtotal-amount">Rs.
+												<%= parseInt(cartlisting[i].item.price) * parseInt(cartlisting[i].quantity) %></span>
 
 											<a href="#" class="remove">
 												<i class="fa fa-trash-o"></i>
@@ -351,7 +354,7 @@
 							<div class="row align-items-center">
 								<div class="col-lg-7 col-sm-7 col-md-7">
 									<div class="continue-shopping-box">
-										<a href="#" class="default-btn">
+										<a href="/items" class="default-btn">
 											Continue Shopping
 											<i class="flaticon-right-arrow-forward"></i>
 										</a>
@@ -359,8 +362,8 @@
 								</div>
 
 								<div class="col-lg-5 col-sm-5 col-md-5 text-right">
-									<button class=" default-btn" type = "submit" >
-										Update Cart
+									<button class=" default-btn" type="submit">
+										Submit
 										<i class="flaticon-right-arrow-forward"></i>
 									</button>
 								</div>
@@ -569,6 +572,13 @@
 
 	<script>
 		console.log(document.getElementsByClassName("quantity").value);
+	</script>
+
+	<script>
+		var num = document.getElementById("number").value;
+		if (num < 0) {
+
+		}
 	</script>
 
 	<!-- Jquery Slim JS -->

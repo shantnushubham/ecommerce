@@ -298,7 +298,7 @@
 										<th scope="col">Product</th>
 										<th scope="col">Name</th>
 										<th scope="col">Unit Price</th>
-										<!-- <th scope="col">Quantity</th> -->
+										<th scope="col">Quantity</th>
 									</tr>
 								</thead>
 
@@ -315,10 +315,14 @@
 										<td class="product-name">
 											<a href="#"><%= cartlisting[i].item.name %></a>
 										</td>
-										<% x = x + parseInt(cartlisting[i].item.price) %>
+										<% x = x + parseInt(cartlisting[i].quantity) * parseInt(cartlisting[i].item.price) %>
 
 										<td class="product-price">
 											<span class="unit-amount">Rs. <%= cartlisting[i].item.price %></span>
+										</td>
+
+										<td class="product-subtotal">
+											<span class="subtotal-amount"><%=cartlisting[i].quantity%></span>
 										</td>
 										<% } %>
 									</tr>
@@ -350,7 +354,7 @@
 							<h3>Cart Totals</h3>
 
 							<ul>
-								<li>Subtotal <span>Rs. <%= x %></span></li>
+								<li>Subtotal <span>Rs. <%= x %>.00</span></li>
 								<li>Shipping <span>$30.00</span></li>
 								<li>Total <span><b>$180.00</b></span></li>
 							</ul>
