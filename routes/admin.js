@@ -21,4 +21,5 @@ app.get('/',function(req,res){
 app.post('/admin/setDiscount',adminController.setDiscount)
 app.get('/admin/items/:iid/activate',adminController.activateItem)
 app.get('/admin/items/:iid/deactivate',adminController.deactivateItem)
+// app.get('/populate/:iid',adminController.populate)
 module.exports=app

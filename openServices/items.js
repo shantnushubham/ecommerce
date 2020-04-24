@@ -1,6 +1,8 @@
 var itemMetaModel = require("../models/Items/ItemMetadata")
 var itemModel = require('../models/Items/Items')
+var categoryModel=require('../models/Items/Category')
 var mongoose = require("mongoose")
+var functions=require('../Middlewares/common/functions')
 class items {
     constructor() {
 
@@ -41,14 +43,33 @@ class items {
     }
 
     getItemByCategory(category, callback) {
-        itemModel.find({ category: category }, function (err, foundItem) {
-            if (err) {
-                console.log(err)
-                callback({ success: false, err: err })
+        console.log(category);
+        itemModel.aggregate([
+        { $lookup: { from: 'categories', localField: 'category', foreignField: '_id', as: 'category' } },
+        
+        { $project: { 
+            iid:'$iid',
+            name:'$name',
+            active:'$active',
+            price:'$price',
+
+            "category": { "$arrayElemAt": [ "$category", 0 ] },
+
+
+        }} ,
+        {'$match':{'category.name':category}}
+        ]).exec(function(err,found){
+            if(err){
+                console.log(err);
+                req.flash('error','error in fetching cart')
+                res.redirect('/items')
             }
-            else
-                callback({ success: true, foundItems, err: null });
-        });
+            else{
+            // console.log(found);
+            callback({foundItems:found})
+        }
+        })
+        
     }
 
     getItemByStatus(status, callback) {
@@ -63,14 +84,80 @@ class items {
     }
 
     createItem(data, callback) {
-        itemModel.create(data, function (err, newItem) {
-            if (err) {
-                console.log(err)
-                callback({ success: false, err: "trouble creating item" })
+        var item_data={name:data.name,price:data.price,image:data.image,}
+        var item_metaData={weight:data.weight,content:data.content}
+        var item_categoryData={name:data.category}
+        
+        categoryModel.findOne({name:item_categoryData.name},function(err,foundCategory){
+            if(err)
+            {
+                console.log(err);
+                callback({success:false,message:'error in getting categories'})
             }
             else
-                callback({ success: true, item: newItem, err: null })
+            {
+                if(functions.isEmpty(foundCategory)){
+                    categoryModel.create(item_categoryData,function(err,newCat){
+                        if(err)
+                        {
+                            console.log(err);
+                            callback({success:false,message:'error in getting categories'})
+                        }
+                        else
+                        {
+                            item_data.category=newCat._id
+                            itemModel.create(item_data, function (err, newItem) {
+                                if (err) {
+                                    console.log(err)
+                                    callback({ success: false, err: "trouble creating item" })
+                                }
+                                else{
+                                    item_metaData.iid=newItem.iid
+                                    itemMetaModel.create(item_metaData,function(err,newMeta){
+                                        if(err)
+                                        {
+                                            console.log(err)
+                                            callback({ success: false, err: "trouble creating item" })
+                                        }
+                                        else
+                                        {
+                                            callback({ success: true, item: newItem, err: null })   
+                                        }
+                                    })
+                                    // callback({ success: true, item: newItem, err: null })
+                                }
+                                })
+                        }
+                    })
+                }
+                else
+                {
+                    item_data.category=foundCategory._id
+                    itemModel.create(item_data, function (err, newItem) {
+                        if (err) {
+                            console.log(err)
+                            callback({ success: false, err: "trouble creating item" })
+                        }
+                        else{
+                            item_metaData.iid=newItem.iid
+                            itemMetaModel.create(item_metaData,function(err,newMeta){
+                                if(err)
+                                {
+                                    console.log(err)
+                                    callback({ success: false, err: "trouble creating item" })
+                                }
+                                else
+                                {
+                                    callback({ success: true, item: newItem, err: null })   
+                                }
+                            })
+                            // callback({ success: true, item: newItem, err: null })
+                        }
+                        })
+                }
+            }
         })
+        
     }
 
     setDiscount(discount, iid, callback) {
