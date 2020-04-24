@@ -6,14 +6,12 @@ const { forwardAuthenticated, ensureAuthenticated } = require('../Middlewares/us
 var viewController = require('../controllers/view_controller');
 var UserControl = require('../controllers/user/userController');
 
-router.get('/', forwardAuthenticated, (req, res) => res.render('dashboard'));
+router.get('/', (req, res) => res.render('new'));
 
-router.get('/dashboard', ensureAuthenticated, (req, res) => {
-  console.log(req);
-  res.render('dashboard', {
-    user: req.user
-  })
-});
+// router.get('/', (req, res) => {
+//   console.log(req.user, 'sdf');
+//   return res.render('index1')
+// });
 
 
 router.get('/recover', forwardAuthenticated, (req, res) => res.render('recover'));

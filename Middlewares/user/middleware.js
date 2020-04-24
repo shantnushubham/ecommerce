@@ -12,7 +12,8 @@ module.exports = {
     if (!req.isAuthenticated()) {
       return next();
     }
-    res.redirect('/dashboard');      
+    console.log(req.user, 'sa')
+    return res.redirect('/');      
   },
 
   isEmpty:function(obj){

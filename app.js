@@ -9,6 +9,7 @@ const path=require('path')
 const mongooseMorgan=require('mongoose-morgan')
 const compression= require('compression')
 const app = express();
+var logger = require('morgan');
 var MongoStore  = require('connect-mongo')(session)
 
 require('dotenv').config()
@@ -41,7 +42,7 @@ app.use(mongooseMorgan({
   'dev'
 ));
 
-// app.use(logger('dev'));
+app.use(logger('dev'));
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended: true}));
 
