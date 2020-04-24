@@ -55,7 +55,7 @@ exports.register = (req, res) => {
                   return res.status(500).json({message: error.message});
                 }
                 
-                res.redirect('/', {user});
+                res.redirect('/');
             });
           });
       });
@@ -64,7 +64,7 @@ exports.register = (req, res) => {
 
 exports.login = (req, res, next) => {
     passport.authenticate('local', {
-      successRedirect: '/',
+      successRedirect: '/dashboard',
       failureRedirect: '/users/login',
       failureFlash: true
     })(req, res, next);

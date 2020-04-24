@@ -1,5 +1,6 @@
 var express = require('express')
 var router = express.Router()
+const passport = require('passport');
 
 const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares/user/middleware');
 
@@ -9,7 +10,13 @@ router.get('/login', forwardAuthenticated, (req, res) => res.render('login2'));
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register2'));
 
 router.post('/register', forwardAuthenticated, UserControl.register);
-router.post('/login', UserControl.login);
+router.post('/login', passport.authenticate("local",{
+        successRedirect: "/dashboard",
+        failureRedirect: "/users/login",
+        failureFlash: true
+    }), (req, res) => {
+});
+
 router.get('/logout', ensureAuthenticated, UserControl.logout);
 
 

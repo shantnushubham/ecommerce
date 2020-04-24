@@ -8,7 +8,7 @@ const OAuthCredentials = require('./auth');
 const User = require('../models/User/User');
 
 module.exports = function(passport) {
-  passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' },User.authenticate()));
+  passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, User.authenticate()));
 
   passport.use(
     new GoogleStrategy({

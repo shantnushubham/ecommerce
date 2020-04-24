@@ -19,9 +19,6 @@ var adminroutes=require('./routes/admin')
 var itemRoutes=require('./routes/items')
 var User = require('./models/User/User');
 
-// Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
 require('./config/passport')(passport);
 // const OAuthCredentials = require('./config/auth');
 
@@ -70,6 +67,10 @@ app.use(function(req, res, next) {
 
 // Connect flash
 app.use(flash());
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Global variables
 app.use(function(req, res, next) {
