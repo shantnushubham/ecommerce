@@ -38,7 +38,6 @@ module.exports = function(passport) {
                                 newUser.name  = profile.displayName;
                                 newUser.email = profile.emails[0].value; // pull the first email
                                 newUser.username = profile.emails[0].value;
-                                newUser.state = "none";
                                 newUser.phone = 0;
                                 // save the user
 
@@ -82,7 +81,6 @@ module.exports = function(passport) {
                 newUser.name  = profile.displayName;
                 newUser.email = profile['_json']['email']; // pull the first email
                 newUser.username = profile['_json']['email'];
-                newUser.state = "none";
                 newUser.phone = 0;
                 // save the user
 

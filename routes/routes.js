@@ -13,6 +13,12 @@ router.get('/', (req, res) => res.render('new'));
 //   return res.render('index1')
 // });
 
+router.get('/dashboard', (req, res) => {
+  console.log(req.user)
+  res.render('dashboard', {
+    user: req.user
+  })
+});
 
 router.get('/recover', forwardAuthenticated, (req, res) => res.render('recover'));
 router.get('/reset/:token', UserControl.reset, (req, res) => {

@@ -32,33 +32,47 @@ exports.register = (req, res) => {
     } else {
       req.body.user['username'] = req.body.email;
       req.body.user['email'] = req.body.email;
+      req.body.user['phone'] = req.body.phone;
       req.body.user['active'] = true;
-      console.log(req.body.user);
-      var u = new User(req.body.user);
-      User.register(new User(u), req.body.password, function(err, user){
-          if(err){
-              console.log(err);
-              return req.flash('error_msg', 'Email already exist');
-          }
-          passport.authenticate("local")(req, res, function(){
-            console.log(user)
-            const mailOptions = {
-                to: user.email,
-                from: 'support@inversion.co.in',
-                subject: "Password change request",
-                text: `Hi ${user.name} \n 
-                  You have been successfully registered.`
-            };
-            sendgrid.send(mailOptions, (error, result) => {
-                if (error) {
-                  console.log(error)
-                  return res.status(500).json({message: error.message});
-                }
-                
-                res.redirect('/');
+
+      req.body.address['email'] = req.body.email;
+      req.body.address['phone'] = req.body.phone;
+      console.log(req.body.user, req.body.address);
+      var newAddress = new UserAddress(req.body.address);
+      newAddress.save( (err, addressRes) => {
+        if(err) {
+          console.log(err);
+          return res.flash('error_msg', 'unable to save address');
+        }
+        req.body.user['defaultDeliveryAddress'] = addressRes._id;
+        req.body.user['deliveryAddress'] = [addressRes._id];
+        var u = new User(req.body.user);
+        User.register(new User(u), req.body.password, function(err, user){
+            if(err){
+                console.log(err);
+                req.flash('error_msg', 'Email already exist');
+                res.redirect('/users/register');
+            }
+            passport.authenticate("local")(req, res, function(){
+              console.log(user)
+              const mailOptions = {
+                  to: user.email,
+                  from: 'support@inversion.co.in',
+                  subject: "successfully registered",
+                  text: `Hi ${user.name} \n 
+                    You have been successfully registered.`
+              };
+              sendgrid.send(mailOptions, (error, result) => {
+                  if (error) {
+                    console.log(error)
+                    return res.status(500).json({message: error.message});
+                  }
+                  console.log('f')
+                  res.redirect('/');
+              });
             });
-          });
-      });
+        });
+      })
     }
   }
 
