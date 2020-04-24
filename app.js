@@ -18,7 +18,10 @@ var cartRoutes=require('./routes/cart')
 var adminroutes=require('./routes/admin')
 var itemRoutes=require('./routes/items')
 var User = require('./models/User/User');
-// Passport Config
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 require('./config/passport')(passport);
 // const OAuthCredentials = require('./config/auth');
 
@@ -64,9 +67,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Connect flash
 app.use(flash());

@@ -25,7 +25,7 @@ exports.Register = function (user, callback) {
                 </head>
                 <body>
                     <div style="font-family:Avenir,Helvetica,sans-serif;color:#74787e;height:100%;line-height:1.4;margin:0;width:100%!important">
-                        Dear ${user.name},
+                        Dear ${user.name}, you have succesfully registered for spice.
                     </div>
             </body>
         </html>`

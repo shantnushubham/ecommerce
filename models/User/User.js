@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var bcrypt = require('bcrypt-nodejs')
-const shortid = require("shortid");
+const shortid = require("shortid");    
+var passportLocalMongoose=require("passport-local-mongoose");
 var mongooseHistory = require('mongoose-history')
 const crypto = require('crypto');
 
@@ -16,6 +17,10 @@ var UserSchema  = new mongoose.Schema({
     },
     username: {
         type: String,
+    },
+    active:{
+        type: Boolean,
+        default: false
     },
     phone: {
         type: String,
@@ -63,37 +68,11 @@ var UserSchema  = new mongoose.Schema({
     }
 });
 
-UserSchema.pre('save', (next) => {
-    var user = this
-        bcrypt.genSalt(10, function (err, salt) {
-            if (err) {
-                return next(err)
-            }
-            bcrypt.hash(user.password, salt, null, function (err, hash) {
-                if (err) {
-                    return next(err)
-                }
-                console.log(hash)
-                user.password = hash
-                next()
-            })
-        })
-   
-})
-
-UserSchema.methods.comparePassword =  (pass, callback) => {
-    bcrypt.compare(pass, this.password, (err, isMatch) => {
-        if (err)
-            return callback(err)
-        callback(null, isMatch)
-    })
-}
-
 UserSchema.methods.generatePasswordReset = function() {
     this.resetPasswordToken = crypto.randomBytes(20).toString('hex');
     this.resetPasswordExpires = Date.now() + 3600000; //expires in an hour
 };
 
 UserSchema.plugin(mongooseHistory)
-
+UserSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model("User", UserSchema);
