@@ -5,34 +5,38 @@
     <h1>Add Item</h1>
     <br>
     <br>
-    <form method="" action="POST">
+    <form action="/admin/createItem" method="POST">
         <div class="ui form">
-
             <div class="field">
                 <label>Name</label>
-                <input type="text" placeholder="Name">
-            </div>
-            <div class="field">
-                <label>Item ID</label>
-                <input type="text" placeholder="IID">
-            </div>
-            <div class="field">
-                <label>Sale</label>
-                <input type="text" placeholder="Sale">
+                <input type="text" placeholder="Name" name="name">
             </div>
             <div class="field">
                 <label>Price</label>
-                <input type="text" placeholder="Price">
+                <input type="text" placeholder="Price" name="price">
+            </div>
+            <div class="field">
+                <label>Weight</label>
+                <input type="text" placeholder="Weight" name="weight">
+            </div>
+            <div class="field">
+                <label>Color</label>
+                <input type="text" placeholder="Color" name="color">
+            </div>
+            <div class="field">
+                <label>Category</label>
+                <input type="text" placeholder="Category" name="category">
             </div>
             <div class="field">
                 <label>Image Link</label>
-                <input type="text" placeholder="ImageLink">
+                <input type="text" placeholder="ImageLink" name="image">
             </div>
             <div class="field">
                 <label>Content</label>
                 <textarea rows="2" spellcheck="true" placeholder="Content"></textarea>
             </div>
         </div>
+        <button class="ui button" type="submit">Submit</button>
     </form>
 </div>
 
