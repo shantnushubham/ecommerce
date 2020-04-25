@@ -178,7 +178,7 @@
 		</div>
 	</div>
 	<!-- End Navbar Area -->
-<script> console.log(user) </script>
+
 	<!-- Start Sidebar Modal -->
 	<div class="sidebar-modal">
 		<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
@@ -200,18 +200,25 @@
 						<div class="sidebar-modal-widget">
 							<h3 class="title">Additional Links</h3>
 							<ul>
+								<% if(typeof user != 'undefined' ) { console.log(user.name, 'her') %> 
+								<li>
+									<a href="#"> welcome <%= user.name %></a>
+								</li>
+								<li>
+									<a href="/users/logout">Logout</a>
+								</li>
+							<% } else {%>
 								<li>
 									<a href="/users/login">Log In</a>
 								</li>
 								<li>
 									<a href="/users/register">Sign Up</a>
 								</li>
+							<% } %>
 								<li>
 									<a href="faq.html">FAQ</a>
 								</li>
-								<li>
-									<a href="#">Logout</a>
-								</li>
+								
 							</ul>
 						</div>
 						<div class="sidebar-modal-widget">

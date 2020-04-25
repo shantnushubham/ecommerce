@@ -13,7 +13,7 @@ module.exports = {
       return next();
     }
     console.log(req.user, 'sa')
-    return res.render('index', {user: req.user});      
+    return res.redirect('/');      
   },
 
   isEmpty:function(obj){

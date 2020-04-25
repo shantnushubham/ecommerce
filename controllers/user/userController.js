@@ -225,18 +225,62 @@ exports.updateUserData = (req, res) => {
 //     else return res.send({success: false, message: "data insufficient"})
 // }
 
-exports.addUserAddress = (req, res) => {
+
+exports.addDefaultUserAddress = (req, res) => {
   if(req && req.user && req.body){
-    var address = new UserAddress(req.body)
+    var address = new UserAddress(req.body.address)
     address.save((err, result) => {
         if(err) return res.status(400).send({error:err})
-        else if(!result) return res.json({success: false, message: 'Unable to save'});
+        else if(!result) {
+                req.flash('error_msg', 'Unable to add address');
+                res.redirect('/');
+        }
+        var updateData = {
+          defaultDeliveryAddress: result._id,
+          deliveryAddress: [result._id],
+          active: true
+        }
+        User.update(
+            { uuid: req.user.uuid}, 
+            updateData, 
+            {new: true}
+        )
+        .exec(err => {
+          if(err){
+                req.flash('error_msg', 'Unable to add address');
+                res.redirect('/');
+          }
+          else
+            res.redirect('/')
+        })
+    })
+  }
+  else res.send({success: false, message: "data insufficient"})
+}
 
-        User.findOneAndUpdate({ uuid: req.user.uuid}, { $addToSet: { deliveryAddress: {_id: result._id} }, defaultDeliveryAddress: result._id }, {new: true})
-        .select('name email phone username')
-        .populate('defaultDeliveryAddress deliveryAddress', 'locality landmark state district pincode contact')
-            .then(data => res.send({success: true, message: 'Address Added', body: data})
-            )
+exports.addUserAddress = (req, res) => {
+  if(req && req.user && req.body){
+    var address = new UserAddress(req.body.address)
+    address.save((err, result) => {
+        if(err) return res.status(400).send({error:err})
+        else if(!result) {
+                req.flash('error_msg', 'Unable to add address');
+                res.redirect('/');
+        }
+
+        User.update(
+            { uuid: req.user.uuid}, 
+            { $addToSet: { deliveryAddress:result._id } }, 
+            {new: true}
+        )
+        .exec(err => {
+          if(err){
+                req.flash('error_msg', 'Unable to add address');
+                res.redirect('/');
+          }
+          else
+            res.redirect('/')
+        })
     })
   }
   else res.send({success: false, message: "data insufficient"})
@@ -316,4 +360,3 @@ exports.makeAdressToDefaultAddress = (req, res) => {
     }
     else return res.send({success: false, message: "data insufficient"})
 }
-

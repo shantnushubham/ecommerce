@@ -6,7 +6,17 @@ const { forwardAuthenticated, ensureAuthenticated } = require('../Middlewares/us
 var viewController = require('../controllers/view_controller');
 var UserControl = require('../controllers/user/userController');
 
-router.get('/', (req, res) => res.render('new'));
+
+router.get('/', (req,res) => {
+  console.log(req.user, 'dfs')
+  if(!req.user){
+    return res.render('index')
+  }
+  else if( req.user && !req.user.active) {
+    return res.render('address', {user: req.user})
+  }
+  else return res.render('index', {user: req.user})
+})
 
 // router.get('/', (req, res) => {
 //   console.log(req.user, 'sdf');

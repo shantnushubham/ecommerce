@@ -1,21 +1,15 @@
-var nodemailer = require('nodemailer');
-
-var clientId = process.env.CLIENTID
-var clientSecret = process.env.CLIENTSECRET
-var refreshToken = process.env.REFRESHTOKEN
-var userMailID = process.env.USERMAILID
+var sendgrid = require("@sendgrid/mail");
+var auth = require("../../config/auth");
+sendgrid.setApiKey(auth.sendgrid.apiKey);
+// var clientId = process.env.CLIENTID
+// var clientSecret = process.env.CLIENTSECRET
+// var refreshToken = process.env.REFRESHTOKEN
+// var userMailID = process.env.USERMAILID
 
 exports.Register = function (user, callback) {
     if (user && user.email && user.name) {
-        var transporter = nodemailer.createTransport({
-            service: 'Gmail',
-            auth: {
-                user: 'support@inversion.co.in',
-                pass: "1429inversion.co.in"
-            }
-        });
         var mailOptions = {
-            from: 'support@inversion.co.in',
+            from: 'Foxmula<support@foxmula.com>',
             to: user.email,
             subject: "Welcome",
             html: `
@@ -30,13 +24,11 @@ exports.Register = function (user, callback) {
             </body>
         </html>`
         };
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                transporter.close();
-                callback({success: true})
+        sendgrid.send(mailOptions, (err, response) => {
+            if (err) {
+                console.log(err);
             }
+            callback({success: true});
         });
     } else {
         return null;
