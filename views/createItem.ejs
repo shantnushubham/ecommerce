@@ -1,0 +1,43 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="container">
+    <br>
+    <h1>Add Item</h1>
+    <br>
+    <br>
+    <form action="/admin/createItem" method="POST">
+        <div class="ui form">
+            <div class="field">
+                <label>Name</label>
+                <input type="text" placeholder="Name" name="name">
+            </div>
+            <div class="field">
+                <label>Price</label>
+                <input type="text" placeholder="Price" name="price">
+            </div>
+            <div class="field">
+                <label>Weight</label>
+                <input type="text" placeholder="Weight" name="weight">
+            </div>
+            <div class="field">
+                <label>Color</label>
+                <input type="text" placeholder="Color" name="color">
+            </div>
+            <div class="field">
+                <label>Category</label>
+                <input type="text" placeholder="Category" name="category">
+            </div>
+            <div class="field">
+                <label>Image Link</label>
+                <input type="text" placeholder="ImageLink" name="image">
+            </div>
+            <div class="field">
+                <label>Content</label>
+                <textarea rows="2" spellcheck="true" placeholder="content" name="content"></textarea>
+            </div>
+        </div>
+        <button class="ui button" type="submit">Submit</button>
+    </form>
+</div>
+
+<%- include('partials/adminFooter'); -%>

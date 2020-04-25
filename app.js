@@ -12,6 +12,7 @@ const app = express();
 var logger = require('morgan');
 var MongoStore  = require('connect-mongo')(session)
 
+
 require('dotenv').config()
 
 var routes = require('./routes/routes')
@@ -23,10 +24,14 @@ var User = require('./models/User/User');
 require('./config/passport')(passport);
 // const OAuthCredentials = require('./config/auth');
 
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.set("views",path.join(__dirname, 'views'));
+
+
 
 mongoose.connect('mongodb://localhost:27017/newSpice', { useUnifiedTopology: true, useNewUrlParser: true });
 
@@ -47,6 +52,8 @@ app.use(logger('dev'));
 // app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(compression());
+
+
 
 app.use(session({
   secret: 'my-secret',
@@ -109,7 +116,9 @@ app.get('/auth/facebook/callback',
                                       failureRedirect: '/login' })
 );
 
+
 app.use('/', require('./routes/routes'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

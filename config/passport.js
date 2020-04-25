@@ -4,7 +4,7 @@ const FacebookStrategy        = require('passport-facebook');
 const Mailer = require('./../controllers/common/Mailer')
 const OAuthCredentials = require('./auth');
 
-// Load User model
+// // Load User model
 const User = require('../models/User/User');
 
 module.exports = function(passport) {
@@ -73,7 +73,7 @@ module.exports = function(passport) {
                 // if a user is found, log them in
                 return done(null, user);
             } else {
-                // if the user isnt in our database, create a new user
+//                 // if the user isnt in our database, create a new user
 
                 var newUser = new User();
                 // set all of the relevant information

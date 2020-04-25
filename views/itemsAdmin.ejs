@@ -1,0 +1,46 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="container">
+    <br>
+    <a href="/admin/createItem"><button class="ui large green button">Create Item</button></a>
+    <br>
+    <br>
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>IID</th>
+                <th>Name</th>
+                <th>Active</th>
+                <th>Discount</th>
+                <th>Sale</th>
+                <th>Price</th>
+                <th>Open</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < itemlist.length; i++ ) { %>
+            <tr>
+                <td><img src="<%= itemlist[i].image %>"></td>
+                <td><%= itemlist[i].iid %></td>
+                <td><%= itemlist[i].name %></td>
+                <td><% if (itemlist[i].active == true) { %>
+                    <a href="/admin/items/<%=itemlist[i].iid%>/deactivate"><button
+                            class="ui small green button">Active</button></a>
+                    <% } else { %>
+                    <a href="/admin/items/<%=itemlist[i].iid%>/activate"><button
+                            class="ui small red button">Deactivated</button></a>
+                    <% } %>
+                </td>
+                <td><%= itemlist[i].discount %></td>
+                <td><%= itemlist[i].sale %></td>
+                <td><%= itemlist[i].price %></td>
+                <td><a href="/admin/items/<%=itemlist[i].iid%>"><button
+                    class="ui small green button">Open Item</button></a></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('partials/adminFooter'); -%>

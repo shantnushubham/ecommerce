@@ -8,7 +8,7 @@ var categorySchema  = new mongoose.Schema({
     },
     type:{
         type:String,
-        required:true
+        // required:true
     }
 });
 categorySchema.plugin(mongooseHistory)

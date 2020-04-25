@@ -24,7 +24,7 @@ var itemsSchema  = new mongoose.Schema({
     category:{
         type:mongoose.Types.ObjectId,
         required:true,
-        ref: 'category',
+        ref: "category",
     },
     image:{
         type:String

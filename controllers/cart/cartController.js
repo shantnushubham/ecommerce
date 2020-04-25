@@ -3,12 +3,14 @@ var itemmodel = require('../../models/Items/Items')
 var cartmodel = require('../../models/cart/cart')
 var cartservices = require('../../openServices/cart')
 var mongoose = require("mongoose")
-var middleware = require('../../Middlewares/user/middleware')
+var middleware = require('../../Middlewares/common/functions')
 var async= require('async')
 
 //get items from cart
 exports.getAllItems = function (req, res) {
-    
+    console.log('user='+req.user);
+    console.log('body='+req.body);
+
     cartmodel.aggregate([
         { $match : { uid:'xyz' } },
         { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
@@ -190,19 +192,7 @@ exports.clearCart = function (req, res) {
 }
 
 exports.verify = function (req, res) {
-    console.log(req.session.cart)
-    var newCart = [
-        {
-            itemID: '123', quantity: 7, uid: 'xxyz'
-        },
-        {
-            itemID: '127', quantity: 6, uid: 'xyz'
-        },
-        {
-            itemID: '122', quantity: 4, uid: 'xyz'
-        },
-    ]
-    console.log(cartservices.verifyCart(newCart, 'xyz'))
+    
 }
 
 exports.checkout = function (req, res) {

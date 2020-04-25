@@ -31,7 +31,14 @@ exports.getItemByStatus=function(req,res){
 }
 
 exports.createItem=function(req,res){
-   itemservices.createItem({price:req.body.price,name:req.body.name,category:req.body.category,image:req.body.image},function(createdItem){
+   itemservices.createItem({price:req.body.price,
+    name:req.body.name,
+    category:req.body.category,
+    image:req.body.image,
+    weight:req.body.weight,
+    content:req.body.content,},function(createdItem){
+        console.log('here');
+        console.log(createdItem);
        if(createdItem.success==false)req.flash('error',createdItem.err)
        else req.flash('success','success')
        res.redirect('/admin/items')

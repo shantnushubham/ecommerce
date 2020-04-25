@@ -1,7 +1,7 @@
 var itemMetaModel = require("../models/Items/ItemMetadata")
 var itemmodel = require('../models/Items/Items')
 var cartmodel = require('../models/cart/cart')
-var functions = require('../Middlewares/user/middleware')
+var functions = require('../Middlewares/common/functions')
 
 var mongoose = require("mongoose")
 class cart {
