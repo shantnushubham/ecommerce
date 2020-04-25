@@ -15,7 +15,7 @@
                 <th>Discount</th>
                 <th>Sale</th>
                 <th>Price</th>
-                <th>Content</th>
+                <th>Open</th>
             </tr>
         </thead>
         <tbody>
@@ -35,7 +35,8 @@
                 <td><%= itemlist[i].discount %></td>
                 <td><%= itemlist[i].sale %></td>
                 <td><%= itemlist[i].price %></td>
-                <td><%= itemlist[i].content %></td>
+                <td><a href="/admin/items/<%=itemlist[i].iid%>"><button
+                    class="ui small green button">Open Item</button></a></td>
             </tr>
             <% } %>
         </tbody>

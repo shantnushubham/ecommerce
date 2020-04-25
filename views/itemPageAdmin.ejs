@@ -11,19 +11,26 @@
                 <!-- <img src="<%=item.image%>"> -->
             </div>
             <div class="content">
-                <a class="header"><%=item.name%></a>
-                <a class="header"><%=item.price%></a>
+                <h2>Name: <%=item.name%></h2>
                 <a class="header"><%=item.color%></a>
                 <a class="header"><%=item.content%></a>
+                <a class="header"><%=item.active%></a>
                 <div class="meta">
-                    <span>Description</span>
+                    <h4>Price: Rs. <%=item.price%></h4>
+                    <h4>Color: <%=item.color%></h4>
+                    <% if (item.active == true) { %>
+                        <h4 style="color: green !important;">Active</h4>
+                    <% } else { %>
+                        <h4 style="color: red !important;">Inactive</h4>
+                    <% } %>
                 </div>
                 <div class="description">
-                    <p></p>
+                    <h4>Content: </h4><br>
+                    <h6><%= item.content %></h6>
                 </div>
-                <div class="extra">
+                <!-- <div class="extra">
                     Additional Details
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
