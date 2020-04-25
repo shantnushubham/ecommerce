@@ -21,24 +21,32 @@ class items {
     getItemById(iid, callback) {
         itemModel.findOne({ iid: iid }, function (err, foundItem) {
             if (err) callback({ success: false, err: err })
+            else{
             itemMetaModel.findOne({ iid: foundItem.iid }, function (err, foundMeta) {
                 if (err) callback({ success: false, err: err })
-                // console.log(foundItem);
-                // console.log(foundMeta);
-                var totalDetails = {
-                    active: foundItem.active,
-                    iid: foundItem.iid,
-                    name: foundItem.name,
-                    price: foundItem.price,
-                    image: foundItem.image,
-                    discount: foundItem.discount,
-                    content: foundMeta.content,
-                    weight: foundMeta.weight,
-                    color: foundMeta.color
+                else
+                {
+                categoryModel.findOne({_id:foundItem.category},function(err,foundCategory){
+                    if(err)callback({ success: false, err: err })
+                    var totalDetails = {
+                        active: foundItem.active,
+                        iid: foundItem.iid,
+                        name: foundItem.name,
+                        price: foundItem.price,
+                        image: foundItem.image,
+                        discount: foundItem.discount,
+                        content: foundMeta.content,
+                        weight: foundMeta.weight,
+                        color: foundMeta.color,
+                        category:foundCategory.name
+                    }
+                    // console.log(totalDetails);
+                    callback({ success: true, totalDetails, err: null })
+                })
+               
                 }
-                console.log(totalDetails);
-                callback({ success: true, totalDetails, err: null })
             })
+        }
         })
     }
 
