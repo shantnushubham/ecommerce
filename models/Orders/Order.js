@@ -16,7 +16,7 @@ var orderSchema  = new mongoose.Schema({
         required: true
     },
     itemId:{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'item'
     },
     quantity:{
@@ -24,7 +24,7 @@ var orderSchema  = new mongoose.Schema({
         required:true
     },
     deliveryAddress:{
-        type:mongoose.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref: 'delivery_address',
         required:true
     },
@@ -48,7 +48,19 @@ var orderSchema  = new mongoose.Schema({
     },
     transaction_id:{
         type: String
-    }
+    },
+    user: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    cancelled_order: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'cancelled_order'
+    }],
+    review: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'review'
+    }]
 });
 orderSchema.plugin(mongooseHistory)
 module.exports = mongoose.model("order", orderSchema);

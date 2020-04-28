@@ -242,13 +242,13 @@ exports.addDefaultUserAddress = (req, res) => {
         }
         User.update(
             { uuid: req.user.uuid}, 
-            updateData, 
+            updateData,
             {new: true}
         )
         .exec(err => {
           if(err){
                 req.flash('error_msg', 'Unable to add address');
-                res.redirect('/');
+                res.redirect('/address');
           }
           else
             res.redirect('/')
@@ -259,31 +259,33 @@ exports.addDefaultUserAddress = (req, res) => {
 }
 
 exports.addUserAddress = (req, res) => {
-  if(req && req.user && req.body){
+  //// if(req && req.user && req.body){
     var address = new UserAddress(req.body.address)
-    address.save((err, result) => {
+    UserAddress.create(req.body.address, function(err, result)  {
         if(err) return res.status(400).send({error:err})
         else if(!result) {
                 req.flash('error_msg', 'Unable to add address');
-                res.redirect('/');
+                res.redirect('/address');
         }
-
-        User.update(
-            { uuid: req.user.uuid}, 
-            { $addToSet: { deliveryAddress:result._id } }, 
-            {new: true}
-        )
-        .exec(err => {
+        console.log(result)
+        User.findByIdAndUpdate(
+            { _id: req.user._id}, 
+            {$addToSet: { deliveryAddress:result._id } },
+            { checkKeys: false, upsert: true } )
+        .exec(function(err){
           if(err){
+                console.log(err, 'er')
                 req.flash('error_msg', 'Unable to add address');
-                res.redirect('/');
+                res.redirect('/address');
           }
-          else
+          else{
+            // console.log(data, 'hellp')
             res.redirect('/')
-        })
-    })
-  }
-  else res.send({success: false, message: "data insufficient"})
+          }
+        }) 
+      })
+  //}
+  //else res.send({success: false, message: "data insufficient"})
 }
 
 

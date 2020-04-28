@@ -31,7 +31,15 @@ var deliveryAddressSchema  = new mongoose.Schema({
     country: {
         type:String,
         required: true
-    }
+    },
+    user: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    order:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'order',
+    }],
 });
 deliveryAddressSchema.plugin(mongooseHistory)
 module.exports = mongoose.model("delivery_address", deliveryAddressSchema);

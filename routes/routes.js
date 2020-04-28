@@ -8,7 +8,6 @@ var UserControl = require('../controllers/user/userController');
 
 
 router.get('/', (req,res) => {
-  console.log(req.user, 'dfs')
   if(!req.user){
     return res.render('index')
   }
@@ -18,13 +17,11 @@ router.get('/', (req,res) => {
   else return res.render('index', {user: req.user})
 })
 
-// router.get('/', (req, res) => {
-//   console.log(req.user, 'sdf');
-//   return res.render('index1')
-// });
+router.get('/address', ensureAuthenticated, (req, res) => {
+  return res.render('address', {user: req.user})
+});
 
 router.get('/dashboard', (req, res) => {
-  console.log(req.user)
   res.render('dashboard', {
     user: req.user
   })
