@@ -2,7 +2,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy          = require('passport-google-oauth20');
 const FacebookStrategy        = require('passport-facebook');
 const Mailer = require('./../controllers/common/Mailer')
-const OAuthCredentials = require('./auth');
+require('dotenv').config()
+const envData=process.env
 
 // // Load User model
 const User = require('../models/User/User');
@@ -12,9 +13,9 @@ module.exports = function(passport) {
 
   passport.use(
     new GoogleStrategy({
-        clientID:OAuthCredentials.googleAuth.clientID,
-        clientSecret:OAuthCredentials.googleAuth.clientSecret,
-        callbackURL:OAuthCredentials.googleAuth.callbackURL
+        clientID:envData.gAuth_client_id,
+        clientSecret:envData.gAuth_client_Secret,
+        callbackURL:envData.gAuth_client_callBackURL
     },(accessToken, refreshToken, profile, done)=>{
         process.nextTick(function() {
             User.findOne({"email": profile.emails[0].value}, function(err, founduser){
@@ -60,9 +61,9 @@ module.exports = function(passport) {
   );
 
   passport.use(new FacebookStrategy({
-        clientID: OAuthCredentials.facebookAuth.clientID,
-        clientSecret: OAuthCredentials.facebookAuth.clientSecret,
-        callbackURL: OAuthCredentials.facebookAuth.callbackURL,
+        clientID: envData.fbAuth_client_id,
+        clientSecret: envData.fbAuth_client_Secret,
+        callbackURL: envData.fbAuth_client_callBackURL,
         profileFields: ['id', 'displayName', 'email']
     },
     function(accessToken, refreshToken, profile, done) {
