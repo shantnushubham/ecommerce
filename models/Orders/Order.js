@@ -13,15 +13,28 @@ var orderSchema  = new mongoose.Schema({
     uid:{
         type:String
     },
-    iid:{
-        type: String,
-        required: true,
-        default:shortid.generate
+    orderId: {
+        type: String
     },
-    quantity:{
-        type:Number,
-        required:true
-    },
+    // iid:{
+    //     type: String,
+    //     required: true,
+    //     default:shortid.generate
+    // },
+    // quantity:{
+    //     type:Number,
+    //     required:true
+    // },
+
+    orderedItems: [
+        new Schema (
+            {
+                // item: ObjectId,
+                iid: String,
+                quantity: Number
+            }
+        )
+    ],
     deliveryAddress:{
         type:mongoose.Types.ObjectId,
         ref: 'delivery_address',
