@@ -14,6 +14,7 @@ var MongoStore  = require('connect-mongo')(session)
 
 
 require('dotenv').config()
+const envData=process.env
 
 var routes = require('./routes/routes')
 var cartRoutes=require('./routes/cart')
@@ -33,11 +34,11 @@ app.set("views",path.join(__dirname, 'views'));
 
 
 
-mongoose.connect('mongodb://localhost:27017/newSpice', { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(envData.DB, { useUnifiedTopology: true, useNewUrlParser: true });
 
 app.use(mongooseMorgan({
     collection: 'Log',
-    connectionString: 'mongodb://localhost:27017/newSpice',
+    connectionString: envData.DB,
   },
   {
     skip: function (req, res) {

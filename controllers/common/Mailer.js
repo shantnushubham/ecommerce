@@ -1,6 +1,7 @@
 var sendgrid = require("@sendgrid/mail");
-var auth = require("../../config/auth");
-sendgrid.setApiKey(auth.sendgrid.apiKey);
+require('dotenv').config()
+const envData=process.env
+sendgrid.setApiKey(envData.sendgrid_apikey);
 // var clientId = process.env.CLIENTID
 // var clientSecret = process.env.CLIENTSECRET
 // var refreshToken = process.env.REFRESHTOKEN

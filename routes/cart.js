@@ -23,6 +23,6 @@ app.get('/updateCart',cartController.getUpdateCart)
 app.post('/updateCart',cartController.updateCart)
 app.get('/clearcart',cartController.clearCart)
 app.post('/add/:iid',cartController.addItem)
-// app.get('/verify',cartController.verify)
+app.get('/verify',cartController.verify)
 
 module.exports=app

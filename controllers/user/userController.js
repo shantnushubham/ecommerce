@@ -2,13 +2,14 @@ var User = require("../../models/User/User")
 var UserAddress = require("../../models/User/DeliveryAddress")
 // var Generator = require("../../common/Generator")
 var mailer = require("../common/Mailer")
-
+var mongoose=require('mongoose')
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 var ObjectId = require('mongoose').Types.ObjectId;
 var sendgrid = require("@sendgrid/mail");
-var auth = require("../../config/auth");
-sendgrid.setApiKey(auth.sendgrid.apiKey);
+require('dotenv').config()
+const envData=process.env
+sendgrid.setApiKey(envData.sendgrid_apikey);
 
 exports.register = (req, res) => {
     const { email, password, password2 } = req.body;
@@ -258,7 +259,7 @@ exports.addDefaultUserAddress = (req, res) => {
   else res.send({success: false, message: "data insufficient"})
 }
 
-exports.addUserAddress = (req, res) => {
+exports.addUserAddress = function(req, res){
   if(req && req.user && req.body){
     var address = new UserAddress(req.body.address)
     address.save((err, result) => {
