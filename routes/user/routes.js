@@ -1,16 +1,27 @@
 var express = require('express')
 var router = express.Router()
+const passport = require('passport');
 
 const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares/user/middleware');
 
 var UserControl = require('../../controllers/user/userController')
 
-router.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
-router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
+router.get('/login', forwardAuthenticated, (req, res) => { 
+    console.log(req.user, 'dell')
+    return res.render('login2')
+});
+router.get('/register', forwardAuthenticated, (req, res) => res.render('register2'));
 
-router.post('/register', UserControl.register);
-router.post('/login', UserControl.login);
-router.get('/logout', UserControl.logout);
+router.post('/register', forwardAuthenticated, UserControl.register);
+router.post('/addAddress', ensureAuthenticated, UserControl.addDefaultUserAddress);
+router.post('/login', passport.authenticate("local",{
+        successRedirect: "/",
+        failureRedirect: "/users/login",
+        failureFlash: true
+    }), (req, res) => {
+});
+
+router.get('/logout', ensureAuthenticated, UserControl.logout);
 
 
 router.get('/getUserById', ensureAuthenticated, UserControl.getUserById)

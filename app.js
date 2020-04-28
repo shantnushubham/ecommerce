@@ -9,6 +9,7 @@ const path=require('path')
 const mongooseMorgan=require('mongoose-morgan')
 const compression= require('compression')
 const app = express();
+var logger = require('morgan');
 var MongoStore  = require('connect-mongo')(session)
 
 
@@ -19,8 +20,8 @@ var cartRoutes=require('./routes/cart')
 var adminroutes=require('./routes/admin')
 var itemRoutes=require('./routes/items')
 var User = require('./models/User/User');
-// Passport Config
-// require('./config/passport')(passport);
+
+require('./config/passport')(passport);
 // const OAuthCredentials = require('./config/auth');
 
 
@@ -46,7 +47,7 @@ app.use(mongooseMorgan({
   'dev'
 ));
 
-// app.use(logger('dev'));
+app.use(logger('dev'));
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended: true}));
 
@@ -71,12 +72,13 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Connect flash
 app.use(flash());
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Global variables
 app.use(function(req, res, next) {

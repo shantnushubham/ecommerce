@@ -56,32 +56,104 @@
 						<div class="sign-up-bg"></div>
 					</div>
 					<div class="col-lg-6 col-md-6 p-0">
+						<% if(typeof errors != 'undefined'){ %> <% errors.forEach(function(error) { %>
+							<div  role="alert">
+							  <%= error.msg %>
+							  <button type="button" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </button>
+							</div>
+							<% }); %> <% } %> <% if(success_msg != ''){ %>
+							<div class="alert alert-success alert-dismissible fade show" role="alert">
+							  <%= success_msg %>
+							  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </button>
+							</div>
+							<% } %> <% if(error_msg != ''){ %>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							  <%= error_msg %>
+							  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </button>
+							</div>
+							<% } %> <% if(error != ''){ %>
+							<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							  <%= error %>
+							  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </button>
+							</div>
+							<% } %>
 						<div class="sign-up-form">
 							<h3>Create your Account</h3>
-							<form>
+							<form  action="/users/register" method="POST">
 								<div class="row">
-									<div class="col-lg-6 col-sm-6">
+									<div class="col-lg-6">
 										<div class="form-group">
-											<label>First Name</label>
-											<input type="text" class="form-control" placeholder="First Name">
+											<label>Name</label>
+											<input name="user[name]" type="text" class="form-control" placeholder="	Name" required>
 										</div>
 									</div>
-									<div class="col-lg-6 col-sm-6">
-										<div class="form-group">
-											<label>Last Name</label>
-											<input type="text" class="form-control" placeholder="Last Name">
-										</div>
-									</div>
-									<div class="col-lg-12">
+									<div class="col-lg-6">
 										<div class="form-group">
 											<label>Email</label>
-											<input type="email" class="form-control" placeholder="Email Address">
+											<input type="email" name="email" class="form-control" placeholder="Email Address" required value="<%= typeof email != 'undefined' ? email : '' %>">
 										</div>
 									</div>
 									<div class="col-lg-12">
 										<div class="form-group">
+											<label>Phone</label>
+											<input name="phone" type="number" class="form-control" required placeholder="Phone Number">
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label>Landmark</label>
+											<input name="address[landmark]" type="text" class="form-control" placeholder="Landmark">
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label>Locality</label>
+											<input name="address[locality]" type="text" class="form-control" placeholder="Locality">
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label>Pincode</label>
+											<input name="address[pincode]" type="number" required class="form-control" placeholder="Pincode Number">
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label>District</label>
+											<input name="address[district]" type="text" required class="form-control" placeholder="District">
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label>State</label>
+											<input name="address[state]" type="text" required class="form-control" placeholder="State">
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label>Country</label>
+											<input name="address[country]" type="text" required class="form-control" placeholder="Country">
+										</div>
+									</div>
+									
+									<div class="col-lg-6">
+										<div class="form-group">
 											<label>Password</label>
-											<input type="password" class="form-control" placeholder="Password">
+											<input type="password" name="password" required class="form-control" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>">
+										</div>
+									</div>
+									<div class="col-lg-6">
+										<div class="form-group">
+											<label>Confirm Password</label>
+											<input type="password" name="password2" required class="form-control" placeholder="Confirm Password" value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
 										</div>
 									</div>
 									<div class="col-md-6 offset-md-3">

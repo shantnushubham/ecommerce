@@ -1,7 +1,7 @@
 var User = require("../../models/User/User")
 var UserAddress = require("../../models/User/DeliveryAddress")
 // var Generator = require("../../common/Generator")
-// var mailer = require("../../common/Mailer")
+var mailer = require("../common/Mailer")
 
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
@@ -11,65 +11,68 @@ var auth = require("../../config/auth");
 sendgrid.setApiKey(auth.sendgrid.apiKey);
 
 exports.register = (req, res) => {
-    const { name, email, password, password2 } = req.body;
+    const { email, password, password2 } = req.body;
     let errors = [];
-  
-    if (!name || !email || !password || !password2) {
-      errors.push({ msg: 'Please enter all fields' });
-    }
   
     if (password != password2) {
       errors.push({ msg: 'Passwords do not match' });
     }
   
-    if (password.length < 6) {
+    if (password.length < 0) {
       errors.push({ msg: 'Password must be at least 6 characters' });
     }
   
     if (errors.length > 0) {
       res.render('register', {
         errors,
-        name,
         email,
         password,
         password2
       });
     } else {
-      User.findOne({ email: email }).then(user => {
-        if (user) {
-          errors.push({ msg: 'Email already exists' });
-          res.render('register', {
-            errors,
-            name,
-            email,
-            password,
-            password2
-          });
-        } else {
-          const newUser = new User({
-            name,
-            email,
-            password
-          });
-  
-          bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if (err) throw err;
-              newUser.password = hash;
-              newUser
-                .save()
-                .then(user => {
-                  req.flash(
-                    'success_msg',
-                    'You are now registered and can log in'
-                  );
-                  res.redirect('/users/login');
-                })
-                .catch(err => console.log(err));
-            });
-          });
+      req.body.user['username'] = req.body.email;
+      req.body.user['email'] = req.body.email;
+      req.body.user['phone'] = req.body.phone;
+      req.body.user['active'] = true;
+
+      req.body.address['email'] = req.body.email;
+      req.body.address['phone'] = req.body.phone;
+      console.log(req.body.user, req.body.address);
+      var newAddress = new UserAddress(req.body.address);
+      newAddress.save( (err, addressRes) => {
+        if(err) {
+          console.log(err);
+          return res.flash('error_msg', 'unable to save address');
         }
-      });
+        req.body.user['defaultDeliveryAddress'] = addressRes._id;
+        req.body.user['deliveryAddress'] = [addressRes._id];
+        var u = new User(req.body.user);
+        User.register(new User(u), req.body.password, function(err, user){
+            if(err){
+                console.log(err);
+                req.flash('error_msg', 'Email already exist');
+                res.redirect('/users/register');
+            }
+            passport.authenticate("local")(req, res, function(){
+              console.log(user)
+              const mailOptions = {
+                  to: user.email,
+                  from: 'support@inversion.co.in',
+                  subject: "successfully registered",
+                  text: `Hi ${user.name} \n 
+                    You have been successfully registered.`
+              };
+              sendgrid.send(mailOptions, (error, result) => {
+                  if (error) {
+                    console.log(error)
+                    return res.status(500).json({message: error.message});
+                  }
+                  console.log('f')
+                  res.redirect('/');
+              });
+            });
+        });
+      })
     }
   }
 
@@ -137,38 +140,34 @@ exports.reset = (req, res, next) => {
 
 
 exports.resetPassword = (req, res) => {
-  console.log(req.body)
     if(req && req.body && req.body.password && req.body.password2){
       if(req.body.password === req.body.password2){
         User.findOne({resetPasswordToken: req.body.token, resetPasswordExpires: {$gt: Date.now()}})
         .then((user) => {
             if (!user) return res.status(401).json({msg: 'Password reset token is invalid or has expired.'});
+            
+            user.setPassword(req.body.password, function(err) {
+              user.resetPasswordToken = undefined;
+              user.resetPasswordExpires = undefined;
 
-            //Set the new password
-            user.password = req.body.password;
-            user.resetPasswordToken = undefined;
-            user.resetPasswordExpires = undefined;
+              user.save(function(err) {
+                  if (err) return res.status(500).json({msg: err.message});
+                  const mailOptions = {
+                      to: user.email,
+                      from: 'support@inversion.co.in',
+                      subject: "Your password has been changed",
+                      text: `Hi ${user.username} \n 
+                      This is a confirmation that the password for your account ${user.email} has just been changed.\n`
+                  };
 
-            // Save
-            user.save((err) => {
-                if (err) return res.status(500).json({msg: err.message});
+                  sendgrid.send(mailOptions, (error, result) => {
+                      if (error) return res.status(500).json({msg: error.message});
 
-                // send email
-                const mailOptions = {
-                    to: user.email,
-                    from: 'support@inversion.co.in',
-                    subject: "Your password has been changed",
-                    text: `Hi ${user.username} \n 
-                    This is a confirmation that the password for your account ${user.email} has just been changed.\n`
-                };
-
-                sendgrid.send(mailOptions, (error, result) => {
-                    if (error) return res.status(500).json({msg: error.message});
-
-                    req.flash('success_msg', 'password changed successfully');
-                    res.redirect('/users/login');
-                });
-            });
+                      req.flash('success_msg', 'password changed successfully');
+                      res.redirect('/users/login');
+                  });
+              });
+          })
         });
       }
       else return res.status(200).json({success: false, msg: 'Pasword doesn\'t matched'});
@@ -226,18 +225,62 @@ exports.updateUserData = (req, res) => {
 //     else return res.send({success: false, message: "data insufficient"})
 // }
 
-exports.addUserAddress = (req, res) => {
+
+exports.addDefaultUserAddress = (req, res) => {
   if(req && req.user && req.body){
-    var address = new UserAddress(req.body)
+    var address = new UserAddress(req.body.address)
     address.save((err, result) => {
         if(err) return res.status(400).send({error:err})
-        else if(!result) return res.json({success: false, message: 'Unable to save'});
+        else if(!result) {
+                req.flash('error_msg', 'Unable to add address');
+                res.redirect('/');
+        }
+        var updateData = {
+          defaultDeliveryAddress: result._id,
+          deliveryAddress: [result._id],
+          active: true
+        }
+        User.update(
+            { uuid: req.user.uuid}, 
+            updateData, 
+            {new: true}
+        )
+        .exec(err => {
+          if(err){
+                req.flash('error_msg', 'Unable to add address');
+                res.redirect('/');
+          }
+          else
+            res.redirect('/')
+        })
+    })
+  }
+  else res.send({success: false, message: "data insufficient"})
+}
 
-        User.findOneAndUpdate({ uuid: req.user.uuid}, { $addToSet: { deliveryAddress: {_id: result._id} }, defaultDeliveryAddress: result._id }, {new: true})
-        .select('name email phone username')
-        .populate('defaultDeliveryAddress deliveryAddress', 'locality landmark state district pincode contact')
-            .then(data => res.send({success: true, message: 'Address Added', body: data})
-            )
+exports.addUserAddress = (req, res) => {
+  if(req && req.user && req.body){
+    var address = new UserAddress(req.body.address)
+    address.save((err, result) => {
+        if(err) return res.status(400).send({error:err})
+        else if(!result) {
+                req.flash('error_msg', 'Unable to add address');
+                res.redirect('/');
+        }
+
+        User.update(
+            { uuid: req.user.uuid}, 
+            { $addToSet: { deliveryAddress:result._id } }, 
+            {new: true}
+        )
+        .exec(err => {
+          if(err){
+                req.flash('error_msg', 'Unable to add address');
+                res.redirect('/');
+          }
+          else
+            res.redirect('/')
+        })
     })
   }
   else res.send({success: false, message: "data insufficient"})
@@ -317,4 +360,3 @@ exports.makeAdressToDefaultAddress = (req, res) => {
     }
     else return res.send({success: false, message: "data insufficient"})
 }
-

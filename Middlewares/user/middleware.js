@@ -5,14 +5,15 @@ module.exports = {
       console.log('authenticated user')
       return next();
     }
-    req.flash('error', 'Please log in to view that resource');
+    req.flash('error_msg', 'Please log in.');
     res.redirect('/users/login');
   },
   forwardAuthenticated: function(req, res, next) {
     if (!req.isAuthenticated()) {
       return next();
     }
-    res.redirect('/dashboard');      
+    console.log(req.user, 'sa')
+    return res.redirect('/');      
   },
 
   

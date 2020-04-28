@@ -119,10 +119,10 @@
 											<a href="404.html" class="nav-link">404 Error</a>
 										</li>
 										<li class="nav-item">
-											<a href="log-in.html" class="nav-link">Log In</a>
+											<a href="/users/login" class="nav-link">Log In</a>
 										</li>
 										<li class="nav-item">
-											<a href="sign-up.html" class="nav-link">Sign Up</a>
+											<a href="/users/register" class="nav-link">Sign Up</a>
 										</li>
 									</ul>
 								</li>
@@ -200,18 +200,25 @@
 						<div class="sidebar-modal-widget">
 							<h3 class="title">Additional Links</h3>
 							<ul>
+								<% if(typeof user != 'undefined' ) { console.log(user.name, 'her') %> 
 								<li>
-									<a href="log-in.html">Log In</a>
+									<a href="#"> welcome <%= user.name %></a>
 								</li>
 								<li>
-									<a href="sign-up.html">Sign Up</a>
+									<a href="/users/logout">Logout</a>
 								</li>
+							<% } else {%>
+								<li>
+									<a href="/users/login">Log In</a>
+								</li>
+								<li>
+									<a href="/users/register">Sign Up</a>
+								</li>
+							<% } %>
 								<li>
 									<a href="faq.html">FAQ</a>
 								</li>
-								<li>
-									<a href="#">Logout</a>
-								</li>
+								
 							</ul>
 						</div>
 						<div class="sidebar-modal-widget">
