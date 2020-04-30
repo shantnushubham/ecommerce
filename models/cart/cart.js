@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const shortid = require("shortid");
 
 var cartSchema  = new mongoose.Schema({
-    uid:{
+    uuid:{
         type:String
     },
     iid:{

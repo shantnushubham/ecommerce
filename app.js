@@ -59,10 +59,10 @@ app.use(compression());
 app.use(session({
   secret: 'my-secret',
   resave: false,
-  saveUninitialized: true,
-  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  saveUninitialized: false,
+  // store: new MongoStore({ mongooseConnection: mongoose.connection }),
   cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7 * 3 // two weeks
+      maxAge: 1000 * 60 * 60 * 24 * 3 // two weeks
   }
 }));
 
