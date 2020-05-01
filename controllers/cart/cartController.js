@@ -192,7 +192,9 @@ exports.clearCart = function (req, res) {
 }
 
 exports.verify = function (req, res) {
-    
+    cartservices.getListingForOrder('xyz',function(resp){
+        console.log(resp);
+    })
 }
 
 exports.checkout = function (req, res) {

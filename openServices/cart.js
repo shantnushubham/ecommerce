@@ -250,5 +250,29 @@ class cart {
         })
     }
 
+    getListingForOrder(uid,callback)
+    {
+       cartmodel.aggregate([
+        { $match : { uid:'xyz' } },
+        { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
+        { $project: { 
+            "quantity": "$quantity", 
+            "iid": "$iid", 
+            "item": { "$arrayElemAt": [ "$item", 0 ] } 
+            ,"price":"$item.price"
+        }}
+       ]).exec(function(err,cartItem){
+           if(err)
+           {
+               console.log(err);
+               callback({success:false})
+           }
+           else
+           {
+               console.log(cartItem);
+           }
+       })
+    }
+
 }
 module.exports = new cart()

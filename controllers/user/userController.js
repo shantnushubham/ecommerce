@@ -2,13 +2,14 @@ var User = require("../../models/User/User")
 var UserAddress = require("../../models/User/DeliveryAddress")
 // var Generator = require("../../common/Generator")
 var mailer = require("../common/Mailer")
-
+var mongoose=require('mongoose')
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 var ObjectId = require('mongoose').Types.ObjectId;
 var sendgrid = require("@sendgrid/mail");
-var auth = require("../../config/auth");
-sendgrid.setApiKey(auth.sendgrid.apiKey);
+require('dotenv').config()
+const envData=process.env
+sendgrid.setApiKey(envData.sendgrid_apikey);
 
 exports.register = (req, res) => {
     const { password, password2, phone } = req.body;
