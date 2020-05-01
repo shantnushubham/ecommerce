@@ -223,7 +223,6 @@ exports.updateUserData = (req, res) => {
 //     else return res.send({success: false, message: "data insufficient"})
 // }
 
-
 exports.addDefaultUserAddress = (req, res) => {
   const {phone, pincode} = req.body.address
     let errors = [];

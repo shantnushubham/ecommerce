@@ -18,6 +18,10 @@ var UserSchema  = new mongoose.Schema({
     username: {
         type: String,
     },
+    isAdmin : {
+        type: Boolean,
+        default: false
+    },
     active:{
         type: Boolean,
         default: false
