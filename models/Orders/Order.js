@@ -10,23 +10,27 @@ var mongooseHistory = require('mongoose-history')
 // 4: cancelled
 
 var orderSchema  = new mongoose.Schema({
-    uid:{
+    uuid:{
         type:String
     },
 
     orderId: {
         type: String,
+        required:true,
         default: shortid.generate
     },
 
     orderedItems: [
         {
-            quantity: Number,
-            items: { 
-                type : String, 
-            },
+            iid:{type:String},
+            quantity:{type: Number},
         }
     ],
+    
+    total:{
+        type:Number,
+        required:true,
+    },
 
     deliveryAddress:{
         type:mongoose.Schema.Types.ObjectId,
@@ -41,9 +45,28 @@ var orderSchema  = new mongoose.Schema({
     },
 
     status:{
-        type: Number,
-        required: true
+        type: String,
+        default:'initialised'
     },
+    instaPaymentRequestId:{
+        type:String,
+        default:''
+    },
+    instaPaymenturl:{
+        type:String,
+        default:''
+    },
+    instaPaymentId:{
+        type:String,
+        default:''
+    },
+    paid:{
+        type:Boolean,
+        required:true,
+        default:false
+    },
+
+    
     // estimatedDeliveryDate:{
     //     type: Date,
     // },

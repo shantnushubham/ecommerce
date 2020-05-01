@@ -12,11 +12,11 @@ exports.getAllItems = function (req, res) {
     console.log('body='+req.body);
 
     cartmodel.aggregate([
-        { $match : { uid:'xyz' } },
+        { $match : { uuid:req.user.uuid } },
         { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
         { $project: { 
             "quantity": "$quantity", 
-            "uid": "$uid", 
+            "uuid": "$uuid", 
             "item": { "$arrayElemAt": [ "$item", 0 ] } 
         }} ]).exec(function(err,found){
         if(err){
@@ -26,7 +26,7 @@ exports.getAllItems = function (req, res) {
         }
         else{
         
-        cartlisting = cartservices.verifyCart(found, 'xyz')
+        cartlisting = cartservices.verifyCart(found, req.user.uuid)
         //  console.log(cartlisting);   
          cartlisting.forEach(element => {
              console.log(element);
@@ -55,7 +55,7 @@ exports.addItem = function (req, res) {
                 res.redirect('/items')
             }
             else {
-                cartservices.checkCartForItem(founditem.iid, 'xyz', function (cartItem) {
+                cartservices.checkCartForItem(founditem.iid, req.user.uuid, function (cartItem) {
                     if (cartItem.success == false) {
                         console.log('trouble in fetching cart');
                         req.flash('error', 'trouble in fetching cart')
@@ -69,7 +69,7 @@ exports.addItem = function (req, res) {
                         }
                         else {
                             console.log(req.body);
-                            cartservices.addToCart(founditem.iid,'xyz',req.body.quantity,function(addedCart){
+                            cartservices.addToCart(founditem.iid,req.user.uuid,req.body.quantity,function(addedCart){
                                 if(addedCart.success==false)
                                 {
                                     console.log(addedCart.message);
@@ -102,7 +102,7 @@ exports.addItem = function (req, res) {
 exports.getUpdateCart=function(req,res){
     console.log('getting cart');
     var cartlisting = []
-    cartservices.getUserCartItems('xyz',function(cartitem){
+    cartservices.getUserCartItems(req.user.uuid,function(cartitem){
         if(cartitem.success==false)
         {
             req.flash('error','error in fetching cart')
@@ -123,7 +123,7 @@ exports.getUpdateCart=function(req,res){
                             quantity: element.quantity,
                             price: founditem.price,
                             image: founditem.image,
-                            uid: 'xyz',
+                            uuid: req.user.uuid,
                         }
                         cartlisting.push(itemdata)
         
@@ -133,7 +133,7 @@ exports.getUpdateCart=function(req,res){
         }
     })
    
-    cartlisting = cartservices.verifyCart(cartlisting, 'xyz')
+    cartlisting = cartservices.verifyCart(cartlisting, req.user.uuid)
     res.render('updateCart',{cart:cartlisting})
 }
 
@@ -147,7 +147,7 @@ exports.updateCart = function (req, res) {
    
     // ids.forEach(element => {
     //     console.log(cart[element]);
-    //      cartservices.updateCart(element,'xyz',cart[element],function(updatedCart){
+    //      cartservices.updateCart(element,req.user.uuid,cart[element],function(updatedCart){
     //         if(updatedCart.success==false){
     //             console.log('error');
     //             errolist.push('error for element with iid'+element.iid)
@@ -157,7 +157,7 @@ exports.updateCart = function (req, res) {
     //     })
     // });
     var promiseArr=[]
-ids.forEach(obj => promiseArr.push( cartservices.updateCart(obj,'xyz',cart[obj]) ) ) ;
+ids.forEach(obj => promiseArr.push( cartservices.updateCart(obj,req.user.uuid,cart[obj]) ) ) ;
 
     // if(errorFlag){
     //     console.log(errorlist);
@@ -178,7 +178,7 @@ res.redirect('/cartpage')
 //clear cart
 exports.clearCart = function (req, res) {
     
-   cartservices.clearCart('xyz',function(updatedCart){
+   cartservices.clearCart(req.user.uuid,function(updatedCart){
     if(updatedCart.success==false)
     {
         req.flash('error','error in clearing cart. please try again')
@@ -192,7 +192,8 @@ exports.clearCart = function (req, res) {
 }
 
 exports.verify = function (req, res) {
-    cartservices.getListingForOrder('xyz',function(resp){
+    console.log('user='+req.user);
+    cartservices.getListingForOrder(req.user.uuid,function(resp){
         console.log(resp);
     })
 }
