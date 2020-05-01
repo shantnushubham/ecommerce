@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 var mongooseHistory = require('mongoose-history')
 
 var deliveryAddressSchema  = new mongoose.Schema({
+    uuid:{
+        type: String,
+        required: true
+    },
     locality:{
         type:String,
     },
@@ -32,14 +36,6 @@ var deliveryAddressSchema  = new mongoose.Schema({
         type:String,
         required: true
     },
-    user: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    order:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'order',
-    }],
 });
 deliveryAddressSchema.plugin(mongooseHistory)
 module.exports = mongoose.model("delivery_address", deliveryAddressSchema);

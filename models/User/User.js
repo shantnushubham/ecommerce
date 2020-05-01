@@ -41,10 +41,6 @@ var UserSchema  = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'delivery_address'
     },
-    deliveryAddress:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'delivery_address'
-    }],
     orders:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'order'

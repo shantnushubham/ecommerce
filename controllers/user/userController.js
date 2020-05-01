@@ -241,6 +241,7 @@ exports.addDefaultUserAddress = (req, res) => {
       res.redirect('/address');
     } 
     else {
+      req.body.address['uuid'] = req.user.uuid
       var address = new UserAddress(req.body.address)
       address.save((err, result) => {
           if(err) return res.status(400).send({error:err})
@@ -250,7 +251,6 @@ exports.addDefaultUserAddress = (req, res) => {
           }
           var updateData = {
             defaultDeliveryAddress: result._id,
-            deliveryAddress: [result._id],
             active: true
           }
           User.update(
@@ -287,37 +287,20 @@ exports.addUserAddress = (req, res) => {
       res.redirect('/address');
     } 
     else {
-    UserAddress.create(req.body.address, function(err, result)  {
-        if(err) return res.status(400).send({error:err})
-        else if(!result) {
-                req.flash('error_msg', 'Unable to add address');
-                res.redirect('/address');
-        }
-        // console.log(result)
-        User.findById({ _id: req.user._id})
-        .select('deliveryAddress')
-        .exec(function(err, data){
-          if(err){
-                // console.log(err, 'er')
-                req.flash('error_msg', 'Unable to add address');
-                res.redirect('/address');
+      req.body.address['uuid'] = req.user.uuid
+      UserAddress.create(req.body.address, function(err, result)  {
+          if(err) {
+              req.flash('error_msg', 'Unable to add address');
+              res.redirect('/address');
           }
-          else{
-            data.deliveryAddress.push(result._id)
-            const updateData = { deliveryAddress :data.deliveryAddress}
-            User.findOneAndUpdate({_id: req.user._id}, updateData)
-              .exec( (err) => {
-                if(err){
-                  // console.log(err, 'er')
+          else if(!result) {
                   req.flash('error_msg', 'Unable to add address');
                   res.redirect('/address');
-                }
-                res.redirect('/');
-              })
           }
-        }) 
-      })
-    }
+            // console.log(result, 'hell')
+            res.redirect('/');
+          })
+      }
 }
 
 exports.updateUserAddress = (req, res) => {
@@ -331,6 +314,23 @@ exports.updateUserAddress = (req, res) => {
     )
   }
     else return res.send({success: false, message: "data insufficient"})
+}
+
+exports.getUserAddress = (req, res) => {
+  User.aggregate([
+    {'$match':{'uuid': req.user.uuid}},
+    { $lookup: { from: 'delivery_addresses', localField: 'email', foreignField: 'email', as: 'address' } },
+    ]).exec(function(err,result){
+        if(err){
+            console.log(err);
+            req.flash('error','error in fetching cart')
+            res.redirect('/address')
+        }
+        else{
+        console.log(result)
+        res.redirect('/address')
+     }
+    })
 }
 
 exports.deleteAddress = (req, res) => {

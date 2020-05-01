@@ -12,7 +12,9 @@ router.get('/login', forwardAuthenticated, (req, res) => {
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register2'));
 
 router.post('/register', forwardAuthenticated, UserControl.register);
-router.post('/addAddress', ensureAuthenticated, UserControl.addDefaultUserAddress);
+router.post('/addDefaultAddress', ensureAuthenticated, UserControl.addDefaultUserAddress);
+router.post('/getUserAddress', ensureAuthenticated, UserControl.getUserAddress);
+router.post('/addAddress', ensureAuthenticated, UserControl.addUserAddress);
 router.post('/login', passport.authenticate("local",{
         successRedirect: "/",
         failureRedirect: "/users/login",
