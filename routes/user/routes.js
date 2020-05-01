@@ -7,13 +7,12 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares
 var UserControl = require('../../controllers/user/userController')
 
 router.get('/login', forwardAuthenticated, (req, res) => { 
-    console.log(req.user, 'dell')
     return res.render('login2')
 });
 router.get('/register', forwardAuthenticated, (req, res) => res.render('register2'));
 
 router.post('/register', forwardAuthenticated, UserControl.register);
-router.post('/addAddress', ensureAuthenticated, UserControl.addUserAddress);
+router.post('/addAddress', ensureAuthenticated, UserControl.addDefaultUserAddress);
 router.post('/login', passport.authenticate("local",{
         successRedirect: "/",
         failureRedirect: "/users/login",

@@ -22,7 +22,7 @@ var itemsSchema  = new mongoose.Schema({
         required:true,
     },
     category:{
-        type:mongoose.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         required:true,
         ref: "category",
     },
@@ -30,7 +30,7 @@ var itemsSchema  = new mongoose.Schema({
         type:String
     },
     metadata:{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'items_metadata'
     },
     discount:{
@@ -42,7 +42,7 @@ var itemsSchema  = new mongoose.Schema({
         default:false
     },
     reviews:[{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'review'
     }],
     dateCreated: {
@@ -55,4 +55,4 @@ var itemsSchema  = new mongoose.Schema({
 
 itemsSchema.plugin(mongooseHistory)
 
-module.exports = mongoose.model("items", itemsSchema,"items");
+module.exports = mongoose.model("items", itemsSchema);

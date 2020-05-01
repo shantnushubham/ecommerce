@@ -18,6 +18,10 @@ var UserSchema  = new mongoose.Schema({
     username: {
         type: String,
     },
+    isAdmin : {
+        type: Boolean,
+        default: false
+    },
     active:{
         type: Boolean,
         default: false
@@ -34,19 +38,19 @@ var UserSchema  = new mongoose.Schema({
         type: String
     },
     defaultDeliveryAddress:{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'delivery_address'
     },
     deliveryAddress:[{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'delivery_address'
     }],
     orders:[{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'order'
     }],
     cancelledOrder:[{
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'cancelled_order'
     }],
     googleUserId: {

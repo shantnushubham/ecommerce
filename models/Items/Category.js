@@ -9,7 +9,11 @@ var categorySchema  = new mongoose.Schema({
     type:{
         type:String,
         // required:true
-    }
+    },
+    items:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: "items",
+    }],
 });
 categorySchema.plugin(mongooseHistory)
 module.exports = mongoose.model("category", categorySchema,"categories");

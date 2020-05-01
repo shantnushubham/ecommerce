@@ -8,7 +8,7 @@ var mongooseHistory = require('mongoose-history')
 
 var cancelledOrderSchema  = new mongoose.Schema({
     order_id:{
-        type:mongoose.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         required:true,
         ref: 'order'
     },
@@ -18,6 +18,10 @@ var cancelledOrderSchema  = new mongoose.Schema({
     },
     reasonOfCancellation:{
         type: String
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 });
 cancelledOrderSchema.plugin(mongooseHistory)

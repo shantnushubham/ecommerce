@@ -3,7 +3,7 @@ var mongooseHistory = require('mongoose-history')
 
 var reviewSchema  = new mongoose.Schema({
     orderId:{
-        type:mongoose.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref: 'order'
     },
     ratingScore:{
@@ -15,7 +15,11 @@ var reviewSchema  = new mongoose.Schema({
     },
     comment:{
         type: String
-    }
+    },
+    items:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'items'
+    }],
 });
 reviewSchema.plugin(mongooseHistory)
 module.exports = mongoose.model("review", reviewSchema);

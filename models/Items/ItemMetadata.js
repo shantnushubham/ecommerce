@@ -5,7 +5,7 @@ var itemsMetaSchema  = new mongoose.Schema({
     iid:{
         type: String,
         required: true,
-        default:mongoose.Types.ObjectId
+        default:mongoose.Schema.Types.ObjectId
     },
     content:{
         type:String,
@@ -17,7 +17,11 @@ var itemsMetaSchema  = new mongoose.Schema({
     },
     color:{
         type:String,
-    }
+    },
+    items:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'items'
+    },
 });
 itemsMetaSchema.plugin(mongooseHistory)
 module.exports = mongoose.model("items_metadata", itemsMetaSchema,"itemsMeta");

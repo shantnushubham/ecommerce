@@ -33,8 +33,9 @@ var orderSchema  = new mongoose.Schema({
     },
 
     deliveryAddress:{
-        type: String,
-        required: true
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'delivery_address',
+        required:true
     },
 
     purchaseTime:{
@@ -63,9 +64,33 @@ var orderSchema  = new mongoose.Schema({
         type:Boolean,
         required:true,
         default:false
-    }
+    },
 
     
+    // estimatedDeliveryDate:{
+    //     type: Date,
+    // },
+    // deliveredDate:{
+    //     type: Date,
+    // },
+    // approvedDate:{
+    //     type: Date,
+    // },
+    transaction_id:{
+        type: String
+    },
+    user: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    cancelled_order: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'cancelled_order'
+    }],
+    review: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'review'
+    }]
 });
 
 orderSchema.plugin(mongooseHistory)
