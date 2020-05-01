@@ -11,24 +11,22 @@ var auth = require("../../config/auth");
 sendgrid.setApiKey(auth.sendgrid.apiKey);
 
 exports.register = (req, res) => {
-    const { email, password, password2 } = req.body;
+    const { password, password2, phone } = req.body;
+    const { pincode } = req.body.address;
     let errors = [];
-  
-    if (password != password2) {
+    if (phone.length < 10) {
+      errors.push({ msg: 'Invalid phone number' });
+    } else if (pincode.length !== 6) {
+      errors.push({ msg: 'Invalid pincode' });
+    } else if (password.length < 6) {
+      errors.push({ msg: 'Password must be at least 6 characters' });
+    } else if (password != password2) {
       errors.push({ msg: 'Passwords do not match' });
     }
-  
-    if (password.length < 0) {
-      errors.push({ msg: 'Password must be at least 6 characters' });
-    }
-  
+
     if (errors.length > 0) {
-      res.render('register', {
-        errors,
-        email,
-        password,
-        password2
-      });
+      req.flash('error_msg', errors[0].msg);
+      res.redirect('/users/register');
     } else {
       req.body.user['username'] = req.body.email;
       req.body.user['email'] = req.body.email;
@@ -227,67 +225,100 @@ exports.updateUserData = (req, res) => {
 
 
 exports.addDefaultUserAddress = (req, res) => {
-  if(req && req.user && req.body){
-    var address = new UserAddress(req.body.address)
-    address.save((err, result) => {
-        if(err) return res.status(400).send({error:err})
-        else if(!result) {
-                req.flash('error_msg', 'Unable to add address');
-                res.redirect('/');
-        }
-        var updateData = {
-          defaultDeliveryAddress: result._id,
-          deliveryAddress: [result._id],
-          active: true
-        }
-        User.update(
-            { uuid: req.user.uuid}, 
-            updateData,
-            {new: true}
-        )
-        .exec(err => {
-          if(err){
-                req.flash('error_msg', 'Unable to add address');
-                res.redirect('/address');
+  const {phone, pincode} = req.body.address
+    let errors = [];
+  
+    if (phone.length < 10) {
+      errors.push({ msg: 'Invalid phone number' });
+    }
+    else if (pincode.length !== 6) {
+      errors.push({ msg: 'Invalid pincode' });
+    }
+  
+    if (errors.length > 0) {
+      // console.log(errors)
+      req.flash('error_msg', errors[0].msg);
+      res.redirect('/address');
+    } 
+    else {
+      var address = new UserAddress(req.body.address)
+      address.save((err, result) => {
+          if(err) return res.status(400).send({error:err})
+          else if(!result) {
+                  req.flash('error_msg', 'Unable to add address');
+                  res.redirect('/');
           }
-          else
-            res.redirect('/')
-        })
-    })
+          var updateData = {
+            defaultDeliveryAddress: result._id,
+            deliveryAddress: [result._id],
+            active: true
+          }
+          User.update(
+              { uuid: req.user.uuid}, 
+              updateData,
+              {new: true}
+          )
+          .exec(err => {
+            if(err){
+                  req.flash('error_msg', 'Unable to add address');
+                  res.redirect('/address');
+            }
+            else
+              res.redirect('/')
+          })
+      })
   }
-  else res.send({success: false, message: "data insufficient"})
 }
 
 exports.addUserAddress = (req, res) => {
-  //// if(req && req.user && req.body){
-    var address = new UserAddress(req.body.address)
+    const {phone, pincode} = req.body.address
+    let errors = [];
+  
+    if (phone.length < 10) {
+      errors.push({ msg: 'Invalid phone number' });
+    }
+    else if (pincode.length !== 6) {
+      errors.push({ msg: 'Invalid pincode' });
+    }
+  
+    if (errors.length > 0) {
+      // console.log(errors)
+      req.flash('error_msg', errors[0].msg);
+      res.redirect('/address');
+    } 
+    else {
     UserAddress.create(req.body.address, function(err, result)  {
         if(err) return res.status(400).send({error:err})
         else if(!result) {
                 req.flash('error_msg', 'Unable to add address');
                 res.redirect('/address');
         }
-        console.log(result)
-        User.findByIdAndUpdate(
-            { _id: req.user._id}, 
-            {$addToSet: { deliveryAddress:result._id } },
-            { checkKeys: false, upsert: true } )
-        .exec(function(err){
+        // console.log(result)
+        User.findById({ _id: req.user._id})
+        .select('deliveryAddress')
+        .exec(function(err, data){
           if(err){
-                console.log(err, 'er')
+                // console.log(err, 'er')
                 req.flash('error_msg', 'Unable to add address');
                 res.redirect('/address');
           }
           else{
-            // console.log(data, 'hellp')
-            res.redirect('/')
+            data.deliveryAddress.push(result._id)
+            const updateData = { deliveryAddress :data.deliveryAddress}
+            User.findOneAndUpdate({_id: req.user._id}, updateData)
+              .exec( (err) => {
+                if(err){
+                  // console.log(err, 'er')
+                  req.flash('error_msg', 'Unable to add address');
+                  res.redirect('/address');
+                }
+                res.redirect('/');
+              })
           }
         }) 
       })
-  //}
-  //else res.send({success: false, message: "data insufficient"})
+    }
 }
-
 
 exports.updateUserAddress = (req, res) => {
   if(req && req.query && req.body){
