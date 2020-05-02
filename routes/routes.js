@@ -27,6 +27,8 @@ router.get('/dashboard', (req, res) => {
   })
 });
 
+router.post('/checkPincodeValid', UserControl.checkPinCodeValid);
+
 router.get('/recover', forwardAuthenticated, (req, res) => res.render('recover'));
 router.get('/reset/:token', UserControl.reset, (req, res) => {
   return res.render('resetPassword', {token: req.params.token})});
