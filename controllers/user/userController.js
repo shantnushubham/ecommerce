@@ -317,10 +317,7 @@ exports.updateUserAddress = (req, res) => {
 }
 
 exports.getUserAddress = (req, res) => {
-  User.aggregate([
-    {'$match':{'uuid': req.user.uuid}},
-    { $lookup: { from: 'delivery_addresses', localField: 'email', foreignField: 'email', as: 'address' } },
-    ]).exec(function(err,result){
+  UserAddress.find( {uuid: req.user.uuid}).exec(function(err,result){
         if(err){
             console.log(err);
             req.flash('error','error in fetching cart')
@@ -328,6 +325,7 @@ exports.getUserAddress = (req, res) => {
         }
         else{
         console.log(result)
+        req.flash('success_msg','result fetched check in console')
         res.redirect('/address')
      }
     })
