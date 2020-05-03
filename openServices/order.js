@@ -1,6 +1,7 @@
 var itemMetaModel = require("../models/Items/ItemMetadata")
 var itemmodel = require('../models/Items/Items')
 var cartmodel = require('../models/cart/cart')
+var UserAddress = require('../models/User/DeliveryAddress')
 var ordermodel= require('../models/Orders/Order')
 var functions = require('../Middlewares/common/functions')
 
@@ -11,9 +12,9 @@ class order
         
     }
 
-    createOrder(cartlist,total,uuid,callback)
+    createOrder(order,callback)
     {
-        ordermodel.create({uuid:uuid,total:total,orderedItems:cartlist,deliveryAddress:address},function(err,createdOrder){
+        ordermodel.create(order,function(err,createdOrder){
             if(err)
             {
                 callback({success:false})
@@ -114,7 +115,38 @@ class order
         })
     }
 
+    getUserAddress(uuid,callback)
+    {
+        UserAddress.find( {uuid:uuid}).exec(function(err,result){
+            if(err){
+                console.log(err);
+                callback({success:false})
+            }
+            else{
+            callback({success:true,address:result})
+         }
+        })
+    }
 
+    findAddressByid(id,callback){
+        UserAddress.findOne({_id:id},function(err,address){
+            if(err)
+            {
+                callback({success:false})
+
+            }
+            else{
+                if(functions.isEmpty(address))
+                {
+                    callback({success:false})
+                }
+                else
+                {
+                    callback({success:true,address:address})
+                }
+            }
+        })
+    }
 
 
     

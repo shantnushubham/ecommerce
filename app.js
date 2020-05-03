@@ -19,6 +19,7 @@ const envData=process.env
 var routes = require('./routes/routes')
 var cartRoutes=require('./routes/cart')
 var adminroutes=require('./routes/admin')
+var orderroutes=require('./routes/orders')
 var itemRoutes=require('./routes/items')
 var User = require('./models/User/User');
 
@@ -93,6 +94,8 @@ app.use(function(req, res, next) {
 app.use(cartRoutes)
 app.use(adminroutes)
 app.use(itemRoutes)
+app.use(orderroutes)
+
 app.get('/auth/google', passport.authenticate('google',{
   scope:[
       'https://www.googleapis.com/auth/userinfo.profile',

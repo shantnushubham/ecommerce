@@ -11,7 +11,8 @@ var mongooseHistory = require('mongoose-history')
 
 var orderSchema  = new mongoose.Schema({
     uuid:{
-        type:String
+        type:String,
+        required:true
     },
 
     orderId: {
@@ -32,18 +33,30 @@ var orderSchema  = new mongoose.Schema({
         required:true,
     },
 
-    deliveryAddress:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref: 'delivery_address',
-        required:true
+    fullAddress:{
+        type:String
+    }, 
+    city: {
+        type:String,
+        required: true
     },
-
+    state: {
+        type:String,
+        required: true
+    },
+    pincode: {
+        type:Number,
+        required: true
+    },
     purchaseTime:{
         type: Date,
         required: true,
         default: Date.now
     },
-
+    country: {
+        type:String,
+        required: true
+    },
     status:{
         type: String,
         default:'initialised'

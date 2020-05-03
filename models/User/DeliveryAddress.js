@@ -9,6 +9,9 @@ var deliveryAddressSchema  = new mongoose.Schema({
     locality:{
         type:String,
     },
+    fullAddress:{
+        type:String
+    },
     email:{
         type:String,
         required: true
@@ -35,6 +38,10 @@ var deliveryAddressSchema  = new mongoose.Schema({
     country: {
         type:String,
         required: true
+    },
+    city:{
+        type:String,
+        required:true
     },
 });
 deliveryAddressSchema.plugin(mongooseHistory)

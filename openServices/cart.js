@@ -269,6 +269,7 @@ class cart {
            }
            else
            {
+               console.log(cartItem);
                let total=0
                let cartlist=[]
                cartItem.forEach(cartEl => {
@@ -286,6 +287,41 @@ class cart {
                callback({success:true,cartList:cartlist,total:total})
            }
        })
+    }
+
+    getListingForCheckout(uuid,callback){
+     
+       cartmodel.aggregate([
+        { $match : { uuid:uuid } },
+        { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
+        { $project: { 
+            "quantity": "$quantity", 
+            "iid": "$iid", 
+            "item": { "$arrayElemAt": [ "$item", 0 ] } 
+            ,"price":"$item.price"
+        }}
+       ]).exec(function(err,cartItem){
+           if(err)
+           {
+               console.log(err);
+               callback({success:false})
+           }
+           else
+           {
+               console.log(cartItem);
+               let total=0
+               cartItem.forEach(cartEl => {
+                   total=total+(parseInt(cartEl.price[0]*cartEl.quantity))
+               });
+               if(total<=0)
+               {
+                callback({success:false,message:"cant checkout with empty cart"}) 
+               }
+               else
+               callback({success:true,cartList:cartItem,total:total})
+           }
+       })
+    
     }
 
 }

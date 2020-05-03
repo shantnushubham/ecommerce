@@ -2,9 +2,11 @@ const cartServices = require('../openServices/cart')
 const express = require('express')
 const router = express()
 const orderServices = require('../openServices/order')
-const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares/user/middleware');
+const orderController=require('../controllers/orders/orderController')
+const { ensureAuthenticated, forwardAuthenticated } = require('../Middlewares/user/middleware');
 
-router.get("/order/:id/payment", middleware.isLoggedIn, function (req, res) {
+
+router.get("/order/:id/payment", function (req, res) {
 
     orderServices.findOrderById(req.params.id,req.user.uuid, function (foundOrder) {
         if (foundOrder.success == false) {
@@ -47,7 +49,7 @@ router.get("/order/:id/payment", middleware.isLoggedIn, function (req, res) {
                                 res.redirect('/dashboard')
                             }
                             else {
-                                console.log('reg=' + rsp.registration);
+                                
                                 res.redirect(x);
                             }
                         })
@@ -110,3 +112,8 @@ router.get("/redirect", function(req, res){
         }
     });
 });
+
+router.get('/checkout',ensureAuthenticated,orderController.getCheckout)
+router.post('/checkout',ensureAuthenticated,orderController.postCheckout)
+
+module.exports=router
