@@ -19,7 +19,7 @@ exports.getCheckout = function (req, res) {
                     res.redirect('/cartpage')
                 }
                 else {
-                    res.render('checkout', { cart: cart.cartList, address: address })
+                    res.render('checkout', { total:cart.total,cart: cart.cartList, address: address }) 
                 }
             })
         }

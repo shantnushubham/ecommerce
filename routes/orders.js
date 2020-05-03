@@ -113,6 +113,7 @@ router.get("/redirect", function(req, res){
     });
 });
 
+
 router.get('/checkout',ensureAuthenticated,orderController.getCheckout)
 router.post('/checkout',ensureAuthenticated,orderController.postCheckout)
 
