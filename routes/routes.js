@@ -31,9 +31,7 @@ router.get('/recover', forwardAuthenticated, (req, res) => res.render('recover')
 router.get('/reset/:token', UserControl.reset, (req, res) => {
   return res.render('resetPassword', {token: req.params.token})});
 
-  router.get('/address', ensureAuthenticated, (req, res) => {
-    return res.render('address', {user: req.user})
-  });
+
   
   
 
