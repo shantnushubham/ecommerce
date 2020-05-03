@@ -37,21 +37,22 @@ exports.register = (req, res) => {
 
       req.body.address['email'] = req.body.email;
       req.body.address['phone'] = req.body.phone;
-      console.log(req.body.user, req.body.address);
-      var newAddress = new UserAddress(req.body.address);
-      newAddress.save( (err, addressRes) => {
-        if(err) {
-          console.log(err);
-          return res.flash('error_msg', 'unable to save address');
-        }
-        req.body.user['defaultDeliveryAddress'] = addressRes._id;
-        req.body.user['deliveryAddress'] = [addressRes._id];
-        var u = new User(req.body.user);
-        User.register(new User(u), req.body.password, function(err, user){
-            if(err){
-                console.log(err);
-                req.flash('error_msg', 'Email already exist');
-                res.redirect('/users/register');
+      req.body.address['isDefault'] = true;
+      // console.log(req.body.user, req.body.address);
+      
+      var u = new User(req.body.user);
+      User.register(new User(u), req.body.password, function(err, user){
+          if(err){
+              console.log(err);
+              req.flash('error_msg', 'Email already exist');
+              res.redirect('/users/register');
+          }
+          req.body.address['uuid'] = user.uuid;
+          var newAddress = new UserAddress(req.body.address);
+          newAddress.save( (err, addressRes) => {
+            if(err) {
+              console.log(err);
+              return req.flash('error_msg', 'unable to save address');
             }
             passport.authenticate("local")(req, res, function(){
               console.log(user)
@@ -71,7 +72,7 @@ exports.register = (req, res) => {
                   res.redirect('/');
               });
             });
-        });
+      });
       })
     }
   }
@@ -242,7 +243,9 @@ exports.addDefaultUserAddress = (req, res) => {
       res.redirect('/address');
     } 
     else {
-      req.body.address['uuid'] = req.user.uuid
+      req.body.address['uuid'] = req.user.uuid;
+      req.body.address['isDefault'] = true;
+
       var address = new UserAddress(req.body.address)
       address.save((err, result) => {
           if(err) return res.status(400).send({error:err})

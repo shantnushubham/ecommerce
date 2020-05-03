@@ -37,10 +37,6 @@ var UserSchema  = new mongoose.Schema({
     password: {
         type: String
     },
-    defaultDeliveryAddress:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'delivery_address'
-    },
     orders:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'order'

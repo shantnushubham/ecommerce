@@ -19,6 +19,10 @@ var deliveryAddressSchema  = new mongoose.Schema({
     landmark: {
         type:String,
     },
+    isDefault: {
+        type: Boolean,
+        default: false
+    },
     district: {
         type:String,
         required: true
@@ -39,10 +43,10 @@ var deliveryAddressSchema  = new mongoose.Schema({
         type:String,
         required: true
     },
-    city:{
-        type:String,
-        required:true
-    },
+    // city:{
+    //     type:String,
+    //     required:true
+    // },
 });
 deliveryAddressSchema.plugin(mongooseHistory)
 module.exports = mongoose.model("delivery_address", deliveryAddressSchema);
