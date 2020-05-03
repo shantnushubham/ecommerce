@@ -193,7 +193,7 @@ exports.clearCart = function (req, res) {
 
 exports.verify = function (req, res) {
     console.log('user='+req.user);
-    cartservices.getListingForOrder(req.user.uuid,function(resp){
+    cartservices.getListingForCheckout(req.user.uuid,function(resp){
         console.log(resp);
     })
 }
