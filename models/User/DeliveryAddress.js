@@ -16,6 +16,10 @@ var deliveryAddressSchema  = new mongoose.Schema({
     landmark: {
         type:String,
     },
+    isDefault: {
+        type: Boolean,
+        default: false
+    },
     district: {
         type:String,
         required: true
