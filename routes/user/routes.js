@@ -22,6 +22,7 @@ router.post('/login', passport.authenticate("local",{
     }), (req, res) => {
 });
 
+
 router.get('/logout', ensureAuthenticated, UserControl.logout);
 
 

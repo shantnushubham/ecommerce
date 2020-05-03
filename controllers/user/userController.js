@@ -10,6 +10,7 @@ var sendgrid = require("@sendgrid/mail");
 require('dotenv').config()
 const envData=process.env
 sendgrid.setApiKey(envData.sendgrid_apikey);
+const axios = require('axios');
 
 exports.register = (req, res) => {
     const { password, password2, phone } = req.body;
@@ -317,10 +318,7 @@ exports.updateUserAddress = (req, res) => {
 }
 
 exports.getUserAddress = (req, res) => {
-  User.aggregate([
-    {'$match':{'uuid': req.user.uuid}},
-    { $lookup: { from: 'delivery_addresses', localField: 'email', foreignField: 'email', as: 'address' } },
-    ]).exec(function(err,result){
+  UserAddress.find( {uuid: req.user.uuid}).exec(function(err,result){
         if(err){
             console.log(err);
             req.flash('error','error in fetching cart')
@@ -328,6 +326,7 @@ exports.getUserAddress = (req, res) => {
         }
         else{
         console.log(result)
+        req.flash('success_msg','result fetched check in console')
         res.redirect('/address')
      }
     })
@@ -392,4 +391,30 @@ exports.makeAdressToDefaultAddress = (req, res) => {
           )
     }
     else return res.send({success: false, message: "data insufficient"})
+}
+
+
+// check pincode valid
+exports.checkPinCodeValid = (req, res) => {
+  const { pincode } = req.body;
+  // change it when available
+  const token = ''
+  axios({
+    method: 'get',
+    url: 'https://track.delhivery.com/c/api/pin-codes/output/?token=&filter_codes=',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+  }
+  })
+    .then(function (result) {
+        console.log(result);
+        req.flash('success_msg','OTP is' + result.message)
+        res.redirect('/');
+    })
+    .catch( err => {
+      console.log(err);
+      req.flash('error','Unable to validate otp')
+      res.redirect('/')
+    });
 }
