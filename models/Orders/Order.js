@@ -107,4 +107,4 @@ var orderSchema  = new mongoose.Schema({
 });
 
 orderSchema.plugin(mongooseHistory)
-module.exports = mongoose.model("order", orderSchema);
+module.exports = mongoose.model("order", orderSchema, "orders");
