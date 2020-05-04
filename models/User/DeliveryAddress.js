@@ -39,6 +39,9 @@ var deliveryAddressSchema  = new mongoose.Schema({
         type: String,
         required: true
     },
+    addressType: {
+        type: String
+    },
     country: {
         type:String,
         required: true

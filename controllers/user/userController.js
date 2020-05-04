@@ -386,12 +386,15 @@ exports.deleteAddress = (req, res) => {
 exports.makeAdressToDefaultAddress = (req, res) => {
     if(req && req.body && req.body.addressId){
       const addressId = req.body.addressId;
-      User.findByIdAndUpdate({uuid: req.user.uuid}, { defaultDeliveryAddress: addressId }, {new: true} )
-        .select('name email phone username')
-          .populate('defaultDeliveryAddress', 'locality landmark state district pincode contact')
-          .then(data => 
-            res.send({success: true, message: 'Updated default address.', body: data})
-          )
+      UserAddress.findOneAndUpdate({uuid: req.user.uuid, isDefault: true}, {isDefault: false})
+      .then(err => {
+        if(err) return console.log('hellp', err)
+        UserAddress.findOneAndUpdate({_id: addressId}, {isDefault: true})
+        .then( err => {
+          if(err) return console.log('error', err)
+          else return console.log('success')
+        })
+      })
     }
     else return res.send({success: false, message: "data insufficient"})
 }
