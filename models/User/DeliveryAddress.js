@@ -25,7 +25,6 @@ var deliveryAddressSchema  = new mongoose.Schema({
     },
     district: {
         type:String,
-        required: true
     },
     state: {
         type:String,

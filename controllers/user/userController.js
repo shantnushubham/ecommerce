@@ -297,12 +297,19 @@ exports.addUserAddress = (req, res) => {
               req.flash('error_msg', 'Unable to add address');
               res.redirect('/address');
           }
-          else if(!result) {
+          else{ 
+            if(!result) {
                   req.flash('error_msg', 'Unable to add address');
                   res.redirect('/address');
           }
-            // console.log(result, 'hell')
+          else
+          {
+            req.flash('success_msg','succesfully added address')
             res.redirect('/');
+          }
+        }
+            
+            
           })
       }
 }
