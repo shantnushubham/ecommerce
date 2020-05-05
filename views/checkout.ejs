@@ -32,17 +32,10 @@
 	<link rel="stylesheet" href="/css/style.css">
 	<!-- Responsive CSS -->
 	<link rel="stylesheet" href="/css/responsive.css">
-
-	<link rel="stylesheet" href="/css/uikit-rtl.min.css">
-	<link rel="stylesheet" href="/css/uikit.min.css">
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.23/js/uikit.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.23/js/uikit-icons.min.js"></script>
-
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" href="/img/favicon.png">
 	<!-- TITLE -->
-	<title>Asahi - Food & Restaurant HTML Template</title>
+	<title>Checkout Page - Spice Website</title>
 </head>
 
 <body>
@@ -309,18 +302,25 @@
 					<div class="order-details">
 						<div class="order-table table-responsive">
 							<div class="payment-box">
-								<div class="payment-method">
-									<h3 class="title">Addresses</h3>
-									<form method="POST" action="/checkout">
-										<div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-											<% for (let i = 0; i < address.address.length; i++) { %>
-											<label><input class="uk-radio" type="radio" name="address"
-													value="<%=address.address[i]._id%>"><%=address.address[i].fullAddress%></label>
-											<% } %>
-										</div>
-										<button class="uk-button uk-button-default">Submit</button>
-									</form>
-								</div>
+								<form method="POST" action="/checkout">
+									<div class="payment-method">
+										<h3 class="title">Addresses</h3>
+										<% for (let i = 0; i < address.address.length; i++) { %>
+										<p>
+											<input type="radio" id="<%=address.address[i]._id%>" name="address"
+												value="<%=address.address[i]._id%>">
+											<label for="<%=address.address[i]._id%>"><span
+													style="color: #F16D07; text-transform: uppercase; font-size: medium;"><%=address.address[i].addressType%></span><br>
+												<%=(address.address[i].fullAddress + ", " + address.address[i].landmark  + ", " + address.address[i].locality + ", " + 
+												address.address[i].city + ", " + address.address[i].state +".")%><br>
+												PIN: <%=(address.address[i].pincode) %><br>
+												Phone Number: <span
+													style="color: #F16D07; text-transform: uppercase;"><%=address.address[i].phone%></span></label>
+										</p>
+										<% } %>
+									</div>
+									<button class="default-btn">Place Order</button>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -369,11 +369,11 @@
 
 									<tr>
 										<td class="order-shipping">
-											<span>GST</span>
+											<span>GST (18%)</span>
 										</td>
 										<td></td>
 										<td class="shipping-price">
-											<span>Rs. 5.00</span>
+											<span>Rs. <%=(sum * (18/100))%></span>
 										</td>
 									</tr>
 
@@ -383,7 +383,7 @@
 										</td>
 										<td></td>
 										<td class="product-subtotal">
-											<span class="subtotal-amount"></span>
+											<span class="subtotal-amount">Rs. <%=(sum * (118/100))%></span>
 										</td>
 									</tr>
 								</tbody>

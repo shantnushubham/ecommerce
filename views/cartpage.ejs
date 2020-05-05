@@ -36,7 +36,7 @@
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" href="/img/favicon.png">
 	<!-- TITLE -->
-	<title>Asahi - Food & Restaurant HTML Template</title>
+	<title>CartPage - Spice Website</title>
 </head>
 
 <body>
@@ -355,8 +355,8 @@
 
 							<ul>
 								<li>Subtotal <span>Rs. <%= x %>.00</span></li>
-								<li>Shipping <span>$30.00</span></li>
-								<li>Total <span><b>$180.00</b></span></li>
+								<li>GST (18%) <span>Rs. <%= (x*(18/100)) %>.00</span></li>
+								<li>Total <span><b>Rs. <%= (x*(118/100)) %>.00</b></span></li>
 							</ul>
 							<a href="#" class="default-btn">
 								Proceed to Checkout
