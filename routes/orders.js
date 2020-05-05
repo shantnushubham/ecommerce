@@ -1,9 +1,12 @@
 const cartServices = require('../openServices/cart')
 const express = require('express')
 const router = express()
+const axios=require('axios')
 const orderServices = require('../openServices/order')
 const orderController=require('../controllers/orders/orderController')
 const { ensureAuthenticated, forwardAuthenticated } = require('../Middlewares/user/middleware');
+require('dotenv').config()
+const envData=process.env
 
 
 router.get("/order/:id/payment", function (req, res) {
@@ -71,32 +74,37 @@ router.get("/order/:id/payment", function (req, res) {
 
 router.get("/redirect", function(req, res){
     var payment_id = req.query.payment_id;
-    console.log(payment_id);
-    console.log(req.query);
     var payment_request_id = req.query.payment_request_id;
-    var headers = { 'X-Api-Key':envData.X_Api_Key , 'X-Auth-Token': envData.X_Auth_Token};
+    var headers = { 'X-Api-Key':envData.X_Api_Key , 'X-Auth-Token':envData.X_Auth_Token};
 
+console.log('----------------');
+console.log(payment_id);
+console.log(req.query);
+console.log(envData.instamojoLink+payment_request_id+'/'+payment_id+'/');
+console.log(headers);
+console.log('----------------');
 
-
-
-    request.get(
-        envData.instamojoLink+payment_request_id+'/'+payment_id+'/',
-        {form: "",  headers: headers}, function(error, response, body){
-            console.log(body);
+    axios.get(envData.instamojoLink+payment_request_id+'/'+payment_id+'/',{headers:headers}).then(function(response){
+            console.log('get req made');
+            // console.log(err);
             // console.log(response);
-            if(!error && response.statusCode == 200)
+            // console.log(body);
+            // console.log(response);
+            if(response.status == 200)
             {
-            body = JSON.parse(body);
+            var body = response.data
             console.log(body)
             if (body["success"]==true) {
-
+                console.log('successful payment');
                 orderServices.addInstaMojoId(payment_id,payment_request_id ,function(foundOrder){
-                            if (foundReg.success==false) {
+                            if (foundOrder.success==false) {
                                 console.log("Not found");
                                 req.flash('error','could not update registration')
+                                res.redirect('/cartpage')
                             }
                             else
                             {
+                                console.log('redirect to success page');
                                 res.render('successPage',{order:foundOrder.order})
                             }    
                         });
@@ -110,7 +118,12 @@ router.get("/redirect", function(req, res){
             req.flash('error','error in payment')
             res.redirect("/cartpage");
         }
-    });
+    }).catch(err=>
+        {
+            console.log(err);
+            res.redirect('/cartpage')
+        })
+    console.log('outside');
 });
 
 

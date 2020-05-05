@@ -3,6 +3,8 @@ const express = require('express')
 const router = express()
 const orderServices = require('../../openServices/order')
 const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares/user/middleware');
+require('dotenv').config()
+const envData=process.env
 
 exports.getCheckout = function (req, res) {
 
@@ -27,18 +29,24 @@ exports.getCheckout = function (req, res) {
 }
 
 exports.postCheckout = function (req, res) {
+    console.log('enter');
+    console.log(req.body);
     cartServices.getListingForOrder(req.user.uuid, function (cart) {
         if (cart.success == false) {
+            console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
             res.redirect('/cartpage')
         }
         else {
             orderServices.findAddressByid(req.body.address, function (address) {
                 if (address.success == false) {
+                    console.log('error in getting address list');
                     req.flash('error', 'error in getting address list')
                     res.redirect('/cartpage')
                 }
                 else {
+                    console.log('address=');
+                    // console.log(address.address);
                     var userAdd = address.address
                     var order = {
                         fullAddress: userAdd.fullAddress,
@@ -50,12 +58,15 @@ exports.postCheckout = function (req, res) {
                         orderedItems: cart.cartList,
                         uuid: req.user.uuid
                     }
+                    console.log(order);
                     orderServices.createOrder(order, function (createOrder) {
                         if (createOrder.success == false) {
+                            console.log('error in creating order');
                             req.flash('error', 'error in creating order')
                             res.redirect('/cartpage')
                         }
                         else {
+                            console.log('success');
                             res.redirect('/order/' + createOrder.order.orderId + '/payment')
                         }
                     })

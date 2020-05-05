@@ -11,6 +11,8 @@ const compression= require('compression')
 const app = express();
 var logger = require('morgan');
 var MongoStore  = require('connect-mongo')(session)
+const cors                    = require("cors");
+
 
 
 require('dotenv').config()
@@ -32,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.set("views",path.join(__dirname, 'views'));
-
+app.use(cors());
 
 
 mongoose.connect(envData.DB, { useUnifiedTopology: true, useNewUrlParser: true });

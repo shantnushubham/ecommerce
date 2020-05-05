@@ -92,18 +92,18 @@ var orderSchema  = new mongoose.Schema({
     transaction_id:{
         type: String
     },
-    user: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    cancelled_order: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'cancelled_order'
-    }],
-    review: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'review'
-    }]
+    // user: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User'
+    // }],
+    // cancelled_order: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'cancelled_order'
+    // }],
+    // review: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'review'
+    // }]
 });
 
 orderSchema.plugin(mongooseHistory)

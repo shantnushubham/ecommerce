@@ -17,11 +17,14 @@ class order
         ordermodel.create(order,function(err,createdOrder){
             if(err)
             {
+                console.log(err);
                 callback({success:false})
             }
             else
             {
-                if(functions.isEmpty(createOrder))callback({success:false})
+                if(functions.isEmpty(createdOrder)){
+                    console.log('empty order');
+                    callback({success:false})}
                 else
                 callback({success:true,order:createdOrder})
             }
@@ -103,7 +106,7 @@ class order
 
 
     addInstaMojoId(paymentId,reqId,callback){
-        ordermodel.findOneAndUpdate({instaPaymentRequestId:reqId},{'$set':{instaPaymentId:paymentId,paid:true}},function(err,updatedOrder){
+        ordermodel.findOneAndUpdate({instaPaymentRequestId:reqId},{'$set':{instaPaymentId:paymentId,paid:true,status:'authorised',transaction_id:paymentId}},function(err,updatedOrder){
             if(err){
                 console.log(err);
                 callback({success:false})
@@ -132,6 +135,7 @@ class order
         UserAddress.findOne({_id:id},function(err,address){
             if(err)
             {
+                console.log(err);
                 callback({success:false})
 
             }

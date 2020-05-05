@@ -46,10 +46,10 @@ var deliveryAddressSchema  = new mongoose.Schema({
         type:String,
         required: true
     },
-    // city:{
-    //     type:String,
-    //     required:true
-    // },
+    city:{
+        type:String,
+        required:true
+    },
 });
 deliveryAddressSchema.plugin(mongooseHistory)
 module.exports = mongoose.model("delivery_address", deliveryAddressSchema);
