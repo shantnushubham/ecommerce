@@ -351,9 +351,9 @@
 											<span class="subtotal-amount"><%= cart[i].quantity%></span>
 										</td>
 										<td class="product-total">
-											<span class="subtotal-amount">Rs. <%= cart[i].price[0]%></span>
+											<span class="subtotal-amount">Rs. <%= parseInt(cart[i].quantity) * parseInt(cart[i].price[0])%></span>
 										</td>
-										<% sum = sum + parseInt(cart[i].price[0]) %>
+										<% sum = sum + parseInt(cart[i].quantity) * parseInt(cart[i].price[0]) %>
 									</tr>
 									<% } %>
 
