@@ -277,7 +277,7 @@ class cart {
                    item.quantity=cartEl.quantity
                    item.iid=cartEl.iid
                    cartlist.push(item)
-                   total=total+(parseInt(cartEl.price[0]*cartEl.quantity))
+                   total=total+parseInt((parseInt(cartEl.price[0])*(1-cartEl.item.discount)*cartEl.quantity))
                });
                if(total<=0||cartlist.length==0)
                {
@@ -311,7 +311,7 @@ class cart {
                console.log(cartItem);
                let total=0
                cartItem.forEach(cartEl => {
-                   total=total+(parseInt(cartEl.price[0]*cartEl.quantity))
+                   total=total+parseInt((parseInt(cartEl.price[0])*(1-cartEl.item.discount)*cartEl.quantity))
                });
                if(total<=0)
                {

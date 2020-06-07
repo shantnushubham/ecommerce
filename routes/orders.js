@@ -129,5 +129,8 @@ console.log('----------------');
 
 router.get('/checkout',ensureAuthenticated,orderController.getCheckout)
 router.post('/checkout',ensureAuthenticated,orderController.postCheckout)
+router.get('/voucher',orderController.getUserRefcode)
+router.get('/deal',orderController.getdealCode)
+
 
 module.exports=router
