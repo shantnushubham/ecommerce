@@ -78,20 +78,12 @@ var orderSchema  = new mongoose.Schema({
         required:true,
         default:false
     },
-
-    
-    // estimatedDeliveryDate:{
-    //     type: Date,
-    // },
-    // deliveredDate:{
-    //     type: Date,
-    // },
-    // approvedDate:{
-    //     type: Date,
-    // },
     transaction_id:{
         type: String
     },
+    code:{
+        type:String
+    }
     // user: [{
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: 'User'

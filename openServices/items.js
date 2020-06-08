@@ -93,7 +93,7 @@ class items {
 
     createItem(data, callback) {
         var item_data={name:data.name,price:data.price,image:data.image,}
-        var item_metaData={weight:data.weight,content:data.content}
+        var item_metaData={weight:data.weight,content:data.content,color:data.color}
         var item_categoryData={name:data.category}
         
         categoryModel.findOne({name:item_categoryData.name},function(err,foundCategory){
