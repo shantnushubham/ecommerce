@@ -54,7 +54,7 @@
 		<div class="navbar-area fixed-top">
 			<!-- Menu For Mobile Device -->
 			<div class="mobile-nav">
-				<a href="index.html" class="logo">
+				<a href="/" class="logo">
 					<img src="/img/asahi-logo.png" alt="Asahi Logo">
 				</a>
 			</div>
@@ -63,7 +63,7 @@
 			<div class="main-nav asahi-nav-style-two asahi-nav-style-three">
 				<nav class="navbar navbar-expand-md navbar-light">
 					<div class="container">
-						<a class="navbar-brand" href="index.html">
+						<a class="navbar-brand" href="/">
 							<img src="/img/asahi-logo.png" alt="Asahi Logo">
 						</a>
 
@@ -73,7 +73,7 @@
 									<a href="#" class="nav-link dropdown-toggle active">Home</a>
 									<ul class="dropdown-menu">
 										<li class="nav-item">
-											<a href="index.html" class="nav-link active">Home One</a>
+											<a href="/" class="nav-link active">Home One</a>
 										</li>
 										<li class="nav-item">
 											<a href="index-2.html" class="nav-link">Home Two</a>
@@ -98,74 +98,25 @@
 									</ul>
 								</li>
 								<li class="nav-item">
-									<a href="#" class="nav-link dropdown-toggle">Pages</a>
-									<ul class="dropdown-menu">
-										<li class="nav-item">
-											<a href="about.html" class="nav-link active">about</a>
-										</li>
-										<li class="nav-item">
-											<a href="faq.html" class="nav-link">FAQ</a>
-										</li>
-										<li class="nav-item">
-											<a href="book-table.html" class="nav-link">Book Table</a>
-										</li>
-										<li class="nav-item">
-											<a href="book-table.html" class="nav-link">Book Table</a>
-										</li>
-										<li class="nav-item">
-											<a href="coming-soon.html" class="nav-link">Coming Soon</a>
-										</li>
-										<li class="nav-item">
-											<a href="404.html" class="nav-link">404 Error</a>
-										</li>
-										<li class="nav-item">
-											<a href="/users/login" class="nav-link">Log In</a>
-										</li>
-										<li class="nav-item">
-											<a href="/users/register" class="nav-link">Sign Up</a>
-										</li>
-									</ul>
+									<a href="/items" class="nav-link"> Items</a>
 								</li>
 								<li class="nav-item">
-									<a href="#" class="nav-link dropdown-toggle">Shop</a>
-									<ul class="dropdown-menu">
-										<li class="nav-item">
-											<a href="shop.html" class="nav-link">Shop</a>
-										</li>
-										<li class="nav-item">
-											<a href="shop-details.html" class="nav-link">Shop Details</a>
-										</li>
-										<li class="nav-item">
-											<a href="checkout.html" class="nav-link">Checkout</a>
-										</li>
-										<li class="nav-item">
-											<a href="cart.html" class="nav-link">Cart</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-item">
-									<a href="#" class="nav-link dropdown-toggle">Blog</a>
-									<ul class="dropdown-menu">
-										<li class="nav-item">
-											<a href="blog-grid.html" class="nav-link">Blog Grid</a>
-										</li>
-										<li class="nav-item">
-											<a href="blog-right-sidebar.html" class="nav-link">Blog Right Sidebar</a>
-										</li>
-										<li class="nav-item">
-											<a href="blog-details.html" class="nav-link">Blog Details</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-item">
-									<a href="contact.html" class="nav-link">Contact</a>
+									<a href="/cartPage" class="nav-link">Cart</a>
 								</li>
 							</ul>
 							<div class="others-option">
-								<a href="tel:+800-987-65-43" class="menu-btn contact-number">
-									<i class="flaticon-phone-call"></i>
-									+800-987-65-43
+								<% if (typeof user != 'undefined') { %>
+								<span class="menu-btn contact-number">
+									Hi! <%= user.name %>
+								</span>
+								<a href="/users/logout" class="menu-btn contact-number">
+									LOGOUT
 								</a>
+								<% } else { %>
+								<a href="/users/login" class="menu-btn contact-number">
+									LOGIN
+								</a>
+								<% } %>
 								<a href="#" data-toggle="modal" data-target="#myModal2" class="menu-btn side-menu">
 									Menu
 									<i class="flaticon-menu"></i>
@@ -191,7 +142,7 @@
 							</span>
 						</button>
 						<h2 class="modal-title" id="myModalLabel2">
-							<a href="index.html">
+							<a href="/">
 								<img src="/img/asahi-logo.png" alt="Logo">
 							</a>
 						</h2>
@@ -200,25 +151,25 @@
 						<div class="sidebar-modal-widget">
 							<h3 class="title">Additional Links</h3>
 							<ul>
-								<% if(typeof user != 'undefined' ) { %> 
+								<% if(typeof user != 'undefined' ) { %>
 								<li>
 									<a href="#"> welcome <%= user.name %></a>
 								</li>
 								<li>
-									<a href="/users/logout">Logout</a>
+									<a href="/logout">Logout</a>
 								</li>
-							<% } else {%>
+								<% } else {%>
 								<li>
-									<a href="/users/login">Log In</a>
+									<a href="/login">Log In</a>
 								</li>
 								<li>
-									<a href="/users/register">Sign Up</a>
+									<a href="/signup">Sign Up</a>
 								</li>
-							<% } %>
+								<% } %>
 								<li>
 									<a href="faq.html">FAQ</a>
 								</li>
-								
+
 							</ul>
 						</div>
 						<div class="sidebar-modal-widget">

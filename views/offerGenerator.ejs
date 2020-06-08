@@ -1,0 +1,19 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="container">
+    <br>
+    <h1>Create Deal</h1>
+    <br>
+    <br>
+    <form action="/admin/createDeal" method="POST">
+        <div class="ui form">
+            <div class="field">
+                <label>Dicount (Please enter a number between 0 and 1 Eg. 0.20 for 20%):</label>
+                <input type="text" placeholder="Discount" name="discount">
+            </div>
+        </div>
+        <button class="ui button" type="submit">Submit</button>
+    </form>
+</div>
+
+<%- include('partials/adminFooter'); -%>

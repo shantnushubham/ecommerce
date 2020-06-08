@@ -1,0 +1,19 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="container">
+    <br>
+    <h1>Generate Discount Coupon</h1>
+    <br>
+    <br>
+    <form action="//admin/discountCodes" method="GET">
+        <div class="ui form">
+            <div class="field">
+                <label>Enter Dicount Info:</label>
+                <input type="text" placeholder="Discount" name="discount">
+            </div>
+        </div>
+        <button class="ui button" type="submit">Submit</button>
+    </form>
+</div>
+
+<%- include('partials/adminFooter'); -%>
