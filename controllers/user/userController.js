@@ -11,6 +11,7 @@ require('dotenv').config()
 const envData=process.env
 sendgrid.setApiKey(envData.sendgrid_apikey);
 const axios = require('axios');
+const orderServices=require('../../openServices/order')
 
 exports.register = (req, res) => {
     const { password, password2, phone } = req.body;
@@ -30,49 +31,58 @@ exports.register = (req, res) => {
       req.flash('error_msg', errors[0].msg);
       res.redirect('/users/register');
     } else {
-      req.body.user['username'] = req.body.email;
-      req.body.user['email'] = req.body.email;
-      req.body.user['phone'] = req.body.phone;
-      req.body.user['active'] = true;
-
-      req.body.address['email'] = req.body.email;
-      req.body.address['phone'] = req.body.phone;
-      req.body.address['isDefault'] = true;
-      // console.log(req.body.user, req.body.address);
-      
-      var u = new User(req.body.user);
-      User.register(new User(u), req.body.password, function(err, user){
-          if(err){
-              console.log(err);
-              req.flash('error_msg', 'Email already exist');
-              res.redirect('/users/register');
-          }
-          req.body.address['uuid'] = user.uuid;
-          var newAddress = new UserAddress(req.body.address);
-          newAddress.save( (err, addressRes) => {
-            if(err) {
-              console.log(err);
-              return req.flash('error_msg', 'unable to save address');
-            }
-            passport.authenticate("local")(req, res, function(){
-              console.log(user)
-              const mailOptions = {
-                  to: user.email,
-                  from: 'support@inversion.co.in',
-                  subject: "successfully registered",
-                  text: `Hi ${user.name} \n 
-                    You have been successfully registered.`
-              };
-              sendgrid.send(mailOptions, (error, result) => {
-                  if (error) {
-                    console.log(error)
-                    return res.status(500).json({message: error.message});
-                  }
-                  console.log('f')
-                  res.redirect('/');
-              });
-            });
-      });
+      orderServices.createVoucherCode(5,5,true,0.15,function(discode){
+        {
+          
+          req.body.user['username'] = req.body.email;
+          req.body.user['email'] = req.body.email;
+          req.body.user['phone'] = req.body.phone;
+          req.body.user['active'] = true;
+    
+          req.body.address['email'] = req.body.email;
+          req.body.address['phone'] = req.body.phone;
+          req.body.address['isDefault'] = true;
+          if(discode.success==false)
+          req.body.user['code']='invalid'
+          else
+          req.body.user['code']=discode.code
+          // console.log(req.body.user, req.body.address);
+          
+          var u = new User(req.body.user);
+          User.register(new User(u), req.body.password, function(err, user){
+              if(err){
+                  console.log(err);
+                  req.flash('error_msg', 'Email already exist');
+                  res.redirect('/users/register');
+              }
+              req.body.address['uuid'] = user.uuid;
+              var newAddress = new UserAddress(req.body.address);
+              newAddress.save( (err, addressRes) => {
+                if(err) {
+                  console.log(err);
+                  return req.flash('error_msg', 'unable to save address');
+                }
+                passport.authenticate("local")(req, res, function(){
+                  console.log(user)
+                  const mailOptions = {
+                      to: user.email,
+                      from: 'support@inversion.co.in',
+                      subject: "successfully registered",
+                      text: `Hi ${user.name} \n 
+                        You have been successfully registered.`
+                  };
+                  sendgrid.send(mailOptions, (error, result) => {
+                      if (error) {
+                        console.log(error)
+                        return res.status(500).json({message: error.message});
+                      }
+                      console.log('f')
+                      res.redirect('/');
+                  });
+                });
+          });
+          })
+        }
       })
     }
   }

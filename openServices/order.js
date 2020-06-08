@@ -98,7 +98,7 @@ class order {
 
 
     addInstaMojoId(paymentId, reqId, callback) {
-        ordermodel.findOneAndUpdate({ instaPaymentRequestId: reqId }, { '$set': { instaPaymentId: paymentId, paid: true, status: 'authorised', transaction_id: paymentId } }, function (err, updatedOrder) {
+        ordermodel.findOneAndUpdate({ instaPaymentRequestId: reqId }, { '$set': { instaPaymentId: paymentId, paid: true, status: 'authorized', transaction_id: paymentId } }, function (err, updatedOrder) {
             if (err) {
                 console.log(err);
                 callback({ success: false })
@@ -197,9 +197,30 @@ class order {
     {
         codemodel.findOne({code:code},function(err,disc){
             if(err)
+            callback({success:false,discount:0,code:''})
+            else
+            {
+                if(functions.isEmpty(disc))
+                callback({success:true,discount:0,code:''})
+                else
+                callback({success:true,discount:disc.discount,code:disc.code})
+            
+        }
+        })
+    }
+
+    checkIfCodeUsed(code,uuid,callback)
+    {
+        ordermodel.findOne({uuid:uuid,code:code,status:'authorized'},function(err,foundOrder){
+            if(err)
             callback({success:false})
             else
-            callback({success:true,discount:disc.discount})
+            {
+                if(functions.isEmpty(foundOrder))
+                callback({success:true,allow:true})
+                else
+                callback({success:false,allow:false})
+            }
         })
     }
 

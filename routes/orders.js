@@ -129,8 +129,9 @@ console.log('----------------');
 
 router.get('/checkout',ensureAuthenticated,orderController.getCheckout)
 router.post('/checkout',ensureAuthenticated,orderController.postCheckout)
-router.get('/voucher',orderController.getUserRefcode)
-router.get('/deal',orderController.getdealCode)
+// router.get('/voucher',orderController.getUserRefcode)
+router.get('/admin/createDeal',orderController.getdealCode)
+router.post('/admin/createDeal',orderController.postDealCode)
 
 
 module.exports=router

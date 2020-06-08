@@ -37,6 +37,11 @@ var UserSchema  = new mongoose.Schema({
     password: {
         type: String
     },
+    code:{
+        type:String,
+        required:true,
+        default:'invalid'
+    },
     orders:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'order'

@@ -31,14 +31,14 @@ exports.getCheckout = function (req, res) {
 exports.postCheckout = function (req, res) {
     // console.log('enter');
     console.log(req.body);
-    cartServices.getListingForOrder(req.user.uuid, function (cart) {
+    cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
             res.redirect('/cartpage')
         }
         else {
-            orderServices.findAddressByid(req.body.address, function (address) {
+            orderServices.findAddressByid(req.body.address, function (address) {//get address of user
                 if (address.success == false) {
                     console.log('error in getting address list');
                     req.flash('error', 'error in getting address list')
@@ -49,33 +49,75 @@ exports.postCheckout = function (req, res) {
                     // console.log(address.address);
                     var userAdd = address.address
                     var finalAmt=cart.total
-                    if(req.body.code)
+                    if(req.body.code.length>0&&req.body.code!=req.user.code&&req.body.code!='invalid')//check if code is valid
                     {
-                        orderServices.getDiscountForCode(req.body.code,function(disc){
-                            finalAmt=finalAmt*(1-disc.discount)
-                            var order = {
-                                fullAddress: userAdd.fullAddress,
-                                city: userAdd.city,
-                                state: userAdd.state,
-                                country: userAdd.country,
-                                pincode: userAdd.pincode,
-                                total: cart.finalAmt,
-                                orderedItems: cart.cartList,
-                                uuid: req.user.uuid
+                        orderServices.checkIfCodeUsed(req.body.code,req.user.uuid,function(codeallow){//check if user is allowed to use code
+                            if(codeallow.success==false)
+                            {
+                                req.flash('error', 'error in checking offer code')
+                                res.redirect('/cartpage')
                             }
-                            console.log(order);
-                            orderServices.createOrder(order, function (createOrder) {
-                                if (createOrder.success == false) {
-                                    console.log('error in creating order');
-                                    req.flash('error', 'error in creating order')
-                                    res.redirect('/cartpage')
+                            else
+                            {
+                                if(codeallow.allow==true)//allowed user
+                                {
+                                    orderServices.getDiscountForCode(req.body.code,function(disc){//get discount amount
+                                        if(disc.success)
+                                        finalAmt=finalAmt*(1-disc.discount)
+            
+                                        var order = {
+                                            fullAddress: userAdd.fullAddress,
+                                            city: userAdd.city,
+                                            state: userAdd.state,
+                                            country: userAdd.country,
+                                            pincode: userAdd.pincode,
+                                            total: cart.finalAmt,
+                                            orderedItems: cart.cartList,
+                                            uuid: req.user.uuid,
+                                            code:disc.code
+                                        }
+                                        console.log(order);
+                                        orderServices.createOrder(order, function (createOrder) {//create total order
+                                            if (createOrder.success == false) {
+                                                console.log('error in creating order');
+                                                req.flash('error', 'error in creating order')
+                                                res.redirect('/cartpage')
+                                            }
+                                            else {
+                                                // console.log('success');
+                                                res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                            }
+                                        })
+                                    })
                                 }
-                                else {
-                                    console.log('success');
-                                    res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                else
+                                {
+                                    var order = {
+                                        fullAddress: userAdd.fullAddress,
+                                        city: userAdd.city,
+                                        state: userAdd.state,
+                                        country: userAdd.country,
+                                        pincode: userAdd.pincode,
+                                        total: cart.finalAmt,
+                                        orderedItems: cart.cartList,
+                                        uuid: req.user.uuid
+                                    }
+                                    console.log(order);
+                                    orderServices.createOrder(order, function (createOrder) {
+                                        if (createOrder.success == false) {
+                                            console.log('error in creating order');
+                                            req.flash('error', 'error in creating order')
+                                            res.redirect('/cartpage')
+                                        }
+                                        else {
+                                            console.log('success');
+                                            res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                        }
+                                    })
                                 }
-                            })
+                            }
                         })
+                        
                     }
                     else
                     {
@@ -123,9 +165,14 @@ exports.getUserRefcode=function(req,res)
 
 exports.getdealCode=function(req,res)
 {
-    orderServices.createVoucherCode(5,5,false,0.55,function(updatedCode){
+    res.render('offerGenerator')
+}
+
+exports.postDealCode=function(req,res)
+{
+    orderServices.createVoucherCode(5,5,false,req.body.discount,function(updatedCode){
         console.log("**");
          console.log(updatedCode);
-        res.redirect('/');
+        res.render('offerGenerated',{code:updatedCode});
      })
 }
