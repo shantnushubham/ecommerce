@@ -304,7 +304,7 @@
 								</thead>
 
 								<tbody>
-									<% let x = 0;
+									<% let sum = 0;
 									for (let i = 0; i < cartlisting.length; i++) { %>
 									<tr>
 										<td class="product-thumbnail">
@@ -316,7 +316,7 @@
 										<td class="product-name">
 											<a href="#"><%= cartlisting[i].item.name %></a>
 										</td>
-										<% x = x + parseInt(cartlisting[i].item.price) * parseInt(cartlisting[i].quantity) %>
+										<% sum = sum + parseInt(cartlisting[i].item.price) * parseInt(cartlisting[i].quantity) %>
 
 										<td class="product-price">
 											<span class="unit-amount">Rs. <%= cartlisting[i].item.price %></span>
@@ -329,7 +329,7 @@
 												</span>
 												<input class="quantity" type="text" min="0"
 													value="<%= cartlisting[i].quantity %>"
-													name="<%= cartlisting[i].item.iid %>" , id="number">
+													name="<%= cartlisting[i].item.iid %>" id="number">
 												<span class="plus-btn">
 													<i class="fa fa-plus"></i>
 												</span>
@@ -374,9 +374,9 @@
 							<h3>Cart Totals</h3>
 
 							<ul>
-								<li>Subtotal <span>Rs. <%= x %></span></li>
-								<li>Shipping <span>$30.00</span></li>
-								<li>Total <span><b>$180.00</b></span></li>
+								<li>Subtotal <span>Rs. <%= sum %></span></li>
+								<li>GST <span>Rs. <%= ((0.18) * sum) %></span></li>
+								<li>Total <span><b>Rs. <%= ((1.18) * sum) %></b></span></li>
 							</ul>
 							<a href="#" class="default-btn">
 								Proceed to Checkout
