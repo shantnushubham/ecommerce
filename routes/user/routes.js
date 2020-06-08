@@ -26,13 +26,13 @@ router.post('/login', passport.authenticate("local",{
 router.get('/logout', ensureAuthenticated, UserControl.logout);
 
 
-router.get('/getUserById', ensureAuthenticated, UserControl.getUserById)
+
 router.post('/addUserAddress', ensureAuthenticated, UserControl.addUserAddress)
 router.put('/updateUserData', ensureAuthenticated, UserControl.updateUserData)
 router.put('/makeDefaultAddress', ensureAuthenticated, UserControl.makeAdressToDefaultAddress)
 router.put('/updateAddress', ensureAuthenticated, UserControl.updateUserAddress)
-router.delete('/deleteUser', ensureAuthenticated, UserControl.deleteUserById)
-router.delete('/deleteAddress', ensureAuthenticated, UserControl.deleteAddress)
+// router.delete('/deleteUser', ensureAuthenticated, UserControl.deleteUserById)
+// router.delete('/deleteAddress', ensureAuthenticated, UserControl.deleteAddress)
 
 
 

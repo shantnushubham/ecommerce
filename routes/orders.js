@@ -5,6 +5,7 @@ const axios=require('axios')
 const orderServices = require('../openServices/order')
 const orderController=require('../controllers/orders/orderController')
 const { ensureAuthenticated, forwardAuthenticated } = require('../Middlewares/user/middleware');
+const functions=require('../Middlewares/common/functions')
 require('dotenv').config()
 const envData=process.env
 
@@ -130,8 +131,6 @@ console.log('----------------');
 router.get('/checkout',ensureAuthenticated,orderController.getCheckout)
 router.post('/checkout',ensureAuthenticated,orderController.postCheckout)
 // router.get('/voucher',orderController.getUserRefcode)
-router.get('/admin/createDeal',orderController.getdealCode)
-router.post('/admin/createDeal',orderController.postDealCode)
 
 
 module.exports=router

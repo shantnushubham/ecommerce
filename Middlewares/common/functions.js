@@ -14,3 +14,15 @@ exports.isEmpty=function(obj){
    
     return true;
      }
+
+exports.isAdmin = function(req, res, next) {
+    if (req.isAuthenticated())  {
+        if (req.user.isAdmin == true) {
+            next();
+        } else {
+            res.redirect("/dashboard");
+        }
+    } else {
+        res.redirect("/login");
+    }
+}

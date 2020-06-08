@@ -224,6 +224,18 @@ class order {
         })
     }
 
+    getDiscountListing(callback)
+    {
+        codemodel.find({isRef:false},function(err,foundCodes)
+        {
+            if(err)
+            callback({success:false})
+            else
+            callback({success:true,codelist:foundCodes})
+        })
+    }
+
+
 
 
 }

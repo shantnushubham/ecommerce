@@ -186,17 +186,34 @@ exports.resetPassword = (req, res) => {
 };
 
 exports.getUserById = (req, res) => {
-    if(req && req.user){
-      User.findOne({uuid: req.user.uuid})
-        .select('name email phone username')
-        // .populate('defaultDeliveryAddress deliveryAddress', 'locality landmark state district pincode contact')
-        // .populate('orders', 'itemId quantity')
-        .exec((err, user) => {
-            if(err) return res.status(400).send({err: err})
-            else if(!user) return res.send({success:false, message: 'User not found'})
-            return res.send({success: true, body: user})
-        })
-    }
+    User.findOne({uuid:req.params.uuid},function(err,foundUser)
+    {
+      if(err)
+      {
+        req.flash('error','could not fetch')
+        res.redirect('/admin/users')
+      }
+      else
+      {
+        res.render('userPeek',{user:foundUser})
+      }
+    })
+}
+
+exports.getAllUsers=function(req,res)
+{
+  User.find({},function(err,foundUser)
+    {
+      if(err)
+      {
+        req.flash('error','could not fetch')
+        res.redirect('/admin/users')
+      }
+      else
+      {
+        res.render('userPeek',{user:foundUser})
+      }
+    })
 }
 
 exports.deleteUserById = (req, res) => {

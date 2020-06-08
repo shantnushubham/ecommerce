@@ -62,6 +62,7 @@ exports.postCheckout = function (req, res) {
                                 if(codeallow.allow==true)//allowed user
                                 {
                                     orderServices.getDiscountForCode(req.body.code,function(disc){//get discount amount
+                                        
                                         if(disc.success)
                                         finalAmt=finalAmt*(1-disc.discount)
             
@@ -175,4 +176,20 @@ exports.postDealCode=function(req,res)
          console.log(updatedCode);
         res.render('offerGenerated',{code:updatedCode});
      })
+}
+
+exports.getDiscountCodeList=function(req,res)
+{
+    orderServices.getDiscountListing(function(foundcodes)
+    {
+        if(foundcodes.success==false)
+        {
+            req.flash('error','could not get listing for discount codes')
+            res.redirect('/admin')
+        }
+        else
+        {
+            res.render('discountListing')
+        }
+    })
 }
