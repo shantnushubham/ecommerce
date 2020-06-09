@@ -2,18 +2,25 @@
 
 <div class="container">
     <br>
-    <h1>Generate Discount Coupon</h1>
     <br>
     <br>
-    <form action="//admin/discountCodes" method="GET">
-        <div class="ui form">
-            <div class="field">
-                <label>Enter Dicount Info:</label>
-                <input type="text" placeholder="Discount" name="discount">
-            </div>
-        </div>
-        <button class="ui button" type="submit">Submit</button>
-    </form>
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Discount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < foundcodes.length; i++ ) { %>
+            <tr>
+                <td><img src="<%= itemlist[i].image %>"></td>
+                <td><%= foundcodes[i].code %></td>
+                <td><%= foundcodes[i].discount %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
 </div>
 
 <%- include('partials/adminFooter'); -%>
