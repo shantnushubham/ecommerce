@@ -207,7 +207,7 @@ exports.getAllUsers=function(req,res)
       if(err)
       {
         req.flash('error','could not fetch')
-        res.redirect('/admin/users')
+        res.redirect('/admin/userNotFound')
       }
       else
       {

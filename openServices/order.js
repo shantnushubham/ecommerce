@@ -226,7 +226,7 @@ class order {
 
     getDiscountListing(callback)
     {
-        codemodel.find({isRef:false},function(err,foundCodes)
+        codemodel.find({isReferral:false},function(err,foundCodes)
         {
             if(err)
             callback({success:false})
