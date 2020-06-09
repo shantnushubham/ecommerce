@@ -14,7 +14,7 @@ app.get('/admin/createItem', functions.isAdmin, function (req, res) {
     res.render('createItem')
 })
 app.post('/admin/createItem', functions.isAdmin, adminController.createItem)
-app.get('admin/setDiscount', function (req, res) {
+app.get('/admin/setDiscount', function (req, res) {
     res.render('setDiscount')
 })
 
@@ -28,7 +28,7 @@ app.post('/admin/createDeal', functions.isAdmin, orderController.postDealCode)
 
 app.get('/admin/discountCodes', orderController.getDiscountCodeList)
 
-app.get('/admin/getUserById', functions.isAdmin, UserController.getUserById)
-app.get('/admin/getUsers/:uid', functions.isAdmin, UserController.getAllUsers)
+app.get('/admin/getUsers/:uuid', functions.isAdmin, UserController.getUserById)
+app.get('/admin/getUsers', functions.isAdmin, UserController.getAllUsers)
 
 module.exports = app

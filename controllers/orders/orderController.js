@@ -174,7 +174,7 @@ exports.postDealCode=function(req,res)
     orderServices.createVoucherCode(5,5,false,req.body.discount,function(updatedCode){
         console.log("**");
          console.log(updatedCode);
-        res.render('offerGenerated',{code:updatedCode});
+        res.render('offerGenerator',{code:updatedCode});
      })
 }
 
