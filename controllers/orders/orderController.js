@@ -4,7 +4,7 @@ const router = express()
 const orderServices = require('../../openServices/order')
 const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares/user/middleware');
 require('dotenv').config()
-const envData=process.env
+const envData = process.env
 
 exports.getCheckout = function (req, res) {
 
@@ -21,7 +21,7 @@ exports.getCheckout = function (req, res) {
                     res.redirect('/cartpage')
                 }
                 else {
-                    res.render('checkout', { total:cart.total,cart: cart.cartList, address: address }) 
+                    res.render('checkout', { total: cart.total, cart: cart.cartList, address: address })
                 }
             })
         }
@@ -48,24 +48,22 @@ exports.postCheckout = function (req, res) {
                     console.log('address=');
                     // console.log(address.address);
                     var userAdd = address.address
-                    var finalAmt=cart.total
-                    if(req.body.code.length>0&&req.body.code!=req.user.code&&req.body.code!='invalid')//check if code is valid
+                    var finalAmt = cart.total
+                    if (req.body.code.length > 0 && req.body.code != req.user.code && req.body.code != 'invalid')//check if code is valid
                     {
-                        orderServices.checkIfCodeUsed(req.body.code,req.user.uuid,function(codeallow){//check if user is allowed to use code
-                            if(codeallow.success==false)
-                            {
+                        orderServices.checkIfCodeUsed(req.body.code, req.user.uuid, function (codeallow) {//check if user is allowed to use code
+                            if (codeallow.success == false) {
                                 req.flash('error', 'error in checking offer code')
                                 res.redirect('/cartpage')
                             }
-                            else
-                            {
-                                if(codeallow.allow==true)//allowed user
+                            else {
+                                if (codeallow.allow == true)//allowed user
                                 {
-                                    orderServices.getDiscountForCode(req.body.code,function(disc){//get discount amount
-                                        
-                                        if(disc.success)
-                                        finalAmt=finalAmt*(1-disc.discount)
-            
+                                    orderServices.getDiscountForCode(req.body.code, function (disc) {//get discount amount
+
+                                        if (disc.success)
+                                            finalAmt = finalAmt * (1 - disc.discount)
+
                                         var order = {
                                             fullAddress: userAdd.fullAddress,
                                             city: userAdd.city,
@@ -75,7 +73,7 @@ exports.postCheckout = function (req, res) {
                                             total: cart.finalAmt,
                                             orderedItems: cart.cartList,
                                             uuid: req.user.uuid,
-                                            code:disc.code
+                                            code: disc.code
                                         }
                                         console.log(order);
                                         orderServices.createOrder(order, function (createOrder) {//create total order
@@ -91,8 +89,7 @@ exports.postCheckout = function (req, res) {
                                         })
                                     })
                                 }
-                                else
-                                {
+                                else {
                                     var order = {
                                         fullAddress: userAdd.fullAddress,
                                         city: userAdd.city,
@@ -118,10 +115,9 @@ exports.postCheckout = function (req, res) {
                                 }
                             }
                         })
-                        
+
                     }
-                    else
-                    {
+                    else {
                         var order = {
                             fullAddress: userAdd.fullAddress,
                             city: userAdd.city,
@@ -145,9 +141,6 @@ exports.postCheckout = function (req, res) {
                             }
                         })
                     }
-
-                    
-
                 }
             })
         }
@@ -155,41 +148,35 @@ exports.postCheckout = function (req, res) {
 
 }
 
-exports.getUserRefcode=function(req,res)
-{
-    orderServices.createVoucherCode(5,5,true,0,function(updatedCode){
-       console.log("**");
+exports.getUserRefcode = function (req, res) {
+    orderServices.createVoucherCode(5, 5, true, 0, function (updatedCode) {
+        console.log("**");
         console.log(updatedCode);
-       res.redirect('/');
+        res.redirect('/');
     })
 }
 
-exports.getdealCode=function(req,res)
-{
+exports.getdealCode = function (req, res) {
     res.render('offerGenerator')
 }
 
-exports.postDealCode=function(req,res)
-{
-    orderServices.createVoucherCode(5,5,false,req.body.discount,function(updatedCode){
+exports.postDealCode = function (req, res) {
+    orderServices.createVoucherCode(5, 5, false, req.body.discount, function (updatedCode) {
         console.log("**");
-         console.log(updatedCode);
-        res.render('offerGenerator',{code:updatedCode});
-     })
+        console.log(updatedCode);
+        res.render('offerGenerator', { code: updatedCode });
+    })
 }
 
-exports.getDiscountCodeList=function(req,res)
-{
-    orderServices.getDiscountListing(function(foundcodes)
-    {
-        if(foundcodes.success==false)
-        {
-            req.flash('error','could not get listing for discount codes')
+exports.getDiscountCodeList = function (req, res) {
+    orderServices.getDiscountListing(function (foundcodes) {
+        if (foundcodes.success == false) {
+            req.flash('error', 'could not get listing for discount codes')
             res.redirect('/admin')
         }
-        else
-        {
-            res.render('discountListing')
+        else {
+            console.log(foundcodes.codelist);
+            res.render('discountListing', { codeArray: foundcodes.codelist })
         }
     })
 }
