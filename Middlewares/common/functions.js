@@ -23,6 +23,6 @@ exports.isAdmin = function(req, res, next) {
             res.redirect("/dashboard");
         }
     } else {
-        res.redirect("/login");
+        res.redirect("/users/login");
     }
 }
