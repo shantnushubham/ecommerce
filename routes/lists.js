@@ -4,6 +4,7 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../Middlewares/us
 var app = express();
 
 app.get('/user/list/names',ensureAuthenticated,listController.getListPage)
+app.get('/user/create-list',ensureAuthenticated,listController.getCreateListPage)
 app.post('/user/create-list',ensureAuthenticated,listController.createList)
 app.get('/user/list-items/:lid',ensureAuthenticated,listController.showListByLid)
 app.get('/user/list-add/:iid',ensureAuthenticated,listController.addToList)
