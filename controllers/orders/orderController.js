@@ -45,11 +45,12 @@ exports.postCheckout = function (req, res) {
                     res.redirect('/cartpage')
                 }
                 else {
+                    // console.log('cartobj=',cart);
                     console.log('address=');
                     // console.log(address.address);
                     var userAdd = address.address
                     var finalAmt = cart.total
-                    if (req.body.code.length > 0 && req.body.code != req.user.code && req.body.code != 'invalid')//check if code is valid
+                    if (req.body.code && req.body.code != req.user.code && req.body.code != 'invalid')//check if code is valid
                     {
                         orderServices.checkIfCodeUsed(req.body.code, req.user.uuid, function (codeallow) {//check if user is allowed to use code
                             if (codeallow.success == false) {
@@ -70,7 +71,7 @@ exports.postCheckout = function (req, res) {
                                             state: userAdd.state,
                                             country: userAdd.country,
                                             pincode: userAdd.pincode,
-                                            total: cart.finalAmt,
+                                            total: finalAmt,
                                             orderedItems: cart.cartList,
                                             uuid: req.user.uuid,
                                             code: disc.code
@@ -96,7 +97,7 @@ exports.postCheckout = function (req, res) {
                                         state: userAdd.state,
                                         country: userAdd.country,
                                         pincode: userAdd.pincode,
-                                        total: cart.finalAmt,
+                                        total: finalAmt,
                                         orderedItems: cart.cartList,
                                         uuid: req.user.uuid
                                     }
@@ -124,7 +125,7 @@ exports.postCheckout = function (req, res) {
                             state: userAdd.state,
                             country: userAdd.country,
                             pincode: userAdd.pincode,
-                            total: cart.finalAmt,
+                            total: finalAmt,
                             orderedItems: cart.cartList,
                             uuid: req.user.uuid
                         }

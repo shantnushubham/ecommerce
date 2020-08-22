@@ -50,8 +50,8 @@ class list {
         })
 
     }
-    removeFromList(uuid, iid, callback) {
-        listmodel.deleteOne({ uuid: uuid, iid: iid }, function (err, removed) {
+    removeFromList(uuid, iid,lid, callback) {
+        listmodel.deleteOne({ uuid: uuid, iid: iid,lid:lid }, function (err, removed) {
             if (err) callback({ success: false })
             else callback({ success: true })
         })
@@ -151,8 +151,8 @@ class list {
                         "item": { "$arrayElemAt": [ "$item", 0 ] } 
                         ,"price":"$item.price"
                     }}
-                   ]).exec(function(err,foundL){
-                       if(err)
+                   ]).exec(function(err1,foundL){
+                       if(err1||functions.isEmpty(foundL))
                        callback({success:false})
                        else
                        callback({success:true,listmeta:foundMeta,list:foundL})
@@ -174,5 +174,23 @@ class list {
             })
         })
     }
+    addListToCart(uuid,lid,callback)
+    {
+        listmodel.find({uuid:uuid,lid:lid},function(err,foundL){
+            if(err)
+            callback({success:false})
+            else
+            {
+                cartmodel.insertMany(foundL,function(err,createdC){
+                    if(err)
+                    callback({success:false})
+                    else
+                    callback({success:true,cre})
+                })
+            }
+        })
+    }
 
 }
+
+module.exports=new list()

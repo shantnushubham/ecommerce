@@ -28,9 +28,7 @@ exports.getAllItems = function (req, res) {
         
         cartlisting = cartservices.verifyCart(found, req.user.uuid)
         //  console.log(cartlisting);   
-         cartlisting.forEach(element => {
-             console.log(element);
-         });
+         
         res.render('cartpage',{cart:cartlisting})
     }
     })

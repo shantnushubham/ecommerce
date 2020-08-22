@@ -279,6 +279,7 @@ class cart {
                    cartlist.push(item)
                    total=total+parseInt((parseInt(cartEl.price[0])*(1-cartEl.item.discount)*cartEl.quantity))
                });
+               console.log('total amt=',total);
                if(total<=0||cartlist.length==0)
                {
                 callback({success:false,message:"cant checkout with empty cart"}) 
