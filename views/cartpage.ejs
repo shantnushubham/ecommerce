@@ -254,8 +254,8 @@
 								</thead>
 
 								<tbody>
-									<% let x = 0;
-									for (let i = 0; i < cartlisting.length; i++) { %>
+									<% let x = 0; %>
+									<% for (let i = 0; i < cartlisting.length; i++) { %>
 									<tr>
 										<td class="product-thumbnail">
 											<a href="#">
@@ -304,7 +304,6 @@
 
 					<div class="cart-totals">
 						<h3>Cart Totals</h3>
-
 						<ul>
 							<li>Subtotal <span>Rs. <%= x %>.00</span></li>
 							<li>GST (18%) <span>Rs. <%= (x*(0.18)) %>.00</span></li>
