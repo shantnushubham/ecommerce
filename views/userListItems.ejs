@@ -255,7 +255,7 @@
 								</thead>
 
 								<tbody>
-									<% let x = 0;
+									<% let x = 0; %>
 									<% for (let i = 0; i < list.length; i++) { %>
 									<tr>
 										<td class="product-thumbnail">
@@ -297,7 +297,7 @@
 								</div>
 
 								<div class="col-lg-5 col-sm-5 col-md-5 text-right">
-									<a href="/updateCart" class=" default-btn">
+									<a href="/user/list-update/<%=lid%>" class=" default-btn">
 										Update Cart
 										<i class="flaticon-right-arrow-forward"></i>
 									</a>
@@ -309,11 +309,7 @@
 					<div class="cart-totals">
 						<h3>Cart Totals</h3>
 
-						<ul>
-							<li>Subtotal <span>Rs. <%= x %>.00</span></li>
-							<li>GST (18%) <span>Rs. <%= (x*(0.18)) %>.00</span></li>
-							<li>Total <span><b>Rs. <%= (x*(1.18)) %>.00</b></span></li>
-						</ul>
+						
 						<a href="/checkout" class="default-btn">
 							Proceed to Checkout
 							<i class="flaticon-right-arrow-forward"></i>

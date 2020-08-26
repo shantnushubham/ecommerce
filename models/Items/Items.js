@@ -42,10 +42,10 @@ var itemsSchema  = new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    reviews:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'review'
-    }],
+    isPackage:{
+        type:Boolean,
+        default:false
+    },
     dateCreated: {
         type: Date,
         required: true,

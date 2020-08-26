@@ -13,7 +13,7 @@ exports.getListPage = function (req, res) {
       req.flash("error", "error in getting list names");
       res.render("listNames", { list: [] });
     } else {
-      res.render("listNames", { list: foundNames });
+      res.render("listNames", { list: foundNames.foundLM });
     }
   });
 };
@@ -21,10 +21,11 @@ exports.getListPage = function (req, res) {
 exports.showListByLid = function (req, res) {
   listServices.getUserList(req.user.uuid, req.params.lid, function (foundList) {
     if (foundList.success == false) {
+      console.log(("error", "error in getting list "));
       req.flash("error", "error in getting list ");
       res.redirect("/user/list/names");
     } else {
-      res.render("userListItems", { list: foundList });
+      res.render("userListItems", { list: foundList.list,lid:req.params.lid});
     }
   });
 };
@@ -32,6 +33,7 @@ exports.getCreateListPage = function (req, res) {
   res.render("createList");
 };
 exports.createList = function (req, res) {
+  console.log('here');
   listServices.createUserList(req.user.uuid, req.body.listName, function (
     createdList
   ) {
@@ -59,10 +61,11 @@ exports.getChooseList = function (req, res) {
 
 exports.addToList = function (req, res) {
   var data = {
-    uuid: req.user.uuid,
+    // uuid: req.user.uuid,
     iid: req.params.iid,
     quantity: req.body.quantity,
     lid: req.body.lid,
+    uuid:'5iIinrQCH'
   };
   listServices.addToList(data, function (addedL) {
     if (addedL.success == false) req.flash("error", "error in adding to list");
@@ -74,12 +77,13 @@ exports.addToList = function (req, res) {
 exports.removeFromList = function (req, res) {
   listServices.removeFromList(
     req.user.uuid,
+    // '5iIinrQCH',
     req.params.iid,
     req.params.lid,
     function (deleted) {
       if (deleted.success == false)
         req.flash("error", "error in deleting item");
-      res.redirect("user/list-items/" + req.params.lid);
+      res.redirect("/user/list-items/" + req.params.lid);
     }
   );
 };
@@ -99,7 +103,7 @@ exports.getUpdateList = function (req, res) {
       req.flash("error", "error in getting list ");
       res.redirect("/user/list/names");
     } else {
-      res.render("updateList", { list: foundList });
+      res.render("updateList", { list: foundList.list,lid:req.params.lid });
     }
   });
 };
@@ -123,11 +127,11 @@ exports.postUpdateList = function (req, res) {
     .then((respo) => {
       console.log("updated");
       //  console.log(respo);
-      res.redirect("user/list-items/" + req.params.lid);
+      res.redirect("/user/list-items/" + req.params.lid);
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("user/list-items/" + req.params.lid);
+      res.redirect("/user/list-items/" + req.params.lid);
     });
 };
 

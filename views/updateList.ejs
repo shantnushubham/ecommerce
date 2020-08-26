@@ -314,12 +314,12 @@
 										</td>
 
 										<td class="product-name">
-											<a href="#"><%= cartlisting[i].item.name %></a>
+											<a href="#"><%= list[i].item.name %></a>
 										</td>
-										<% sum = sum + parseInt(cartlisting[i].item.price) * parseInt(cartlisting[i].quantity) %>
+										<% sum = sum + parseInt(list[i].item.price) * parseInt(list[i].quantity) %>
 
 										<td class="product-price">
-											<span class="unit-amount">Rs. <%= cartlisting[i].item.price %></span>
+											<span class="unit-amount">Rs. <%= list[i].item.price %></span>
 										</td>
 
 										<td class="product-quantity">
@@ -328,8 +328,8 @@
 													<i class="fa fa-minus"></i>
 												</span>
 												<input class="quantity" type="text" min="0"
-													value="<%= cartlisting[i].quantity %>"
-													name="<%= cartlisting[i].item.iid %>" id="number">
+													value="<%= list[i].quantity %>"
+													name="<%= list[i].item.iid %>" id="number">
 												<span class="plus-btn">
 													<i class="fa fa-plus"></i>
 												</span>
@@ -338,7 +338,7 @@
 
 										<td class="product-subtotal">
 											<span class="subtotal-amount">Rs.
-												<%= parseInt(cartlisting[i].item.price) * parseInt(cartlisting[i].quantity) %></span>
+												<%= parseInt(list[i].item.price) * parseInt(list[i].quantity) %></span>
 											<a href="#" class="remove">
 												<i class="fa fa-trash-o"></i>
 											</a>

@@ -19,8 +19,10 @@ class list {
         })
     }
     createUserList(uuid, name, callback) {
+        console.log("creating list");
         listMetaModel.create({ uuid: uuid, name: name }, function (err, foundLM) {
             if (err) {
+                console.log(err);
                 callback({ success: false })
             }
             else callback({ success: true, foundLM: foundLM })
@@ -50,8 +52,8 @@ class list {
         })
 
     }
-    removeFromList(uuid, iid,lid, callback) {
-        listmodel.deleteOne({ uuid: uuid, iid: iid,lid:lid }, function (err, removed) {
+    removeFromList(uuid, iid, lid, callback) {
+        listmodel.deleteOne({ uuid: uuid, iid: iid, lid: lid }, function (err, removed) {
             if (err) callback({ success: false })
             else callback({ success: true })
         })
@@ -132,60 +134,63 @@ class list {
 
         }
     }
-    getUserList(uuid,lid,callback)
-    {
-        listMetaModel.findOne({uuid:uuid,lid:lid},function(err,foundMeta){
-            if(err)
-            {
-                callback({success:false})
-                
+    getUserList(uuid, lid, callback) {
+        listMetaModel.findOne({ uuid: uuid, lid: lid }, function (err, foundMeta) {
+            if (err) {
+                console.log(err);
+                callback({ success: false })
+
             }
-            else
-            {
+            else {
                 listmodel.aggregate([
-                    { $match : { uuid:uuid,lid:lid } },
+                    { $match: { uuid: uuid, lid: lid } },
                     { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
-                    { $project: { 
-                        "quantity": "$quantity", 
-                        "iid": "$iid", 
-                        "item": { "$arrayElemAt": [ "$item", 0 ] } 
-                        ,"price":"$item.price"
-                    }}
-                   ]).exec(function(err1,foundL){
-                       if(err1||functions.isEmpty(foundL))
-                       callback({success:false})
-                       else
-                       callback({success:true,listmeta:foundMeta,list:foundL})
-                   })
+                    {
+                        $project: {
+                            "quantity": "$quantity",
+                            "iid": "$iid",
+                            "item": { "$arrayElemAt": ["$item", 0] }
+                            , "price": "$item.price"
+                        }
+                    }
+                ]).exec(function (err1, foundL) {
+                    if (err1)
+                        callback({ success: false })
+                    else {
+                        if (functions.isEmpty(foundL)) {
+                            callback({ success: true, isEmpty: true, listmeta: foundMeta, list: [] })
+                        }
+                        else
+                            callback({ success: true, listmeta: foundMeta, list: foundL })
+
+                    }
+                })
             }
         })
     }
-    deleteUserList(uuid,lid,callback)
-    {
-        listMetaModel.deleteMany({uuid:uuid,lid:lid},function(err,deletedMeta){
+    deleteUserList(uuid, lid, callback) {
+        listMetaModel.deleteMany({ uuid: uuid, lid: lid }, function (err, deletedMeta) {
             console.log(err);
-            listmodel.deleteMany({uuid:uuid,lid:lid},function(err1,deletedL){
+            listmodel.deleteMany({ uuid: uuid, lid: lid }, function (err1, deletedL) {
                 console.log(err);
 
-                if(err||err1)
-                callback({success:false})
+                if (err || err1)
+                    callback({ success: false })
                 else
-                callback({success:true})
+                    callback({ success: true })
             })
         })
     }
-    addListToCart(uuid,lid,callback)
-    {
-        listmodel.find({uuid:uuid,lid:lid},function(err,foundL){
-            if(err)
-            callback({success:false})
-            else
-            {
-                cartmodel.insertMany(foundL,function(err,createdC){
-                    if(err)
-                    callback({success:false})
+    addListToCart(uuid, lid, callback) {
+        listmodel.find({ uuid: uuid, lid: lid }, function (err, foundL) {
+            if (err)
+                callback({ success: false })
+            else {
+                cartmodel.insertMany(foundL, function (err, createdC) {
+                    if (err)
+                        callback({ success: false })
                     else
-                    callback({success:true,cre})
+                        callback({ success: true, createdC:true })
                 })
             }
         })
@@ -193,4 +198,4 @@ class list {
 
 }
 
-module.exports=new list()
+module.exports = new list()
