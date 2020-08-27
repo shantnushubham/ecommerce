@@ -2,9 +2,7 @@ const mongoose = require("mongoose");
 const shortid = require("shortid");
 
 var packageSchema  = new mongoose.Schema({
-    uuid:{
-        type:String
-    },
+    
     iid:{
         type: String,
         required: true,

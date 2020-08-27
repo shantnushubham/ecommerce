@@ -13,7 +13,7 @@ var itemsMetaSchema  = new mongoose.Schema({
     },
     weight:{
         type:String,
-        required:true
+    
     },
     color:{
         type:String,

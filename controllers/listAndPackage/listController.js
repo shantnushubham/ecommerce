@@ -3,6 +3,7 @@ var itemmodel = require("../../models/Items/Items");
 var cartmodel = require("../../models/cart/cart");
 var cartservices = require("../../openServices/cart");
 var listServices = require("../../openServices/list");
+var packageServices=require('../../openServices/package')
 var mongoose = require("mongoose");
 var middleware = require("../../Middlewares/common/functions");
 var async = require("async");
@@ -13,6 +14,16 @@ exports.getListPage = function (req, res) {
       req.flash("error", "error in getting list names");
       res.render("listNames", { list: [] });
     } else {
+      if(req.user.isAdmin==true)
+      {
+        packageServices.getPackageNames(function(packages){
+          if(packages.success==false)
+          res.render("listNames", { list: foundNames.foundLM,packages:[] });
+          else
+          res.render("listNames", { list: foundNames.foundLM,packages:packages.foundPM });
+        })
+      }
+      else
       res.render("listNames", { list: foundNames.foundLM });
     }
   });
@@ -53,7 +64,22 @@ exports.getChooseList = function (req, res) {
       itemmodel.findOne({ iid: req.params.iid }, function (err, foundItem) {
         if (err || middleware.isEmpty(foundItem))
           res.redirect("/items/" + req.params.iid);
-        else res.render("chooseList", { list: foundNames, item: foundItem });
+
+        else
+        {
+          if(req.user.isAdmin==true){
+            packageServices.getPackageNames(function(packages){
+              if(packages.success==false)
+              res.render("chooseList", { list: foundNames, item: foundItem,packages:[] });
+              else
+              res.render("chooseList", { list: foundNames, item: foundItem,packages:packages.foundPM });
+            })
+          }
+          else
+          res.render("chooseList", { list: foundNames, item: foundItem, });
+          
+          
+        }
       });
     }
   });
@@ -65,7 +91,7 @@ exports.addToList = function (req, res) {
     iid: req.params.iid,
     quantity: req.body.quantity,
     lid: req.body.lid,
-    uuid:'5iIinrQCH'
+    uuid:req.user.uuid
   };
   listServices.addToList(data, function (addedL) {
     if (addedL.success == false) req.flash("error", "error in adding to list");
