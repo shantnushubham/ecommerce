@@ -31,6 +31,7 @@ router.post('/addUserAddress', ensureAuthenticated, UserControl.addUserAddress)
 router.put('/updateUserData', ensureAuthenticated, UserControl.updateUserData)
 router.put('/makeDefaultAddress', ensureAuthenticated, UserControl.makeAdressToDefaultAddress)
 router.put('/updateAddress', ensureAuthenticated, UserControl.updateUserAddress)
+router.get('/add/business-account',ensureAuthenticated)
 // router.delete('/deleteUser', ensureAuthenticated, UserControl.deleteUserById)
 // router.delete('/deleteAddress', ensureAuthenticated, UserControl.deleteAddress)
 

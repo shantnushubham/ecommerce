@@ -66,6 +66,10 @@ var UserSchema  = new mongoose.Schema({
     },
     resetPasswordExpires: {
         type: String
+    },
+    isBusiness:{
+        type:Boolean,
+        default:false
     }
 });
 
