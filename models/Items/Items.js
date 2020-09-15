@@ -2,56 +2,69 @@ const mongoose = require("mongoose");
 const shortid = require("shortid");
 var mongooseHistory = require('mongoose-history')
 
-var itemsSchema  = new mongoose.Schema({
-    iid:{
+var itemsSchema = new mongoose.Schema({
+    iid: {
         type: String,
         required: true,
-        default:shortid.generate
+        default: shortid.generate
     },
-    name:{
-        type:String,
-        required:true
+    name: {
+        type: String,
+        required: true
     },
     active: {
         type: Boolean,
         required: true,
         default: true
     },
-    price:{
-        type:Number,
-        required:true,
+    price: {
+        type: Number,
+        required: true,
     },
-    category:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref: "category",
+    category: {
+        type: String,
+        default: "others"
     },
-    image:{
-        type:String
+    subCategory: {
+        type: String,
+        default: "others"
     },
-    metadata:{
+    tag: {
+        type: String,
+        default: "others"
+    },
+    groupingTag: {
+        type: String,
+
+    },
+    image: {
+        type: String
+    },
+    metadata: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'items_metadata'
     },
-    discount:{
-        type:Number,
-        required:true,
-        default:0
+    discount: {
+        type: Number,
+        required: true,
+        default: 0
     },
-    sale:{
-        type:Boolean,
-        default:false
+    sale: {
+        type: Boolean,
+        default: false
     },
-    isPackage:{
-        type:Boolean,
-        default:false
+    isPackage: {
+        type: Boolean,
+        default: false
     },
     dateCreated: {
         type: Date,
         required: true,
         default: Date.now
     },
-
+    slideshow: [
+        { type: String }
+    ]
 });
 
 itemsSchema.plugin(mongooseHistory)

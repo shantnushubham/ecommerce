@@ -6,16 +6,14 @@ var app = express();
 
 // app.get('/user/list/names',ensureAuthenticated,listController.getListPage)
 // app.get('/user/create-list',ensureAuthenticated,listController.getCreateListPage)
-app.post('/user/create-list',functions.isAdmin,listController.createList)
-// app.get('/user/list-items/:lid',ensureAuthenticated,listController.showListByLid)
-app.post('/user/list-add/:iid',functions.isAdmin,listController.addToList)
-app.get('/user/list/remove/:iid/:lid',listController.removeFromList)
-// app.get('/user/list-items/:lid',ensureAuthenticated,listController.showListByLid)
-app.get('/user/delete-list/:lid',ensureAuthenticated,listController.deleteList)
-// app.get('/user/list-items/:lid',ensureAuthenticated,listController.showListByLid)
-app.get('/user/list-update/:lid',ensureAuthenticated,listController.getUpdateList)
-app.post('/user/list-update/:lid',ensureAuthenticated,listController.postUpdateList)
-app.get('/user/export-list/:lid',ensureAuthenticated,listController.addListToCart)
+app.post('/admin/create-package',packageController.createPackage)//works
+app.post('/admin/package-add/:iid',packageController.addToPackage)//works
+app.get('/admin/package/remove/:iid/:lid',packageController.removeFromPackage)
+// app.get('/user/delete-list/:lid',ensureAuthenticated,listController.deleteList)
+app.get('/admin/package-update/:lid',ensureAuthenticated,packageController.getUpdatePackage)//works
+app.post('/admin/package-update/:lid',ensureAuthenticated,packageController.postUpdatePackage)//works
+app.post('/admin/publish-package/:lid',ensureAuthenticated,packageController.publishPackage)
+app.get('/user/export-list/:lid',ensureAuthenticated,packageController.addPackageToCart)
 
 
 

@@ -14,7 +14,9 @@ var async = require("async");
 
 exports.createPackage = function (req, res) {
   console.log('here');
-  packageServices.createPackage(req.user.uuid, req.body.listName, function (
+  packageServices.createPackage(
+    req.user.uuid,
+     req.body.listName, function (
     createdList
   ) {
     if (createdList.success == false)
@@ -38,11 +40,11 @@ exports.showPackageByLid = function (req, res) {
 
 exports.addToPackage = function (req, res) {
   var data = {
-    // uuid: req.user.uuid,
     iid: req.params.iid,
     quantity: req.body.quantity,
     lid: req.body.lid,
     uuid:req.user.uid
+    // uuid:'5iIinrQCH'
   };
   packageServices.addToPackage(data, function (addedL) {
     if (addedL.success == false) req.flash("error", "error in adding to Package");
@@ -51,7 +53,7 @@ exports.addToPackage = function (req, res) {
   });
 };
 
-exports.removeFromList = function (req, res) {
+exports.removeFromPackage = function (req, res) {
   packageServices.removeFromPackage(
     
     req.params.iid,
@@ -117,7 +119,17 @@ exports.addPackageToCart = function (req, res) {
     res.redirect("/cartpage");
   });
 };
-
+exports.getPublishPackage=function(req,res){
+  packageServices.getPackage(req.params.lid,function(foundPackage){
+    if(foundPackage.success==false)
+    {
+      req.flash('error','error in getting package')
+      res.redirect('/user/list/names')
+    }
+    else
+    res.render('publishPackage',{list:foundPackage.list, packageMeta:foundPackage.packageMeta})
+  })
+}
 exports.publishPackage=function(req,res)
 {
   var data={
@@ -127,7 +139,9 @@ exports.publishPackage=function(req,res)
 
     content:req.bopdy.content,
 
-    category:req.body.category
+    category:req.body.category,
+
+    lid:req.params.lid
   }
   packageServices.publishPackage(data,function(createdPackage){
     if(createdPackage.success==false)req.flash('error',createdPackage.message)

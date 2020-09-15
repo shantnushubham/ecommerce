@@ -21,6 +21,7 @@ app.get('/admin/setDiscount', function (req, res) {
 app.post('/admin/setDiscount', functions.isAdmin, adminController.setDiscount)
 app.get('/admin/items/:iid/activate', functions.isAdmin, adminController.activateItem)
 app.get('/admin/items/:iid/deactivate', functions.isAdmin, adminController.deactivateItem)
+app.get('/admin/addImg',)
 // app.get('/populate/:iid',adminController.populate)
 
 app.get('/admin/createDeal', functions.isAdmin, orderController.getdealCode)

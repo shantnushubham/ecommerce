@@ -6,14 +6,24 @@ var mongoose=require("mongoose")
 
 exports.getAllItems=function(req,res){
     itemservices.getAllItems(function(itemlist){
-        console.log(itemlist.foundItems);
-        res.render('items',{itemlist:itemlist.foundItems})
+        if(itemlist.success==false)
+        {
+            req.flash('error','error in getting items')
+            res.redirect('/')
+        }
+        else
+        res.render('items',{itemlist:itemlist.foundItems,category:itemlist.category,subCategory:itemlist.subCategory,tag:itemlist.tag})
     })
 }
 
 exports.getItem=function(req,res){
    itemservices.getItemById(req.params.iid,function(foundItem){
-       res.render('itemPage',{item:foundItem.totalDetails})
+       if(foundItem.success==false)
+       {
+
+       }
+       else
+       res.render('itemPage',{item:foundItem.totalDetails,group:foundItem.group})
     // console.log(foundItem)
    })
 }

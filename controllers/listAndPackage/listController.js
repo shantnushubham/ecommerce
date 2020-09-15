@@ -8,7 +8,7 @@ var mongoose = require("mongoose");
 var middleware = require("../../Middlewares/common/functions");
 var async = require("async");
 
-exports.getListPage = function (req, res) {
+exports.getListPage = function (req, res) {//get packages and lists
   listServices.getUserListNames(req.user.uuid, function (foundNames) {
     if (foundNames.success == false) {
       req.flash("error", "error in getting list names");
@@ -17,6 +17,7 @@ exports.getListPage = function (req, res) {
       if(req.user.isAdmin==true)
       {
         packageServices.getPackageNames(function(packages){
+          console.log('packages=',packages.foundPM);
           if(packages.success==false)
           res.render("listNames", { list: foundNames.foundLM,packages:[] });
           else

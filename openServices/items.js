@@ -1,83 +1,98 @@
 var itemMetaModel = require("../models/Items/ItemMetadata")
 var itemModel = require('../models/Items/Items')
-var categoryModel=require('../models/Items/Category')
+var categoryModel = require('../models/Items/Category')
 var mongoose = require("mongoose")
-var functions=require('../Middlewares/common/functions')
+var functions = require('../Middlewares/common/functions')
 class items {
     constructor() {
 
     }
     getAllItems(callback) {
-        itemModel.find({}, function (err, foundItems, next) {
+        itemModel.find({}, function (err, foundItems) {
             if (err) {
                 console.log(err)
                 callback({ success: false, err: err })
             }
-            else
-                callback({ success: true, foundItems, err: null });
+            else{
+                var category=new Set()
+                var subCategory=new Set()
+                var tag=new Set()
+                foundItems.forEach(el=>{
+                    category.add(el.category)
+                    subCategory.add(el.subCategory)
+                    tag.add(el.tag)
+
+                })
+
+                callback({ success: true, foundItems, err: null,category:Array.from(category),subCategory:Array.from(subCategory),tag:Array.from(tag) });
+
+            }
         })
     }
 
     getItemById(iid, callback) {
         itemModel.findOne({ iid: iid }, function (err, foundItem) {
             if (err) callback({ success: false, err: err })
-            else{
-            itemMetaModel.findOne({ iid: foundItem.iid }, function (err, foundMeta) {
-                if (err) callback({ success: false, err: err })
-                else
-                {
-                categoryModel.findOne({_id:foundItem.category},function(err,foundCategory){
-                    if(err)callback({ success: false, err: err })
-                    var totalDetails = {
-                        active: foundItem.active,
-                        iid: foundItem.iid,
-                        name: foundItem.name,
-                        price: foundItem.price,
-                        image: foundItem.image,
-                        discount: foundItem.discount,
-                        content: foundMeta.content,
-                        weight: foundMeta.weight,
-                        color: foundMeta.color,
-                        category:foundCategory.name
+            else {
+                itemMetaModel.findOne({ iid: foundItem.iid }, function (err, foundMeta) {
+                    if (err) callback({ success: false, err: err })
+                    else {
+                        var totalDetails = {
+                            active: foundItem.active,
+                            iid: foundItem.iid,
+                            name: foundItem.name,
+                            price: foundItem.price,
+                            image: foundItem.image,
+                            discount: foundItem.discount,
+                            content: foundMeta.content,
+                            weight: foundMeta.weight,
+                            color: foundMeta.color,
+                            category: foundItem.category,
+                            subCategory: foundItem.subCategory,
+                            tag: foundItem.tag,
+                            groupingTag: foundItem.groupingTag,
+
+
+                        }
+                        
+                        itemModel.find({groupingTag:foundItem.groupingTag},function(err1,foundGroup){
+                            if(err1)
+                            callback({success:true,group:[],totalDetails:totalDetails})
+                            else
+                            callback({success:true,group:foundGroup,totalDetails:totalDetails})
+
+
+                        })
+                       
                     }
-                    // console.log(totalDetails);
-                    callback({ success: true, totalDetails, err: null })
                 })
-               
-                }
-            })
-        }
+            }
         })
     }
 
-    getItemByCategory(category, callback) {
-        console.log(category);
-        itemModel.aggregate([
-        { $lookup: { from: 'categories', localField: 'category', foreignField: '_id', as: 'category' } },
-        
-        { $project: { 
-            iid:'$iid',
-            name:'$name',
-            active:'$active',
-            price:'$price',
-
-            "category": { "$arrayElemAt": [ "$category", 0 ] },
-
-
-        }} ,
-        {'$match':{'category.name':category}}
-        ]).exec(function(err,found){
-            if(err){
-                console.log(err);
-                req.flash('error','error in fetching cart')
-                res.redirect('/items')
+    filterItems(filterList,callback)
+    {
+        itemModel.find({$or:filterList},function(err,foundItems){
+            if (err) {
+                console.log(err)
+                callback({ success: false, err: err })
             }
             else{
-            // console.log(found);
-            callback({foundItems:found})
-        }
+                var category=new Set()
+                var subCategory=new Set()
+                var tag=new Set()
+                foundItems.forEach(el=>{
+                    category.add(el.category)
+                    subCategory.add(el.subCategory)
+                    tag.add(el.tag)
+
+                })
+
+                callback({ success: true, foundItems, err: null,category:Array.from(category),subCategory:Array.from(subCategory),tag:Array.from(tag) });
+
+            }
+                
         })
-        
     }
 
     getItemByStatus(status, callback) {
@@ -92,80 +107,37 @@ class items {
     }
 
     createItem(data, callback) {
-        var item_data={name:data.name,price:data.price,image:data.image,}
-        var item_metaData={weight:data.weight,content:data.content,color:data.color}
-        var item_categoryData={name:data.category}
-        
-        categoryModel.findOne({name:item_categoryData.name},function(err,foundCategory){
-            if(err)
-            {
-                console.log(err);
-                callback({success:false,message:'error in getting categories'})
+        var item_data = {
+            name: data.name,
+            price: data.price,
+            image: data.image,
+            category: data.category,
+            subCategory: data.subCategory,
+            tag: data.tag,
+            groupingTag: data.grp
+        }
+        var item_metaData = { weight: data.weight, content: data.content, color: data.color }
+
+
+        itemModel.create(item_data, function (err, newItem) {
+            if (err) {
+                console.log(err)
+                callback({ success: false, err: "trouble creating item" })
             }
-            else
-            {
-                if(functions.isEmpty(foundCategory)){
-                    categoryModel.create(item_categoryData,function(err,newCat){
-                        if(err)
-                        {
-                            console.log(err);
-                            callback({success:false,message:'error in getting categories'})
-                        }
-                        else
-                        {
-                            item_data.category=newCat._id
-                            itemModel.create(item_data, function (err, newItem) {
-                                if (err) {
-                                    console.log(err)
-                                    callback({ success: false, err: "trouble creating item" })
-                                }
-                                else{
-                                    item_metaData.iid=newItem.iid
-                                    itemMetaModel.create(item_metaData,function(err,newMeta){
-                                        if(err)
-                                        {
-                                            console.log(err)
-                                            callback({ success: false, err: "trouble creating item" })
-                                        }
-                                        else
-                                        {
-                                            callback({ success: true, item: newItem, err: null })   
-                                        }
-                                    })
-                                    // callback({ success: true, item: newItem, err: null })
-                                }
-                                })
-                        }
-                    })
-                }
-                else
-                {
-                    item_data.category=foundCategory._id
-                    itemModel.create(item_data, function (err, newItem) {
-                        if (err) {
-                            console.log(err)
-                            callback({ success: false, err: "trouble creating item" })
-                        }
-                        else{
-                            item_metaData.iid=newItem.iid
-                            itemMetaModel.create(item_metaData,function(err,newMeta){
-                                if(err)
-                                {
-                                    console.log(err)
-                                    callback({ success: false, err: "trouble creating item" })
-                                }
-                                else
-                                {
-                                    callback({ success: true, item: newItem, err: null })   
-                                }
-                            })
-                            // callback({ success: true, item: newItem, err: null })
-                        }
-                        })
-                }
+            else {
+                item_metaData.iid = newItem.iid
+                itemMetaModel.create(item_metaData, function (err, newMeta) {
+                    if (err) {
+                        console.log(err)
+                        callback({ success: false, err: "trouble creating item" })
+                    }
+                    else {
+                        callback({ success: true, item: newItem, err: null })
+                    }
+                })
+                // callback({ success: true, item: newItem, err: null })
             }
         })
-        
     }
 
     setDiscount(discount, iid, callback) {
@@ -203,6 +175,30 @@ class items {
                 callback({ success: true, err: null, item: newItem })
             }
         });
+    }
+
+    filler(previous, current, key) {
+        var r = []
+        if (previous.length === 0) {
+            for (var i = 0; i < current.length; i++) {
+                var ob = {}
+                ob[key] = current[i]
+                r.push(ob)
+            }
+        }
+        else {
+            for (var i = 0; i < previous.length; i++) {
+                for (var j = 0; j < current.length; j++) {
+                    var ob = { ...previous[i] }
+                    ob[key] = current[j]
+                    r.push(ob)
+                }
+            }
+        }
+        if (r.length >= previous.length)
+            return r;
+        else
+            return previous
     }
 
 }

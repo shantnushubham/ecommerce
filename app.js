@@ -25,6 +25,7 @@ var orderroutes=require('./routes/orders')
 var itemRoutes=require('./routes/items')
 var User = require('./models/User/User');
 var listRoutes=require('./routes/lists')
+var packageRoutes=require('./routes/packages')
 require('./config/passport')(passport);
 // const OAuthCredentials = require('./config/auth');
 
@@ -91,6 +92,18 @@ app.use(function(req, res, next) {
   res.locals.error = req.flash('error');
   next();
 });
+app.use(function(req, res, next){
+  if (req.isAuthenticated()) {
+      res.locals.currentUser = req.user;
+      res.locals.success = req.flash('success');
+      res.locals.error = req.flash('error');
+  } else {
+      res.locals.currentUser = "";
+      res.locals.success = req.flash('success');
+      res.locals.error = req.flash('error');
+  }
+  next();
+});
 
 // app.use('/', require('./routes/routes'));
 app.use(cartRoutes)
@@ -98,6 +111,8 @@ app.use(adminroutes)
 app.use(itemRoutes)
 app.use(orderroutes)
 app.use(listRoutes)
+app.use(packageRoutes)
+
 
 app.get('/auth/google', passport.authenticate('google',{
   scope:[

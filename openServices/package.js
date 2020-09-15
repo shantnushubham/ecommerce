@@ -10,7 +10,7 @@ var packageMetaModel = require('../models/lists/packageMeta')
 var functions = require('../Middlewares/common/functions')
 
 var mongoose = require("mongoose")
-class package {
+class packs {
     constructor() {
 
     }
@@ -187,7 +187,7 @@ class package {
     //     })
     // }
     addPackageToCart(userId, lid, callback) {
-        package.find({ lid: lid }, function (err, foundL) {
+        packageModel.find({ lid: lid }, function (err, foundL) {
             if (err)
                 callback({ success: false })
             else {
@@ -233,4 +233,4 @@ class package {
 
 }
 
-module.exports = new package()
+module.exports = new packs()
