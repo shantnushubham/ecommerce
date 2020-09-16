@@ -114,7 +114,7 @@ class items {
             category: data.category,
             subCategory: data.subCategory,
             tag: data.tag,
-            groupingTag: data.grp
+            groupingTag: data.groupingTag
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
 

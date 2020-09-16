@@ -4,6 +4,7 @@ var app = express();
 
 app.get('/items',itemController.getAllItems)
 app.get('/items/:iid',itemController.getItem)
+app.post('/items/filter',itemController.filterItems)
 
 
 
