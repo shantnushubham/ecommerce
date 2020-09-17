@@ -40,6 +40,7 @@ exports.getItemByStatus = function (req, res) {
 }
 
 exports.createItem = function (req, res) {
+    var data = req.body;
     itemservices.createItem({
         name: data.name,
         price: data.price,

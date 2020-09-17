@@ -13,19 +13,18 @@ class items {
                 console.log(err)
                 callback({ success: false, err: err })
             }
-            else{
-                var category=new Set()
-                var subCategory=new Set()
-                var tag=new Set()
-                foundItems.forEach(el=>{
+            else {
+                var category = new Set()
+                var subCategory = new Set()
+                var tag = new Set()
+                foundItems.forEach(el => {
                     category.add(el.category)
                     subCategory.add(el.subCategory)
                     tag.add(el.tag)
 
                 })
-
-                callback({ success: true, foundItems, err: null,category:Array.from(category),subCategory:Array.from(subCategory),tag:Array.from(tag) });
-
+                console.log({ success: true, foundItems, err: null, category: Array.from(category), subCategory: Array.from(subCategory), tag: Array.from(tag) });
+                callback({ success: true, foundItems, err: null, category: Array.from(category), subCategory: Array.from(subCategory), tag: Array.from(tag) })
             }
         })
     }
@@ -54,44 +53,43 @@ class items {
 
 
                         }
-                        
-                        itemModel.find({groupingTag:foundItem.groupingTag},function(err1,foundGroup){
-                            if(err1)
-                            callback({success:true,group:[],totalDetails:totalDetails})
+
+                        itemModel.find({ groupingTag: foundItem.groupingTag }, function (err1, foundGroup) {
+                            if (err1)
+                                callback({ success: true, group: [], totalDetails: totalDetails })
                             else
-                            callback({success:true,group:foundGroup,totalDetails:totalDetails})
+                                callback({ success: true, group: foundGroup, totalDetails: totalDetails })
 
 
                         })
-                       
+
                     }
                 })
             }
         })
     }
 
-    filterItems(filterList,callback)
-    {
-        itemModel.find({$or:filterList},function(err,foundItems){
+    filterItems(filterList, callback) {
+        itemModel.find({ $or: filterList }, function (err, foundItems) {
             if (err) {
                 console.log(err)
                 callback({ success: false, err: err })
             }
-            else{
-                var category=new Set()
-                var subCategory=new Set()
-                var tag=new Set()
-                foundItems.forEach(el=>{
+            else {
+                var category = new Set()
+                var subCategory = new Set()
+                var tag = new Set()
+                foundItems.forEach(el => {
                     category.add(el.category)
                     subCategory.add(el.subCategory)
                     tag.add(el.tag)
 
                 })
 
-                callback({ success: true, foundItems, err: null,category:Array.from(category),subCategory:Array.from(subCategory),tag:Array.from(tag) });
+                callback({ success: true, foundItems, err: null, category: Array.from(category), subCategory: Array.from(subCategory), tag: Array.from(tag) });
 
             }
-                
+
         })
     }
 
