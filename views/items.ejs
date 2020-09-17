@@ -264,47 +264,50 @@
 							<a class="filters" style="font-weight: bold;">Collapse Filters</a>
 							<div class="collapse show" id="collapseFilters">
 								<form method="POST" action="/items/filter">
-									<hr>
-									<div class="filter_type">
-										<h5>Categories</h5>
-										<ul>
-											<% category.forEach(element => { %>
-											<li>
-												<label>
-													<input type="checkbox" name="category" value="<%=element%>">&nbsp; <b><%=element%></b>
-												</label>
-											</li>
-											<% }); %>
-										</ul>
-									</div>
-									<hr>
-									<div class="filter_type">
-										<h5>Sub-Category</h5>
-										<ul>
-											<% subCategory.forEach(element => { %>
-											<li>
-												<label>
-													<input type="checkbox" name="subCategory" value="<%=element%>">&nbsp; <b><%=element%></b>
-												</label>
-											</li>
-											<% }); %>
-										</ul>
-									</div>
-									<hr>
-									<div class="filter_type">
-										<h5>Tags</h5>
-										<ul>
-											<% tag.forEach(element => { %>
-											<li>
-												<label>
-													<input type="checkbox" name="tags" value="<%=element%>">&nbsp; <b><%=element%></b>
-												</label>
-											</li>
-											<% }); %>
-										</ul>
-									</div>
-									<button class="default-btn" type="submit">Search</button>
-								</form>
+								<hr>
+								<div class="filter_type">
+									<h5>Categories</h5>
+									<ul>
+										<% category.forEach(element => { %>
+										<li>
+											<label>
+												<input type="checkbox" name="category" value="<%=element%>">&nbsp;
+												<b><%=element%></b>
+											</label>
+										</li>
+										<% }); %>
+									</ul>
+								</div>
+								<hr>
+								<div class="filter_type">
+									<h5>Sub-Category</h5>
+									<ul>
+										<% subCategory.forEach(element => { %>
+										<li>
+											<label>
+												<input type="checkbox" name="subCategory" value="<%=element%>">&nbsp;
+												<b><%=element%></b>
+											</label>
+										</li>
+										<% }); %>
+									</ul>
+								</div>
+								<hr>
+								<div class="filter_type">
+									<h5>Tags</h5>
+									<ul>
+										<% tag.forEach(element => { %>
+										<li>
+											<label>
+												<input type="checkbox" name="tags" value="<%=element%>">&nbsp;
+												<b><%=element%></b>
+											</label>
+										</li>
+										<% }); %>
+									</ul>
+								</div>
+								<button class="default-btn" type="submit">Search</button>
+								<!-- </form> -->
 							</div>
 							<!--/collapse -->
 						</div>
