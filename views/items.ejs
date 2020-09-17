@@ -7,16 +7,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="Udema a modern educational site template">
 	<meta name="author" content="Ansonika">
-	<title>Asahi - Food & Restaurant HTML Template</title>
 
-	<!-- Favicons-->
-	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-	<link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
-	<link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
-	<link rel="apple-touch-icon" type="image/x-icon" sizes="114x114"
-		href="img/apple-touch-icon-114x114-precomposed.png">
-	<link rel="apple-touch-icon" type="image/x-icon" sizes="144x144"
-		href="img/apple-touch-icon-144x144-precomposed.png">
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="/img/favicon.png">
+	<!-- TITLE -->
+	<title>Asahi - Food & Restaurant HTML Template</title>
 
 	<!-- GOOGLE WEB FONT -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800" rel="stylesheet">
@@ -265,91 +260,51 @@
 			<div class="container margin_60_35">
 				<div class="row">
 					<aside class="col-lg-3" id="sidebar">
-						<div id="filters_col"> 
+						<div id="filters_col">
 							<a class="filters" style="font-weight: bold;">Collapse Filters</a>
 							<div class="collapse show" id="collapseFilters">
-								<hr>
-								<div class="filter_type">
-									<h5>Category</h5>
-									<ul>
-										<li>
-											<label>
-												<input type="checkbox">&nbsp; <b>Architecture</b>
-											</label>
-										</li>
-										<li>
-											<label>
-												<input type="checkbox">&nbsp; <b>Architecture</b>
-											</label>
-										</li>
-										<li>
-											<label>
-												<input type="checkbox">&nbsp; <b>Architecture</b>
-											</label>
-										</li>
-										<li>
-											<label>
-												<input type="checkbox">&nbsp; <b>Architecture</b>
-											</label>
-										</li>
-										<li>
-											<label>
-												<input type="checkbox">&nbsp; <b>Architecture</b>
-											</label>
-										</li>
-									</ul>
-								</div>
-								<hr>
-								<div class="filter_type">
-									<h5>Rating</h5>
-									<ul>
-										<li>
-											<label>
-												<input type="checkbox" class="icheck">
-												<span class="rating"><i class="icon_star voted"></i><i
-														class="icon_star voted"></i><i class="icon_star voted"></i><i
-														class="icon_star voted"></i><i class="icon_star voted"></i>
-													<small>(145)</small></span>
-											</label>
-										</li>
-										<li>
-											<label>
-												<input type="checkbox" class="icheck">
-												<span class="rating"><i class="icon_star voted"></i><i
-														class="icon_star voted"></i><i class="icon_star voted"></i><i
-														class="icon_star voted"></i><i class="icon_star"></i>
-													<small>(25)</small></span>
-											</label>
-										</li>
-										<li>
-											<label>
-												<input type="checkbox" class="icheck">
-												<span class="rating"><i class="icon_star voted"></i><i
-														class="icon_star voted"></i><i class="icon_star voted"></i><i
-														class="icon_star"></i><i class="icon_star"></i>
-													<small>(68)</small></span>
-											</label>
-										</li>
-										<li>
-											<label>
-												<input type="checkbox" class="icheck">
-												<span class="rating"><i class="icon_star voted"></i><i
-														class="icon_star voted"></i><i class="icon_star"></i><i
-														class="icon_star"></i><i class="icon_star"></i>
-													<small>(34)</small></span>
-											</label>
-										</li>
-										<li>
-											<label>
-												<input type="checkbox" class="icheck">
-												<span class="rating"><i class="icon_star voted"></i><i
-														class="icon_star"></i><i class="icon_star"></i><i
-														class="icon_star"></i><i class="icon_star"></i>
-													<small>(10)</small></span>
-											</label>
-										</li>
-									</ul>
-								</div>
+								<form method="POST" action="/item/filter">
+									<hr>
+									<div class="filter_type">
+										<h5>Categories</h5>
+										<ul>
+											<% category.forEach(element => { %>
+											<li>
+												<label>
+													<input type="checkbox" name="category">&nbsp; <b><%=element%></b>
+												</label>
+											</li>
+											<% }); %>
+										</ul>
+									</div>
+									<hr>
+									<div class="filter_type">
+										<h5>Sub-Category</h5>
+										<ul>
+											<% subCategory.forEach(element => { %>
+											<li>
+												<label>
+													<input type="checkbox" name="subCategory">&nbsp; <b><%=element%></b>
+												</label>
+											</li>
+											<% }); %>
+										</ul>
+									</div>
+									<hr>
+									<div class="filter_type">
+										<h5>Tags</h5>
+										<ul>
+											<% tag.forEach(element => { %>
+											<li>
+												<label>
+													<input type="checkbox" name="tags">&nbsp; <b><%=element%></b>
+												</label>
+											</li>
+											<% }); %>
+										</ul>
+									</div>
+									<button class="default-btn" type="submit">Search</button>
+								</form>
 							</div>
 							<!--/collapse -->
 						</div>
