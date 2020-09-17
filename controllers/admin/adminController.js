@@ -6,8 +6,8 @@ var mongoose = require("mongoose")
 
 exports.getAllItems = function (req, res) {
     itemservices.getAllItems(function (itemlist) {
-        console.log({ itemlist: itemlist.foundItems });
-        res.render('itemsAdmin', { itemlist: itemlist.foundItems })
+        // console.log({ itemlist: itemlist.foundItems });
+        res.render('itemsAdmin', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag  })
     })
 }
 
@@ -28,7 +28,7 @@ exports.getItemByCategory = function (req, res) {
             res.redirect('/')
         }
         else
-            res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag })
+            res.render('itemsAdmin', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag })
     })
 }
 

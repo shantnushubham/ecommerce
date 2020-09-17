@@ -53,40 +53,20 @@ exports.addItem = function (req, res) {
                 res.redirect('/items')
             }
             else {
-                cartservices.checkCartForItem(founditem.iid, req.user.uuid, function (cartItem) {
-                    if (cartItem.success == false) {
-                        console.log('trouble in fetching cart');
-                        req.flash('error', 'trouble in fetching cart')
+                cartservices.addToCart(founditem.iid,req.user.uuid,req.body.quantity,function(addedCart){
+                    if(addedCart.success==false)
+                    {
+                        console.log(addedCart.message);
+                        req.flash('error',addedCart.message)
                         res.redirect('/items')
                     }
-                    else {
-                        if (cartItem.found == true) {
-                            console.log('success already');
-                            req.flash('success', 'You already have this item in your cart')
-                            res.redirect('/cartpage')
-                        }
-                        else {
-                            console.log(req.body);
-                            cartservices.addToCart(founditem.iid,req.user.uuid,req.body.quantity,function(addedCart){
-                                if(addedCart.success==false)
-                                {
-                                    console.log(addedCart.message);
-                                    req.flash('error',addedCart.message)
-                                    res.redirect('/items')
-                                }
-                                else
-                                {
-                                    console.log('success');
-                                    req.flash('success','added to cart')
-                                    res.redirect('/items')
-                                }
-                            })
-
-                        }
-
+                    else
+                    {
+                        console.log('success');
+                        req.flash('success','added to cart')
+                        res.redirect('/cartPage')
                     }
                 })
-
             }
         }
     })

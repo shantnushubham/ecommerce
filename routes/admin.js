@@ -9,7 +9,7 @@ var app = express();
 app.get('/admin/items', functions.isAdmin, adminController.getAllItems)
 app.get('/admin/items/:iid', functions.isAdmin, adminController.getItem)
 app.get('/admin/items/status/:status', functions.isAdmin, adminController.getItemByStatus)
-app.get('/admin/items/category/:category', functions.isAdmin, adminController.getItemByCategory)
+app.post('/admin/items/category/', functions.isAdmin, adminController.getItemByCategory)
 app.get('/admin/createItem', functions.isAdmin, function (req, res) {
     res.render('createItem')
 })
