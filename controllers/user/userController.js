@@ -62,7 +62,8 @@ exports.register = (req, res) => {
           newAddress.save((err, addressRes) => {
             if (err) {
               console.log(err);
-              return req.flash('error_msg', 'unable to save address');
+              req.flash('error_msg', 'unable to save address');
+              res.redirect('/users/register');
             }
             passport.authenticate("local")(req, res, function () {
               console.log(user)
