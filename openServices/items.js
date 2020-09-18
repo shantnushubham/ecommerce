@@ -30,42 +30,48 @@ class items {
     }
 
     getItemById(iid, callback) {
+        console.log("called",iid);
         itemModel.findOne({ iid: iid }, function (err, foundItem) {
             if (err) callback({ success: false, err: err })
             else {
-                itemMetaModel.findOne({ iid: foundItem.iid }, function (err, foundMeta) {
-                    if (err) callback({ success: false, err: err })
-                    else {
-                        var totalDetails = {
-                            active: foundItem.active,
-                            iid: foundItem.iid,
-                            name: foundItem.name,
-                            price: foundItem.price,
-                            image: foundItem.image,
-                            discount: foundItem.discount,
-                            content: foundMeta.content,
-                            weight: foundMeta.weight,
-                            color: foundMeta.color,
-                            category: foundItem.category,
-                            subCategory: foundItem.subCategory,
-                            tag: foundItem.tag,
-                            groupingTag: foundItem.groupingTag,
-
-
+                if(functions.isEmpty(foundItem))callback({success:false,})
+                else
+                {
+                    itemMetaModel.findOne({ iid: foundItem.iid }, function (err, foundMeta) {
+                        if (err) callback({ success: false, err: err })
+                        else {
+                            var totalDetails = {
+                                active: foundItem.active,
+                                iid: foundItem.iid,
+                                name: foundItem.name,
+                                price: foundItem.price,
+                                image: foundItem.image,
+                                discount: foundItem.discount,
+                                content: foundMeta.content,
+                                weight: foundMeta.weight,
+                                color: foundMeta.color,
+                                category: foundItem.category,
+                                subCategory: foundItem.subCategory,
+                                tag: foundItem.tag,
+                                groupingTag: foundItem.groupingTag,
+    
+    
+                            }
+    
+                            itemModel.find({ groupingTag: foundItem.groupingTag }, function (err1, foundGroup) {
+                                if (err1)
+                                    callback({ success: true, group: [], totalDetails: totalDetails })
+                                else
+                                    callback({ success: true, group: foundGroup, totalDetails: totalDetails })
+    
+    
+                            })
+    
                         }
-
-                        itemModel.find({ groupingTag: foundItem.groupingTag }, function (err1, foundGroup) {
-                            if (err1)
-                                callback({ success: true, group: [], totalDetails: totalDetails })
-                            else
-                                callback({ success: true, group: foundGroup, totalDetails: totalDetails })
-
-
-                        })
-
-                    }
-                })
-            }
+                    })
+                }
+                }
+              
         })
     }
 
@@ -197,6 +203,19 @@ class items {
             return r;
         else
             return previous
+    }
+
+    clean_Data(val){
+        var res=[]
+        if(typeof(val)==="string")
+        {
+            res.push(val)
+            return res
+        }
+        if(typeof(val)==="undefined")
+        return res
+        if(Array.isArray(val))
+        return val
     }
 
 }

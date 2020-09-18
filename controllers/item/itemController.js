@@ -29,19 +29,28 @@ exports.getItem = function (req, res) {
 
 exports.filterItems = function (req, res) {
     console.log(req.body);
-    console.log("filtering");
-    var s = itemservices.filler([], req.body.category, "category")
-    var s1 = itemservices.filler(s, req.body.subCategory, "subCategory")
-    var s2 = itemservices.filler(s1, req.body.tag, "tag")
+    var ca = [], su = [], ta = [];
+    ca = itemservices.clean_Data(req.body.category)
+    su = itemservices.clean_Data(req.body.subCategory)
+    ta = itemservices.clean_Data(req.body.tag)
+
+
+
+    var s = itemservices.filler([], ca, "category")
+    var s1 = itemservices.filler(s, su, "subCategory")
+    var s2 = itemservices.filler(s1, ta, "tag")
     console.log(s2);
     itemservices.filterItems(s2, function (itemlist) {
-        console.log(itemlist);
+        // console.log(itemlist);
         if (itemlist.success == false) {
             req.flash('error', 'error in getting items')
             res.redirect('/')
         }
-        else
+        else{
+            console.log({ itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag });
             res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag })
+        
+        }
     })
 }
 
