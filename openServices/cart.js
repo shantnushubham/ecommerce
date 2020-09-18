@@ -8,16 +8,14 @@ class cart {
     constructor() {
 
     }
-    getUserCartItems(uuid,callback){
-        cartmodel.find({uuid:uuid},function(err,foundItem){
-            if(err)
-            {
-                callback({success:false})
+    getUserCartItems(uuid, callback) {
+        cartmodel.find({ uuid: uuid }, function (err, foundItem) {
+            if (err) {
+                callback({ success: false })
 
             }
-            else
-            {
-                callback({success:true,items:foundItem})
+            else {
+                callback({ success: true, items: foundItem })
             }
         })
     }
@@ -62,31 +60,30 @@ class cart {
             else {
                 if (functions.isEmpty(foundItem)) {
                     console.log('not in cart');
-                    callback({ success: false, found: false,message:'item with iid'+iid+' does not exist in cart' })
+                    callback({ success: false, found: false, message: 'item with iid' + iid + ' does not exist in cart' })
                 }
                 else {
                     itemmodel.findOne({ iid: iid, active: true }, function (err, founditem) {
                         if (err) {
                             console.log(err);
                             callback({ success: false, message: 'could not find any item by that name' })
-            
+
                         }
                         else {
                             if (functions.isEmpty(founditem)) {
                                 console.log('unavailable item');
                                 callback({ success: false, message: 'could not find any item by that name' })
-            
+
                             }
                             else {
-                                
-                                if(quantity==0)
-                                {
 
-                                    cartmodel.deleteOne({iid:founditem.iid,uuid:uuid},function(err,deleted){
+                                if (quantity == 0) {
+
+                                    cartmodel.deleteOne({ iid: founditem.iid, uuid: uuid }, function (err, deleted) {
                                         if (err) {
                                             console.log(err);
                                             callback({ success: false, message: 'error in adding to cart' })
-                
+
                                         }
                                         else {
                                             console.log('success deleting');
@@ -94,25 +91,24 @@ class cart {
                                         }
                                     })
                                 }
-                                else
-                                {
-                                cartmodel.findOneAndUpdate({iid:founditem.iid,uuid:uuid},{'$set':{quantity:quantity}}, function (err, addedItem) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback({ success: false, message: 'error in adding to cart' })
-            
-                                    }
-                                    else {
-                                        console.log('success');
-                                        callback({ success: true, item: addedItem })
-                                    }
-                                })
-                            }
-            
-            
+                                else {
+                                    cartmodel.findOneAndUpdate({ iid: founditem.iid, uuid: uuid }, { '$set': { quantity: quantity } }, function (err, addedItem) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback({ success: false, message: 'error in adding to cart' })
+
+                                        }
+                                        else {
+                                            console.log('success');
+                                            callback({ success: true, item: addedItem })
+                                        }
+                                    })
+                                }
+
+
                             }
                         }
-            
+
                     })
 
                 }
@@ -120,83 +116,81 @@ class cart {
         })
     }
 
-  updateCart(iid, uuid, quantity){
-        iid= iid.trim()
-        uuid=uuid.trim()
-        return new Promise((resolve,reject)=>{
-            cartmodel.findOne({ iid: iid, uuid: uuid }).then( function(foundItem) {
-            
+    updateCart(iid, uuid, quantity) {
+        iid = iid.trim()
+        uuid = uuid.trim()
+        return new Promise((resolve, reject) => {
+            cartmodel.findOne({ iid: iid, uuid: uuid }).then(function (foundItem) {
+
                 if (functions.isEmpty(foundItem)) {
                     console.log('not in cart');
                     // callback({ success: false, found: false,message:'item with iid'+iid+' does not exist in cart' })
                     reject()
                 }
                 else {
-                    itemmodel.findOne({ iid: iid, active: true }).then(function ( founditem) {
-                        
-                            if (functions.isEmpty(founditem)) {
-                                console.log('unavailable item');
-                                // callback({ success: false, message: 'could not find any item by that name' })
-                                reject()
-            
-                            }
-                            else {
-                                
-                                if(quantity==0)
-                                {
+                    itemmodel.findOne({ iid: iid, active: true }).then(function (founditem) {
 
-                                    cartmodel.deleteOne({iid:founditem.iid,uuid:uuid}).then(function(deleted){
-                                        
-                                        
-                                            console.log('success deleting');
-                                            // callback({ success: true, item: deleted })
-                                            resolve()
-                                        
-                                    }).catch(function(err){
-                                        console.log(err);
-                                        // callback({success:false})
-                                        reject()
-                                    })
-                                }
-                                else
-                                {
-                                cartmodel.findOneAndUpdate({iid:founditem.iid,uuid:uuid},{'$set':{quantity:quantity}}).then(function ( addedItem) {
-                                    
-                                    
-                                        console.log('success');
-                                        // callback({ success: true, item: addedItem })
-                                        resolve()
-                                    
-                                }).catch(function(err){
+                        if (functions.isEmpty(founditem)) {
+                            console.log('unavailable item');
+                            // callback({ success: false, message: 'could not find any item by that name' })
+                            reject()
+
+                        }
+                        else {
+
+                            if (quantity == 0) {
+
+                                cartmodel.deleteOne({ iid: founditem.iid, uuid: uuid }).then(function (deleted) {
+
+
+                                    console.log('success deleting');
+                                    // callback({ success: true, item: deleted })
+                                    resolve()
+
+                                }).catch(function (err) {
                                     console.log(err);
                                     // callback({success:false})
                                     reject()
                                 })
                             }
-            
-            
+                            else {
+                                cartmodel.findOneAndUpdate({ iid: founditem.iid, uuid: uuid }, { '$set': { quantity: quantity } }).then(function (addedItem) {
+
+
+                                    console.log('success');
+                                    // callback({ success: true, item: addedItem })
+                                    resolve()
+
+                                }).catch(function (err) {
+                                    console.log(err);
+                                    // callback({success:false})
+                                    reject()
+                                })
                             }
-                        
-            
-                    }).catch(function(err){
+
+
+                        }
+
+
+                    }).catch(function (err) {
                         console.log(err);
                         // callback({success:false})
                         reject()
                     })
 
                 }
-            
-        }).catch(function(err){
-            console.log(err);
-            // callback({success:false})
-            reject()
+
+            }).catch(function (err) {
+                console.log(err);
+                // callback({success:false})
+                reject()
+            })
         })
-        })
-       
-        
+
+
     }
 
-    addToCart(iid, uuid, quantity,callback) {
+    addToCart(iid, uuid, quantity, callback) {
         itemmodel.findOne({ iid: iid, active: true }, function (err, founditem) {
             if (err) {
                 callback({ success: false, message: 'could not find any item by that name' })
@@ -211,7 +205,7 @@ class cart {
                     cartmodel.findOne({ iid: iid, uuid: uuid }, function (err, foundItem) {
                         if (err) {
                             callback({ success: false, found: false })
-            
+
                         }
                         else {
                             var cartelement
@@ -222,13 +216,13 @@ class cart {
                                     quantity: quantity,
                                     image: founditem.image,
                                     name: founditem.name,
-            
+
                                 }
                                 cartmodel.create(cartelement, function (err, addedItem) {
                                     if (err) {
                                         console.log(err);
                                         callback({ success: false, message: 'error in adding to cart' })
-            
+
                                     }
                                     else {
                                         callback({ success: true, item: addedItem })
@@ -239,30 +233,30 @@ class cart {
                                 cartelement = {
                                     uuid: uuid,
                                     iid: founditem.iid,
-                                    quantity: parseInt(quantity)+foundItem.quantity,
+                                    quantity: parseInt(quantity) + foundItem.quantity,
                                     image: founditem.image,
                                     name: founditem.name,
-            
+
                                 }
-                                cartmodel.findOneAndUpdate({uuid: uuid,iid: founditem.iid,},{quantity: parseInt(quantity)+foundItem.quantity,},function(err,updatedCart){
+                                cartmodel.findOneAndUpdate({ uuid: uuid, iid: founditem.iid, }, { quantity: parseInt(quantity) + foundItem.quantity, }, function (err, updatedCart) {
                                     if (err) {
                                         console.log(err);
                                         callback({ success: false, message: 'error in adding to cart' })
-            
+
                                     }
                                     else {
                                         callback({ success: true, item: updatedCart })
                                     }
                                 })
-                               
+
                             }
-                            
+
 
                         }
                     })
 
-                   
-                    
+
+
 
 
 
@@ -272,108 +266,149 @@ class cart {
         })
     }
 
-    addManyToCart(itemList,qty,callback)
-    {
-        cartmodel.find().where('iid').in(itemList).exec((err, items) => {
-            if(itemList.length>items.length)
-            {
-                callback({success:false,err:"false object entry"})
+    addManyToCart(uuid, itemList, qty, callback) {
+        if (qty.length < itemList.length) callback({ success: false, err: 'quantity array less than items' })
+        else {
+            itemmodel.find().where('iid').in(itemList).exec((err, items) => {
+                if (itemList.length > items.length) {
+                    callback({ success: false, err: "false object entry" })
 
-            }
-            else
-            {
-                
-            }
-        });
+                }
+                else {
+                    cartmodel.find({ uuid: uuid }, function (err, foundCart) {
+                        if (err)
+                            callback({ success: false })
+                        else {
+                            var mapC = {}
+                            var input = []
+                            var it={}
+
+                            foundCart.forEach(el => {
+                                mapC[el.iid] = el
+                            })
+
+                            
+                            for (var i = 0; i < items.length; i++) {
+                                if(items[i] in mapC)
+                                {
+                                    it = {
+                                        uuid: uuid,
+                                        iid: items[i].iid,
+                                        quantity: parseInt(qty[i])+mapC[items[i]].quantity,
+                                        image: items[i].image,
+                                        name: items[i].name,
+                                    }
+                                }
+                                else
+                                {
+                                    it = {
+                                        uuid: uuid,
+                                        iid: items[i].iid,
+                                        quantity: parseInt(qty[i]),
+                                        image: items[i].image,
+                                        name: items[i].name,
+                                    }
+                                }
+                                input.push(it)
+                                
+                            }
+                            
+                        }
+
+
+                    })
+
+                }
+
+            });
+
+        }
+
     }
 
 
-    clearCart(uuid,callback){
-        cartmodel.deleteMany({uuid:uuid},function(err,updatedcart){
-            if(err)
-            {
+    clearCart(uuid, callback) {
+        cartmodel.deleteMany({ uuid: uuid }, function (err, updatedcart) {
+            if (err) {
                 console.log(err);
-                callback({success:false})
+                callback({ success: false })
             }
-            else{
-                callback({success:true,cart:updatedcart})
+            else {
+                callback({ success: true, cart: updatedcart })
             }
         })
     }
 
-    getListingForOrder(uuid,callback)
-    {
-       cartmodel.aggregate([
-        { $match : { uuid:uuid } },
-        { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
-        { $project: { 
-            "quantity": "$quantity", 
-            "iid": "$iid", 
-            "item": { "$arrayElemAt": [ "$item", 0 ] } 
-            ,"price":"$item.price"
-        }}
-       ]).exec(function(err,cartItem){
-           if(err)
-           {
-               console.log(err);
-               callback({success:false})
-           }
-           else
-           {
-               console.log(cartItem);
-               let total=0
-               let cartlist=[]
-               cartItem.forEach(cartEl => {
-                   var item={}
-                   item.quantity=cartEl.quantity
-                   item.iid=cartEl.iid
-                   cartlist.push(item)
-                   total=total+parseInt((parseInt(cartEl.price[0])*(1-cartEl.item.discount)*cartEl.quantity))
-               });
-               console.log('total amt=',total);
-               if(total<=0||cartlist.length==0)
-               {
-                callback({success:false,message:"cant checkout with empty cart"}) 
-               }
-               else
-               callback({success:true,cartList:cartlist,total:total})
-           }
-       })
+    getListingForOrder(uuid, callback) {
+        cartmodel.aggregate([
+            { $match: { uuid: uuid } },
+            { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
+            {
+                $project: {
+                    "quantity": "$quantity",
+                    "iid": "$iid",
+                    "item": { "$arrayElemAt": ["$item", 0] }
+                    , "price": "$item.price"
+                }
+            }
+        ]).exec(function (err, cartItem) {
+            if (err) {
+                console.log(err);
+                callback({ success: false })
+            }
+            else {
+                console.log(cartItem);
+                let total = 0
+                let cartlist = []
+                cartItem.forEach(cartEl => {
+                    var item = {}
+                    item.quantity = cartEl.quantity
+                    item.iid = cartEl.iid
+                    cartlist.push(item)
+                    total = total + parseInt((parseInt(cartEl.price[0]) * (1 - cartEl.item.discount) * cartEl.quantity))
+                });
+                console.log('total amt=', total);
+                if (total <= 0 || cartlist.length == 0) {
+                    callback({ success: false, message: "cant checkout with empty cart" })
+                }
+                else
+                    callback({ success: true, cartList: cartlist, total: total })
+            }
+        })
     }
 
-    getListingForCheckout(uuid,callback){
-     
-       cartmodel.aggregate([
-        { $match : { uuid:uuid } },
-        { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
-        { $project: { 
-            "quantity": "$quantity", 
-            "iid": "$iid", 
-            "item": { "$arrayElemAt": [ "$item", 0 ] } 
-            ,"price":"$item.price"
-        }}
-       ]).exec(function(err,cartItem){
-           if(err)
-           {
-               console.log(err);
-               callback({success:false})
-           }
-           else
-           {
-               console.log(cartItem);
-               let total=0
-               cartItem.forEach(cartEl => {
-                   total=total+parseInt((parseInt(cartEl.price[0])*(1-cartEl.item.discount)*cartEl.quantity))
-               });
-               if(total<=0)
-               {
-                callback({success:false,message:"cant checkout with empty cart"}) 
-               }
-               else
-               callback({success:true,cartList:cartItem,total:total})
-           }
-       })
-    
+    getListingForCheckout(uuid, callback) {
+
+        cartmodel.aggregate([
+            { $match: { uuid: uuid } },
+            { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
+            {
+                $project: {
+                    "quantity": "$quantity",
+                    "iid": "$iid",
+                    "item": { "$arrayElemAt": ["$item", 0] }
+                    , "price": "$item.price"
+                }
+            }
+        ]).exec(function (err, cartItem) {
+            if (err) {
+                console.log(err);
+                callback({ success: false })
+            }
+            else {
+                console.log(cartItem);
+                let total = 0
+                cartItem.forEach(cartEl => {
+                    total = total + parseInt((parseInt(cartEl.price[0]) * (1 - cartEl.item.discount) * cartEl.quantity))
+                });
+                if (total <= 0) {
+                    callback({ success: false, message: "cant checkout with empty cart" })
+                }
+                else
+                    callback({ success: true, cartList: cartItem, total: total })
+            }
+        })
+
     }
 
 }
