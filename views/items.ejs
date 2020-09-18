@@ -263,7 +263,7 @@
 						<div id="filters_col">
 							<a class="filters" style="font-weight: bold;">Collapse Filters</a>
 							<div class="collapse show" id="collapseFilters">
-								<form method="POST" action="/items/filter">
+								<!-- <form method="POST" action="/items/filter"> -->
 								<hr>
 								<div class="filter_type">
 									<h5>Categories</h5>
@@ -306,8 +306,51 @@
 										<% }); %>
 									</ul>
 								</div>
-								<button class="default-btn" type="submit">Search</button>
+								<button class="default-btn" onclick="Geeks();">Search</button>
 								<!-- </form> -->
+								<script>
+									function Geeks() {
+										var category = new Array();
+										var temp_category = document.getElementsByName("category");
+										temp_category.forEach(el => {
+											if (el.checked == true) {
+												category.push(el.value);
+											}
+										})
+										var subCategory = new Array();
+										var temp_subCategory = document.getElementsByName("subCategory");
+										temp_subCategory.forEach(el => {
+											if (el.checked == true) {
+												subCategory.push(el.value);
+											}
+										})
+										var tags = new Array();
+										var temp_tags = document.getElementsByName("tags");
+										temp_tags.forEach(el => {
+											if (el.checked == true) {
+												tags.push(el.value);
+											}
+										})
+										var obj = {
+											category: category,
+											subCategory: subCategory,
+											tags: tags
+										}
+										console.log(JSON.stringify(obj));
+
+										// var xhr = new XMLHttpRequest();
+										// xhr.open("POST", "/items/filter", true);
+										// xhr.setRequestHeader('Content-Type', 'application/json');
+										// xhr.send({"Hello" : "H"})
+										var saveData = $.ajax({
+											type: 'POST',
+											url: "/items/filter",
+											data: obj,
+											dataType: "application/json",
+											success: function (resultData) { alert("Save Complete") }
+										});
+									}
+								</script>
 							</div>
 							<!--/collapse -->
 						</div>
