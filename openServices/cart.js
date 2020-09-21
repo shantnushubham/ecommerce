@@ -266,63 +266,69 @@ class cart {
         })
     }
 
-    addManyToCart(uuid, itemList, qty, callback) {
-        if (qty.length < itemList.length) callback({ success: false, err: 'quantity array less than items' })
-        else {
-            itemmodel.find().where('iid').in(itemList).exec((err, items) => {
-                if (itemList.length > items.length) {
-                    callback({ success: false, err: "false object entry" })
+    addManyToCart(uuid, iid, qty) {
+        return new Promise((resolve,reject)=>{
+            // if (qty.length < itemList.length) reject({ success: false, err: 'quantity array less than items' })
+            
+                itemmodel.findOne({iid:iid},function(err, foundItem)  {
+                    if (err||functions.isEmpty(foundItem)) {
+                        console.log(err);
+                        reject({ success: false, err: "error in getting obj" })
+    
+                    }
 
-                }
-                else {
-                    cartmodel.find({ uuid: uuid }, function (err, foundCart) {
-                        if (err)
-                            callback({ success: false })
-                        else {
-                            var mapC = {}
-                            var input = []
-                            var it={}
+                    else {
+                        cartmodel.findOne({ uuid: uuid ,iid:iid}, function (err, foundCart) {
+                            if (err)
+                                reject({ success: false })
+                            else {
+                               if(functions.isEmpty(foundCart))
+                               {
+                                   var ob={
+                                    uuid: uuid,
+                                    iid: foundItem.iid,
+                                    quantity: parseInt(qty),
+                                    image: foundItem.image,
+                                    name: foundItem.name,
 
-                            foundCart.forEach(el => {
-                                mapC[el.iid] = el
-                            })
-
-                            
-                            for (var i = 0; i < items.length; i++) {
-                                if(items[i] in mapC)
-                                {
-                                    it = {
-                                        uuid: uuid,
-                                        iid: items[i].iid,
-                                        quantity: parseInt(qty[i])+mapC[items[i]].quantity,
-                                        image: items[i].image,
-                                        name: items[i].name,
-                                    }
                                 }
-                                else
-                                {
-                                    it = {
-                                        uuid: uuid,
-                                        iid: items[i].iid,
-                                        quantity: parseInt(qty[i]),
-                                        image: items[i].image,
-                                        name: items[i].name,
-                                    }
+                                cartmodel.create(ob,function(err,createdCI){
+                                    if(err)
+                                    reject({err:err,success:false})
+                                    else
+                                    resolve({success:true,createdCI})
+                                })
+                               }
+                               else
+                               {
+                                var ob={
+                                    uuid: uuid,
+                                    iid: foundItem.iid,
+                                    quantity: parseInt(qty) + foundCart.quantity,
+                                    image: foundItem.image,
+                                    name: foundItem.name,
+
                                 }
-                                input.push(it)
-                                
+                                cartmodel.findOneAndUpdate({uuid:uuid,iid:iid},ob,function(err,createdCI){
+                                    if(err)
+                                    reject({err:err,success:false})
+                                    else
+                                    resolve({success:true,createdCI})
+                                })
+                               }
                             }
-                            
-                        }
-
-
-                    })
-
-                }
-
-            });
-
-        }
+    
+    
+                        })
+    
+                    }
+    
+                });
+    
+            
+        })
+        
+       
 
     }
 

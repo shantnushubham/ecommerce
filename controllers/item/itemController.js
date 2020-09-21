@@ -48,7 +48,7 @@ exports.filterItems = function (req, res) {
         }
         else{
             console.log({ itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag });
-            res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag })
+            res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag ,s_cat:ca,s_sub:su,s_tag:ta})
         
         }
     })
