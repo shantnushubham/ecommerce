@@ -169,6 +169,25 @@ exports.clearCart = function (req, res) {
    })
 }
 
+exports.addManyToCart=function(req,res)
+{
+    console.log(req.body);
+    var promiseArr=[]
+    for(var i=0;i<req.body.iid.length;i++)
+    {
+        promiseArr.push(cartservices.addManyToCart('5iIinrQCH',req.body.iid[i],req.body.qty[i]))
+
+    }
+    Promise.all(promiseArr).then(result=>{
+        res.redirect('/cartpage')
+        
+    }).catch(errors=>{
+        res.redirect('/cartpage')
+        
+    })
+   
+    
+}
 exports.verify = function (req, res) {
     console.log('user='+req.user);
     cartservices.getListingForCheckout(req.user.uuid,function(resp){

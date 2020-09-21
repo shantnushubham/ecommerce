@@ -9,5 +9,6 @@ app.post('/updateCart',ensureAuthenticated,cartController.updateCart)
 app.get('/clearcart',ensureAuthenticated,cartController.clearCart)
 app.post('/add/:iid',ensureAuthenticated,cartController.addItem)
 app.get('/verify',ensureAuthenticated,cartController.verify)
+app.post('/addMany',cartController.addManyToCart)
 
 module.exports=app
