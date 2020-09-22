@@ -110,6 +110,18 @@ class items {
         });
     }
 
+    getItemByGroupingTag(gt,callback)
+    {
+        itemModel.find({groupingTag:gt},function(err,foundItems){
+            if(err)
+            {
+                callback({success:false,group:[]})
+            }
+            else
+            callback({success:true,group:foundItems})
+        })
+    }
+
     createItem(data, callback) {
         var item_data = {
             name: data.name,

@@ -131,6 +131,6 @@ console.log('----------------');
 router.get('/checkout',ensureAuthenticated,orderController.getCheckout)
 router.post('/checkout',ensureAuthenticated,orderController.postCheckout)
 // router.get('/voucher',orderController.getUserRefcode)
-
+router.get("/user-order/:orderId",orderController.checkUserOrder)
 
 module.exports=router
