@@ -64,7 +64,13 @@ var itemsSchema = new mongoose.Schema({
     },
     slideshow: [
         { type: String }
-    ]
+    ],
+    vendorId:{
+        type:String
+    },
+    vendorName:{
+        type:String
+    }
 });
 
 itemsSchema.plugin(mongooseHistory)
