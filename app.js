@@ -26,6 +26,7 @@ var itemRoutes=require('./routes/items')
 var User = require('./models/User/User');
 var listRoutes=require('./routes/lists')
 var packageRoutes=require('./routes/packages')
+var vendorRoutes=require('./routes/vendors')
 require('./config/passport')(passport);
 // const OAuthCredentials = require('./config/auth');
 
@@ -112,6 +113,7 @@ app.use(itemRoutes)
 app.use(orderroutes)
 app.use(listRoutes)
 app.use(packageRoutes)
+app.use(vendorRoutes)
 
 
 app.get('/auth/google', passport.authenticate('google',{

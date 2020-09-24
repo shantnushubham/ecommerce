@@ -43,6 +43,8 @@ router.post('/resetpassword', UserControl.resetPassword);
 router.use('/users', require('./user/routes'));
 
 // -> /*
-router.get('/*', viewController);
+router.get('/*', function(req,res){
+  res.redirect('/')
+});
 
 module.exports = router;

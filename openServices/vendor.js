@@ -17,7 +17,7 @@ class vendor{
         vendorModel.find({},function(err,foundVendor){
             
             if(err)callback({success:false})
-            else callback({success:true,vendor:createdVendor})
+            else callback({success:true,vendor:foundVendor})
         })
     }
     getVendorById(vendorId,callback)
@@ -26,7 +26,7 @@ class vendor{
         vendorModel.find({vendorId:vendorId},function(err,foundVendor){
             
             if(err)callback({success:false})
-            else callback({success:true,vendor:createdVendor})
+            else callback({success:true,vendor:foundVendor})
         })
     }
 }

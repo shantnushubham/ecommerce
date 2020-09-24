@@ -8,5 +8,6 @@ var app = express();
 app.get('/admin/vendors',middleware.isAdmin,vendorController.getVendors)
 app.get('/admin/vendors/:vendorId',middleware.isAdmin,vendorController.fetchVendorById)
 app.get('/admin/createVendor',middleware.isAdmin,vendorController.getCreateVendor)
-app.get('/admin/createVendor',middleware.isAdmin,vendorController.postCreateVendor)
+app.post('/admin/createVendor',middleware.isAdmin,vendorController.postCreateVendor)
 
+module.exports=app
