@@ -181,3 +181,29 @@ exports.getDiscountCodeList = function (req, res) {
         }
     })
 }
+
+exports.checkUserOrder=function(req,res)
+{
+    
+orderServices.checkOrderDetails(req.params.orderId,function(foundOrder){
+    if(foundOrder.success==false||foundOrder.found==false)
+    {
+        req.flash('error','error in getting order details')
+        res.redirect('/')
+    }
+    else
+    {
+        var promiseArr=[]
+        foundOrder.order.orderedItems.forEach(element => {
+            promiseArr.push(orderServices.getItemForOrderList(element.iid,element.quantity))
+        });
+        Promise.all(promiseArr).then(result=>{
+            res.send({ success: true, found: true, order: foundOrder.order, Olist:result })
+        }).catch(errors=>{
+            res.send({ success: false, found: true, order: foundOrder.order,Olist:errors })
+        })
+    }
+
+})
+
+}

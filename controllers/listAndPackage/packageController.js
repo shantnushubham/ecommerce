@@ -12,8 +12,8 @@ var async = require("async");
 
 
 
-exports.createPackage = function (req, res) {
-  console.log('here');
+exports.createPackage = function (req, res) {//workd
+  console.log('creating package');
   packageServices.createPackage(
     req.user.uuid,
      req.body.listName, function (
@@ -33,6 +33,8 @@ exports.showPackageByLid = function (req, res) {
       req.flash("error", "error in getting list ");
       res.redirect("/user/list/names");
     } else {
+      // res.send(foundList)
+      // console.log(foundList);
       res.render("userListItems", { list: foundList.list,lid:req.params.lid});
     }
   });

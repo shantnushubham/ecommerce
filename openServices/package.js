@@ -153,9 +153,8 @@ class packs {
                     {
                         $project: {
                             "quantity": "$quantity",
-                            "iid": "$iid",
+                            "iid":"$iid",
                             "item": { "$arrayElemAt": ["$item", 0] }
-                            , "price": "$item.price"
                         }
                     }
                 ]).exec(function (err1, foundL) {

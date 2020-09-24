@@ -47,6 +47,39 @@ class order {
 
         })
     }
+    checkOrderDetails(orderId,callback)
+    {
+        
+        ordermodel.findOne({ orderId: orderId }, function (err, foundOrder) {
+            if (err) {
+                console.log(err);
+                callback({ success: false })
+            }
+            else {
+                if (functions.isEmpty(foundOrder)) {
+                    callback({ success: true, found: false })
+                }
+                else {
+                  callback({success:true,found:true,order:foundOrder})
+                }
+            }
+
+        })
+    }
+
+    getItemForOrderList(iid,qty)
+    {
+        return new Promise((resolve,reject)=>{
+            itemmodel.findOne({iid:iid},function(err,foundItem){
+                if(err)
+                reject({success:false,item:{}})
+                else
+                {
+                    resolve({success:true,item:foundItem,quantity:qty})
+                }
+            })
+        })
+    }
 
     getOrdersForadmin(callback) {
         ordermodel.find({}, function (err, foundOrder) {

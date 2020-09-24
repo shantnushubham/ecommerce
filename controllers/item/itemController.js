@@ -68,6 +68,7 @@ exports.createItem = function (req, res) {
         image: req.body.image,
         weight: req.body.weight,
         content: req.body.content,
+        vendorId:req.body.vendorId,
     }, function (createdItem) {
         // console.log('here');
         console.log(createdItem);

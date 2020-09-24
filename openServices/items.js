@@ -1,5 +1,6 @@
 var itemMetaModel = require("../models/Items/ItemMetadata")
 var itemModel = require('../models/Items/Items')
+var vendorModel = require('../models/Items/vendor')
 var categoryModel = require('../models/Items/Category')
 var mongoose = require("mongoose")
 var functions = require('../Middlewares/common/functions')
@@ -30,13 +31,12 @@ class items {
     }
 
     getItemById(iid, callback) {
-        console.log("called",iid);
+        console.log("called", iid);
         itemModel.findOne({ iid: iid }, function (err, foundItem) {
             if (err) callback({ success: false, err: err })
             else {
-                if(functions.isEmpty(foundItem))callback({success:false,})
-                else
-                {
+                if (functions.isEmpty(foundItem)) callback({ success: false, })
+                else {
                     itemMetaModel.findOne({ iid: foundItem.iid }, function (err, foundMeta) {
                         if (err) callback({ success: false, err: err })
                         else {
@@ -54,24 +54,24 @@ class items {
                                 subCategory: foundItem.subCategory,
                                 tag: foundItem.tag,
                                 groupingTag: foundItem.groupingTag,
-    
-    
+
+
                             }
-    
+
                             itemModel.find({ groupingTag: foundItem.groupingTag }, function (err1, foundGroup) {
                                 if (err1)
                                     callback({ success: true, group: [], totalDetails: totalDetails })
                                 else
                                     callback({ success: true, group: foundGroup, totalDetails: totalDetails })
-    
-    
+
+
                             })
-    
+
                         }
                     })
                 }
-                }
-              
+            }
+
         })
     }
 
@@ -110,6 +110,16 @@ class items {
         });
     }
 
+    getItemByGroupingTag(gt, callback) {
+        itemModel.find({ groupingTag: gt }, function (err, foundItems) {
+            if (err) {
+                callback({ success: false, group: [] })
+            }
+            else
+                callback({ success: true, group: foundItems })
+        })
+    }
+
     createItem(data, callback) {
         var item_data = {
             name: data.name,
@@ -122,26 +132,38 @@ class items {
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
 
-
-        itemModel.create(item_data, function (err, newItem) {
-            if (err) {
-                console.log(err)
-                callback({ success: false, err: "trouble creating item" })
+        vendorModel.findOne({ vendorId: data.vendorId }, function (err, foundV) {
+            if (err || functions.isEmpty(foundV)) {
+                callback({ success: false, message: "vendor not found" })
             }
             else {
-                item_metaData.iid = newItem.iid
-                itemMetaModel.create(item_metaData, function (err, newMeta) {
+                item_data["vendorId"] = foundV.vendorId
+                item_data["vendorName"] = foundV.vendorName
+                itemModel.create(item_data, function (err, newItem) {
                     if (err) {
                         console.log(err)
                         callback({ success: false, err: "trouble creating item" })
                     }
                     else {
-                        callback({ success: true, item: newItem, err: null })
+                        item_metaData.iid = newItem.iid
+                        itemMetaModel.create(item_metaData, function (err, newMeta) {
+                            if (err) {
+                                console.log(err)
+                                callback({ success: false, err: "trouble creating item" })
+                            }
+                            else {
+                                callback({ success: true, item: newItem, err: null })
+                            }
+                        })
+                        // callback({ success: true, item: newItem, err: null })
                     }
                 })
-                // callback({ success: true, item: newItem, err: null })
+
             }
+
         })
+
+
     }
 
     setDiscount(discount, iid, callback) {
@@ -205,17 +227,16 @@ class items {
             return previous
     }
 
-    clean_Data(val){
-        var res=[]
-        if(typeof(val)==="string")
-        {
+    clean_Data(val) {
+        var res = []
+        if (typeof (val) === "string") {
             res.push(val)
             return res
         }
-        if(typeof(val)==="undefined")
-        return res
-        if(Array.isArray(val))
-        return val
+        if (typeof (val) === "undefined")
+            return res
+        if (Array.isArray(val))
+            return val
     }
 
 }

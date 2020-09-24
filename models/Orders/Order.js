@@ -9,93 +9,109 @@ var mongooseHistory = require('mongoose-history')
 // 3: placed
 // 4: cancelled
 
-var orderSchema  = new mongoose.Schema({
-    uuid:{
-        type:String,
-        required:true
+var orderSchema = new mongoose.Schema({
+    uuid: {
+        type: String,
+        required: true
     },
 
     orderId: {
         type: String,
-        required:true,
+        required: true,
         default: shortid.generate
     },
 
     orderedItems: [
         {
-            iid:{type:String},
-            quantity:{type: Number},
+            iid: { type: String },
+            quantity: { type: Number },
         }
     ],
-    
-    total:{
-        type:Number,
-        required:true,
+
+    total: {
+        type: Number,
+        required: true,
     },
 
-    fullAddress:{
-        type:String
-    }, 
+    fullAddress: {
+        type: String
+    },
     city: {
-        type:String,
+        type: String,
         required: true
     },
     state: {
-        type:String,
+        type: String,
         required: true
     },
     pincode: {
-        type:Number,
+        type: Number,
         required: true
     },
-    purchaseTime:{
+    purchaseTime: {
         type: Date,
         required: true,
         default: Date.now
     },
     country: {
-        type:String,
+        type: String,
         required: true
     },
-    status:{
+    status: {
         type: String,
-        default:'initialised'
+        default: 'initialised'
     },
-    instaPaymentRequestId:{
-        type:String,
-        default:''
+    instaPaymentRequestId: {
+        type: String,
+        default: ''
     },
-    instaPaymenturl:{
-        type:String,
-        default:''
+    instaPaymenturl: {
+        type: String,
+        default: ''
     },
-    instaPaymentId:{
-        type:String,
-        default:''
+    instaPaymentId: {
+        type: String,
+        default: ''
     },
-    paid:{
-        type:Boolean,
-        required:true,
-        default:false
+    paid: {
+        type: Boolean,
+        required: true,
+        default: false
     },
-    transaction_id:{
+    transaction_id: {
         type: String
     },
-    code:{
-        type:String
+    code: {
+        type: String
+    }, 
+    shipRocketId: {
+        type: String
+    }, 
+    height: {
+        type: String
+    }, 
+    weight: {
+        type: String
+    }, 
+    length: {
+        type: String
+    }, 
+    breadth: {
+        type: String
+    },
+    vendorName: {
+        type: String
+    },
+    vendorId: {
+        type: String
+    },
+    vendorAddress: {
+        type: String
+    },
+    shippingConfirmed: {
+        type: Boolean
     }
-    // user: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User'
-    // }],
-    // cancelled_order: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'cancelled_order'
-    // }],
-    // review: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'review'
-    // }]
+
 });
 
 orderSchema.plugin(mongooseHistory)
