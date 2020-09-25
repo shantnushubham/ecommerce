@@ -3440,12 +3440,12 @@ Start Slider Text Three Area Style
 Service Area Three Style
 ================================*/
 .service-area-three {
-  background-color: #1e8ac8;
+  background-color: #fff;
 }
 
 .service-area-three .single-service {
   margin-bottom: 0 !important;
-  background-color: #083377 !important;
+  background-color: #1e8ac8 !important;
 }
 
 .service-area-three .single-service .service-icon i {
