@@ -215,7 +215,7 @@ class packs {
             else {
                 item_data["vendorId"] = foundV.vendorId
                 item_data["vendorName"] = foundV.vendorName
-                itemModel.create(item_data, function (err, newItem) {
+                itemmodel.create(item_data, function (err, newItem) {
                     if (err) {
                         console.log(err)
                         callback({ success: false, err: "trouble creating item" })

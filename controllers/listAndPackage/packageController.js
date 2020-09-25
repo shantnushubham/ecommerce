@@ -64,7 +64,7 @@ exports.removeFromPackage = function (req, res) {
     function (deleted) {
       if (deleted.success == false)
         req.flash("error", "error in deleting item");
-      res.redirect("/user/list-items/" + req.params.lid);
+      res.redirect('/admin/get/package/' + req.params.lid);
     }
   );
 };
@@ -108,11 +108,11 @@ exports.postUpdatePackage = function (req, res) {
     .then((respo) => {
       console.log("updated");
       //  console.log(respo);
-      res.redirect("/user/list-items/" + req.params.lid);
+      res.redirect("/admin/get/package/" + req.params.lid);
     })
     .catch((err) => {
       console.log(err);
-      res.redirect("/user/list-items/" + req.params.lid);
+      res.redirect("/admin/get/package/" + req.params.lid);
     });
 };
 
