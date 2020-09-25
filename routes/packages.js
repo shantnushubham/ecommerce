@@ -10,8 +10,9 @@ app.post('/admin/package-add/:iid', packageController.addToPackage)//works
 app.get('/admin/package/remove/:iid/:lid', packageController.removeFromPackage)
 app.get('/admin/package-update/:lid', ensureAuthenticated, packageController.getUpdatePackage)//works
 app.post('/admin/package-update/:lid', ensureAuthenticated, packageController.postUpdatePackage)//works
+app.get('/admin/publish-package/:lid',packageController.getPublishPackage)
 app.post('/admin/publish-package/:lid', ensureAuthenticated, packageController.publishPackage)
-app.get('/user/export-list/:lid', ensureAuthenticated, packageController.addPackageToCart)
+app.get('/export-package/:lid',packageController.addPackageToCart)//works
 
 
 

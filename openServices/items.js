@@ -121,6 +121,7 @@ class items {
     }
 
     createItem(data, callback) {
+        var st=["ab","bv","vv"]
         var item_data = {
             name: data.name,
             price: data.price,
@@ -128,7 +129,8 @@ class items {
             category: data.category,
             subCategory: data.subCategory,
             tag: data.tag,
-            groupingTag: data.groupingTag
+            groupingTag: data.groupingTag,
+            slideshow:st
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
 

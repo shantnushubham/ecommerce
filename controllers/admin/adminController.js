@@ -49,6 +49,7 @@ exports.createItem = function (req, res) {
         subCategory: data.subCategory,
         tag: data.tag,
         groupingTag: data.groupingTag,
+        vendorId:data.vendorId,
 
         weight: data.weight,
         content: data.content,
