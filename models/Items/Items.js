@@ -62,9 +62,8 @@ var itemsSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
-    slideshow: [
-        { type: String }
-    ],
+    slideshow: [String],
+    
     vendorId:{
         type:String
     },

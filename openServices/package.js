@@ -1,5 +1,6 @@
 var itemMetaModel = require("../models/Items/ItemMetadata")
 var itemmodel = require('../models/Items/Items')
+var vendorModel=require('../models/Items/vendor')
 var itemServices = require('../openServices/items')
 var cartmodel = require('../models/cart/cart')
 var listmodel = require('../models/lists/list')
@@ -172,20 +173,8 @@ class packs {
             }
         })
     }
-    // deletePackage(uuid, lid, callback) {
-    //     listMetaModel.deleteMany({ uuid: uuid, lid: lid }, function (err, deletedMeta) {
-    //         console.log(err);
-    //         listmodel.deleteMany({ uuid: uuid, lid: lid }, function (err1, deletedL) {
-    //             console.log(err);
-
-    //             if (err || err1)
-    //                 callback({ success: false })
-    //             else
-    //                 callback({ success: true })
-    //         })
-    //     })
-    // }
-    addPackageToCart(userId, lid, callback) {
+    
+    addPackageToCart(userId, lid, callback) {//discarded
         packageModel.find({ lid: lid }, function (err, foundL) {
             if (err)
                 callback({ success: false })
@@ -205,30 +194,54 @@ class packs {
     }
 
     publishPackage(data, callback) {
-        var item_data = { name: data.name, price: data.price, image: data.image, }
-        var item_metaData = { content: data.content }
-        var item_categoryData = { name: data.category }
-        itemServices.createItem(data, function (createdItem) {
-            if (createdItem.success == false) {
-                callback({ success: false, message: 'could not create Item' })
+        var item_data = {
+            name: data.name,
+            price: data.price,
+            image: data.image,
+            category: data.category,
+            subCategory: data.subCategory,
+            tag: data.tag,
 
+            groupingTag: data.groupingTag,
+            isPackage:true,
+            iid:data.lid
+        }
+        var item_metaData = { weight: data.weight, content: data.content, color: data.color }
+
+        vendorModel.findOne({ vendorId: data.vendorId }, function (err, foundV) {
+            if (err || functions.isEmpty(foundV)) {
+                callback({ success: false, message: "vendor not found" })
             }
             else {
-                itemmodel.findOneAndUpdate({ iid: createdItem.item.iid }, { iid: data.lid, isPackage: true }, function (err, updatedItem) {
-                    if (err)
-                        callback({ success: false, message: "trouble in appointing id to item" })
+                item_data["vendorId"] = foundV.vendorId
+                item_data["vendorName"] = foundV.vendorName
+                itemmodel.create(item_data, function (err, newItem) {
+                    if (err) {
+                        console.log(err)
+                        callback({ success: false, err: "trouble creating item" })
+                    }
                     else {
-                        packageMetaModel.findByIdAndUpdate({ lid: data.lid }, { total: data.price }, function (err, createdPack) {
-                            if (err)
-                                callback({ success: true, message: "please check entry of package" })
-                            else
-                                callback({ success: true, message: "item is live" })
+                        item_metaData.iid = newItem.iid
+                        itemMetaModel.create(item_metaData, function (err, newMeta) {
+                            if (err) {
+                                console.log(err)
+                                callback({ success: false, err: "trouble creating item" })
+                            }
+                            else {
+                                callback({ success: true, item: newItem, err: null })
+                            }
                         })
+                        // callback({ success: true, item: newItem, err: null })
                     }
                 })
+
             }
+
         })
+
+
     }
+        
 
 }
 
