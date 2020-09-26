@@ -32,6 +32,7 @@
 	<link rel="stylesheet" href="/css/style.css">
 	<!-- Responsive CSS -->
 	<link rel="stylesheet" href="/css/responsive.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
 
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" href="/img/favicon.png">
@@ -242,7 +243,21 @@
 			<div class="row align-items-center">
 				<div class="col-lg-6 col-md-12">
 					<div class="product-details-image">
-						<img src="/img/product-details/1.jpg" alt="image">
+						<% var imageArray = item.image.trim().split("||") %>
+						<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
+							<ul class="uk-slideshow-items">
+								<% imageArray.forEach(el => { %>
+								<li>
+									<img data-src="<%=el%>" alt="" uk-cover uk-img="target: !.uk-slideshow-items"
+										alt="image">
+								</li>
+								<% }) %>
+							</ul>
+							<a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"
+								uk-slidenav-previous uk-slideshow-item="previous"></a>
+							<a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#"
+								uk-slidenav-next uk-slideshow-item="next"></a>
+						</div>
 					</div>
 				</div>
 
@@ -252,7 +267,7 @@
 
 						<div class="price">
 							<span class="new-price">Rs. <%= item.price %></span>
-							<span class="old-price">$20.00</span>
+							<span class="old-price">Rs. <%= item.price * (120/100) %></span>
 						</div>
 
 						<div class="product-review">
@@ -263,10 +278,10 @@
 								<i class="fa fa-star"></i>
 								<i class="fa fa-star-half-alt"></i>
 							</div>
-							<a href="#" class="rating-count">3 reviews</a>
+							<a href="#" class="rating-count"><%=Math.floor(Math.random() * 100)%> reviews</a>
 						</div>
 
-						<p><%= item.content %></p>
+						<p><%- item.content -%></p>
 
 						<form method="POST" action="/add/<%=item.iid%>">
 							<div class="product-add-to-cart">
@@ -355,15 +370,19 @@
 								<div class="tab_content">
 									<div class="tabs_item">
 										<div class="products-details-tab-content">
-											<p>Design inspiration lorem ipsum dolor sit amet, consectetuer adipiscing
+											<p>Design inspiration lorem ipsum dolor sit amet, consectetuer
+												adipiscing
 												elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhoncus
 												neque, id pulvinar odio lorem non turpis. Nullam sit amet enim.
 												Suspendisse id velit vitae ligula volutpat condimentum. Aliquam erat
-												volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus pharetra
+												volutpat. Sed quis velit. Nulla facilisi. Nulla libero. Vivamus
+												pharetra
 												posuere sapien. Nam consectetuer. Sed aliquam, nunc eget euismod
-												ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim nibh
+												ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim
+												nibh
 												eget ipsum. Nam consectetuer. Sed aliquam, nunc eget euismod
-												ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim nibh
+												ullamcorper, lectus nunc ullamcorper orci, fermentum bibendum enim
+												nibh
 												eget ipsum. Nulla libero. Vivamus pharetra posuere sapien.</p>
 										</div>
 									</div>
@@ -410,9 +429,11 @@
 														<h3>Good</h3>
 														<span><strong>Admin</strong> on <strong>Sep 21,
 																2020</strong></span>
-														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+															sed
 															do eiusmod tempor incididunt ut labore et dolore magna
-															aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+															aliqua. Ut enim ad minim veniam, quis nostrud
+															exercitation.
 														</p>
 
 														<a href="#" class="review-report-link">Report as
@@ -430,9 +451,11 @@
 														<h3>Good</h3>
 														<span><strong>Admin</strong> on <strong>Sep 21,
 																2020</strong></span>
-														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+															sed
 															do eiusmod tempor incididunt ut labore et dolore magna
-															aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+															aliqua. Ut enim ad minim veniam, quis nostrud
+															exercitation.
 														</p>
 
 														<a href="#" class="review-report-link">Report as
@@ -450,9 +473,11 @@
 														<h3>Good</h3>
 														<span><strong>Admin</strong> on <strong>Sep 21,
 																2020</strong></span>
-														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+														<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+															sed
 															do eiusmod tempor incididunt ut labore et dolore magna
-															aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+															aliqua. Ut enim ad minim veniam, quis nostrud
+															exercitation.
 														</p>
 
 														<a href="#" class="review-report-link">Report as
@@ -894,6 +919,8 @@
 	<script src="/js/odometer.min.js"></script>
 	<!-- Custom JS -->
 	<script src="/js/custom.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/js/uikit-icons.min.js"></script>
 </body>
 
 </html>

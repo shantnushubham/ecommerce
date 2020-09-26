@@ -264,51 +264,52 @@
 							<a class="filters" style="font-weight: bold;">Collapse Filters</a>
 							<div class="collapse show" id="collapseFilters">
 								<form method="POST" action="/items">
-								<hr>
-								<div class="filter_type">
-									<h5>Categories</h5>
-									<ul>
-										<% category.forEach(element => { %>
-										<li>
-											<label>
-												<input type="checkbox" name="category" value="<%=element%>">&nbsp;
-												<b><%=element%></b>
-											</label>
-										</li>
-										<% }); %>
-									</ul>
-								</div>
-								<hr>
-								<div class="filter_type">
-									<h5>Sub-Category</h5>
-									<ul>
-										<% subCategory.forEach(element => { %>
-										<li>
-											<label>
-												<input type="checkbox" name="subCategory" value="<%=element%>">&nbsp;
-												<b><%=element%></b>
-											</label>
-										</li>
-										<% }); %>
-									</ul>
-								</div>
-								<hr>
-								<div class="filter_type">
-									<h5>Tags</h5>
-									<ul>
-										<% tag.forEach(element => { %>
-										<li>
-											<label>
-												<input type="checkbox" name="tag" value="<%=element%>">&nbsp;
-												<b><%=element%></b>
-											</label>
-										</li>
-										<% }); %>
-									</ul>
-								</div>
-								<button class="default-btn" type="submit">Search</button>
+									<hr>
+									<div class="filter_type">
+										<h5>Categories</h5>
+										<ul>
+											<% category.forEach(element => { %>
+											<li>
+												<label>
+													<input type="checkbox" name="category" value="<%=element%>">&nbsp;
+													<b><%=element%></b>
+												</label>
+											</li>
+											<% }); %>
+										</ul>
+									</div>
+									<hr>
+									<div class="filter_type">
+										<h5>Sub-Category</h5>
+										<ul>
+											<% subCategory.forEach(element => { %>
+											<li>
+												<label>
+													<input type="checkbox" name="subCategory"
+														value="<%=element%>">&nbsp;
+													<b><%=element%></b>
+												</label>
+											</li>
+											<% }); %>
+										</ul>
+									</div>
+									<hr>
+									<div class="filter_type">
+										<h5>Tags</h5>
+										<ul>
+											<% tag.forEach(element => { %>
+											<li>
+												<label>
+													<input type="checkbox" name="tag" value="<%=element%>">&nbsp;
+													<b><%=element%></b>
+												</label>
+											</li>
+											<% }); %>
+										</ul>
+									</div>
+									<button class="default-btn" type="submit">Search</button>
 								</form>
-							
+
 							</div>
 							<!--/collapse -->
 						</div>
@@ -321,10 +322,11 @@
 							<div class="container">
 								<div class="row">
 									<% for (let x = 0; x < itemlist.length; x++) { %>
+									<% var imageArray = itemlist[x].image.trim().split("||") %>
 									<div class="col-lg-6 col-md-6 col-sm-6">
 										<div class="single-menu-item" style="background-color: white !important;">
 											<div class="menu-img">
-												<img src="<%=itemlist[x].image%>" alt="Shop">
+												<img src="<%=imageArray[0]%>" alt="Shop">
 												<div class="price">
 													<span style="font-size: small;">Rs. <%= itemlist[x].price %></span>
 												</div>
