@@ -286,6 +286,39 @@ class order {
         })
     }
 
+    getCancellationsForUser(uuid,callback) {
+        cancelOrderModel.find({uuid: uuid},function(err,foundCancelReq){
+            if(err)callback({ success: false})
+            else
+            callback({ success:true,cancelReq:foundCancelReq})
+        })
+    }
+
+    getAllCancellations(callback) {
+        cancelOrderModel.find({},function(err,foundCancelReq){
+            if(err)callback({ success: false})
+            else
+            callback({ success:true,cancelReq:foundCancelReq})
+        })
+    }
+    acceptCancellation(cancellationId, callback){
+        cancelOrderModel.findOneAndUpdate({cancellationId: cancellationId},
+        {cancellationStatus:'cancelled',paymentRefundStatus:'completed'}
+        ,function(err,cancelReq){
+            if(err)
+            callback({success:false})
+            else
+            {
+                ordermodel.findOneAndUpdate({orderId: cancelReq.orderId},{shipmentStatus:'cancelled',},function(err,updatedOrder){
+                    if(err)
+                    callback({success:false})
+                    else
+                    callback({success:true})
+                })
+            }
+        })
+    }
+
 
 
 

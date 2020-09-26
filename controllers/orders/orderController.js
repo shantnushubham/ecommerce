@@ -209,5 +209,16 @@ orderServices.checkOrderDetails(req.params.orderId,function(foundOrder){
 }
 
 exports.cancelOrder=function(req,res){
-
+    orderServices.cancelOrder(req.params.orderId,function(canceled){
+        if(canceled.success == false)
+        {
+            req.flash('error','error in creating Cancellation.please check cancelled requests')
+            res.redirect('/')
+        }
+        else
+        {
+            req.flash('success','cancellation requested')
+            res.redirect('/')
+        }
+    })
 }
