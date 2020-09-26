@@ -1585,7 +1585,7 @@
 /** Only Mobile Menu **/
 @media only screen and (max-width: 991px) {
   .mean-container .mean-bar {
-    background-color: #16171d;
+    background-color: #1e8ac8;
     padding: 0;
   }
   .mobile-nav .logo {
