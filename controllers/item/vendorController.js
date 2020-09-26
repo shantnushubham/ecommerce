@@ -35,7 +35,7 @@ exports.postCreateVendor=function(req,res)
 exports.getVendors=function(req,res)
 {
     vendorServices.getVendors(function(foundVendors){
-        if(createdVendor.success==false)
+        if(foundVendors.success==false)
         {
             req.flash('error','error in creating vendor')
             res.redirect('/admin/vendors')

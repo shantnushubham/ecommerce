@@ -207,3 +207,7 @@ orderServices.checkOrderDetails(req.params.orderId,function(foundOrder){
 })
 
 }
+
+exports.cancelOrder=function(req,res){
+
+}

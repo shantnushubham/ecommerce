@@ -110,6 +110,14 @@ var orderSchema = new mongoose.Schema({
     },
     shippingConfirmed: {
         type: Boolean
+    },
+    shipmentStatus:{
+        type:String,
+        default:"processing",
+        enum:['processing','approved','cancelled','completed','cancellation processing']
+    },
+    cancellationId:{
+        type:String
     }
 
 });

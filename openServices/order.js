@@ -3,6 +3,7 @@ var itemmodel = require('../models/Items/Items')
 var cartmodel = require('../models/cart/cart')
 var UserAddress = require('../models/User/DeliveryAddress')
 var ordermodel = require('../models/Orders/Order')
+var cancelOrderModel=require('../models/Orders/CancelledOrder')
 var codemodel = require('../models/offer/codes')
 
 var functions = require('../Middlewares/common/functions')
@@ -265,6 +266,23 @@ class order {
             callback({success:false})
             else
             callback({success:true,codelist:foundCodes})
+        })
+    }
+
+    cancelOrder(orderId,callback)
+    {
+        ordermodel.findOneAndUpdate({orderId:orderId},{shipmentStatus:'cancellation processing'},function(err,updatedOrder){
+            if(err||functions.isEmpty(updatedOrder))
+            callback({success:false})
+            else
+            {
+                cancelOrderModel.create({orderId:orderId,uuid:updatedOrder.uuid},function(err,createdCancel){
+                    if(err||functions.isEmpty(createdCancel))
+                    callback({success:false})
+                    else
+                    callback({success:true,cancelReq:createdCancel})
+                })
+            }
         })
     }
 
