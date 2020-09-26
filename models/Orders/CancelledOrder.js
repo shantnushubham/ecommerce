@@ -1,28 +1,31 @@
 const mongoose = require("mongoose");
 var mongooseHistory = require('mongoose-history')
+var shortid=require('shortid')
 
 // refundStatus
 // 0 : pending
 // 1: refunded
 // 2:someError
 
-var cancelledOrderSchema  = new mongoose.Schema({
-    order_id:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:true,
-        ref: 'order'
-    },
-    paymentRefundStatus:{
-        type:Number,
-        required:true
-    },
-    reasonOfCancellation:{
+var cancelledOrderSchema = new mongoose.Schema({
+    order_id: {
         type: String
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+    paymentRefundStatus: {
+        type: String
+    },
+    cancellationStatus:{
+        type:String,
+        default:"cancellation processing",
+        enum:['cancelled','cancellation processing']
+    },
+    uuid: {
+        type:String
+    },
+    cancellationId:{
+        type:String,
+        default:shortid.generate
     }
 });
 cancelledOrderSchema.plugin(mongooseHistory)
-module.exports = mongoose.model("cancelled_order", cancelledOrderSchema);
+module.exports = mongoose.model("cancelledOrders", cancelledOrderSchema, 'cancelledOrders');
