@@ -60,9 +60,17 @@ class items {
 
                             itemModel.find({ groupingTag: foundItem.groupingTag }, function (err1, foundGroup) {
                                 if (err1)
-                                    callback({ success: true, group: [], totalDetails: totalDetails })
-                                else
-                                    callback({ success: true, group: foundGroup, totalDetails: totalDetails })
+                                    callback({ success: true, group: [], totalDetails: totalDetails, similar: [] })
+                                else {
+                                    itemModel.find({ category: foundItem.category }).limit(10).exec(function (err, similarItems) {
+                                        if (err)
+                                            callback({ success: true, group: [], totalDetails: totalDetails, similar: [] })
+                                        else
+                                            callback({ success: true, group: foundGroup, totalDetails: totalDetails, similar: similarItems })
+
+                                    })
+
+                                }
 
 
                             })
@@ -121,7 +129,7 @@ class items {
     }
 
     createItem(data, callback) {
-        var st=["ab","bv","vv"]
+        var st = ["ab", "bv", "vv"]
         var item_data = {
             name: data.name,
             price: data.price,
@@ -130,7 +138,7 @@ class items {
             subCategory: data.subCategory,
             tag: data.tag,
             groupingTag: data.groupingTag,
-            slideshow:st
+            slideshow: st
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
 

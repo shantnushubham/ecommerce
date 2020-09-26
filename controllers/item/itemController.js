@@ -22,7 +22,7 @@ exports.getItem = function (req, res) {
             res.redirect('/')
         }
         else
-            res.render('itempage', { item: foundItem.totalDetails, group: foundItem.group })
+            res.render('itempage', { item: foundItem.totalDetails, group: foundItem.group, similar: foundItem.similar  })
         // console.log(foundItem)
     })
 }
