@@ -163,6 +163,6 @@ app.use(function(err, req, res, next) {
 });
 
 
-app.listen(3000, process.env.IP, function(){
+app.listen(3010, process.env.IP, function(){
     console.log("Server is up and running! Go ahead make your move.");
 });
