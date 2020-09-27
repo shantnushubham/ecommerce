@@ -298,12 +298,12 @@ exports.postConfirmCancellation = function (req, res) {
     orderServices.acceptCancellation(req.params.cancellationId, req.body.transaction_id, function (cancelled) {
         if (cancelled.success == false) {
             req.flash('error', 'error in cancelling')
-            res.redirect('/admin/cancel-list')
+            res.redirect('/admin/cancels-filter')
         }
         else {
 
             req.flash('success', 'success')
-            res.redirect('/admin/cancel-list')
+            res.redirect('/admin/cancels-filter')
         }
     })
 }
@@ -325,11 +325,11 @@ exports.confirmOrder = function (req, res) {
     orderServices.acceptOrder(req.params.orderId, d, function (order) {
         if (order.success == false) {
             req.flash('error', 'error')
-            res.redirect('/admin/orderList')
+            res.redirect('/admin/orders-filter')
         }
         else {
             req.flash('success', 'success')
-            res.redirect('/admin/orderList')
+            res.redirect('/admin/orders-filter')
         }
     })
 }
@@ -338,7 +338,7 @@ exports.getOrderByShipStatus = function (req, res) {
     orderServices.getOrderByShipment(req.params.shipment, function (foundOrder) {
         if (foundOrder.success == false) {
             req.flash('error', 'error')
-            res.redirect('/order/orderList')
+            res.redirect('/admin/orders-filter')
         }
         else {
             res.render('adminOrders', { orders: foundOrder.order })
@@ -350,7 +350,7 @@ exports.getAllOrders = function (req, res) {
     orderServices.getAllOrders(function (foundOrder) {
         if (foundOrder.success == false) {
             req.flash('error', 'error')
-            res.redirect('/order/orderList')
+            res.redirect('/admin/orders-filter')
         }
         else {
             res.render('adminOrders', { orders: foundOrder.order })
@@ -362,7 +362,7 @@ exports.getOrderByPayment = function (req, res) {
     orderServices.getOrderByPayment(req.params.payment, function (foundOrder) {
         if (foundOrder.success == false) {
             req.flash('error', 'error')
-            res.redirect('/order/orderList')
+            res.redirect('/admin/orders-filter')
         }
         else {
             res.render('adminOrders', { orders: foundOrder.order })
