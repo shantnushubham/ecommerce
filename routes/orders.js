@@ -10,7 +10,7 @@ require('dotenv').config()
 const envData=process.env
 
 
-router.get("/order/:id/payment", function (req, res) {
+router.get("/order/:id/payment",ensureAuthenticated, function (req, res) {
 
     orderServices.findOrderById(req.params.id,req.user.uuid, function (foundOrder) {
         if (foundOrder.success == false) {
@@ -73,7 +73,7 @@ router.get("/order/:id/payment", function (req, res) {
 
 })
 
-router.get("/redirect", function(req, res){
+router.get("/redirect",ensureAuthenticated, function(req, res){
     var payment_id = req.query.payment_id;
     var payment_request_id = req.query.payment_request_id;
     var headers = { 'X-Api-Key':envData.X_Api_Key , 'X-Auth-Token':envData.X_Auth_Token};
@@ -130,7 +130,47 @@ console.log('----------------');
 
 router.get('/checkout',ensureAuthenticated,orderController.getCheckout)
 router.post('/checkout',ensureAuthenticated,orderController.postCheckout)
-// router.get('/voucher',orderController.getUserRefcode)
-router.get("/user-order/:orderId",orderController.checkUserOrder)
+router.get("/user-order/:orderId",ensureAuthenticated,orderController.checkUserOrder)
+router.get('/user-order',ensureAuthenticated,orderController.userOrderList)
+router.get('/cancellation/request/:orderId',ensureAuthenticated,orderController.cancelOrder)
+router.get('/cancellations',ensureAuthenticated,orderController.userCancellationList)
+router.get('/cancellations/:id',ensureAuthenticated,orderController.fetchCancellationById)
+
+
+
+router.get('/admin/orders-filter',functions.isAdmin,orderController.getAllOrders)
+router.get('/admin/orders-filter-payment/:payment',functions.isAdmin,orderController.getOrderByPayment)
+router.get('/admin/orders-filter-shipment/:shipment',functions.isAdmin,orderController.getOrderByShipStatus)
+router.get('/admin/orders/:orderId',functions.isAdmin,orderController.adminCheckOrder)
+router.get('/admin/confirm-order/:orderId',functions.isAdmin,orderController.getConfirmOrder)
+router.post('/admin/confirm-order/:orderId',functions.isAdmin,orderController.confirmOrder)
+
+router.get('/admin/cancels-filter',functions.isAdmin,orderController.getAllCancellations)
+router.get('/admin/cancels-filter/:status',functions.isAdmin,orderController.getCancellationsByStatus)
+router.get('/cancellations/:cancellationId',functions.isAdmin,orderController.getCancellationByIdAdmin)
+router.get('/confirm-cancel/:cancellationId',functions.isAdmin,orderController.getConfirmCancellation)
+router.get('/confirm-cancel/:cancellationId',functions.isAdmin,orderController.postConfirmCancellation)
+router.get('/cancellations/:cancellationId',functions.isAdmin,orderController.getCancellationByIdAdmin)
+
+
+
+
+
+
+
+
+/**
+ * admin get all orders
+ * admin see orders
+ * admin confirm order
+ * see order by shipmentStatus
+ * see order by payment
+ * 
+ * cancel order
+ * see all admin cancel orders
+ * confirm cancel
+ * 
+ */
+
 
 module.exports=router

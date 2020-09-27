@@ -116,9 +116,7 @@ var orderSchema = new mongoose.Schema({
         default:"processing",
         enum:['processing','approved','cancelled','completed','cancellation processing']
     },
-    cancellationId:{
-        type:String
-    }
+   
 
 });
 

@@ -182,32 +182,227 @@ exports.getDiscountCodeList = function (req, res) {
     })
 }
 
-exports.checkUserOrder=function(req,res)
-{
-    
-orderServices.checkOrderDetails(req.params.orderId,function(foundOrder){
-    if(foundOrder.success==false||foundOrder.found==false)
-    {
-        req.flash('error','error in getting order details')
-        res.redirect('/')
-    }
-    else
-    {
-        var promiseArr=[]
-        foundOrder.order.orderedItems.forEach(element => {
-            promiseArr.push(orderServices.getItemForOrderList(element.iid,element.quantity))
-        });
-        Promise.all(promiseArr).then(result=>{
-            res.send({ success: true, found: true, order: foundOrder.order, Olist:result })
-        }).catch(errors=>{
-            res.send({ success: false, found: true, order: foundOrder.order,Olist:errors })
-        })
-    }
+exports.checkUserOrder = function (req, res) {
 
-})
+    orderServices.checkOrderDetails(req.params.orderId, function (foundOrder) {
+        if (foundOrder.success == false || foundOrder.found == false) {
+            req.flash('error', 'error in getting order details')
+            res.redirect('/')
+        }
+        else {
+            if (foundOrder.order.uuid === req.user.uuid) {
+
+                var promiseArr = []
+                foundOrder.order.orderedItems.forEach(element => {
+                    promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
+                });
+                Promise.all(promiseArr).then(result => {
+                    res.render('userOrder', { success: true, found: true, order: foundOrder.order, Olist: result })
+                }).catch(errors => {
+                    res.render('userOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
+                })
+            }
+            else {
+                req.flash('error', 'unauthorized')
+                res.redirect('/')
+            }
+
+        }
+
+    })
 
 }
 
-exports.cancelOrder=function(req,res){
+exports.cancelOrder = function (req, res) {
+    orderServices.cancelOrder(req.params.orderId, function (canceled) {
+        if (canceled.success == false) {
+            req.flash('error', 'error in creating Cancellation.please check cancelled requests')
+            res.redirect('/')
+        }
+        else {
+            req.flash('success', 'cancellation requested')
+            res.redirect('/')
+        }
+    })
+}
+
+exports.userCancellationList = function (req, res) {
+    orderServices.getCancellationsForUser(req.user.uuid, function (cancellations) {
+        if (cancellations.success == false) {
+            req.flash('error', 'error in fetching list')
+            res.redirect('/')
+        }
+        else {
+            res.render('userCancelList', { cancellations: cancellations })
+        }
+    })
+}
+
+exports.fetchCancellationById = function (req, res) {
+
+    orderServices.getCancellationById(req.params.id, function (cancellations) {
+        if (cancellations.success == false) {
+            req.flash('error', 'error in data')
+            res.redirect('/')
+        }
+        else {
+            res.render('cancellationDetail', { cancellations: cancellations })
+        }
+    })
+}
+
+exports.getCancellationByIdAdmin = function (req, res) {
+
+    orderServices.getCancellationById(req.params.id, function (cancellations) {
+        if (cancellations.success == false) {
+            req.flash('error', 'error in data')
+            res.redirect('/')
+        }
+        else {
+            res.render('cancellationDetailAdmin', { cancellations: cancellations })
+        }
+    })
+}
+
+exports.getAllCancellations = function (req, res) {
+
+    orderServices.getAllCancellations(function (cancellations) {
+        if (cancellations.success == false) {
+            req.flash('error', 'error in fetching list')
+            res.redirect('/')
+        }
+        else {
+            res.render('adminCancelList', { cancellations: cancellations })
+        }
+    })
+}
+
+exports.getCancellationsByStatus = function (req, res) {
+
+    orderServices.getCancellationByStatus(req.params.status,function (cancellations) {
+        if (cancellations.success == false) {
+            req.flash('error', 'error in fetching list')
+            res.redirect('/')
+        }
+        else {
+            res.render('adminCancelList', { cancellations: cancellations })
+        }
+    })
+}
+
+exports.getConfirmCancellation = function (req, res) {
+    res.render('adminConfCancel', { cancellationId: req.params.cancellationId })
+}
+
+exports.postConfirmCancellation = function (req, res) {
+    orderServices.acceptCancellation(req.params.cancellationId, req.body.transaction_id, function (cancelled) {
+        if (cancelled.success == false) {
+            req.flash('error', 'error in cancelling')
+            res.redirect('/admin/cancels-filter')
+        }
+        else {
+
+            req.flash('success', 'success')
+            res.redirect('/admin/cancels-filter')
+        }
+    })
+}
+
+exports.getConfirmOrder = function (req, res) {
+    res.render('confirmOrderAdmin', { orderId: req.params.orderId })
+}
+
+exports.confirmOrder = function (req, res) {
+    var d = {
+        shipmentStatus: 'approved',
+        shipmentConfirmed: true,
+        length: req.body.length,
+        breadth: req.body.breadth,
+        height: req.body.height,
+        width: req.body.width,
+        shipRocketId: req.body.shipRocketId
+    }
+    orderServices.acceptOrder(req.params.orderId, d, function (order) {
+        if (order.success == false) {
+            req.flash('error', 'error')
+            res.redirect('/admin/orders-filter')
+        }
+        else {
+            req.flash('success', 'success')
+            res.redirect('/admin/orders-filter')
+        }
+    })
+}
+
+exports.getOrderByShipStatus = function (req, res) {
+    orderServices.getOrderByShipment(req.params.shipment, function (foundOrder) {
+        if (foundOrder.success == false) {
+            req.flash('error', 'error')
+            res.redirect('/admin/orders-filter')
+        }
+        else {
+            res.render('adminOrders', { orders: foundOrder.order })
+        }
+    })
+}
+
+exports.getAllOrders = function (req, res) {
+    orderServices.getAllOrders(function (foundOrder) {
+        if (foundOrder.success == false) {
+            req.flash('error', 'error')
+            res.redirect('/admin/orders-filter')
+        }
+        else {
+            res.render('adminOrders', { orders: foundOrder.order })
+        }
+    })
+}
+
+exports.getOrderByPayment = function (req, res) {
+    orderServices.getOrderByPayment(req.params.payment, function (foundOrder) {
+        if (foundOrder.success == false) {
+            req.flash('error', 'error')
+            res.redirect('/admin/orders-filter')
+        }
+        else {
+            res.render('adminOrders', { orders: foundOrder.order })
+        }
+    })
+}
+
+exports.adminCheckOrder = function (req, res) {
+    orderServices.checkOrderDetails(req.params.orderId, function (foundOrder) {
+        if (foundOrder.success == false || foundOrder.found == false) {
+            req.flash('error', 'error in getting order details')
+            res.redirect('/')
+        }
+        else {
+
+
+            var promiseArr = []
+            foundOrder.order.orderedItems.forEach(element => {
+                promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
+            });
+            Promise.all(promiseArr).then(result => {
+                res.render('adminCheckOrder', { success: true, found: true, order: foundOrder.order, Olist: result })
+            }).catch(errors => {
+                res.render('adminCheckOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
+            })
+
+
+
+        }
+
+    })
+}
+
+exports.userOrderList = function (req, res) {
+    orderServices.getOrderByUUID(req.user.uuid, function (foundOrder) {
+        if (foundOrder.success == false) {
+            req.flash('error', 'error in getting list')
+            res.redirect('/')
+        }
+        res.render('oListUser')
+    })
 
 }

@@ -9,10 +9,12 @@ var shortid=require('shortid')
 
 var cancelledOrderSchema = new mongoose.Schema({
     order_id: {
-        type: String
+        type: String,
+        required:true
     },
     paymentRefundStatus: {
-        type: String
+        type: String,
+        default:'pending'
     },
     cancellationStatus:{
         type:String,
@@ -20,11 +22,20 @@ var cancelledOrderSchema = new mongoose.Schema({
         enum:['cancelled','cancellation processing']
     },
     uuid: {
-        type:String
+        type:String,
+        required:true
+
     },
     cancellationId:{
         type:String,
         default:shortid.generate
+    },
+    transaction_id: {
+        type:String,
+    },
+    dateCreated:{
+        type:Date,
+        default:Date.now()
     }
 });
 cancelledOrderSchema.plugin(mongooseHistory)
