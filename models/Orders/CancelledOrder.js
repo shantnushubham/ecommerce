@@ -29,6 +29,13 @@ var cancelledOrderSchema = new mongoose.Schema({
     cancellationId:{
         type:String,
         default:shortid.generate
+    },
+    transaction_id: {
+        type:String,
+    },
+    dateCreated:{
+        type:Date,
+        default:Date.now()
     }
 });
 cancelledOrderSchema.plugin(mongooseHistory)

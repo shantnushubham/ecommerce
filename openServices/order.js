@@ -294,6 +294,15 @@ class order {
         })
     }
 
+    getCancellationById(cancellationId,callback)
+    {
+        cancelOrderModel.findOne({cancellationId: cancellationId},function(err,foundCancelReq){
+            if(err)callback({ success: false})
+            else
+            callback({ success:true,cancelReq:foundCancelReq})
+        })
+    }
+
     getAllCancellations(callback) {
         cancelOrderModel.find({},function(err,foundCancelReq){
             if(err)callback({ success: false})
@@ -301,7 +310,17 @@ class order {
             callback({ success:true,cancelReq:foundCancelReq})
         })
     }
-    acceptCancellation(cancellationId, callback){
+
+    getCancellationByStatus(status,callback)
+    {
+        cancelOrderModel.find({cancellationStatus:status},function(err,foundCancelReq){
+            if(err)callback({ success: false})
+            else
+            callback({ success:true,cancelReq:foundCancelReq})
+        })
+    }
+
+    acceptCancellation(cancellationId,transaction_id, callback){
         cancelOrderModel.findOneAndUpdate({cancellationId: cancellationId},
         {cancellationStatus:'cancelled',paymentRefundStatus:'completed'}
         ,function(err,cancelReq){
@@ -309,7 +328,7 @@ class order {
             callback({success:false})
             else
             {
-                ordermodel.findOneAndUpdate({orderId: cancelReq.orderId},{shipmentStatus:'cancelled',},function(err,updatedOrder){
+                ordermodel.findOneAndUpdate({orderId: cancelReq.orderId},{shipmentStatus:'cancelled',transaction_id:transaction_id},function(err,updatedOrder){
                     if(err)
                     callback({success:false})
                     else
@@ -319,6 +338,43 @@ class order {
         })
     }
 
+    acceptOrder(orderId,data, callback)
+    {
+        ordermodel.findOneAndUpdate({order_id: orderId},data,function(err,order){
+            if(err) callback({success: false})
+            else callback({success:true})
+        })
+    }
+    
+    getOrderByShipment(status,callback)
+    {
+        ordermodel.find({shipmentStatus: status},function(err,order){
+            if(err||functions.isEmpty(order)) callback({success:false})
+            else callback({success:true,order:order})
+        })
+    }
+    allOrders(callback)
+    {
+        ordermodel.find({},function(err,order){
+            if(err||functions.isEmpty(order)) callback({success:false})
+            else callback({success:true,order:order})
+        })
+    }
+    getOrderByPayment(status,callback)
+    {
+        ordermodel.find({status: status},function(err,order){
+            if(err||functions.isEmpty(order)) callback({success:false})
+            else callback({success:true,order:order})
+        })
+    }
+
+    getOrderByUUID (uuid, callback)
+    {
+        ordermodel.find({uuid:uuid},function(err,order){
+            if(err||functions.isEmpty(order)) callback({success:false})
+            else callback({success:true,order:order})
+        })
+    }
 
 
 
