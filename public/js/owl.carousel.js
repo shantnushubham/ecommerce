@@ -349,7 +349,7 @@
 			this._clones = clones;
 
 			$(append).addClass('cloned').appendTo(this.$stage);
-			// $(prepend).addClass('cloned').prependTo(this.$stage);
+			$(prepend).addClass('cloned').prependTo(this.$stage);
 		}
 	}, {
 		filter: [ 'width', 'items', 'settings' ],
