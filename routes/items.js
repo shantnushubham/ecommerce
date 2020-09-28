@@ -4,6 +4,7 @@ var app = express();
 
 app.get('/items',itemController.getAllItems)
 app.get('/items/:iid',itemController.getItem)
+app.get('/items/category/:category',itemController.categoryPages)
 // app.post('/items/filter',itemController.filterItems)
 app.post('/items',itemController.filterItems)
 

@@ -37,9 +37,8 @@ var itemsSchema = new mongoose.Schema({
         type: String,
 
     },
-    image: {
-        type: String
-    },
+    image: [String],
+
     metadata: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'items_metadata'
@@ -62,7 +61,6 @@ var itemsSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
-    slideshow: [String],
     
     vendorId:{
         type:String

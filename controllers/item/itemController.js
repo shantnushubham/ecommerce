@@ -10,8 +10,11 @@ exports.getAllItems = function (req, res) {
             req.flash('error', 'error in getting items')
             res.redirect('/')
         }
-        else
-            res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag })
+        else {
+            console.log('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag,s_cat:[],s_sub:[],s_tag:[] })
+            
+            res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
+        }
     })
 }
 
@@ -22,7 +25,7 @@ exports.getItem = function (req, res) {
             res.redirect('/')
         }
         else
-            res.render('itempage', { item: foundItem.totalDetails, group: foundItem.group, similar: foundItem.similar  })
+            res.render('itempage', { item: foundItem.totalDetails, group: foundItem.group, similar: foundItem.similar })
         // console.log(foundItem)
     })
 }
@@ -46,10 +49,33 @@ exports.filterItems = function (req, res) {
             req.flash('error', 'error in getting items')
             res.redirect('/')
         }
-        else{
+        else {
             console.log({ itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag });
-            res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag ,s_cat:ca,s_sub:su,s_tag:ta})
-        
+            res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: ca, s_sub: su, s_tag: ta })
+
+        }
+    })
+}
+
+exports.categoryPages = function (req, res) {
+    console.log(req.body);
+    var ca = [], su = [], ta = [];
+    ca.push(req.params.category)
+
+    var s = itemservices.filler([], ca, "category")
+    var s1 = itemservices.filler(s, su, "subCategory")
+    var s2 = itemservices.filler(s1, ta, "tag")
+    console.log(s2);
+    itemservices.filterItems(s2, function (itemlist) {
+        // console.log(itemlist);
+        if (itemlist.success == false) {
+            req.flash('error', 'error in getting items')
+            res.redirect('/')
+        }
+        else {
+            console.log({ itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag });
+            res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: ca, s_sub: su, s_tag: ta })
+
         }
     })
 }
@@ -68,7 +94,7 @@ exports.createItem = function (req, res) {
         image: req.body.image,
         weight: req.body.weight,
         content: req.body.content,
-        vendorId:req.body.vendorId,
+        vendorId: req.body.vendorId,
     }, function (createdItem) {
         // console.log('here');
         console.log(createdItem);
