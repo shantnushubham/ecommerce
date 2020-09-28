@@ -24,7 +24,7 @@ class items {
                     tag.add(el.tag)
 
                 })
-                console.log({ success: true, foundItems, err: null, category: Array.from(category), subCategory: Array.from(subCategory), tag: Array.from(tag) });
+                // console.log({ success: true, foundItems, err: null, category: Array.from(category), subCategory: Array.from(subCategory), tag: Array.from(tag) });
                 callback({ success: true, foundItems, err: null, category: Array.from(category), subCategory: Array.from(subCategory), tag: Array.from(tag) })
             }
         })
@@ -54,7 +54,8 @@ class items {
                                 subCategory: foundItem.subCategory,
                                 tag: foundItem.tag,
                                 groupingTag: foundItem.groupingTag,
-
+                                vendorId: foundItem.vendorId,
+                                vendorName: foundItem.vendorName,
 
                             }
 
@@ -129,7 +130,7 @@ class items {
     }
 
     createItem(data, callback) {
-        var st = ["ab", "bv", "vv"]
+
         var item_data = {
             name: data.name,
             price: data.price,
@@ -138,7 +139,7 @@ class items {
             subCategory: data.subCategory,
             tag: data.tag,
             groupingTag: data.groupingTag,
-            slideshow: st
+
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
 
@@ -173,6 +174,43 @@ class items {
 
         })
 
+
+    }
+
+    updateItem(iid, data, callback) {
+
+        var item_data = {
+            name: data.name,
+            price: data.price,
+            image: data.image,
+            category: data.category,
+            subCategory: data.subCategory,
+            tag: data.tag,
+            groupingTag: data.groupingTag,
+
+        }
+        var item_metaData = { weight: data.weight, content: data.content, color: data.color }
+        vendorModel.findOne({ vendorId: data.vendorId }, function (err, foundV) {
+            if (err || functions.isEmpty(foundV)) {
+                callback({ success: false, message: "vendor not found" })
+            }
+            else {
+                item_data["vendorId"] = foundV.vendorId
+                item_data["vendorName"] = foundV.vendorName
+
+                itemModel.findOneAndUpdate({ iid: iid }, item_data, function (err, updatedItem) {
+                    if (err) callback({ success: false, err: err })
+                    else {
+                        itemMetaModel.findOneAndUpdate({ iid: iid }, item_metaData, function (err, updatedMeta) {
+                            if (err) callback({ success: false, err: err })
+                            else
+                                callback({ success: true, })
+                        })
+                    }
+                })
+
+            }
+        })
 
     }
 
