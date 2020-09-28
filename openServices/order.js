@@ -352,7 +352,7 @@ class order {
 
     getOrderByUUID(uuid, callback) {
         ordermodel.find({ uuid: uuid }, function (err, order) {
-            if (err || functions.isEmpty(order)) callback({ success: false })
+            if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
     }

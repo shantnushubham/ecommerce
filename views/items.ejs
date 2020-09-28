@@ -85,11 +85,10 @@
 					<div class="container">
 						<div class="row">
 							<% itemlist.forEach(el => { %>
-							<% var imageArray = el.image.trim().split("||") %>
 							<div class="col-lg-6 col-md-6 col-sm-6">
 								<div class="single-menu-item" style="background-color: white !important;">
 									<div class="menu-img">
-										<a href="/items/<%= el.iid %>"><img src="<%=imageArray[0]%>" alt="Shop"></a>
+										<a href="/items/<%= el.iid %>"><img src="<%=el.image[0]%>" alt="Shop"></a>
 										<div class="price">
 											<span style="font-size: small;">Rs. <%= el.price %></span>
 										</div>
@@ -103,17 +102,6 @@
 											<li>
 												<a class="default-btn" href="/items/<%= el.iid %>">Order Now</a>
 											</li>
-											<!-- <li class="quantity">
-														<div class="input-counter">
-															<span class="minus-btn">
-																<i class="fa fa-minus"></i>
-															</span>
-															<input type="text" value="1">
-															<span class="plus-btn">
-																<i class="fa fa-plus"></i>
-															</span>
-														</div>
-													</li> -->
 										</ul>
 									</div>
 								</div>

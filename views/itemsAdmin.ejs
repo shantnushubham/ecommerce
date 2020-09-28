@@ -21,8 +21,7 @@
         <tbody>
             <% for (let i = 0; i < itemlist.length; i++ ) { %>
             <tr>
-                <% var imageArray = itemlist[i].image.trim().split("||")%>
-                <td><img src="<%= imageArray[0] %>" width="100px" height="100px"></td>
+                <td><img src="<%= itemlist[i].image[0] %>" width="100px" height="100px"></td>
                 <td><%= itemlist[i].iid %></td>
                 <td><%= itemlist[i].name %></td>
                 <td><% if (itemlist[i].active == true) { %>
