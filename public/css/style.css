@@ -92,7 +92,7 @@ button:focus {
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
   color: #363636;
   font-weight: 700;
-  font-family: 'PT Sans', sans-serif;
+  font-family: 'PT Sans', sans-serif !important;
 }
 
 h3 {
@@ -1388,7 +1388,7 @@ Sidebar Menu Style
 }
 
 .sidebar-modal .modal-header h2 {
-  background-color: #083377;
+  background-color: #1e8ac8;
   padding: 30px 25px;
 }
 
