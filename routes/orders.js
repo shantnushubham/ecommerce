@@ -141,6 +141,9 @@ router.get('/admin/orders-filter-shipment/:shipment', functions.isAdmin, orderCo
 router.get('/admin/orders/:orderId', functions.isAdmin, orderController.adminCheckOrder)
 router.get('/admin/confirm-order/:orderId', functions.isAdmin, orderController.getConfirmOrder)
 router.post('/admin/confirm-order/:orderId', functions.isAdmin, orderController.confirmOrder)
+router.get('/admin/authorize/:orderId',functions.isAdmin,orderController.authorizeOrder)
+router.get('/admin/shipmentStatus/:orderId/:status',functions.isAdmin,orderController.setShipmentStatus)
+
 
 router.get('/admin/cancels-filter', functions.isAdmin, orderController.getAllCancellations)
 router.get('/admin/cancels-filter/:status', functions.isAdmin, orderController.getCancellationsByStatus)
