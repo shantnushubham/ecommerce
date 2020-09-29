@@ -407,3 +407,21 @@ exports.userOrderList = function (req, res) {
     })
 
 }
+
+exports.authorizeOrder=function(req,res)
+{
+    orderServices.authorizeOrder(req.params.orderId,function(updated){
+        if(updated.success==false)
+        req.flash('error','error')
+        res.redirect('/admin/items')
+    })
+}
+
+exports.setShipmentStatus=function(req,res)
+{
+    orderServices.setShipStatus(req.params.orderId,req.params.st,function(updated){
+        if(updated.success==false)
+        req.flash('error','error')
+        res.redirect('/admin/items')
+    })
+}
