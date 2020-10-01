@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Udema a modern educational site template">
+    <meta name="author" content="Ansonika">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <!-- TITLE -->
+    <title>Asahi - Food & Restaurant HTML Template</title>
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="https://d6fhaebhrj3za.cloudfront.net/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style1.css" rel="stylesheet">
+    <link href="/css/vendors.css" rel="stylesheet">
+    <link href="/css/icon_fonts/css/all_icons.min.css" rel="stylesheet">
+
+    <!-- Owl Theme Default CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/owl.theme.default.min.css">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/owl.carousel.min.css">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/animate.min.css">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/font-awesome.min.css">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <!-- Imagelightbox CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/imagelightbox.min.css">
+    <!-- Meanmenu CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/meanmenu.min.css">
+    <!-- Date Picker CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/date-picker.min.css">
+    <!-- Date Picker CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/odometer.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/responsive.min.css">
+
+    <!-- SPECIFIC CSS -->
+    <link href="css/skins/square/grey.css" rel="stylesheet">
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
+
+</head>
+
+<body>
+
+    <!-- Start Preloader Area -->
+    <div class="preloader">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <!-- End Preloader Area -->
+
+    <div id="page" class="theia-exception">
+
+        <!-- Start Navbar Area -->
+        <div class="asahi-nav">
+            <div class="navbar-area fixed-top">
+                <!-- Menu For Mobile Device -->
+                <div class="mobile-nav">
+                    <a href="/" class="logo">
+                        <img src="/img/logoMain1.png" alt="Asahi Logo">
+                    </a>
+                </div>
+
+                <!-- Menu For Desktop Device -->
+                <div class="main-nav asahi-nav-style-two asahi-nav-style-three">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <div class="container">
+                            <a class="navbar-brand" href="/">
+                                <img src="/img/logoMain1.png" alt="Asahi Logo">
+                            </a>
+
+                            <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                                <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item">
+                                        <a href="/" class="nav-link active">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">Menu</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a href="menu-standard.html" class="nav-link">Menu Standard</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="menu-classic.html" class="nav-link">Menu Classic</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="menu-grid.html" class="nav-link">Menu Grid</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/items" class="nav-link"> Items</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/cartPage" class="nav-link">Cart</a>
+                                    </li>
+                                </ul>
+                                <div class="others-option">
+                                    <% if (currentUser != "") { %>
+                                    <span class="menu-btn contact-number">
+                                        Hi! <%= currentUser.name %>
+                                    </span>
+                                    <a href="/users/logout" class="menu-btn contact-number">
+                                        LOGOUT
+                                    </a>
+                                    <% } else { %>
+                                    <a href="/users/login" class="menu-btn contact-number">
+                                        LOGIN
+                                    </a>
+                                    <% } %>
+                                    <a href="#" data-toggle="modal" data-target="#myModal2" class="menu-btn side-menu">
+                                        Menu
+                                        <i class="flaticon-menu"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- End Navbar Area -->
+
+        <!-- Start Sidebar Modal -->
+        <div class="sidebar-modal">
+            <div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <i class="fa fa-times"></i>
+                                </span>
+                            </button>
+                            <h2 class="modal-title" id="myModalLabel2">
+                                <a href="/">
+                                    <img src="/img/logoMain1.png" alt="Logo">
+                                </a>
+                            </h2>
+                        </div>
+                        <div class="modal-body">
+                            <div class="sidebar-modal-widget">
+                                <h3 class="title">Contact Info</h3>
+                                <ul class="contact-info">
+                                    <li>
+                                        <i class="fa fa-map-marker"></i>
+                                        Address
+                                        <span>44 Canal Center Plaza #200, Alexandria, VA 22314, USA</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-envelope"></i>
+                                        Email
+                                        <span>asahi@gmail.com</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-phone"></i>
+                                        Phone
+                                        <span>+25462755, 265497466</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="modal-body">
+                                <div class="sidebar-modal-widget">
+                                    <h3 class="title">Additional Links</h3>
+                                    <ul>
+                                        <% if (currentUser != "") { %>
+                                        <li>
+                                            <a href="#"> Welcome <%= currentUser.name %></a>
+                                        </li>
+                                        <li>
+                                            <a href="/users/logout">Logout</a>
+                                        </li>
+                                        <% } else {%>
+                                        <li>
+                                            <a href="/users/login">Log In</a>
+                                        </li>
+                                        <li>
+                                            <a href="/users/register">Sign Up</a>
+                                        </li>
+                                        <% } %>
+                                        <li>
+                                            <a href="faq.html">FAQ</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div class="sidebar-modal-widget">
+                                    <h3 class="title">Connect With Us</h3>
+                                    <ul class="social-list">
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-facebook"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-instagram"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-linkedin"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Sidebar Modal -->

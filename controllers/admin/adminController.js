@@ -7,7 +7,7 @@ var mongoose = require("mongoose")
 exports.getAllItems = function (req, res) {
     itemservices.getAllItems(function (itemlist) {
         // console.log({ itemlist: itemlist.foundItems });
-        res.render('itemsAdmin', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag  })
+        res.render('itemsAdmin', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag })
     })
 }
 
@@ -44,12 +44,12 @@ exports.createItem = function (req, res) {
     itemservices.createItem({
         name: data.name,
         price: data.price,
-        image: data.image,
+        image: data.image.split("||"),
         category: data.category,
         subCategory: data.subCategory,
         tag: data.tag,
         groupingTag: data.groupingTag,
-        vendorId:data.vendorId,
+        vendorId: data.vendorId,
 
         weight: data.weight,
         content: data.content,
@@ -60,6 +60,36 @@ exports.createItem = function (req, res) {
     })
 }
 
+exports.getUpdateItem = function (req, res) {
+    itemservices.getItemById(req.params.iid, function (foundItem) {
+        // console.log({ item: foundItem.totalDetails });
+        if (!foundItem.success) res.redirect('/admin/items')
+        res.render('updateItem', { item: foundItem.totalDetails, iid: req.params.iid })
+    })
+}
+
+exports.updateItem = function (req, res) {
+    var data = req.body;
+    itemservices.updateItem(req.params.iid, {
+        name: data.name,
+        price: data.price,
+        image: data.image.split("||"),
+        category: data.category,
+        subCategory: data.subCategory,
+        tag: data.tag,
+        groupingTag: data.groupingTag,
+        vendorId: data.vendorId,
+
+        weight: data.weight,
+        content: data.content,
+        color: data.color
+
+    }, function (createdItem) {
+        if (createdItem.success == false) req.flash('error', 'error in update')
+        else req.flash('success', 'success in update')
+        res.redirect('/admin/items')
+    })
+}
 exports.setDiscount = function (req, res) {
     itemservices.setDiscount(req.body.discount, req.body.iid, function (updatedItem) {
         res.redirect('/admin/items')

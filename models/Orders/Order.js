@@ -83,24 +83,24 @@ var orderSchema = new mongoose.Schema({
     },
     code: {
         type: String
-    }, 
+    },
     shipRocketId: {
         type: String
-    }, 
+    },
     height: {
-        type: String
-    }, 
+        type: Number, default: 5
+    },
     weight: {
-        type: String
-    }, 
+        type: Number, default: 5
+    },
     length: {
-        type: String
-    }, 
+        type: Number, default: 5
+    },
     breadth: {
-        type: String
+        type: Number, default: 5
     },
     vendorName: {
-        type: String
+        type: String,
     },
     vendorId: {
         type: String
@@ -111,12 +111,12 @@ var orderSchema = new mongoose.Schema({
     shippingConfirmed: {
         type: Boolean
     },
-    shipmentStatus:{
-        type:String,
-        default:"processing",
-        enum:['processing','approved','cancelled','completed','cancellation processing']
+    shipmentStatus: {
+        type: String,
+        default: "processing",
+        enum: ['processing', 'approved', 'cancelled', 'completed', 'cancellation processing']
     },
-   
+
 
 });
 

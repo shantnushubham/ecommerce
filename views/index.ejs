@@ -1,331 +1,29 @@
-<!doctype html>
-<html lang="zxx">
+<%- include('partials/header'); -%>
 
-<head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="/css/bootstrap.min.css">
-	<!-- Owl Theme Default CSS -->
-	<link rel="stylesheet" href="/css/owl.theme.default.min.css">
-	<!-- Owl Carousel CSS -->
-	<link rel="stylesheet" href="/css/owl.carousel.min.css">
-	<!-- Animate CSS -->
-	<link rel="stylesheet" href="/css/animate.css">
-	<!-- Flaticon CSS -->
-	<link rel="stylesheet" href="/css/flaticon.css">
-	<!-- Font Awesome CSS -->
-	<link rel="stylesheet" href="/css/font-awesome.min.css">
-	<!-- Nice Select CSS -->
-	<link rel="stylesheet" href="/css/nice-select.css">
-	<!-- Imagelightbox CSS -->
-	<link rel="stylesheet" href="/css/imagelightbox.min.css">
-	<!-- Meanmenu CSS -->
-	<link rel="stylesheet" href="/css/meanmenu.css">
-	<!-- Date Picker CSS -->
-	<link rel="stylesheet" href="/css/date-picker.css">
-	<!-- Date Picker CSS -->
-	<link rel="stylesheet" href="/css/odometer.css">
-	<!-- Style CSS -->
-	<link rel="stylesheet" href="/css/style.css">
-	<!-- Responsive CSS -->
-	<link rel="stylesheet" href="/css/responsive.css">
-
-	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="/img/favicon.png">
-	<!-- TITLE -->
-	<title>112Cart</title>
-</head>
-
-<body>
-	<!-- Start Preloader Area -->
-	<div class="preloader">
-		<div class="spinner">
-			<div class="double-bounce1"></div>
-			<div class="double-bounce2"></div>
-		</div>
-	</div>
-	<!-- End Preloader Area -->
-
-	<!-- Start Navbar Area -->
-	<div class="asahi-nav">
-		<div class="navbar-area fixed-top">
-			<!-- Menu For Mobile Device -->
-			<div class="mobile-nav">
-				<a href="/" class="logo">
-					<img src="/img/logoMain1.png" alt="Asahi Logo">
-				</a>
-			</div>
-
-			<!-- Menu For Desktop Device -->
-			<div class="main-nav asahi-nav-style-two asahi-nav-style-three">
-				<nav class="navbar navbar-expand-md navbar-light">
-					<div class="container">
-						<a class="navbar-brand" href="/">
-							<img src="/img/logoMain1.png" alt="Asahi Logo">
-						</a>
-
-						<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-							<ul class="navbar-nav ml-auto">
-								<li class="nav-item">
-									<a href="#" class="nav-link dropdown-toggle active">Home</a>
-									<ul class="dropdown-menu">
-										<li class="nav-item">
-											<a href="/" class="nav-link active">Home One</a>
-										</li>
-										<li class="nav-item">
-											<a href="index-2.html" class="nav-link">Home Two</a>
-										</li>
-										<li class="nav-item">
-											<a href="index-3.html" class="nav-link">Home Three</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-item">
-									<a href="#" class="nav-link dropdown-toggle">Menu</a>
-									<ul class="dropdown-menu">
-										<li class="nav-item">
-											<a href="menu-standard.html" class="nav-link">Menu Standard</a>
-										</li>
-										<li class="nav-item">
-											<a href="menu-classic.html" class="nav-link">Menu Classic</a>
-										</li>
-										<li class="nav-item">
-											<a href="menu-grid.html" class="nav-link">Menu Grid</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-item">
-									<a href="/items" class="nav-link"> Items</a>
-								</li>
-								<li class="nav-item">
-									<a href="/cartPage" class="nav-link">Cart</a>
-								</li>
-							</ul>
-							<div class="others-option">
-								<% if (typeof user != 'undefined') { %>
-								<span class="menu-btn contact-number">
-									Hi! <%= user.name %>
-								</span>
-								<a href="/users/logout" class="menu-btn contact-number">
-									LOGOUT
-								</a>
-								<% } else { %>
-								<a href="/users/login" class="menu-btn contact-number">
-									LOGIN
-								</a>
-								<% } %>
-								<a href="#" data-toggle="modal" data-target="#myModal2" class="menu-btn side-menu">
-									Menu
-									<i class="flaticon-menu"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-				</nav>
-			</div>
-		</div>
-	</div>
-	<!-- End Navbar Area -->
-
-	<!-- Start Sidebar Modal -->
-	<div class="sidebar-modal">
-		<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">
-								<i class="fa fa-times"></i>
-							</span>
-						</button>
-						<h2 class="modal-title" id="myModalLabel2">
-							<a href="/">
-								<img src="/img/logoMain1.png" alt="Logo">
-							</a>
-						</h2>
-					</div>
-					<div class="modal-body">
-						<div class="sidebar-modal-widget">
-							<h3 class="title">Additional Links</h3>
-							<ul>
-								<% if(typeof user != 'undefined' ) { %>
-								<li>
-									<a href="#"> welcome <%= user.name %></a>
-								</li>
-								<li>
-									<a href="/users/logout">Logout</a>
-								</li>
-								<% } else {%>
-								<li>
-									<a href="/users/login">Log In</a>
-								</li>
-								<li>
-									<a href="/users/register">Sign Up</a>
-								</li>
-								<% } %>
-								<li>
-									<a href="faq.html">FAQ</a>
-								</li>
-
-							</ul>
-						</div>
-						<div class="sidebar-modal-widget">
-							<h3 class="title">Contact Info</h3>
-							<ul class="contact-info">
-								<li>
-									<i class="fa fa-map-marker"></i>
-									Address
-									<span>25 Street, west Cruch, Newzeland</span>
-								</li>
-								<li>
-									<i class="fa fa-phone"></i>
-									Email
-									<span>giano@gmail.com</span>
-								</li>
-								<li>
-									<i class="fa fa-envelope"></i>
-									Phone
-									<span>+25462755, 265497466</span>
-								</li>
-							</ul>
-						</div>
-						<div class="sidebar-modal-widget">
-							<h3 class="title">Connect With Us</h3>
-							<ul class="social-list">
-								<li>
-									<a href="#">
-										<i class="fa fa-facebook"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="fa fa-twitter"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="fa fa-instagram"></i>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<i class="fa fa-linkedin"></i>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Sidebar Modal -->
-	<style>
-		.slider-item-bg-1 {
-			background-image: url(https://www.chemtexltd.com/wp-content/uploads/2019/11/Home-page_banner7.jpg);
-		}
-
-		.slider-item-bg-2 {
-			background-image: url(https://1012672760.rsc.cdn77.org/Temp112cart/cover2.jpg);
-		}
-
-		.slider-item-bg-3 {
-			background-image: url(../img/home-two/slider/3.jpg);
-		}
-	</style>
-	<!-- Start Hero Slider Area -->
-	<section class="hero-slider-area hero-slider-three">
-		<div class="hero-slider owl-carousel owl-theme">
-			<div class="hero-slider-item slider-item-bg-1">
-				<div class="d-table">
-					<div class="d-table-cell">
-						<div class="container">
-							<div class="hero-slider-text slider-text-three">
-								<span class="lg-text">Welcome to 112cart</span>
-								<h1>Chemical Technology <span>Experts</span></h1>
-								<p>Explore our tailor made solutions for real world applications.</p>
-								<div class="banner-button">
-									<a class="default-btn-two" href="/items">
-										Shop Now
-										<i class="flaticon-next"></i>
-									</a>
-									<div class="video-wrap">
-										<div class="video-btn-wrap">
-											<a href="play-video" class="video-btn"
-												data-ilb2-video='{"controls":"controls", "autoplay":false, "sources":[{"src":"/img/comeing-soon/video.mp4", "type":"video/mp4"}]}'
-												data-imagelightbox="video">
-												<i class="flaticon-play-button"></i>
-												<div class="video-play">
-													<p>Play Video Now</p>
-												</div>
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hero-slider-item slider-item-bg-2">
-				<div class="d-table">
-					<div class="d-table-cell">
-						<div class="container">
-							<div class="hero-slider-text slider-text-three">
-								<span class="lg-text">Welcome to 112cart</span>
-								<h1>Say goodbye to daily <span>infections</span></h1>
-								<p>Get a 90 Day Protection Coat</p>
-								<div class="banner-button">
-									<a class="default-btn-two" href="book-table.html">
-										Book Service
-										<i class="flaticon-next"></i>
-									</a>
-									<!-- <div class="video-wrap">
-										<div class="video-btn-wrap">
-											<a href="play-video" class="video-btn"
-												data-ilb2-video='{"controls":"controls", "autoplay":false, "sources":[{"src":"/img/comeing-soon/video.mp4", "type":"video/mp4"}]}'
-												data-imagelightbox="video">
-												<i class="flaticon-play-button"></i>
-												<div class="video-play">
-													<p>Play Video Now</p>
-												</div>
-											</a>
-										</div>
-									</div> -->
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="hero-slider-item slider-item-bg-6">
-				<div class="d-table">
-					<div class="d-table-cell">
-						<div class="container">
-							<div class="hero-slider-text slider-text-three">
-								<span class="lg-text">Welcome to Asahi</span>
-								<h1>Good food is to be enjoyed food very <span>beautiful in itse</span></h1>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-									incididunt ut labore et dolore magna aliqua Quis.</p>
-								<div class="banner-button">
-									<a class="default-btn-two" href="book-table.html">
-										Book Table
-										<i class="flaticon-next"></i>
-									</a>
-									<div class="video-wrap">
-										<div class="video-btn-wrap">
-											<a href="play-video" class="video-btn"
-												data-ilb2-video='{"controls":"controls", "autoplay":false, "sources":[{"src":"/img/comeing-soon/video.mp4", "type":"video/mp4"}]}'
-												data-imagelightbox="video">
-												<i class="flaticon-play-button"></i>
-												<div class="video-play">
-													<p>Play Video Now</p>
-												</div>
-											</a>
-										</div>
+<style>
+	.slider-item-bg-1 {
+		background-color: rgb(0, 0, 0);
+	}
+</style>
+<!-- Start Hero Slider Area -->
+<section class="hero-slider-area hero-slider-three">
+	<div class="hero-slider owl-carousel owl-theme">
+		<div class="hero-slider-item slider-item-bg-1" style="padding-bottom: 0px; color: black;">
+			<div class="d-table" id="start">
+				<div class="d-table-cell">
+					<div class="uk-cover-container uk-height-large uk-dark" uk-height-viewport>
+						<video src="https://yootheme.com/site/images/media/yootheme-pro.mp4" autoplay loop muted
+							playsinline uk-cover></video>
+						<div class="uk-overlay uk-overlay-default uk-position-center"
+							style="background-color: rgba(0, 0, 0, 0); text-align: center;">
+							<div class="container">
+								<div class="hero-slider-text slider-text-three">
+									<p style="text-align: center;">Welcome to 112Cart</p>
+									<h1 style="text-align: center;">Say goodbye to daily <span>infections</span></h1>
+									<p style="text-align: center;">Get a 90 Day Protection Coat</p>
+									<div style="text-align: center;">
+										<a class="default-btn-two" href="book-table.html" style="padding: 8px 15px 8px 15px;">
+											Book Service </a>
 									</div>
 								</div>
 							</div>
@@ -334,552 +32,552 @@
 				</div>
 			</div>
 		</div>
-	</section>
-	<!-- End Hero Slider Area -->
+	</div>
+</section>
+<!-- End Hero Slider Area -->
 
-	<!-- Start Suitable Menu Area -->
-	<section class="suitable-menu">
-		<div class="container">
-			<div class="menu-item-wrap">
-				<div class="section-title">
-					<h2>Sanitizers <span>& Disinfectants</span></h2>
-					<img src="/img/shape/1.png" alt="Shape">
-					<p>Buy online from us, directly from our website - delivered right to your doorstep.</p>
-				</div>
-				<div class="menu-list-wrap owl-carousel owl-theme">
-					<div class="single-menu-item">
-						<div class="menu-img">
-							<img src="https://www.chemtexltd.com/wp-content/uploads/2017/08/5dfabb9c-73a6-48f7-8380-c32fe952750c-315x315.jpg"
-								alt="Menu">
-							<div class="price">
-								<span style="font-size: small;">Rs. 7,990</span>
-							</div>
-						</div>
-						<div class="item-text">
-							<h3>
-								<a href="#">Chemtex Office Sanitation Pack</a>
-							</h3>
-							<p>1 Box</p>
-							<ul>
-								<li>
-									<a class="default-btn" href="#">Order Now</a>
-								</li>
-								<!-- <li class="quantity">
-									<div class="input-counter">
-										<span class="minus-btn">
-											<i class="fa fa-minus"></i>
-										</span>
-										<input type="text" value="1">
-										<span class="plus-btn">
-											<i class="fa fa-plus"></i>
-										</span>
-									</div>
-								</li> -->
-							</ul>
-						</div>
-					</div>
-					<div class="single-menu-item">
-						<div class="menu-img">
-							<img src="https://www.chemtexltd.com/wp-content/uploads/2020/06/ec174148-8f27-4e1a-9007-983787e1ec10-315x315.jpg"
-								alt="Menu">
-							<div class="price">
-								<span style="font-size: small;">Rs. 5,490</span>
-							</div>
-						</div>
-						<div class="item-text">
-							<h3>
-								<a href="#">Chemtex Alstasan Handrub (Alc. based Handrub)</a>
-							</h3>
-							<p>4 Jars of 5 litres</p>
-							<ul>
-								<li>
-									<a class="default-btn" href="#">Order Now</a>
-								</li>
-								<!-- <li class="quantity">
-									<div class="input-counter">
-										<span class="minus-btn">
-											<i class="fa fa-minus"></i>
-										</span>
-										<input type="text" value="1">
-										<span class="plus-btn">
-											<i class="fa fa-plus"></i>
-										</span>
-									</div>
-								</li> -->
-							</ul>
-						</div>
-					</div>
-					<div class="single-menu-item">
-						<div class="menu-img">
-							<img src="https://www.chemtexltd.com/wp-content/uploads/2020/06/6520b241-014f-48b3-abbd-4dcfa900d83d-315x315.jpg"
-								alt="Menu">
-							<div class="price">
-								<span>Rs. 2,348</span>
-							</div>
-						</div>
-						<div class="item-text">
-							<h3>
-								<a href="#">Chemtex Monthly Disinfectant Combo for Family</a>
-							</h3>
-							<p>Pack of 6</p>
-							<ul>
-								<li>
-									<a class="default-btn" href="#">Order Now</a>
-								</li>
-								<!-- <li class="quantity">
-									<div class="input-counter">
-										<span class="minus-btn">
-											<i class="fa fa-minus"></i>
-										</span>
-										<input type="text" value="1">
-										<span class="plus-btn">
-											<i class="fa fa-plus"></i>
-										</span>
-									</div>
-								</li> -->
-							</ul>
-						</div>
-					</div>
-					<div class="single-menu-item">
-						<div class="menu-img">
-							<img src="https://www.chemtexltd.com/wp-content/uploads/2020/04/ALSTASAN-SILVOX-150_2-315x315.jpg"
-								alt="Menu">
-							<div class="price">
-								<span>Rs. 10,608</span>
-							</div>
-						</div>
-						<div class="item-text">
-							<h3>
-								<a href="#">Chemtex Alstasan Silvox 150 (Silver Hydrogen Peroxide based Universal
-									Disinfectant)</a>
-							</h3>
-							<p>1 Jar of 20 litres</p>
-							<ul>
-								<li>
-									<a class="default-btn" href="#">Order Now</a>
-								</li>
-								<!-- <li class="quantity">
-									<div class="input-counter">
-										<span class="minus-btn">
-											<i class="fa fa-minus"></i>
-										</span>
-										<input type="text" value="1">
-										<span class="plus-btn">
-											<i class="fa fa-plus"></i>
-										</span>
-									</div>
-								</li> -->
-							</ul>
-						</div>
-					</div>
-					<div class="single-menu-item">
-						<div class="menu-img">
-							<img src="https://www.chemtexltd.com/wp-content/uploads/2020/04/ALSTASAN-ACTIV-2-315x315.jpg"
-								alt="Menu">
-							<div class="price">
-								<span>Rs. 6,372</span>
-							</div>
-						</div>
-						<div class="item-text">
-							<h3>
-								<a href="#">Chemtex Alstasan Activ (5% Peracetic Acid based Oxidizing Disinfectant) - 20
-									Litre</a>
-							</h3>
-							<p>1 Jar of 20 litres</p>
-							<ul>
-								<li>
-									<a class="default-btn" href="#">Order Now</a>
-								</li>
-								<!-- <li class="quantity">
-									<div class="input-counter">
-										<span class="minus-btn">
-											<i class="fa fa-minus"></i>
-										</span>
-										<input type="text" value="1">
-										<span class="plus-btn">
-											<i class="fa fa-plus"></i>
-										</span>
-									</div>
-								</li> -->
-							</ul>
-						</div>
-					</div>
-					<div class="single-menu-item">
-						<div class="menu-img">
-							<img src="https://www.chemtexltd.com/wp-content/uploads/2020/05/ALS256-315x315.jpeg"
-								alt="Menu">
-							<div class="price">
-								<span>Rs. 9,428</span>
-							</div>
-						</div>
-						<div class="item-text">
-							<h3>
-								<a href="#">Chemtex Disinfectant Sprayer with Chlorine Free Disinfectant</a>
-							</h3>
-							<p>2 Jar of 5 litre with Disinfectant Sprayer</p>
-							<ul>
-								<li>
-									<a class="default-btn" href="#">Order Now</a>
-								</li>
-								<!-- <li class="quantity">
-									<div class="input-counter">
-										<span class="minus-btn">
-											<i class="fa fa-minus"></i>
-										</span>
-										<input type="text" value="1">
-										<span class="plus-btn">
-											<i class="fa fa-plus"></i>
-										</span>
-									</div>
-								</li> -->
-							</ul>
-						</div>
-					</div>
-					<div class="single-menu-item">
-						<div class="menu-img">
-							<img src="https://www.chemtexltd.com/wp-content/uploads/2020/05/Alstasan-Hand-Rub_x56-315x315.jpg"
-								alt="Menu">
-							<div class="price">
-								<span>Rs. 2,112</span>
-							</div>
-						</div>
-						<div class="item-text">
-							<h3>
-								<a href="#">Chemtex Alstasan Handrub (Alc. based Handrub)</a>
-							</h3>
-							<p>56 bottles of 110ml</p>
-							<ul>
-								<li>
-									<a class="default-btn" href="#">Order Now</a>
-								</li>
-								<!-- <li class="quantity">
-									<div class="input-counter">
-										<span class="minus-btn">
-											<i class="fa fa-minus"></i>
-										</span>
-										<input type="text" value="1">
-										<span class="plus-btn">
-											<i class="fa fa-plus"></i>
-										</span>
-									</div>
-								</li> -->
-							</ul>
-						</div>
-					</div>
-					<div class="single-menu-item">
-						<div class="menu-img">
-							<img src="https://www.chemtexltd.com/wp-content/uploads/2020/05/12d0dd86-ecb3-42d9-803c-27f756edd373-315x315.jpg"
-								alt="Menu">
-							<div class="price">
-								<span>Rs. 1,381</span>
-							</div>
-						</div>
-						<div class="item-text">
-							<h3>
-								<a href="#">Chemtex Alstasan Silvox 150 MIST (Fog and Spray Disinfectant)/Vegetable
-									Disinfectant</a>
-							</h3>
-							<p>6 bottles of 1 litre</p>
-							<ul>
-								<li>
-									<a class="default-btn" href="#">Order Now</a>
-								</li>
-								<!-- <li class="quantity">
-									<div class="input-counter">
-										<span class="minus-btn">
-											<i class="fa fa-minus"></i>
-										</span>
-										<input type="text" value="1">
-										<span class="plus-btn">
-											<i class="fa fa-plus"></i>
-										</span>
-									</div>
-								</li> -->
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Suitable Menu Area -->
-
-	<!-- Start Our History Area -->
-	<section class="our-histry-area pt-100">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-6">
-					<div class="history-title">
-						<h2>From the <br><span>Chairman's Desk</span></h2>
-						<img src="/img/shape/1.png" alt="Shape">
-						<p>We at Chemtex always think, how can we add a bit of Chemtex to our clients needs. Our aim is
-							to help our clients by way of cutting edge technology and forge relationships that will go a
-							long way.
-
-							RG Karnani, Founder.</p>
-						<!-- <img src="https://www.chemtexltd.com//wp-content/uploads/2016/12/sign-dark.svg"> -->
-						<br>
-
-						<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore magna aliqua. Quis ipsum suspendisse.</p> -->
-						<a class="default-btn" href="#">
-							Our Histry
-							<i class="flaticon-right-arrow-forward"></i>
-						</a>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="single-histry-one">
-						<img src="/img/home-one/store/1.jpg" alt="Store">
-						<div class="store-img-two">
-							<img src="/img/home-one/store/2.jpg" alt="Store">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Our History Area -->
-
-	<!-- Start Service Area -->
-	<section class="service-area-three ptb-100">
-		<div class="container">
+<!-- Start Suitable Menu Area -->
+<section class="suitable-menu">
+	<div class="container">
+		<div class="menu-item-wrap">
 			<div class="section-title">
-				<h2>Industries <span>Served</span></h2>
+				<h2>Sanitizers <span>& Disinfectants</span></h2>
+				<img src="/img/shape/1.png" alt="Shape">
+				<p>Buy online from us, directly from our website - delivered right to your doorstep.</p>
+			</div>
+			<div class="menu-list-wrap owl-carousel owl-theme">
+				<div class="single-menu-item">
+					<div class="menu-img">
+						<img src="https://www.chemtexltd.com/wp-content/uploads/2017/08/5dfabb9c-73a6-48f7-8380-c32fe952750c-315x315.jpg"
+							alt="Menu">
+						<div class="price">
+							<span style="font-size: small;">Rs. 7,990</span>
+						</div>
+					</div>
+					<div class="item-text">
+						<h3>
+							<a href="#">112 Office Sanitation Pack</a>
+						</h3>
+						<p>1 Box</p>
+						<ul>
+							<li>
+								<a class="default-btn" href="#">Order Now</a>
+							</li>
+							<!-- <li class="quantity">
+									<div class="input-counter">
+										<span class="minus-btn">
+											<i class="fa fa-minus"></i>
+										</span>
+										<input type="text" value="1">
+										<span class="plus-btn">
+											<i class="fa fa-plus"></i>
+										</span>
+									</div>
+								</li> -->
+						</ul>
+					</div>
+				</div>
+				<div class="single-menu-item">
+					<div class="menu-img">
+						<img src="https://www.chemtexltd.com/wp-content/uploads/2020/06/ec174148-8f27-4e1a-9007-983787e1ec10-315x315.jpg"
+							alt="Menu">
+						<div class="price">
+							<span style="font-size: small;">Rs. 5,490</span>
+						</div>
+					</div>
+					<div class="item-text">
+						<h3>
+							<a href="#">112 Alstasan Handrub (Alc. based Handrub)</a>
+						</h3>
+						<p>4 Jars of 5 litres</p>
+						<ul>
+							<li>
+								<a class="default-btn" href="#">Order Now</a>
+							</li>
+							<!-- <li class="quantity">
+									<div class="input-counter">
+										<span class="minus-btn">
+											<i class="fa fa-minus"></i>
+										</span>
+										<input type="text" value="1">
+										<span class="plus-btn">
+											<i class="fa fa-plus"></i>
+										</span>
+									</div>
+								</li> -->
+						</ul>
+					</div>
+				</div>
+				<div class="single-menu-item">
+					<div class="menu-img">
+						<img src="https://www.chemtexltd.com/wp-content/uploads/2020/06/6520b241-014f-48b3-abbd-4dcfa900d83d-315x315.jpg"
+							alt="Menu">
+						<div class="price">
+							<span>Rs. 2,348</span>
+						</div>
+					</div>
+					<div class="item-text">
+						<h3>
+							<a href="#">112 Monthly Disinfectant Combo for Family</a>
+						</h3>
+						<p>Pack of 6</p>
+						<ul>
+							<li>
+								<a class="default-btn" href="#">Order Now</a>
+							</li>
+							<!-- <li class="quantity">
+									<div class="input-counter">
+										<span class="minus-btn">
+											<i class="fa fa-minus"></i>
+										</span>
+										<input type="text" value="1">
+										<span class="plus-btn">
+											<i class="fa fa-plus"></i>
+										</span>
+									</div>
+								</li> -->
+						</ul>
+					</div>
+				</div>
+				<div class="single-menu-item">
+					<div class="menu-img">
+						<img src="https://www.chemtexltd.com/wp-content/uploads/2020/04/ALSTASAN-SILVOX-150_2-315x315.jpg"
+							alt="Menu">
+						<div class="price">
+							<span>Rs. 10,608</span>
+						</div>
+					</div>
+					<div class="item-text">
+						<h3>
+							<a href="#">112 Alstasan Silvox 150 (Silver Hydrogen Peroxide based Universal
+								Disinfectant)</a>
+						</h3>
+						<p>1 Jar of 20 litres</p>
+						<ul>
+							<li>
+								<a class="default-btn" href="#">Order Now</a>
+							</li>
+							<!-- <li class="quantity">
+									<div class="input-counter">
+										<span class="minus-btn">
+											<i class="fa fa-minus"></i>
+										</span>
+										<input type="text" value="1">
+										<span class="plus-btn">
+											<i class="fa fa-plus"></i>
+										</span>
+									</div>
+								</li> -->
+						</ul>
+					</div>
+				</div>
+				<div class="single-menu-item">
+					<div class="menu-img">
+						<img src="https://www.chemtexltd.com/wp-content/uploads/2020/04/ALSTASAN-ACTIV-2-315x315.jpg"
+							alt="Menu">
+						<div class="price">
+							<span>Rs. 6,372</span>
+						</div>
+					</div>
+					<div class="item-text">
+						<h3>
+							<a href="#">112 Alstasan Activ (5% Peracetic Acid based Oxidizing Disinfectant) - 20
+								Litre</a>
+						</h3>
+						<p>1 Jar of 20 litres</p>
+						<ul>
+							<li>
+								<a class="default-btn" href="#">Order Now</a>
+							</li>
+							<!-- <li class="quantity">
+									<div class="input-counter">
+										<span class="minus-btn">
+											<i class="fa fa-minus"></i>
+										</span>
+										<input type="text" value="1">
+										<span class="plus-btn">
+											<i class="fa fa-plus"></i>
+										</span>
+									</div>
+								</li> -->
+						</ul>
+					</div>
+				</div>
+				<div class="single-menu-item">
+					<div class="menu-img">
+						<img src="https://www.chemtexltd.com/wp-content/uploads/2020/05/ALS256-315x315.jpeg" alt="Menu">
+						<div class="price">
+							<span>Rs. 9,428</span>
+						</div>
+					</div>
+					<div class="item-text">
+						<h3>
+							<a href="#">112 Disinfectant Sprayer with Chlorine Free Disinfectant</a>
+						</h3>
+						<p>2 Jar of 5 litre with Disinfectant Sprayer</p>
+						<ul>
+							<li>
+								<a class="default-btn" href="#">Order Now</a>
+							</li>
+							<!-- <li class="quantity">
+									<div class="input-counter">
+										<span class="minus-btn">
+											<i class="fa fa-minus"></i>
+										</span>
+										<input type="text" value="1">
+										<span class="plus-btn">
+											<i class="fa fa-plus"></i>
+										</span>
+									</div>
+								</li> -->
+						</ul>
+					</div>
+				</div>
+				<div class="single-menu-item">
+					<div class="menu-img">
+						<img src="https://www.chemtexltd.com/wp-content/uploads/2020/05/Alstasan-Hand-Rub_x56-315x315.jpg"
+							alt="Menu">
+						<div class="price">
+							<span>Rs. 2,112</span>
+						</div>
+					</div>
+					<div class="item-text">
+						<h3>
+							<a href="#">112 Alstasan Handrub (Alc. based Handrub)</a>
+						</h3>
+						<p>56 bottles of 110ml</p>
+						<ul>
+							<li>
+								<a class="default-btn" href="#">Order Now</a>
+							</li>
+							<!-- <li class="quantity">
+									<div class="input-counter">
+										<span class="minus-btn">
+											<i class="fa fa-minus"></i>
+										</span>
+										<input type="text" value="1">
+										<span class="plus-btn">
+											<i class="fa fa-plus"></i>
+										</span>
+									</div>
+								</li> -->
+						</ul>
+					</div>
+				</div>
+				<div class="single-menu-item">
+					<div class="menu-img">
+						<img src="https://www.chemtexltd.com/wp-content/uploads/2020/05/12d0dd86-ecb3-42d9-803c-27f756edd373-315x315.jpg"
+							alt="Menu">
+						<div class="price">
+							<span>Rs. 1,381</span>
+						</div>
+					</div>
+					<div class="item-text">
+						<h3>
+							<a href="#">112 Alstasan Silvox 150 MIST (Fog and Spray Disinfectant)/Vegetable
+								Disinfectant</a>
+						</h3>
+						<p>6 bottles of 1 litre</p>
+						<ul>
+							<li>
+								<a class="default-btn" href="#">Order Now</a>
+							</li>
+							<!-- <li class="quantity">
+									<div class="input-counter">
+										<span class="minus-btn">
+											<i class="fa fa-minus"></i>
+										</span>
+										<input type="text" value="1">
+										<span class="plus-btn">
+											<i class="fa fa-plus"></i>
+										</span>
+									</div>
+								</li> -->
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Suitable Menu Area -->
+
+<!-- Start Our History Area -->
+<section class="our-histry-area pt-100">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-lg-6">
+				<div class="history-title">
+					<h2>From the <br><span>Chairman's Desk</span></h2>
+					<img src="/img/shape/1.png" alt="Shape">
+					<p>We at 112 always think, how can we add a bit of 112 to our clients needs. Our aim is
+						to help our clients by way of cutting edge technology and forge relationships that will go a
+						long way.
+
+						RG Karnani, Founder.</p>
+					<!-- <img src="https://www.chemtexltd.com//wp-content/uploads/2016/12/sign-dark.svg"> -->
+					<br>
+
+					<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+							labore et dolore magna aliqua. Quis ipsum suspendisse.</p> -->
+					<a class="default-btn" href="#">
+						Our Histry
+						<i class="flaticon-right-arrow-forward"></i>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="single-histry-one">
+					<img src="/img/home-one/store/1.jpg" alt="Store">
+					<div class="store-img-two">
+						<img src="/img/home-one/store/2.jpg" alt="Store">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Our History Area -->
+
+<!-- Start Service Area -->
+<section class="service-area-three ptb-100">
+	<div class="container">
+		<div class="section-title">
+			<h2>Industries <span>Served</span></h2>
+		</div>
+		<div class="row">
+			<div class="col-lg-4 col-md-6">
+				<div class="single-service ss-1">
+					<div class="service-icon">
+						<i class="flaticon-cloche"></i>
+					</div>
+					<h3><span>Agriculture</span></h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore.</p>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 icon-color">
+				<div class="single-service ss-2">
+					<div class="service-icon">
+						<i class="flaticon-atmospheric"></i>
+					</div>
+					<h3>Automotive & <span>Transportation</span></h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore.</p>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 icon-color">
+				<div class="single-service">
+					<div class="service-icon">
+						<i class="flaticon-money-bag"></i>
+					</div>
+					<h3>Energy & <span>Resources</span></h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container" style="margin-top: 30px">
+		<div class="row">
+			<div class="col-lg-4 col-md-6">
+				<div class="single-service ss-1">
+					<div class="service-icon">
+						<i class="flaticon-cloche"></i>
+					</div>
+					<h3>Manufacturing & <span>Processing</span></h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore.</p>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 icon-color">
+				<div class="single-service ss-2">
+					<div class="service-icon">
+						<i class="flaticon-atmospheric"></i>
+					</div>
+					<h3>Healthcare & <span>Institutional</span></h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore.</p>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 icon-color">
+				<div class="single-service">
+					<div class="service-icon">
+						<i class="flaticon-money-bag"></i>
+					</div>
+					<h3>Food & <span>Beverage</span></h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Service Area -->
+
+<!-- Start Delicious Menu Area -->
+<section class="delicious-menus-area ptb-100">
+	<div class="container">
+		<div class="delicious-menu-wrap">
+			<div class="section-title">
+				<h2>Other <span>Categories</span></h2>
 			</div>
 			<div class="row">
 				<div class="col-lg-4 col-md-6">
-					<div class="single-service ss-1">
-						<div class="service-icon">
-							<i class="flaticon-cloche"></i>
+					<div class="single-delicious-menu">
+						<div class="menu-list-img">
+							<img src="/img/home-one/delicious-menu/1.jpg" alt="Delicious">
+							<div class="recommend">
+								<a href="#">Recommended</a>
+							</div>
 						</div>
-						<h3><span>Agriculture</span></h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore.</p>
+						<div class="delicious-menu-text">
+							<h3>Water Treatment </h3>
+							<p>Red peppers, roasted garlic, lemon slices.</p>
+							<span class="lg-text">$45.00</span>
+						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-6 icon-color">
-					<div class="single-service ss-2">
-						<div class="service-icon">
-							<i class="flaticon-atmospheric"></i>
-						</div>
-						<h3>Automotive & <span>Transportation</span></h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore.</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 icon-color">
-					<div class="single-service">
-						<div class="service-icon">
-							<i class="flaticon-money-bag"></i>
-						</div>
-						<h3>Energy & <span>Resources</span></h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container" style="margin-top: 30px">
-			<div class="row">
 				<div class="col-lg-4 col-md-6">
-					<div class="single-service ss-1">
-						<div class="service-icon">
-							<i class="flaticon-cloche"></i>
+					<div class="single-delicious-menu">
+						<div class="menu-list-img">
+							<img src="/img/home-one/delicious-menu/2.jpg" alt="Delicious">
+							<div class="recommend">
+								<a href="#">Recommended</a>
+							</div>
 						</div>
-						<h3>Manufacturing & <span>Processing</span></h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore.</p>
+						<div class="delicious-menu-text">
+							<h3>Oil & Gas Chemicals</h3>
+							<p>Red peppers, roasted garlic, lemon slices.</p>
+							<span class="lg-text">$50.00</span>
+						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-6 icon-color">
-					<div class="single-service ss-2">
-						<div class="service-icon">
-							<i class="flaticon-atmospheric"></i>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-delicious-menu">
+						<div class="menu-list-img">
+							<img src="/img/home-one/delicious-menu/3.jpg" alt="Delicious">
+							<div class="recommend">
+								<a href="#">Recommended</a>
+							</div>
 						</div>
-						<h3>Healthcare & <span>Institutional</span></h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore.</p>
+						<div class="delicious-menu-text">
+							<h3>Cleaning & Disinfectant Chemicals</h3>
+							<p>Red peppers, roasted garlic, lemon slices.</p>
+							<span class="lg-text">$60.00</span>
+						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 icon-color">
-					<div class="single-service">
-						<div class="service-icon">
-							<i class="flaticon-money-bag"></i>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-delicious-menu">
+						<div class="menu-list-img">
+							<img src="/img/home-one/delicious-menu/4.jpg" alt="Delicious">
+							<div class="recommend">
+								<a href="#">Recommended</a>
+							</div>
 						</div>
-						<h3>Food & <span>Beverage</span></h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore.</p>
+						<div class="delicious-menu-text">
+							<h3>Heat Transfer Fluids</h3>
+							<p>Red peppers, roasted garlic, lemon slices.</p>
+							<span class="lg-text">$65.00</span>
+						</div>
 					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-delicious-menu">
+						<div class="menu-list-img">
+							<img src="/img/home-one/delicious-menu/5.jpg" alt="Delicious">
+							<div class="recommend">
+								<a href="#">Recommended</a>
+							</div>
+						</div>
+						<div class="delicious-menu-text">
+							<h3>School Uniform</h3>
+							<p>Red peppers, roasted garlic, lemon slices.</p>
+							<span class="lg-text">$70.00</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-delicious-menu">
+						<div class="menu-list-img">
+							<img src="/img/home-one/delicious-menu/6.jpg" alt="Delicious">
+							<div class="recommend">
+								<a href="#">Recommended</a>
+							</div>
+						</div>
+						<div class="delicious-menu-text">
+							<h3>Stationary</h3>
+							<p>Red peppers, roasted garlic, lemon slices.</p>
+							<span class="lg-text">$75.00</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-delicious-menu">
+						<div class="menu-list-img">
+							<img src="/img/home-one/delicious-menu/7.jpg" alt="Delicious">
+							<div class="recommend">
+								<a href="#">Recommended</a>
+							</div>
+						</div>
+						<div class="delicious-menu-text">
+							<h3>Electrical</h3>
+							<p>Red peppers, roasted garlic, lemon slices.</p>
+							<span class="lg-text">$80.00</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-delicious-menu">
+						<div class="menu-list-img">
+							<img src="/img/home-one/delicious-menu/8.jpg" alt="Delicious">
+							<div class="recommend">
+								<a href="#">Recommended</a>
+							</div>
+						</div>
+						<div class="delicious-menu-text">
+							<h3>Lab Hardwares</h3>
+							<p>Red peppers, roasted garlic, lemon slices.</p>
+							<span class="lg-text">$90.00</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
+					<div class="single-delicious-menu">
+						<div class="menu-list-img">
+							<img src="/img/home-one/delicious-menu/9.jpg" alt="Delicious">
+							<div class="recommend">
+								<a href="#">Recommended</a>
+							</div>
+						</div>
+						<div class="delicious-menu-text">
+							<h3>Insalata Rucola</h3>
+							<p>Red peppers, roasted garlic, lemon slices.</p>
+							<span class="lg-text">$45.00</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="row see-full-menu m-0">
+				<div class="col-lg-8 p-0">
+					<p>The menu will be avail able for all or our coustomer please check button all menu</p>
+				</div>
+				<div class="col-lg-4 p-0">
+					<a class="default-btn-two" href="#">
+						See full menu
+						<i class="flaticon-next"></i>
+					</a>
 				</div>
 			</div>
 		</div>
-	</section>
-	<!-- End Service Area -->
+	</div>
+</section>
+<!-- End Delicious Menu Area -->
 
-	<!-- Start Delicious Menu Area -->
-	<section class="delicious-menus-area ptb-100">
-		<div class="container">
-			<div class="delicious-menu-wrap">
-				<div class="section-title">
-					<h2>Check Our <span>Delicious Menu</span></h2>
-				</div>
-				<div class="row">
-					<div class="col-lg-4 col-md-6">
-						<div class="single-delicious-menu">
-							<div class="menu-list-img">
-								<img src="/img/home-one/delicious-menu/1.jpg" alt="Delicious">
-								<div class="recommend">
-									<a href="#">Recommended</a>
-								</div>
-							</div>
-							<div class="delicious-menu-text">
-								<h3>Grilled American</h3>
-								<p>Red peppers, roasted garlic, lemon slices.</p>
-								<span class="lg-text">$45.00</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6">
-						<div class="single-delicious-menu">
-							<div class="menu-list-img">
-								<img src="/img/home-one/delicious-menu/2.jpg" alt="Delicious">
-								<div class="recommend">
-									<a href="#">Recommended</a>
-								</div>
-							</div>
-							<div class="delicious-menu-text">
-								<h3>Carpacio Speacial</h3>
-								<p>Red peppers, roasted garlic, lemon slices.</p>
-								<span class="lg-text">$50.00</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6">
-						<div class="single-delicious-menu">
-							<div class="menu-list-img">
-								<img src="/img/home-one/delicious-menu/3.jpg" alt="Delicious">
-								<div class="recommend">
-									<a href="#">Recommended</a>
-								</div>
-							</div>
-							<div class="delicious-menu-text">
-								<h3>Insalata Rucola</h3>
-								<p>Red peppers, roasted garlic, lemon slices.</p>
-								<span class="lg-text">$60.00</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6">
-						<div class="single-delicious-menu">
-							<div class="menu-list-img">
-								<img src="/img/home-one/delicious-menu/4.jpg" alt="Delicious">
-								<div class="recommend">
-									<a href="#">Recommended</a>
-								</div>
-							</div>
-							<div class="delicious-menu-text">
-								<h3>Seasonal Soup</h3>
-								<p>Red peppers, roasted garlic, lemon slices.</p>
-								<span class="lg-text">$65.00</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6">
-						<div class="single-delicious-menu">
-							<div class="menu-list-img">
-								<img src="/img/home-one/delicious-menu/5.jpg" alt="Delicious">
-								<div class="recommend">
-									<a href="#">Recommended</a>
-								</div>
-							</div>
-							<div class="delicious-menu-text">
-								<h3>Vitello Tomato</h3>
-								<p>Red peppers, roasted garlic, lemon slices.</p>
-								<span class="lg-text">$70.00</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6">
-						<div class="single-delicious-menu">
-							<div class="menu-list-img">
-								<img src="/img/home-one/delicious-menu/6.jpg" alt="Delicious">
-								<div class="recommend">
-									<a href="#">Recommended</a>
-								</div>
-							</div>
-							<div class="delicious-menu-text">
-								<h3>Oatmeal Cookie</h3>
-								<p>Red peppers, roasted garlic, lemon slices.</p>
-								<span class="lg-text">$75.00</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6">
-						<div class="single-delicious-menu">
-							<div class="menu-list-img">
-								<img src="/img/home-one/delicious-menu/7.jpg" alt="Delicious">
-								<div class="recommend">
-									<a href="#">Recommended</a>
-								</div>
-							</div>
-							<div class="delicious-menu-text">
-								<h3>AntiPasti Mixed</h3>
-								<p>Red peppers, roasted garlic, lemon slices.</p>
-								<span class="lg-text">$80.00</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6">
-						<div class="single-delicious-menu">
-							<div class="menu-list-img">
-								<img src="/img/home-one/delicious-menu/8.jpg" alt="Delicious">
-								<div class="recommend">
-									<a href="#">Recommended</a>
-								</div>
-							</div>
-							<div class="delicious-menu-text">
-								<h3>Crema di Pomodoro</h3>
-								<p>Red peppers, roasted garlic, lemon slices.</p>
-								<span class="lg-text">$90.00</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
-						<div class="single-delicious-menu">
-							<div class="menu-list-img">
-								<img src="/img/home-one/delicious-menu/9.jpg" alt="Delicious">
-								<div class="recommend">
-									<a href="#">Recommended</a>
-								</div>
-							</div>
-							<div class="delicious-menu-text">
-								<h3>Insalata Rucola</h3>
-								<p>Red peppers, roasted garlic, lemon slices.</p>
-								<span class="lg-text">$45.00</span>
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<div class="row see-full-menu m-0">
-					<div class="col-lg-8 p-0">
-						<p>The menu will be avail able for all or our coustomer please check button all menu</p>
-					</div>
-					<div class="col-lg-4 p-0">
-						<a class="default-btn-two" href="#">
-							See full menu
-							<i class="flaticon-next"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Delicious Menu Area -->
-
-	<!-- Start Speacial Offers Area -->
-	<!-- <section class="speacial-offers-area ptb-100-70">
+<!-- Start Speacial Offers Area -->
+<!-- <section class="speacial-offers-area ptb-100-70">
 		<div class="container">
 			<div class="section-title">
 				<h2>Our Daily <span>Speacial Offers</span></h2>
@@ -955,10 +653,10 @@
 			</div>
 		</div>
 	</section> -->
-	<!-- End Speacial Offers Area -->
+<!-- End Speacial Offers Area -->
 
-	<!-- Start Offer Menu Area -->
-	<!-- <section class="offer-area ptb-100">
+<!-- Start Offer Menu Area -->
+<!-- <section class="offer-area ptb-100">
 		<div class="container">
 			<div class="row align-items-center">
 				<div class="col-lg-8">
@@ -983,10 +681,10 @@
 			</div>
 		</div>
 	</section> -->
-	<!-- End Offer Menu Area -->
+<!-- End Offer Menu Area -->
 
-	<!-- Start Our Talented Area -->
-	<!-- <section class="our-talented-area ptb-100">
+<!-- Start Our Talented Area -->
+<!-- <section class="our-talented-area ptb-100">
 		<div class="container">
 			<div class="section-title">
 				<h2>Check Our <span>Delicious Menu</span></h2>
@@ -1082,43 +780,43 @@
 			</div>
 		</div>
 	</section> -->
-	<!-- End Our Talented Area -->
+<!-- End Our Talented Area -->
 
-	<!-- Start Counter Area -->
-	<div class="conuter-area ptb-100-70">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-sm-6 col-md-3 pr-0">
-					<div class="single-conuter conuters">
-						<span class="odometer" data-count="93">00</span>
-						<p>Beverages</p>
-					</div>
+<!-- Start Counter Area -->
+<div class="conuter-area ptb-100-70">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-sm-6 col-md-3 pr-0">
+				<div class="single-conuter conuters">
+					<span class="odometer" data-count="93">00</span>
+					<p>Beverages</p>
 				</div>
-				<div class="col-lg-3 col-sm-6 col-md-3 p-0">
-					<div class="single-conuter conuters">
-						<span class="odometer" data-count="109">00</span>
-						<p>Food items</p>
-					</div>
+			</div>
+			<div class="col-lg-3 col-sm-6 col-md-3 p-0">
+				<div class="single-conuter conuters">
+					<span class="odometer" data-count="109">00</span>
+					<p>Food items</p>
 				</div>
-				<div class="col-lg-3 col-sm-6 col-md-3 p-0">
-					<div class="single-conuter conuters">
-						<span class="odometer" data-count="75">00</span>
-						<p>Cooks</p>
-					</div>
+			</div>
+			<div class="col-lg-3 col-sm-6 col-md-3 p-0">
+				<div class="single-conuter conuters">
+					<span class="odometer" data-count="75">00</span>
+					<p>Cooks</p>
 				</div>
-				<div class="col-lg-3 col-sm-6 col-md-3 pl-0">
-					<div class="single-conuter">
-						<span class="odometer" data-count="163">00</span>
-						<p>Original dhishes</p>
-					</div>
+			</div>
+			<div class="col-lg-3 col-sm-6 col-md-3 pl-0">
+				<div class="single-conuter">
+					<span class="odometer" data-count="163">00</span>
+					<p>Original dhishes</p>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- End Counter Area -->
+</div>
+<!-- End Counter Area -->
 
-	<!-- Start Book Table Area -->
-	<!-- <section class="book-table-area-three">
+<!-- Start Book Table Area -->
+<!-- <section class="book-table-area-three">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-6 col-md-6 p-0">
@@ -1245,10 +943,10 @@
 			</div>
 		</div>
 	</section> -->
-	<!-- End  Book Table Area -->
+<!-- End  Book Table Area -->
 
-	<!-- Start Feedback Area -->
-	<!-- <section class="feedback-area-two ptb-100">
+<!-- Start Feedback Area -->
+<!-- <section class="feedback-area-two ptb-100">
 		<div class="container">
 			<div class="section-title">
 				<h2>People Say <span>About Us!</span></h2>
@@ -1287,10 +985,10 @@
 			</div>
 		</div>
 	</section> -->
-	<!-- End Feedback Area -->
+<!-- End Feedback Area -->
 
-	<!-- Start Blog Area -->
-	<!-- <section class="blog-area ptb-100-70">
+<!-- Start Blog Area -->
+<!-- <section class="blog-area ptb-100-70">
 		<div class="container">
 			<div class="section-title">
 				<h2>From <span>Our Blog</span></h2>
@@ -1350,218 +1048,6 @@
 			</div>
 		</div>
 	</section> -->
-	<!-- End Blog Area -->
+<!-- End Blog Area -->
 
-	<!-- Start Footer Area -->
-	<footer class="footer-area ptb-100-70">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-sm-6">
-					<div class="single-widget">
-						<a href="#">
-							<img src="/img/logoMain1.png" alt="Footer Logo">
-						</a>
-						<p>Sign up to our newsletter to get the latest food item news.</p>
-						<form class="subscribe newsletter-form" data-toggle="validator">
-							<label>
-								<input type="email" class="input-newsletter search-field" placeholder="Your email"
-									name="EMAIL" required autocomplete="off">
-							</label>
-							<input type="submit" class="search-submit default-btn-2" value="Sbuscribe">
-							<div id="validator-newsletter" class="form-result"></div>
-						</form>
-					</div>
-				</div>
-				<div class="col-lg-2 col-sm-6">
-					<div class="single-widget single-widget-1">
-						<h3>USEFUL LINKS</h3>
-						<ul class="footer-menu">
-							<li>
-								<a href="hone-one.html">
-									<i class="flaticon-right-arrow-forward"></i>
-									Home
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="flaticon-right-arrow-forward"></i>
-									About Us
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="flaticon-right-arrow-forward"></i>
-									Blog Grid
-								</a>
-							</li>
-							<li>
-								<a href="contact.html">
-									<i class="flaticon-right-arrow-forward"></i>
-									Contact Us
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="flaticon-right-arrow-forward"></i>
-									Privacy Policy
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-sm-6">
-					<div class="single-widget single-widget-2">
-						<h3>ADDRESS</h3>
-						<ul>
-							<li class="address-s">
-								44 Canal Center Plaza #200, Alexandria, VA 22314, USA
-							</li>
-							<li><a href="#">Hotline: 1900 – 123 456 78</a></li>
-							<li><a href="#">Email: asahi@gmail.com</a></li>
-							<li><a href="#">Email: info@example.com</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<div class="single-widget">
-						<h3>OPENING HOURS</h3>
-						<ul>
-							<li class="footer-border">
-								Monday: <span>9.00 AM - 22.00 PM</span>
-							</li>
-							<li class="footer-border">
-								Tuesday: <span>9.00 PM - 22.00 AM</span>
-							</li>
-							<li class="footer-border">
-								Wednesday: <span>9.00 AM - 20.00 PM</span>
-							</li>
-							<li>
-								Thursday: <span>8.00 AM - 22.00 PM</span>
-							</li>
-							<li>
-								Friday: <span>9.00 AM - 22.00 PM</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- End Footer Area -->
-
-	<!-- Start Footer Bottom Area -->
-	<footer class="footer-bottom footer-three-bottom-bg">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-3">
-					<ul class="social-list">
-						<li>
-							<a href="#">
-								<i class="fa fa-facebook"></i>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-twitter"></i>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-instagram"></i>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-linkedin"></i>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-youtube-play"></i>
-							</a>
-						</li>
-					</ul>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="copy-right">
-						<p>
-							© 2020 All Rights Reserved-<a href="https://envytheme.com">EnvyTheme</a>
-						</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-3">
-					<ul class="bank-card">
-						<li>
-							<a href="#">
-								<img src="/img/payment/1.png" alt="">
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="/img/payment/2.png" alt="">
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="/img/payment/3.png" alt="">
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="/img/payment/4.png" alt="">
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- End Footer Bottom Area -->
-
-	<!-- Start Go Top Area -->
-	<div class="go-top-area">
-		<div class="go-top-wrap">
-			<div class="go-top-btn-wrap">
-				<div class="go-top go-top-btn">
-					<i class="flaticon-arrows"></i>
-					<i class="flaticon-arrows"></i>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Go Top Area -->
-
-
-	<!-- Jquery Slim JS -->
-	<script src="/js/jquery-3.2.1.slim.min.js"></script>
-	<!-- Popper JS -->
-	<script src="/js/popper.min.js"></script>
-	<!-- Bootstrap JS -->
-	<script src="/js/bootstrap.min.js"></script>
-	<!-- Meanmenu JS -->
-	<script src="/js/jquery.meanmenu.js"></script>
-	<!-- Nice Select JS -->
-	<script src="/js/jquery.nice-select.min.js"></script>
-	<!-- Wow JS -->
-	<script src="/js/wow.min.js"></script>
-	<!-- Owl Carousel JS -->
-	<script src="/js/owl.carousel.js"></script>
-	<!-- Bootstrap Datepicker JS -->
-	<script src="/js/bootstrap-datepicker.min.js"></script>
-	<!-- Imagelightbox JS -->
-	<script src="/js/imagelightbox.min.js"></script>
-	<!-- Appear JS -->
-	<script src="/js/jquery.appear.js"></script>
-	<!-- Odometer JS -->
-	<script src="/js/odometer.min.js"></script>
-	<!-- Form Ajaxchimp JS -->
-	<script src="/js/jquery.ajaxchimp.min.js"></script>
-	<!-- Form Validator JS -->
-	<script src="/js/form-validator.min.js"></script>
-	<!-- Contact Form JS -->
-	<script src="/js/contact-form-script.js"></script>
-	<!-- Custom JS -->
-	<script src="/js/custom.js"></script>
-</body>
-
-</html>
+<%- include('partials/footer') -%>

@@ -1,18 +1,18 @@
 const cartServices = require('../openServices/cart')
 const express = require('express')
 const router = express()
-const axios=require('axios')
+const axios = require('axios')
 const orderServices = require('../openServices/order')
-const orderController=require('../controllers/orders/orderController')
+const orderController = require('../controllers/orders/orderController')
 const { ensureAuthenticated, forwardAuthenticated } = require('../Middlewares/user/middleware');
-const functions=require('../Middlewares/common/functions')
+const functions = require('../Middlewares/common/functions')
 require('dotenv').config()
-const envData=process.env
+const envData = process.env
 
 
-router.get("/order/:id/payment",ensureAuthenticated, function (req, res) {
+router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
-    orderServices.findOrderById(req.params.id,req.user.uuid, function (foundOrder) {
+    orderServices.findOrderById(req.params.id, req.user.uuid, function (foundOrder) {
         if (foundOrder.success == false) {
             req.flash('error', 'trouble in payment')
             res.redirect('/cartpage')
@@ -46,14 +46,14 @@ router.get("/order/:id/payment",ensureAuthenticated, function (req, res) {
                         console.log(body);
                         var x = body["payment_request"]["longurl"];
                         req.body["payment_request_id"] = body["payment_request"]["id"];
-                        orderServices.addInstaMojoDetails(foundOrder.order.orderId, body["payment_request"]["longurl"],body["payment_request"]["id"], function (instaAdded) {
+                        orderServices.addInstaMojoDetails(foundOrder.order.orderId, body["payment_request"]["longurl"], body["payment_request"]["id"], function (instaAdded) {
                             if (instaAdded.success == false) {
                                 console.log(instaAdded.message);
                                 req.flash(instaAdded.message)
                                 res.redirect('/dashboard')
                             }
                             else {
-                                
+
                                 res.redirect(x);
                             }
                         })
@@ -73,84 +73,84 @@ router.get("/order/:id/payment",ensureAuthenticated, function (req, res) {
 
 })
 
-router.get("/redirect",ensureAuthenticated, function(req, res){
+router.get("/redirect", ensureAuthenticated, function (req, res) {
     var payment_id = req.query.payment_id;
     var payment_request_id = req.query.payment_request_id;
-    var headers = { 'X-Api-Key':envData.X_Api_Key , 'X-Auth-Token':envData.X_Auth_Token};
+    var headers = { 'X-Api-Key': envData.X_Api_Key, 'X-Auth-Token': envData.X_Auth_Token };
 
-console.log('----------------');
-console.log(payment_id);
-console.log(req.query);
-console.log(envData.instamojoLink+payment_request_id+'/'+payment_id+'/');
-console.log(headers);
-console.log('----------------');
+    console.log('----------------');
+    console.log(payment_id);
+    console.log(req.query);
+    console.log(envData.instamojoLink + payment_request_id + '/' + payment_id + '/');
+    console.log(headers);
+    console.log('----------------');
 
-    axios.get(envData.instamojoLink+payment_request_id+'/'+payment_id+'/',{headers:headers}).then(function(response){
-            console.log('get req made');
-            // console.log(err);
-            // console.log(response);
-            // console.log(body);
-            // console.log(response);
-            if(response.status == 200)
-            {
+    axios.get(envData.instamojoLink + payment_request_id + '/' + payment_id + '/', { headers: headers }).then(function (response) {
+        console.log('get req made');
+        // console.log(err);
+        // console.log(response);
+        // console.log(body);
+        // console.log(response);
+        if (response.status == 200) {
             var body = response.data
             console.log(body)
-            if (body["success"]==true) {
+            if (body["success"] == true) {
                 console.log('successful payment');
-                orderServices.addInstaMojoId(payment_id,payment_request_id ,function(foundOrder){
-                            if (foundOrder.success==false) {
-                                console.log("Not found");
-                                req.flash('error','could not update registration')
-                                res.redirect('/cartpage')
-                            }
-                            else
-                            {
-                                console.log('redirect to success page');
-                                res.render('successPage',{order:foundOrder.order})
-                            }    
-                        });
+                orderServices.addInstaMojoId(payment_id, payment_request_id, function (foundOrder) {
+                    if (foundOrder.success == false) {
+                        console.log("Not found");
+                        req.flash('error', 'could not update registration')
+                        res.redirect('/cartpage')
+                    }
+                    else {
+                        console.log('redirect to success page');
+                        res.render('successPage', { order: foundOrder.order })
+                    }
+                });
+            }
+            else {
+                req.flash('error', 'error in payment')
+                res.redirect("/cartpage");
+            }
         }
         else {
-            req.flash('error','error in payment')
+            req.flash('error', 'error in payment')
             res.redirect("/cartpage");
         }
-    }
-        else {
-            req.flash('error','error in payment')
-            res.redirect("/cartpage");
-        }
-    }).catch(err=>
-        {
-            console.log(err);
-            res.redirect('/cartpage')
-        })
+    }).catch(err => {
+        console.log(err);
+        res.redirect('/cartpage')
+    })
     console.log('outside');
 });
 
 
-router.get('/checkout',ensureAuthenticated,orderController.getCheckout)
-router.post('/checkout',ensureAuthenticated,orderController.postCheckout)
-router.get("/user-order/:orderId",ensureAuthenticated,orderController.checkUserOrder)
-router.get('/user-order',ensureAuthenticated,orderController.userOrderList)
-router.get('/cancellation/request/:orderId',ensureAuthenticated,orderController.cancelOrder)
-router.get('/cancellations',ensureAuthenticated,orderController.userCancellationList)
-router.get('/cancellations/:id',ensureAuthenticated,orderController.fetchCancellationById)
+router.get('/checkout', ensureAuthenticated, orderController.getCheckout)
+router.post('/checkout', ensureAuthenticated, orderController.postCheckout)
+router.get("/user-order/:orderId", ensureAuthenticated, orderController.checkUserOrder)
+router.get('/orders', ensureAuthenticated, orderController.userOrderList)
+router.get('/cancellation/request/:orderId', ensureAuthenticated, orderController.cancelOrder)
+router.get('/cancellations', ensureAuthenticated, orderController.userCancellationList)
+router.get('/cancellations/:id', ensureAuthenticated, orderController.fetchCancellationById)
 
 
 
-router.get('/admin/orders-filter',functions.isAdmin,orderController.getAllOrders)
-router.get('/admin/orders-filter-payment/:payment',functions.isAdmin,orderController.getOrderByPayment)
-router.get('/admin/orders-filter-shipment/:shipment',functions.isAdmin,orderController.getOrderByShipStatus)
-router.get('/admin/orders/:orderId',functions.isAdmin,orderController.adminCheckOrder)
-router.get('/admin/confirm-order/:orderId',functions.isAdmin,orderController.getConfirmOrder)
-router.post('/admin/confirm-order/:orderId',functions.isAdmin,orderController.confirmOrder)
+router.get('/admin/orders-filter', functions.isAdmin, orderController.getAllOrders)
+router.get('/admin/orders-filter-payment/:payment', functions.isAdmin, orderController.getOrderByPayment)
+router.get('/admin/orders-filter-shipment/:shipment', functions.isAdmin, orderController.getOrderByShipStatus)
+router.get('/admin/orders/:orderId', functions.isAdmin, orderController.adminCheckOrder)
+router.get('/admin/confirm-order/:orderId', functions.isAdmin, orderController.getConfirmOrder)
+router.post('/admin/confirm-order/:orderId', functions.isAdmin, orderController.confirmOrder)
+router.get('/admin/authorize/:orderId',functions.isAdmin,orderController.authorizeOrder)
+router.get('/admin/shipmentStatus/:orderId/:status',functions.isAdmin,orderController.setShipmentStatus)
 
-router.get('/admin/cancels-filter',functions.isAdmin,orderController.getAllCancellations)
-router.get('/admin/cancels-filter/:status',functions.isAdmin,orderController.getCancellationsByStatus)
-router.get('/cancellations/:cancellationId',functions.isAdmin,orderController.getCancellationByIdAdmin)
-router.get('/confirm-cancel/:cancellationId',functions.isAdmin,orderController.getConfirmCancellation)
-router.get('/confirm-cancel/:cancellationId',functions.isAdmin,orderController.postConfirmCancellation)
-router.get('/cancellations/:cancellationId',functions.isAdmin,orderController.getCancellationByIdAdmin)
+
+router.get('/admin/cancels-filter', functions.isAdmin, orderController.getAllCancellations)
+router.get('/admin/cancels-filter/:status', functions.isAdmin, orderController.getCancellationsByStatus)
+router.get('/cancellations/:cancellationId', functions.isAdmin, orderController.getCancellationByIdAdmin)
+router.get('/confirm-cancel/:cancellationId', functions.isAdmin, orderController.getConfirmCancellation)
+router.get('/confirm-cancel/:cancellationId', functions.isAdmin, orderController.postConfirmCancellation)
+router.get('/cancellations/:cancellationId', functions.isAdmin, orderController.getCancellationByIdAdmin)
 
 
 
@@ -173,4 +173,4 @@ router.get('/cancellations/:cancellationId',functions.isAdmin,orderController.ge
  */
 
 
-module.exports=router
+module.exports = router

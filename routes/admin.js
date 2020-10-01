@@ -14,6 +14,9 @@ app.get('/admin/createItem', functions.isAdmin, function (req, res) {
     res.render('createItem')
 })
 app.post('/admin/createItem', functions.isAdmin, adminController.createItem)
+app.get('/admin/update-item/:iid',functions.isAdmin,adminController.getUpdateItem)
+app.post('/admin/update-item/:iid',functions.isAdmin,adminController.updateItem)
+
 app.get('/admin/setDiscount', function (req, res) {
     res.render('setDiscount')
 })

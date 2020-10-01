@@ -279,7 +279,7 @@ exports.getAllCancellations = function (req, res) {
 
 exports.getCancellationsByStatus = function (req, res) {
 
-    orderServices.getCancellationByStatus(req.params.status,function (cancellations) {
+    orderServices.getCancellationByStatus(req.params.status, function (cancellations) {
         if (cancellations.success == false) {
             req.flash('error', 'error in fetching list')
             res.redirect('/')
@@ -401,8 +401,27 @@ exports.userOrderList = function (req, res) {
         if (foundOrder.success == false) {
             req.flash('error', 'error in getting list')
             res.redirect('/')
+        } else {
+            res.render('oListUser', { order: foundOrder.order })
         }
-        res.render('oListUser')
     })
 
+}
+
+exports.authorizeOrder=function(req,res)
+{
+    orderServices.authorizeOrder(req.params.orderId,function(updated){
+        if(updated.success==false)
+        req.flash('error','error')
+        res.redirect('/admin/items')
+    })
+}
+
+exports.setShipmentStatus=function(req,res)
+{
+    orderServices.setShipStatus(req.params.orderId,req.params.st,function(updated){
+        if(updated.success==false)
+        req.flash('error','error')
+        res.redirect('/admin/items')
+    })
 }
