@@ -1,4 +1,4 @@
-<%- include('partials/header'); -%>
+<%- include('partials/header', {title: "Welcome to 112Cart", desc: "Best Shopping Website"}); -%>
 
 <!-- Start Page Title Area -->
 <div class="page-title-area item-bg-3">
@@ -34,12 +34,12 @@
 									<p>
 										<input type="radio" id="<%=el._id%>" name="address" value="<%=el._id%>">
 										<label for="<%=el._id%>"><span
-												style="color: #fa7725; text-transform: uppercase; font-size: medium;"><%=el.addressType%></span><br>
+												style="color: #004aad; text-transform: uppercase; font-size: medium;"><%=el.addressType%></span><br>
 											<%=(el.fullAddress + ", " + el.landmark  + ", " + el.locality + ", " + 
 												el.city + ", " + el.state +".")%><br>
 											PIN: <%=(el.pincode) %><br>
 											Phone Number: <span
-												style="color: #fa7725; text-transform: uppercase;"><%=el.phone%></span></label>
+												style="color: #004aad; text-transform: uppercase;"><%=el.phone%></span></label>
 									</p>
 									<% }) %>
 								</div>
