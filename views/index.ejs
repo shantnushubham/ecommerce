@@ -1,10 +1,11 @@
-<%- include('partials/header'); -%>
+<%- include('partials/header', {title: "Welcome to 112Cart", desc: "Best Shopping Website"}); -%>
 
 <style>
 	.slider-item-bg-1 {
 		background-color: rgb(0, 0, 0);
 	}
 </style>
+
 <!-- Start Hero Slider Area -->
 <section class="hero-slider-area hero-slider-three">
 	<div class="hero-slider owl-carousel owl-theme">
@@ -12,19 +13,23 @@
 			<div class="d-table" id="start">
 				<div class="d-table-cell">
 					<div class="uk-cover-container uk-height-large uk-dark" uk-height-viewport>
-						<video src="https://yootheme.com/site/images/media/yootheme-pro.mp4" autoplay loop muted
+						<video src="https://1012672760.rsc.cdn77.org/Temp112cart/cover1.mp4" autoplay loop muted
 							playsinline uk-cover></video>
 						<div class="uk-overlay uk-overlay-default uk-position-center"
 							style="background-color: rgba(0, 0, 0, 0); text-align: center;">
 							<div class="container">
 								<div class="hero-slider-text slider-text-three">
-									<p style="text-align: center;">Welcome to 112Cart</p>
-									<h1 style="text-align: center;">Say goodbye to daily <span>infections</span></h1>
-									<p style="text-align: center;">Get a 90 Day Protection Coat</p>
+									<p style="text-align: center; margin-bottom: 10px;"><b>Welcome to 112</b>, where
+										service is salvation.</p>
+									<h1 style="text-align: center; margin-top: 10px;">A supply giant dedicated for <span
+											style=" margin-bottom: 40px;">Schools, Colleges & Institutions</span></h1>
+									<p style="text-align: center;"><b>Prevention is the only cure.</b> Let's keep-up our
+										fight against COVID-19 and protect our family, friends, colleagues and
+										customers.</p>
 									<div style="text-align: center;">
-										<a class="default-btn-two" href="book-table.html"
-											style="padding: 8px 15px 8px 15px; color: white;" autofocus>
-											Book Service </a>
+										<a class="default-btn-two" href="#productsAndServices"
+											style="padding: 8px 15px 8px 15px; color: white;" autofocus uk-scroll>
+											Need of the Hour </a>
 									</div>
 								</div>
 							</div>
@@ -37,12 +42,102 @@
 </section>
 <!-- End Hero Slider Area -->
 
+<!-- Start Our History Area -->
+<section class="our-histry-area pt-100">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-lg-6">
+				<div class="history-title">
+					<h2><span>50+ Years of Service Experience</span><br> Now Going Digital</h2>
+					<p>We at 112 always think, how can we add a bit of 112 to our clients needs. Our aim is
+						to help our clients by way of cutting edge technology and forge relationships that will go a
+						long way.
+
+						RG Karnani, Founder.</p>
+					<!-- <img src="https://www.chemtexltd.com//wp-content/uploads/2016/12/sign-dark.svg"> -->
+					<br>
+
+					<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+							labore et dolore magna aliqua. Quis ipsum suspendisse.</p> -->
+					<a class="default-btn" href="#">
+						Our History
+						<i class="flaticon-right-arrow-forward"></i>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="single-histry-one">
+					<img src="/img/home-one/store/1.jpg" alt="Store">
+					<div class="store-img-two">
+						<img src="/img/home-one/store/2.jpg" alt="Store">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Our History Area -->
+
+<!-- Start Service Area -->
+<section class="service-area-three ptb-100">
+	<div class="container" id="productsAndServices">
+		<div class="section-title">
+			<h2>Sanitizers <span>& Disinfectants</span></h2>
+		</div>
+		<div class="row">
+			<div class="col-lg-6 col-md-6">
+				<div class="single-service ss-1">
+					<div class="service-icon">
+						<i class="flaticon-cloche"></i>
+					</div>
+					<h3>Products</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore.</p>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 icon-color">
+				<div class="single-service ss-2">
+					<div class="service-icon">
+						<i class="flaticon-atmospheric"></i>
+					</div>
+					<h3>Services</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Service Area -->
+
+<!-- Start Offer Menu Area -->
+<section class="offer-area ptb-100">
+	<div class="container">
+		<div class="section-title">
+			<h2 style="color: black !important; text-align: center;">Say goodbye to daily disinfection <br>
+				<span style="font-weight: bold;">Get a 90-Day protection plan</span></h2>
+		</div>
+		<div class="row align-items-center">
+			<div class="col-lg-8">
+				<img src="https://1012672760.rsc.cdn77.org/Temp112cart/biobunnle.png">
+			</div>
+			<div class="col-lg-4">
+				<div class="offer-logo">
+					<p>Book</p>
+					<span style="font-size: 36px;">a service</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Offer Menu Area -->
+
 <!-- Start Suitable Menu Area -->
 <section class="suitable-menu">
 	<div class="container">
 		<div class="menu-item-wrap">
 			<div class="section-title">
-				<h2>Sanitizers <span>& Disinfectants</span></h2>
+				<h2>Recommended <span>Products</span></h2>
 				<img src="/img/shape/1.png" alt="Shape">
 				<p>Buy online from us, directly from our website - delivered right to your doorstep.</p>
 			</div>
@@ -303,139 +398,25 @@
 </section>
 <!-- End Suitable Menu Area -->
 
-<!-- Start Our History Area -->
-<section class="our-histry-area pt-100">
-	<div class="container">
-		<div class="row align-items-center">
-			<div class="col-lg-6">
-				<div class="history-title">
-					<h2>From the <br><span>Chairman's Desk</span></h2>
-					<img src="/img/shape/1.png" alt="Shape">
-					<p>We at 112 always think, how can we add a bit of 112 to our clients needs. Our aim is
-						to help our clients by way of cutting edge technology and forge relationships that will go a
-						long way.
-
-						RG Karnani, Founder.</p>
-					<!-- <img src="https://www.chemtexltd.com//wp-content/uploads/2016/12/sign-dark.svg"> -->
-					<br>
-
-					<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore magna aliqua. Quis ipsum suspendisse.</p> -->
-					<a class="default-btn" href="#">
-						Our Histry
-						<i class="flaticon-right-arrow-forward"></i>
-					</a>
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="single-histry-one">
-					<img src="/img/home-one/store/1.jpg" alt="Store">
-					<div class="store-img-two">
-						<img src="/img/home-one/store/2.jpg" alt="Store">
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- End Our History Area -->
-
-<!-- Start Service Area -->
-<section class="service-area-three ptb-100">
-	<div class="container">
-		<div class="section-title">
-			<h2>Industries <span>Served</span></h2>
-		</div>
-		<div class="row">
-			<div class="col-lg-4 col-md-6">
-				<div class="single-service ss-1">
-					<div class="service-icon">
-						<i class="flaticon-cloche"></i>
-					</div>
-					<h3><span>Agriculture</span></h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore.</p>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 icon-color">
-				<div class="single-service ss-2">
-					<div class="service-icon">
-						<i class="flaticon-atmospheric"></i>
-					</div>
-					<h3>Automotive & <span>Transportation</span></h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore.</p>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 icon-color">
-				<div class="single-service">
-					<div class="service-icon">
-						<i class="flaticon-money-bag"></i>
-					</div>
-					<h3>Energy & <span>Resources</span></h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="container" style="margin-top: 30px">
-		<div class="row">
-			<div class="col-lg-4 col-md-6">
-				<div class="single-service ss-1">
-					<div class="service-icon">
-						<i class="flaticon-cloche"></i>
-					</div>
-					<h3>Manufacturing & <span>Processing</span></h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore.</p>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 icon-color">
-				<div class="single-service ss-2">
-					<div class="service-icon">
-						<i class="flaticon-atmospheric"></i>
-					</div>
-					<h3>Healthcare & <span>Institutional</span></h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore.</p>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 icon-color">
-				<div class="single-service">
-					<div class="service-icon">
-						<i class="flaticon-money-bag"></i>
-					</div>
-					<h3>Food & <span>Beverage</span></h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- End Service Area -->
-
 <!-- Start Delicious Menu Area -->
 <section class="delicious-menus-area ptb-100">
 	<div class="container">
 		<div class="delicious-menu-wrap">
 			<div class="section-title">
 				<h2>Other <span>Categories</span></h2>
+				<h4
+					style="background-color: #004aad; color: white; padding: 7px 15px 7px 15px; margin: 2px 0px 24px 0px;">
+					Coming Soon</h4>
 			</div>
 			<div class="row">
 				<div class="col-lg-4 col-md-6">
 					<div class="single-delicious-menu">
 						<div class="menu-list-img">
 							<img src="/img/home-one/delicious-menu/1.jpg" alt="Delicious">
-							<div class="recommend">
-								<a href="#">Recommended</a>
-							</div>
 						</div>
 						<div class="delicious-menu-text">
 							<h3>Water Treatment </h3>
 							<p>Red peppers, roasted garlic, lemon slices.</p>
-							<span class="lg-text">$45.00</span>
 						</div>
 					</div>
 				</div>
@@ -443,14 +424,10 @@
 					<div class="single-delicious-menu">
 						<div class="menu-list-img">
 							<img src="/img/home-one/delicious-menu/2.jpg" alt="Delicious">
-							<div class="recommend">
-								<a href="#">Recommended</a>
-							</div>
 						</div>
 						<div class="delicious-menu-text">
 							<h3>Oil & Gas Chemicals</h3>
 							<p>Red peppers, roasted garlic, lemon slices.</p>
-							<span class="lg-text">$50.00</span>
 						</div>
 					</div>
 				</div>
@@ -458,14 +435,10 @@
 					<div class="single-delicious-menu">
 						<div class="menu-list-img">
 							<img src="/img/home-one/delicious-menu/3.jpg" alt="Delicious">
-							<div class="recommend">
-								<a href="#">Recommended</a>
-							</div>
 						</div>
 						<div class="delicious-menu-text">
 							<h3>Cleaning & Disinfectant Chemicals</h3>
 							<p>Red peppers, roasted garlic, lemon slices.</p>
-							<span class="lg-text">$60.00</span>
 						</div>
 					</div>
 				</div>
@@ -473,14 +446,10 @@
 					<div class="single-delicious-menu">
 						<div class="menu-list-img">
 							<img src="/img/home-one/delicious-menu/4.jpg" alt="Delicious">
-							<div class="recommend">
-								<a href="#">Recommended</a>
-							</div>
 						</div>
 						<div class="delicious-menu-text">
 							<h3>Heat Transfer Fluids</h3>
 							<p>Red peppers, roasted garlic, lemon slices.</p>
-							<span class="lg-text">$65.00</span>
 						</div>
 					</div>
 				</div>
@@ -488,14 +457,10 @@
 					<div class="single-delicious-menu">
 						<div class="menu-list-img">
 							<img src="/img/home-one/delicious-menu/5.jpg" alt="Delicious">
-							<div class="recommend">
-								<a href="#">Recommended</a>
-							</div>
 						</div>
 						<div class="delicious-menu-text">
 							<h3>School Uniform</h3>
 							<p>Red peppers, roasted garlic, lemon slices.</p>
-							<span class="lg-text">$70.00</span>
 						</div>
 					</div>
 				</div>
@@ -503,14 +468,10 @@
 					<div class="single-delicious-menu">
 						<div class="menu-list-img">
 							<img src="/img/home-one/delicious-menu/6.jpg" alt="Delicious">
-							<div class="recommend">
-								<a href="#">Recommended</a>
-							</div>
 						</div>
 						<div class="delicious-menu-text">
 							<h3>Stationary</h3>
 							<p>Red peppers, roasted garlic, lemon slices.</p>
-							<span class="lg-text">$75.00</span>
 						</div>
 					</div>
 				</div>
@@ -518,14 +479,10 @@
 					<div class="single-delicious-menu">
 						<div class="menu-list-img">
 							<img src="/img/home-one/delicious-menu/7.jpg" alt="Delicious">
-							<div class="recommend">
-								<a href="#">Recommended</a>
-							</div>
 						</div>
 						<div class="delicious-menu-text">
 							<h3>Electrical</h3>
 							<p>Red peppers, roasted garlic, lemon slices.</p>
-							<span class="lg-text">$80.00</span>
 						</div>
 					</div>
 				</div>
@@ -533,14 +490,10 @@
 					<div class="single-delicious-menu">
 						<div class="menu-list-img">
 							<img src="/img/home-one/delicious-menu/8.jpg" alt="Delicious">
-							<div class="recommend">
-								<a href="#">Recommended</a>
-							</div>
 						</div>
 						<div class="delicious-menu-text">
 							<h3>Lab Hardwares</h3>
 							<p>Red peppers, roasted garlic, lemon slices.</p>
-							<span class="lg-text">$90.00</span>
 						</div>
 					</div>
 				</div>
@@ -548,14 +501,10 @@
 					<div class="single-delicious-menu">
 						<div class="menu-list-img">
 							<img src="/img/home-one/delicious-menu/9.jpg" alt="Delicious">
-							<div class="recommend">
-								<a href="#">Recommended</a>
-							</div>
 						</div>
 						<div class="delicious-menu-text">
 							<h3>Insalata Rucola</h3>
 							<p>Red peppers, roasted garlic, lemon slices.</p>
-							<span class="lg-text">$45.00</span>
 						</div>
 					</div>
 				</div>

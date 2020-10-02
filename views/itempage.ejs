@@ -1,4 +1,4 @@
-<%- include('partials/header'); -%>
+<%- include('partials/header', {title: "Welcome to 112Cart", desc: "Best Shopping Website"}); -%>
 
 <!-- Start Page Title Area -->
 <div class="page-title-area item-bg-5">
@@ -25,19 +25,20 @@
 		<div class="row align-items-center">
 			<div class="col-lg-6 col-md-12">
 				<div class="product-details-image">
-					<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
-						<ul class="uk-slideshow-items">
+					<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1"
+						uk-slideshow="ratio: 1:1;">
+						<ul class="uk-slideshow-items" style="background-color: white;">
 							<% item.image.forEach(el => { %>
 							<li>
-								<img data-src="<%=el%>" height="600" width="600" uk-cover
-									uk-img="target: !.uk-slideshow-items" alt="image">
+								<img src="<%=el%>" alt="<%=item.name%>"
+									style="width:auto; height:auto; max-width:100%; max-height:90%;">
 							</li>
 							<% }) %>
 						</ul>
 						<a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"
-							uk-slidenav-previous uk-slideshow-item="previous"></a>
+							uk-slidenav-previous uk-slideshow-item="previous" style="color: black;"></a>
 						<a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
-							uk-slideshow-item="next"></a>
+							uk-slideshow-item="next" style="color: black;"></a>
 					</div>
 				</div>
 			</div>

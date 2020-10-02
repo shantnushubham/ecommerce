@@ -1,16 +1,16 @@
 var express = require('express')
 var router = express.Router()
 const passport = require('passport');
-const middleware=require('../../Middlewares/common/functions')
+const middleware = require('../../Middlewares/common/functions')
 
 const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares/user/middleware');
 
 var UserControl = require('../../controllers/user/userController')
 
 router.get('/login', forwardAuthenticated, (req, res) => {
-    return res.render('login2')
+    return res.render('login')
 });
-router.get('/register', forwardAuthenticated, (req, res) => res.render('register2'));
+router.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
 router.post('/register', forwardAuthenticated, UserControl.register);
 router.post('/addDefaultAddress', ensureAuthenticated, UserControl.addDefaultUserAddress);
 router.get('/getUserAddress', ensureAuthenticated, UserControl.getUserAddress);
