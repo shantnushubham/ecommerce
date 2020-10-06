@@ -61,6 +61,11 @@ var orderSchema = new mongoose.Schema({
         type: String,
         default: 'initialised'
     },
+    paymentType:{
+        type:String,
+        enum:['COD','credit','online'],
+        default:'online'
+    },
     instaPaymentRequestId: {
         type: String,
         default: ''
@@ -79,7 +84,8 @@ var orderSchema = new mongoose.Schema({
         default: false
     },
     transaction_id: {
-        type: String
+        type: String,
+        default:'NA'
     },
     code: {
         type: String
@@ -109,14 +115,30 @@ var orderSchema = new mongoose.Schema({
         type: String
     },
     shippingConfirmed: {
-        type: Boolean
+        type: Boolean,
+        default:false
+    },
+    quoteAsked:{
+        type:Boolean,
+        default:false
     },
     shipmentStatus: {
         type: String,
         default: "processing",
-        enum: ['processing', 'approved', 'cancelled', 'completed', 'cancellation processing']
+        enum: ['processing', 'approved', 'cancelled', 'completed', 'cancellation processing','saved']
     },
-
+    creditAllowed:{
+        type:Boolean,
+        default:false
+    },
+    creditPercent:{
+        type:Number,
+        default:0
+    },
+    codAllowed:{
+        type:Boolean,
+        default:false
+    }
 
 });
 

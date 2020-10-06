@@ -357,21 +357,37 @@ class order {
         })
     }
 
-    authorizeOrder(orderId,callback)
-    {
-        ordermodel.findOneAndUpdate({orderId:orderId},{status:authorized},function(err,updatedOrder){
-            if(err||functions.isEmpty(updatedOrder))callback({success:false})
+    authorizeOrder(orderId, callback) {
+        ordermodel.findOneAndUpdate({ orderId: orderId }, { status: authorized }, function (err, updatedOrder) {
+            if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
             else
-            callback({success:true})
+                callback({ success: true })
         })
     }
-    setShipStatus(orderId,status,callback)
-    {
-        ordermodel.findOneAndUpdate({orderId:orderId},{shipmentStatus:status},function(err,updatedOrder){
-            if(err||functions.isEmpty(updatedOrder))callback({success:false})
+    setShipStatus(orderId, status, callback) {
+        ordermodel.findOneAndUpdate({ orderId: orderId }, { shipmentStatus: status }, function (err, updatedOrder) {
+            if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
             else
-            callback({success:true})
+                callback({ success: true })
         })
+    }
+
+    creditOrderUpdate(orderId, uuid, total, callback) {
+        ordermodel.findOneAndUpdate({ orderId: orderId, uuid: uuid }, { total: total, paymentType: 'credit' }, function (err, updatedOrder) {
+            if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
+            else
+                callback({ success: true, order: updatedOrder })
+        })
+    }
+
+    allowCredit(orderId, percent, callback) {
+        ordermodel.findOneAndUpdate({ orderId: orderId, },
+            { creditAllowed: true, creditPercent: percent, paymentType: 'credit', shipmentStatus: 'approved' },
+            function (err, updatedOrder) {
+                if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
+                else
+                    callback({ success: true, order: updatedOrder })
+            })
     }
 
 
