@@ -1,60 +1,77 @@
 <%- include('partials/adminHeader'); -%>
 
-<div class="container">
-    <br>
-    <h1>Add Item</h1>
-    <br>
-    <br>
-    <form action="/admin/createItem" method="POST">
-        <div class="ui form">
-            <div class="field">
-                <label>Name</label>
-                <input type="text" placeholder="Name" name="name">
-            </div>
-            <div class="field">
-                <label>Price</label>
-                <input type="text" placeholder="Price" name="price">
-            </div>
-            <div class="field">
-                <label>Weight</label>
-                <input type="text" placeholder="Weight" name="weight">
-            </div>
-            <div class="field">
-                <label>Color</label>
-                <input type="text" placeholder="Color" name="color">
-            </div>
-            <div class="field">
-                <label>Category</label>
-                <input type="text" placeholder="Category" name="category">
-            </div>
-            <div class="field">
-                <label>Sub-Category</label>
-                <input type="text" placeholder="Sub-Category" name="subCategory">
-            </div>
-            <div class="field">
-                <label>Tag</label>
-                <input type="text" placeholder="Tag" name="tag">
-            </div>
-            <div class="field">
-                <label>Grouping-Tag</label>
-                <input type="text" placeholder="Grouping-Tag" name="groupingTag">
-            </div>
-            <div class="field">
-                <label>Vendor Id</label>
-                <input type="text" placeholder="Vendor Id" name="vendorId">
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Add Item</li>
+        </ol>
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+                <h2><i class="fa fa-file"></i>Add Item</h2>
             </div>
 
-            <div class="field">
-                <label>Image Link</label>
-                <input type="text" placeholder="ImageLink" name="image">
-            </div>
-            <div class="field">
-                <label>Content</label>
-                <textarea rows="2" spellcheck="true" placeholder="Content" name="content"></textarea>
+            <div class="container">
+                <br>
+                <h1>Add Item</h1>
+                <br>
+                <br>
+                <form action="/admin/createItem" method="POST">
+                    <div class="ui form">
+                        <div class="field">
+                            <label>Name</label>
+                            <input type="text" placeholder="Name" name="name">
+                        </div>
+                        <div class="field">
+                            <label>Price</label>
+                            <input type="text" placeholder="Price" name="price">
+                        </div>
+                        <div class="field">
+                            <label>Weight</label>
+                            <input type="text" placeholder="Weight" name="weight">
+                        </div>
+                        <div class="field">
+                            <label>Color</label>
+                            <input type="text" placeholder="Color" name="color">
+                        </div>
+                        <div class="field">
+                            <label>Category</label>
+                            <input type="text" placeholder="Category" name="category">
+                        </div>
+                        <div class="field">
+                            <label>Sub-Category</label>
+                            <input type="text" placeholder="Sub-Category" name="subCategory">
+                        </div>
+                        <div class="field">
+                            <label>Tag</label>
+                            <input type="text" placeholder="Tag" name="tag">
+                        </div>
+                        <div class="field">
+                            <label>Grouping-Tag</label>
+                            <input type="text" placeholder="Grouping-Tag" name="groupingTag">
+                        </div>
+                        <div class="field">
+                            <label>Vendor Id</label>
+                            <input type="text" placeholder="Vendor Id" name="vendorId">
+                        </div>
+
+                        <div class="field">
+                            <label>Image Link</label>
+                            <input type="text" placeholder="ImageLink" name="image">
+                        </div>
+                        <div class="field">
+                            <label>Content</label>
+                            <textarea rows="2" spellcheck="true" placeholder="Content" name="content"></textarea>
+                        </div>
+                    </div>
+                    <button class="ui button" type="submit">Submit</button>
+                </form>
             </div>
         </div>
-        <button class="ui button" type="submit">Submit</button>
-    </form>
+    </div>
 </div>
 
 <%- include('partials/adminFooter'); -%>
