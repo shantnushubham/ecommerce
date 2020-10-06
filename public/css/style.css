@@ -7028,7 +7028,7 @@ div.scrollmenu a {
 }
 
 div.scrollmenu a:hover {
-  background-color: #777;
+  color: #004aad;
 }
 
 div.scrollmenu::-webkit-scrollbar {
@@ -7043,4 +7043,8 @@ div.scrollmenu::-webkit-scrollbar-track {
 div.scrollmenu::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+#mobileLogin {
+  display: none !important;
 }
