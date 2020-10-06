@@ -471,7 +471,6 @@ exports.getBusinessAccountReg = function (req, res) {
       }
     }
   })
-  res.render('businessAccountReg')
 }
 exports.postBusinessAccReg = function (req, res) {
   var data = {
@@ -542,5 +541,18 @@ exports.revokeBizAcc = function (req, res) {
         }
       })
     }
+  })
+}
+
+exports.getBizReqByStatus=function(req,res)
+{
+  var st=req.params.status=='true'?true:false;
+  businessReg.find({isAccepted:st}, function (err, foundB) {
+    if (err) {
+      req.flash('error', 'error could not find in db')
+      res.redirect('/admin')
+    } else
+      res.render('adminBizReq', { list: foundB })
+
   })
 }
