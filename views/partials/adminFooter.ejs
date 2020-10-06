@@ -1,3 +1,13 @@
+<footer class="sticky-footer">
+    <div class="container">
+       
+    </div>
+</footer>
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+</a>
+<!-- Logout Modal-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -11,46 +21,28 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="/users/logout">Logout</a>
+                <a class="btn btn-primary" href="login.html">Logout</a>
             </div>
         </div>
     </div>
 </div>
 <!-- Bootstrap core JavaScript-->
-
+<script src="/vendor/jquery/jquery.min.js"></script>
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Core plugin JavaScript-->
 <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 <!-- Page level plugin JavaScript-->
-<script src="/vendor/chart.js/Chart.js"></script>
+<script src="/vendor/chart.js/Chart.min.js"></script>
 <script src="/vendor/datatables/jquery.dataTables.js"></script>
 <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
 <script src="/vendor/jquery.selectbox-0.2.js"></script>
 <script src="/vendor/retina-replace.min.js"></script>
 <script src="/vendor/jquery.magnific-popup.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.semanticui.min.js"></script>
-
-<!-- Intercom Scripts -->
-
-
-<script async src=“https://www.googletagmanager.com/gtag/js?id=UA-110608562-2”></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag(‘js’, new Date());
-    gtag(‘config’, ‘UA - 110608562 - 2’);
-</script>
-
-<script src="https://d6fhaebhrj3za.cloudfront.net/js/admin.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="/js/admin.js"></script>
 <!-- Custom scripts for this page-->
-<script src="https://d6fhaebhrj3za.cloudfront.net/js/admin-charts.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable();
-        $('#offersTable').DataTable();
-    });
-</script>
+<script src="/js/admin-datatables.js"></script>
+
 </body>
 
 </html>

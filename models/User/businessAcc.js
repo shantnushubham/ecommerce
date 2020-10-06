@@ -29,6 +29,18 @@ var businessSchema = new mongoose.Schema({
     isAccepted:{
         type:Boolean,
         default:false
-    }
+    },
+    businessAddress:{
+        type:String,
+        required:true
+    },
+    businessPhone:{
+        type:String,
+        required:true
+    },
+    businessEmail:{
+        type:String,
+        required:true
+    },
 });
 module.exports = mongoose.model("businessAcc", businessSchema, "businessAcc");

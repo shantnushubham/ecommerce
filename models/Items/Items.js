@@ -68,18 +68,7 @@ var itemsSchema = new mongoose.Schema({
     vendorName:{
         type:String
     },
-    height: {
-        type: Number, default: 5
-    },
-    weight: {
-        type: Number, default: 5
-    },
-    length: {
-        type: Number, default: 5
-    },
-    breadth: {
-        type: Number, default: 5
-    },
+   
 });
 
 itemsSchema.plugin(mongooseHistory)

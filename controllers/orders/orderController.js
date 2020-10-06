@@ -1,4 +1,5 @@
 const cartServices = require('../../openServices/cart')
+const codaAllow = require('../../models/Orders/codAllow')
 const express = require('express')
 const router = express()
 const orderServices = require('../../openServices/order')
@@ -144,6 +145,105 @@ exports.postCheckout = function (req, res) {
                     }
                 }
             })
+        }
+    })
+
+}
+
+exports.creditPath = function (req, res) {
+    orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundOrder) {
+        if (foundOrder.success == false) {
+            req.flash('error', 'trouble in payment')
+            res.redirect('/cartpage')
+        }
+        else {
+            if (foundOrder.found == false) {
+                req.flash('error', 'could not find order by that id')
+                res.redirect('/cartpage')
+            }
+            else {
+                if (foundOrder.order.creditAllowed == false) {
+                    req.flash('error', 'error! credit not allowed by admin')
+                    res.redirect('/')
+                }
+                else {
+                    var total = foundOrder.order.total * (1 - (foundOrder.order.creditPercent/100))
+                    orderServices.creditOrderUpdate(foundOrder.order.orderId, req.user.uuid, total, function (updatedOrder) {
+                        if (updatedOrder.success == false) {
+
+                            req.flash('error', 'error! credit path error')
+                            res.redirect('/')
+                        }
+                        else
+                        {
+                            res.redirect('/order/' + updatedOrder.order.orderId + '/payment')
+                        }
+                    })
+
+                }
+            }
+        }
+    })
+
+}
+
+exports.codPath = function (req, res) {
+    console.log(req.body);
+    cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
+        if (cart.success == false) {
+            console.log('error in getting cart list');
+            req.flash('error', 'error in getting cart list')
+            res.redirect('/cartpage')
+        }
+        else {
+            codaAllow.find({}, function (err, foundThres) {
+                var cod = false
+                if (!err && foundThres.length >= 1) {
+                    if (cart.total < foundThres[0].from) {
+                        req.flash('error', 'cod not allowed')
+                        res.redirect('/cartpage')
+                    }
+                    else {
+                        orderServices.findAddressByid(req.body.address, function (address) {//get address of user
+                            if (address.success == false) {
+                                console.log('error in getting address list');
+                                req.flash('error', 'error in getting address list')
+                                res.redirect('/cartpage')
+                            }
+                            else {
+                                var userAdd = address.address
+                                var finalAmt = cart.total
+                                var order = {
+                                    fullAddress: userAdd.fullAddress,
+                                    city: userAdd.city,
+                                    state: userAdd.state,
+                                    country: userAdd.country,
+                                    pincode: userAdd.pincode,
+                                    total: finalAmt,
+                                    orderedItems: cart.cartList,
+                                    uuid: req.user.uuid,
+                                    paymentType: 'COD',
+                                    codAllowed: true
+                                }
+                                orderServices.createOrder(order, function (createOrder) {
+                                    if (createOrder.success == false) {
+                                        console.log('error in creating order');
+                                        req.flash('error', 'error in creating order')
+                                        res.redirect('/cartpage')
+                                    }
+                                    else {
+                                        res.render('successPage', { order: createOrder.order })
+                                    }
+                                })
+
+                            }
+                        })
+                    }
+                }
+
+
+            })
+
         }
     })
 
@@ -319,10 +419,26 @@ exports.confirmOrder = function (req, res) {
         length: req.body.length,
         breadth: req.body.breadth,
         height: req.body.height,
-        width: req.body.width,
-        shipRocketId: req.body.shipRocketId
+        weight: req.body.weight,
+        shipRocketId: req.body.shipRocketId,
+        paid:true,
+        
     }
     orderServices.acceptOrder(req.params.orderId, d, function (order) {
+        if (order.success == false) {
+            req.flash('error', 'error')
+            res.redirect('/admin/orders-filter')
+        }
+        else {
+            req.flash('success', 'success')
+            res.redirect('/admin/orders-filter')
+        }
+    })
+}
+
+exports.allowCred=function(req,res)
+{
+    orderServices.allowCredit(req.params.orderId,function (order) {
         if (order.success == false) {
             req.flash('error', 'error')
             res.redirect('/admin/orders-filter')
@@ -408,20 +524,18 @@ exports.userOrderList = function (req, res) {
 
 }
 
-exports.authorizeOrder=function(req,res)
-{
-    orderServices.authorizeOrder(req.params.orderId,function(updated){
-        if(updated.success==false)
-        req.flash('error','error')
+exports.authorizeOrder = function (req, res) {
+    orderServices.authorizeOrder(req.params.orderId, function (updated) {
+        if (updated.success == false)
+            req.flash('error', 'error')
         res.redirect('/admin/items')
     })
 }
 
-exports.setShipmentStatus=function(req,res)
-{
-    orderServices.setShipStatus(req.params.orderId,req.params.st,function(updated){
-        if(updated.success==false)
-        req.flash('error','error')
+exports.setShipmentStatus = function (req, res) {
+    orderServices.setShipStatus(req.params.orderId, req.params.st, function (updated) {
+        if (updated.success == false)
+            req.flash('error', 'error')
         res.redirect('/admin/items')
     })
 }
