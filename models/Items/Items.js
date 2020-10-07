@@ -68,6 +68,10 @@ var itemsSchema = new mongoose.Schema({
     vendorName:{
         type:String
     },
+    cod:{
+        type:Boolean,
+        default:true
+    }
    
 });
 

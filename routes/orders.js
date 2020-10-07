@@ -23,11 +23,16 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                 res.redirect('/cartpage')
             }
             else {
+                var totAmt=parseInt(foundOrder.order.total)
+                if(foundOrder.creditAllowed==true)totAmt=totAmt*(1 - (parseInt(foundOrder.order.creditPercent)/100))
+                
                 var request = require('request')
+                
                 var headers = { 'X-Api-Key': envData.X_Api_Key, 'X-Auth-Token': envData.X_Auth_Token };
+                
                 var payload = {
                     purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
-                    amount: parseInt(foundOrder.order.total) * 1.18,
+                    amount: totAmt * 1.18,
                     phone: req.user.phone,
                     buyer_name: req.user.name,
                     redirect_url: envData.instamojoRedirect,
