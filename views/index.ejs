@@ -420,107 +420,45 @@
 					style="background-color: #004aad; color: white; padding: 7px 15px 7px 15px; margin: 2px 0px 24px 0px;">
 					Coming Soon</h4>
 			</div>
+			<% var array = new Array() %>
+			<% array.push({name : "Physics", image: "", desc: ""}) %>
+			<% array.push({name : "Chemistry", image: "", desc: ""}) %>
+			<% array.push({name : "Biology", image: "", desc: ""}) %>
+			<% array.push({name : "Mathematics", image: "", desc: ""}) %>
+			<% array.push({name : "Geography & Surveying", image: "", desc: ""}) %>
+			<% array.push({name : "Visual Teaching", image: "", desc: ""}) %>
+			<% array.push({name : "Education CD", image: "", desc: ""}) %>
+			<% array.push({name : "Portraits", image: "", desc: ""}) %>
+			<% array.push({name : "Electronics", image: "", desc: ""}) %>
+			<% array.push({name : "Pharmacy", image: "", desc: ""}) %>
+			<% array.push({name : "Sieves", image: "", desc: ""}) %>
+			<% array.push({name : "Applied Mathematics", image: "", desc: ""}) %>
+			<% array.push({name : "Psychology", image: "", desc: ""}) %>
+			<% array.push({name : "Entomology", image: "", desc: ""}) %>
+			<% array.push({name : "Metallurgy & Bio-Technology", image: "", desc: ""}) %>
+			<% array.push({name : "Pathology", image: "", desc: ""}) %>
+			<% array.push({name : "Histopathology", image: "", desc: ""}) %>
+			<% array.push({name : "Quartz Glassware", image: "", desc: ""}) %>
+			<% array.push({name : "ABDOS Lab Plastic-ware", image: "", desc: ""}) %>
+			<% array.push({name : "Nursing Products", image: "", desc: ""}) %>
+			<% array.push({name : "Mechanical Engineer Lab", image: "", desc: ""}) %>
+			<% array.push({name : "Laboratory Instrument", image: "", desc: ""}) %>
+			<% array.push({name : "Chemicals", image: "", desc: ""}) %>
+			<% array.push({name : "Avantor Glassware", image: "", desc: ""}) %>
 			<div class="row">
+				<% array.forEach(el => { %>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-delicious-menu">
 						<div class="menu-list-img">
-							<img src="/img/home-one/delicious-menu/1.jpg" alt="Delicious">
+							<img src="<%=el.image%>" alt="Delicious">
 						</div>
 						<div class="delicious-menu-text">
-							<h3>Water Treatment </h3>
-							<p>Red peppers, roasted garlic, lemon slices.</p>
+							<h3><%=el.name%></h3>
+							<p><%=el.desc%></p>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-delicious-menu">
-						<div class="menu-list-img">
-							<img src="/img/home-one/delicious-menu/2.jpg" alt="Delicious">
-						</div>
-						<div class="delicious-menu-text">
-							<h3>Oil & Gas Chemicals</h3>
-							<p>Red peppers, roasted garlic, lemon slices.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-delicious-menu">
-						<div class="menu-list-img">
-							<img src="/img/home-one/delicious-menu/3.jpg" alt="Delicious">
-						</div>
-						<div class="delicious-menu-text">
-							<h3>Cleaning & Disinfectant Chemicals</h3>
-							<p>Red peppers, roasted garlic, lemon slices.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-delicious-menu">
-						<div class="menu-list-img">
-							<img src="/img/home-one/delicious-menu/4.jpg" alt="Delicious">
-						</div>
-						<div class="delicious-menu-text">
-							<h3>Heat Transfer Fluids</h3>
-							<p>Red peppers, roasted garlic, lemon slices.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-delicious-menu">
-						<div class="menu-list-img">
-							<img src="/img/home-one/delicious-menu/5.jpg" alt="Delicious">
-						</div>
-						<div class="delicious-menu-text">
-							<h3>School Uniform</h3>
-							<p>Red peppers, roasted garlic, lemon slices.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-delicious-menu">
-						<div class="menu-list-img">
-							<img src="/img/home-one/delicious-menu/6.jpg" alt="Delicious">
-						</div>
-						<div class="delicious-menu-text">
-							<h3>Stationary</h3>
-							<p>Red peppers, roasted garlic, lemon slices.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-delicious-menu">
-						<div class="menu-list-img">
-							<img src="/img/home-one/delicious-menu/7.jpg" alt="Delicious">
-						</div>
-						<div class="delicious-menu-text">
-							<h3>Electrical</h3>
-							<p>Red peppers, roasted garlic, lemon slices.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-delicious-menu">
-						<div class="menu-list-img">
-							<img src="/img/home-one/delicious-menu/8.jpg" alt="Delicious">
-						</div>
-						<div class="delicious-menu-text">
-							<h3>Lab Hardwares</h3>
-							<p>Red peppers, roasted garlic, lemon slices.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
-					<div class="single-delicious-menu">
-						<div class="menu-list-img">
-							<img src="/img/home-one/delicious-menu/9.jpg" alt="Delicious">
-						</div>
-						<div class="delicious-menu-text">
-							<h3>Insalata Rucola</h3>
-							<p>Red peppers, roasted garlic, lemon slices.</p>
-						</div>
-					</div>
-				</div>
-
+				<% }) %>
 			</div>
 			<div class="row see-full-menu m-0">
 				<div class="col-lg-8 p-0">
