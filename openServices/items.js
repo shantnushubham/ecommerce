@@ -56,6 +56,7 @@ class items {
                                 groupingTag: foundItem.groupingTag,
                                 vendorId: foundItem.vendorId,
                                 vendorName: foundItem.vendorName,
+                                shortDesc:foundItem.shortDesc
 
                             }
 

@@ -50,6 +50,7 @@ exports.createItem = function (req, res) {
         tag: data.tag,
         groupingTag: data.groupingTag,
         vendorId: data.vendorId,
+        shortDesc:data.shortDesc,
 
         weight: data.weight,
         content: data.content,

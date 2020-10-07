@@ -71,8 +71,10 @@ var itemsSchema = new mongoose.Schema({
     cod:{
         type:Boolean,
         default:true
+    },
+    shortDesc:{
+        type:String
     }
-   
 });
 
 itemsSchema.plugin(mongooseHistory)
