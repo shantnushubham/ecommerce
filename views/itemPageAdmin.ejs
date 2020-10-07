@@ -1,36 +1,53 @@
 <%- include('partials/adminHeader'); -%>
 
-<div class="container">
-    <br>
-    <!-- <a href="/admin/createItem"><button class="ui large green button">Create Item</button></a> -->
-    <br>
-    <br>
-    <div class="ui items">
-        <div class="item">
-            <div class="image">
-                <!-- <img src="<%=item.image%>"> -->
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Add listing</li>
+        </ol>
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+                <h2><i class="fa fa-file"></i>Items Information</h2>
             </div>
-            <div class="content">
-                <h2>Name: <%=item.name%></h2>
-                <a class="header"><%=item.color%></a>
-                <a class="header"><%=item.content%></a>
-                <a class="header"><%=item.active%></a>
-                <div class="meta">
-                    <h4>Price: Rs. <%=item.price%></h4>
-                    <h4>Color: <%=item.color%></h4>
-                    <% if (item.active == true) { %>
-                        <h4 style="color: green !important;">Active</h4>
-                    <% } else { %>
-                        <h4 style="color: red !important;">Inactive</h4>
-                    <% } %>
-                </div>
-                <div class="description">
-                    <h4>Content: </h4><br>
-                    <h6><%= item.content %></h6>
-                </div>
-                <!-- <div class="extra">
+
+            <div class="container">
+                <br>
+                <!-- <a href="/admin/createItem"><button class="ui large green button">Create Item</button></a> -->
+                <br>
+                <br>
+                <div class="ui items">
+                    <div class="item">
+                        <div class="image">
+                            <!-- <img src="<%=item.image%>"> -->
+                        </div>
+                        <div class="content">
+                            <h2>Name: <%=item.name%></h2>
+                            <a class="header"><%=item.color%></a>
+                            <a class="header"><%=item.content%></a>
+                            <a class="header"><%=item.active%></a>
+                            <div class="meta">
+                                <h4>Price: Rs. <%=item.price%></h4>
+                                <h4>Color: <%=item.color%></h4>
+                                <% if (item.active == true) { %>
+                                <h4 style="color: green !important;">Active</h4>
+                                <% } else { %>
+                                <h4 style="color: red !important;">Inactive</h4>
+                                <% } %>
+                            </div>
+                            <div class="description">
+                                <h4>Content: </h4><br>
+                                <h6><%= item.content %></h6>
+                            </div>
+                            <!-- <div class="extra">
                     Additional Details
                 </div> -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
