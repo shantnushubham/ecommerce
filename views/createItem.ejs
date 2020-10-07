@@ -57,14 +57,29 @@
                             <label>Vendor Id</label>
                             <input type="text" placeholder="Vendor Id" name="vendorId">
                         </div>
-
                         <div class="field">
-                            <label>Image Link</label>
+                            <label>Image Link (For multiple images, separate links using "||")</label>
                             <input type="text" placeholder="ImageLink" name="image">
                         </div>
                         <div class="field">
+                            <label>Short Description</label>
+                            <input type="text" placeholder="Short Description" name="shortDesc">
+                        </div>
+                        <div class="field">
                             <label>Content</label>
-                            <textarea rows="2" spellcheck="true" placeholder="Content" name="content"></textarea>
+                            <p>For a bold text, enclose the text to bold with <code>&lt;b&gt;</code>
+                                Example: <code>&lt;b&gt; This is a bold text &lt;/b&gt;</code><br>
+                                For an italic text, enclose the text to italicize with <code>&lt;i&gt;</code>
+                                Example: <code>&lt;i&gt; This is an italic text &lt;/i&gt;</code><br>
+                                For an underlined text, enclose the text to underline with <code>&lt;u&gt;</code>
+                                Example: <code>&lt;u&gt; This is an underlined text &lt;/u&gt;</code><br>
+                                For inserting a line break, use <code>&lt;br&gt;</code>
+                                Example: Line 1 <code>&lt;br&gt;</code> Line 2<br>
+                                For using a list, enclose the list items with <code>&lt;li&gt;</code>
+                                Example: <code>&lt;li&gt;</code> Item 1 <code>&lt;/li&gt;</code><code>&lt;li&gt;</code>
+                                Item 2 <code>&lt;/li&gt;</code><code>&lt;li&gt;</code> Item 3 <code>&lt;/li&gt;</code>
+                            </p>
+                            <textarea spellcheck="true" placeholder="Content" name="content"></textarea>
                         </div>
                     </div>
                     <button class="ui button" type="submit">Submit</button>

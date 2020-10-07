@@ -50,8 +50,7 @@ exports.createItem = function (req, res) {
         tag: data.tag,
         groupingTag: data.groupingTag,
         vendorId: data.vendorId,
-        shortDesc:data.shortDesc,
-
+        shortDesc: data.shortDesc,
         weight: data.weight,
         content: data.content,
         color: data.color
@@ -80,7 +79,7 @@ exports.updateItem = function (req, res) {
         tag: data.tag,
         groupingTag: data.groupingTag,
         vendorId: data.vendorId,
-
+        shortDesc: data.shortDesc,
         weight: data.weight,
         content: data.content,
         color: data.color
