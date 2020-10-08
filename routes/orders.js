@@ -23,13 +23,16 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                 res.redirect('/cartpage')
             }
             else {
-                var totAmt=parseInt(foundOrder.order.total)
-                if(foundOrder.creditAllowed==true)totAmt=totAmt*(1 - (parseInt(foundOrder.order.creditPercent)/100))
-                
+                var totAmt = parseInt(foundOrder.order.total)
+                if (foundOrder.creditAllowed == true && req.session.mode != undefined && req.session.mode === 'credit') {
+                    totAmt = totAmt * (1 - (parseInt(foundOrder.order.creditPercent) / 100))
+                    res.session.mode = ''
+                }
+
                 var request = require('request')
-                
+
                 var headers = { 'X-Api-Key': envData.X_Api_Key, 'X-Auth-Token': envData.X_Auth_Token };
-                
+
                 var payload = {
                     purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
                     amount: totAmt * 1.18,
@@ -146,8 +149,8 @@ router.get('/admin/orders-filter-shipment/:shipment', functions.isAdmin, orderCo
 router.get('/admin/orders/:orderId', functions.isAdmin, orderController.adminCheckOrder)
 router.get('/admin/confirm-order/:orderId', functions.isAdmin, orderController.getConfirmOrder)
 router.post('/admin/confirm-order/:orderId', functions.isAdmin, orderController.confirmOrder)
-router.get('/admin/authorize/:orderId',functions.isAdmin,orderController.authorizeOrder)
-router.get('/admin/shipmentStatus/:orderId/:status',functions.isAdmin,orderController.setShipmentStatus)
+router.get('/admin/authorize/:orderId', functions.isAdmin, orderController.authorizeOrder)
+router.get('/admin/shipmentStatus/:orderId/:status', functions.isAdmin, orderController.setShipmentStatus)
 
 
 router.get('/admin/cancels-filter', functions.isAdmin, orderController.getAllCancellations)
