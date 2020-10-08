@@ -29,6 +29,7 @@
 					<div class="collapse show" id="collapseFilters">
 						<form method="POST" action="/items">
 							<hr>
+							<% if (!(category.length == 1 && category[0] == '')) { %>
 							<div class="filter_type">
 								<h5>Categories</h5>
 								<ul>
@@ -43,6 +44,8 @@
 								</ul>
 							</div>
 							<hr>
+							<% } %>
+							<% if (!(subCategory.length == 1 && subCategory[0] == '')) { %>
 							<div class="filter_type">
 								<h5>Sub-Category</h5>
 								<ul>
@@ -57,6 +60,8 @@
 								</ul>
 							</div>
 							<hr>
+							<% } %>
+							<% if (!(tag.length == 1 && tag[0] == '')) { %>
 							<div class="filter_type">
 								<h5>Tags</h5>
 								<ul>
@@ -70,6 +75,7 @@
 									<% }); %>
 								</ul>
 							</div>
+							<% } %>
 							<button class="default-btn" type="submit">Search</button>
 						</form>
 
