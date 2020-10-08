@@ -3790,6 +3790,7 @@ Page Title Area Style
 }
 
 .page-title-area .page-title-content h2 {
+  margin-top: 10px;
   margin-bottom: 0;
   color: #ffffff;
   font-size: 45px;

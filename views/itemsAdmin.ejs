@@ -13,6 +13,9 @@
             <div class="card-header">
                 <i class="fa fa-table"></i> Items Data Table</div>
             <div class="card-body">
+                <div style="text-align: center;">
+                    <a href="/admin/createItem" class="ui large green button" style="margin-bottom: 5px;">Create Item</a>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -24,7 +27,7 @@
                                 <th>Discount</th>
                                 <th>Sale</th>
                                 <th>Price</th>
-                                <th>Open</th>
+                                <th>Open/Update</th>
                             </tr>
                         </thead>
 
@@ -45,7 +48,7 @@
                                 <td><%= element.discount %></td>
                                 <td><%= element.sale %></td>
                                 <td><%= element.price %></td>
-                                <td><a href="/admin/items/<%=element.iid%>"><button class="ui small green button">Open
+                                <td><a href="/admin/update-item/<%=element.iid%>"><button class="ui small green button">Open
                                             Item</button></a></td>
                             </tr>
                             <% }); %>

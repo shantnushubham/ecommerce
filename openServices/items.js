@@ -56,7 +56,7 @@ class items {
                                 groupingTag: foundItem.groupingTag,
                                 vendorId: foundItem.vendorId,
                                 vendorName: foundItem.vendorName,
-                                shortDesc:foundItem.shortDesc
+                                shortDesc: foundItem.shortDesc
 
                             }
 
@@ -137,6 +137,7 @@ class items {
             price: data.price,
             image: data.image,
             category: data.category,
+            shortDesc: data.shortDesc,
             subCategory: data.subCategory,
             tag: data.tag,
             groupingTag: data.groupingTag,
@@ -187,6 +188,7 @@ class items {
             category: data.category,
             subCategory: data.subCategory,
             tag: data.tag,
+            shortDesc: data.shortDesc,
             groupingTag: data.groupingTag,
 
         }
