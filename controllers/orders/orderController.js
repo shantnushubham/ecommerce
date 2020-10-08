@@ -6,6 +6,7 @@ const orderServices = require('../../openServices/order')
 const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares/user/middleware');
 require('dotenv').config()
 const envData = process.env
+const url = require('url')
 
 exports.getCheckout = function (req, res) {
 
@@ -174,8 +175,7 @@ exports.creditPath = function (req, res) {
                             req.flash('error', 'error! credit path error')
                             res.redirect('/')
                         }
-                        else
-                        {
+                        else {
                             res.redirect('/order/' + updatedOrder.order.orderId + '/payment')
                         }
                     })
@@ -198,7 +198,7 @@ exports.codPath = function (req, res) {
         else {
             codaAllow.find({}, function (err, foundThres) {
                 var cod = false
-                if (!err && foundThres.length >= 1||cart.allowCOD==false) {
+                if (!err && foundThres.length >= 1 && cart.allowCOD == true) {
                     if (cart.total < foundThres[0].from) {
                         req.flash('error', 'cod not allowed')
                         res.redirect('/cartpage')
@@ -240,7 +240,10 @@ exports.codPath = function (req, res) {
                         })
                     }
                 }
-
+                else {
+                    req.flash('error', 'COD not possible')
+                    res.redirect('/')
+                }
 
             })
 
@@ -421,8 +424,9 @@ exports.confirmOrder = function (req, res) {
         height: req.body.height,
         weight: req.body.weight,
         shipRocketId: req.body.shipRocketId,
-        paid:true,
-        
+        paid: true,
+        status:'authorized'
+
     }
     orderServices.acceptOrder(req.params.orderId, d, function (order) {
         if (order.success == false) {
@@ -436,9 +440,11 @@ exports.confirmOrder = function (req, res) {
     })
 }
 
-exports.allowCred=function(req,res)
-{
-    orderServices.allowCredit(req.params.orderId,function (order) {
+exports.getAllowCred = function (req, res) {
+    res.render('allowCred', { orderId: req.params.orderId })
+}
+exports.allowCred = function (req, res) {
+    orderServices.allowCredit(req.params.orderId, req.body.percent, function (order) {
         if (order.success == false) {
             req.flash('error', 'error')
             res.redirect('/admin/orders-filter')
@@ -450,7 +456,7 @@ exports.allowCred=function(req,res)
     })
 }
 
-exports.saveOrder=function(req,res){
+exports.saveOrder = function (req, res) {
     cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
@@ -459,13 +465,14 @@ exports.saveOrder=function(req,res){
         }
         else {
             codaAllow.find({}, function (err, foundThres) {
-                var cod = false
-                if (!err && foundThres.length >= 1||cart.allowCOD==false) {
+                var cod = true
+                
+                if (!err && foundThres.length >= 1 && cart.allowCOD == true) {
                     if (cart.total < foundThres[0].from) {
-                        req.flash('error', 'cod not allowed')
-                        res.redirect('/cartpage')
+                        cod=false
                     }
-                    else {
+                }
+                        
                         orderServices.findAddressByid(req.body.address, function (address) {//get address of user
                             if (address.success == false) {
                                 console.log('error in getting address list');
@@ -485,8 +492,8 @@ exports.saveOrder=function(req,res){
                                     orderedItems: cart.cartList,
                                     uuid: req.user.uuid,
                                     paymentType: 'online',
-                                    codAllowed: true,
-                                    shipmentStatus:'saved'
+                                    codAllowed: cod,
+                                    shipmentStatus: 'saved'
                                 }
                                 orderServices.createOrder(order, function (createOrder) {
                                     if (createOrder.success == false) {
@@ -501,8 +508,8 @@ exports.saveOrder=function(req,res){
 
                             }
                         })
-                    }
-                }
+                    
+                
 
 
             })
@@ -512,28 +519,42 @@ exports.saveOrder=function(req,res){
 
 }
 
-exports.saveToCod=function(req,res)
-{
-    orderServices.updateOrderDoc(req.params.orderId,{paymentType:'COD',shipmentStatus:'processing'},function(updatedOrder){
-        if(updatedOrder.success==false)
-        {
-            req.flash('error','error in processing order')
+exports.savedToCod = function (req, res) {
+    orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'COD', shipmentStatus: 'processing' }, function (updatedOrder) {
+        if (updatedOrder.success == false) {
+            req.flash('error', 'error in processing order')
             res.rediect('/saved-orders')
         }
-        else
-        {
-            res.render('successPage',{order:updatedOrder.order})
+        else {
+            req.session.mode = ''
+            res.render('successPage', { order: updatedOrder.order })
         }
     })
 }
 
-exports.saveToCredit=function(req,res)
-{
-
+exports.savedToCredit = function (req, res) {
+    orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'credit', shipmentStatus: 'processing' }, function (updatedOrder) {
+        if (updatedOrder.success == false) {
+            req.flash('error', 'error in processing order')
+            res.rediect('/saved-orders')
+        }
+        else {
+            req.session.mode = 'credit'
+            res.rediect('/order/' + updatedOrder.order.orderId + '/payment')
+        }
+    })
 }
-exports.saveToPay=function(req,res)
-{
-    
+exports.savedToPay = function (req, res) {
+    orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'online', shipmentStatus: 'processing' }, function (updatedOrder) {
+        if (updatedOrder.success == false) {
+            req.flash('error', 'error in processing order')
+            res.rediect('/saved-orders')
+        }
+        else {
+            req.session.mode = ''
+            res.rediect('/order/' + updatedOrder.order.orderId + '/payment')
+        }
+    })
 }
 exports.getOrderByShipStatus = function (req, res) {
     orderServices.getOrderByShipment(req.params.shipment, function (foundOrder) {
