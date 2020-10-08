@@ -372,8 +372,8 @@ class order {
         })
     }
 
-    creditOrderUpdate(orderId, uuid, total, callback) {
-        ordermodel.findOneAndUpdate({ orderId: orderId, uuid: uuid }, { total: total, paymentType: 'credit' }, function (err, updatedOrder) {
+    creditOrderUpdate(orderId, uuid, callback) {
+        ordermodel.findOneAndUpdate({ orderId: orderId, uuid: uuid }, { paymentType: 'credit' }, function (err, updatedOrder) {
             if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
             else
                 callback({ success: true, order: updatedOrder })
@@ -382,12 +382,21 @@ class order {
 
     allowCredit(orderId, percent, callback) {
         ordermodel.findOneAndUpdate({ orderId: orderId, },
-            { creditAllowed: true, creditPercent: percent, paymentType: 'credit', shipmentStatus: 'approved' },
+            { creditAllowed: true, creditPercent: percent, paymentType: 'credit', shipmentStatus: 'processing' },
             function (err, updatedOrder) {
                 if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
                 else
                     callback({ success: true, order: updatedOrder })
             })
+    }
+
+    updateOrderDoc(orderId,data,callback)
+    {
+        ordermodel.findOneAndUpdate({ orderId: orderId,}, data, function (err, updatedOrder) {
+            if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
+            else
+                callback({ success: true, order: updatedOrder })
+        })
     }
 
 

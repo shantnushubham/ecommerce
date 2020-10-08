@@ -61,14 +61,20 @@ var itemsSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
-    
-    vendorId:{
-        type:String
+
+    vendorId: {
+        type: String
     },
-    vendorName:{
-        type:String
+    vendorName: {
+        type: String
     },
-   
+    cod: {
+        type: Boolean,
+        default: true
+    },
+    shortDesc: {
+        type: String
+    }
 });
 
 itemsSchema.plugin(mongooseHistory)

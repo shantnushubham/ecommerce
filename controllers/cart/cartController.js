@@ -27,11 +27,16 @@ exports.getAllItems = function (req, res) {
                 res.redirect('/items')
             }
             else {
-
-                cartlisting = cartservices.verifyCart(found, req.user.uuid)
-                //  console.log(cartlisting);   
-
-                res.render('cartpage', { cart: cartlisting })
+                var codAllowed=true
+                for(var i=0;i<found.length;i++)
+                {
+                    if(found[i].item.cod==false)
+                    {
+                        codAllowed=false
+                        break
+                    }
+                }
+                res.render('cartpage', { cart: found, codAllowed:codAllowed })
             }
         })
 

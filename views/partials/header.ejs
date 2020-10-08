@@ -60,14 +60,41 @@
 </head>
 
 <body>
+    <% var array = new Array() %>
+    <% array.push({name : "Winter Uniforms", image: "", desc: ""}) %>
+    <% array.push({name : "Books", image: "", desc: ""}) %>
+    <% array.push({name : "Physics", image: "", desc: ""}) %>
+    <% array.push({name : "Chemistry", image: "", desc: ""}) %>
+    <% array.push({name : "Biology", image: "", desc: ""}) %>
+    <% array.push({name : "Mathematics", image: "", desc: ""}) %>
+    <% array.push({name : "Geography & Surveying", image: "", desc: ""}) %>
+    <% array.push({name : "Visual Teaching", image: "", desc: ""}) %>
+    <% array.push({name : "Education CD", image: "", desc: ""}) %>
+    <% array.push({name : "Portraits", image: "", desc: ""}) %>
+    <% array.push({name : "Electronics", image: "", desc: ""}) %>
+    <% array.push({name : "Pharmacy", image: "", desc: ""}) %>
+    <% array.push({name : "Sieves", image: "", desc: ""}) %>
+    <% array.push({name : "Applied Mathematics", image: "", desc: ""}) %>
+    <% array.push({name : "Psychology", image: "", desc: ""}) %>
+    <% array.push({name : "Entomology", image: "", desc: ""}) %>
+    <% array.push({name : "Metallurgy & Bio-Technology", image: "", desc: ""}) %>
+    <% array.push({name : "Pathology", image: "", desc: ""}) %>
+    <% array.push({name : "Histopathology", image: "", desc: ""}) %>
+    <% array.push({name : "Quartz Glassware", image: "", desc: ""}) %>
+    <% array.push({name : "ABDOS Lab Plastic-ware", image: "", desc: ""}) %>
+    <% array.push({name : "Nursing Products", image: "", desc: ""}) %>
+    <% array.push({name : "Mechanical Engineer Lab", image: "", desc: ""}) %>
+    <% array.push({name : "Laboratory Instrument", image: "", desc: ""}) %>
+    <% array.push({name : "Chemicals", image: "", desc: ""}) %>
+    <% array.push({name : "Avantor Glassware", image: "", desc: ""}) %>
 
     <!-- Start Preloader Area -->
-    <div class="preloader">
+    <!-- <div class="preloader">
         <div class="spinner">
             <div class="double-bounce1"></div>
             <div class="double-bounce2"></div>
         </div>
-    </div>
+    </div> -->
     <!-- End Preloader Area -->
 
     <div id="page" class="theia-exception">
@@ -81,34 +108,9 @@
                         <img src="/img/112cartLogo.png" alt="Asahi Logo">
                     </a>
                     <div class="scrollmenu">
-                        <a href="#home">Home</a>
-                        <a href="#news">News</a>
-                        <a href="#contact">Contact</a>
-                        <a href="#about">About</a> <a href="#home">Home</a>
-                        <a href="#news">News</a>
-                        <a href="#contact">Contact</a>
-                        <a href="#about">About</a> <a href="#home">Home</a>
-                        <a href="#news">News</a>
-                        <a href="#contact">Contact</a>
-                        <a href="#about">About</a> <a href="#home">Home</a>
-                        <a href="#news">News</a>
-                        <a href="#contact">Contact</a>
-                        <a href="#about">About</a> <a href="#home">Home</a>
-                        <a href="#news">News</a>
-                        <a href="#contact">Contact</a>
-                        <a href="#about">About</a> <a href="#home">Home</a>
-                        <a href="#news">News</a>
-                        <a href="#contact">Contact</a>
-                        <a href="#about">About</a> <a href="#home">Home</a>
-                        <a href="#news">News</a>
-                        <a href="#contact">Contact</a>
-                        <a href="#about">About</a> <a href="#home">Home</a>
-                        <a href="#news">News</a>
-                        <a href="#contact">Contact</a>
-                        <a href="#about">About</a> <a href="#home">Home</a>
-                        <a href="#news">News</a>
-                        <a href="#contact">Contact</a>
-                        <a href="#about">About</a>
+                        <% array.forEach(element => { %>
+                        <a href="#coming-soon" uk-toggle><%=element.name%></a>
+                        <% }); %>
                     </div>
                 </div>
 
@@ -129,21 +131,18 @@
                                         <a href="#" class="nav-link">Offerings</a>
                                         <ul class="dropdown-menu">
                                             <li class="nav-item">
-                                                <a href="menu-standard.html" class="nav-link">Menu Standard</a>
+                                                <a href="menu-standard.html" class="nav-link">Categories</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="menu-classic.html" class="nav-link">Menu Classic</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="menu-grid.html" class="nav-link">Menu Grid</a>
+                                                <a href="menu-classic.html" class="nav-link">Packages</a>
                                             </li>
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="/items" class="nav-link"> Items</a>
+                                        <a href="/items" class="nav-link">All Items</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="/cartPage" class="nav-link">Cart &nbsp;<span uk-icon="cart"></span></a>
+                                        <a href="/cartPage" class="nav-link">Cart ()&nbsp;<span uk-icon="cart"></span></a>
                                     </li>
                                     <li class="nav-item" id="mobileLogin">
                                         <% if (currentUser != "") { %>
@@ -176,38 +175,37 @@
                     </nav>
                 </div>
                 <div class="scrollmenu">
-                    <a href="#home">Home</a>
-                    <a href="#news">News</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#about">About</a> <a href="#home">Home</a>
-                    <a href="#news">News</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#about">About</a> <a href="#home">Home</a>
-                    <a href="#news">News</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#about">About</a> <a href="#home">Home</a>
-                    <a href="#news">News</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#about">About</a> <a href="#home">Home</a>
-                    <a href="#news">News</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#about">About</a> <a href="#home">Home</a>
-                    <a href="#news">News</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#about">About</a> <a href="#home">Home</a>
-                    <a href="#news">News</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#about">About</a> <a href="#home">Home</a>
-                    <a href="#news">News</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#about">About</a> <a href="#home">Home</a>
-                    <a href="#news">News</a>
-                    <a href="#contact">Contact</a>
-                    <a href="#about">About</a>
+                    <% array.forEach(element => { %>
+                    <a href="#coming-soon" uk-toggle><%=element.name%></a>
+                    <% }); %>
                 </div>
             </div>
         </div>
         <!-- End Navbar Area -->
+
+        <!-- Start Coming Soon Modal -->
+        <div id="coming-soon" class="uk-flex-top" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+                <h2 style="text-align: center;">This Category is <br>
+                    <b style="color: #004aad;">Coming soon.</b>
+                </h2>
+                <h4 style="text-align: center;">Checkout available:</h4>
+                <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+                    <div style="text-align: center;">
+                        <a class="default-btn-two" href="#productsAndServices"
+                            style="padding: 8px 15px 8px 15px; color: white;" uk-scroll>
+                            Products </a>
+                    </div>
+                    <div style="text-align: center;">
+                        <a class="default-btn-two" href="#productsAndServices"
+                            style="padding: 8px 15px 8px 15px; color: white;" uk-scroll>
+                            Services </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Coming Soon Modal -->
 
         <!-- Start Sidebar Modal -->
         <div class="sidebar-modal">
