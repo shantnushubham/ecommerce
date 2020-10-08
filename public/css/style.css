@@ -870,7 +870,7 @@ Section Title
 Start Navbar Area Style
 ================================*/
 .asahi-nav .main-nav {
-  background-color: transparent;
+  background-color: #000;
   padding: 0;
 }
 
