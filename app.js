@@ -13,6 +13,7 @@ var logger = require('morgan');
 var MongoStore  = require('connect-mongo')(session)
 const cors                    = require("cors");
 const axios=require('axios')
+const cartModel=require('./models/cart/cart')
 
 
 
@@ -103,6 +104,22 @@ app.use(function(req, res, next){
       res.locals.currentUser = "";
       res.locals.success = req.flash('success');
       res.locals.error = req.flash('error');
+  }
+  next();
+});
+
+app.use(function(req, res, next){
+  if (req.isAuthenticated()) {
+      cartModel.countDocuments({uuid:req.user.uuid},function(err,count){
+        if(!err)
+        res.locals.cartCount = count
+        else
+        res.locals.cartCount=0
+      })
+    
+      
+  } else {
+     res.locals.cartCount=0
   }
   next();
 });
