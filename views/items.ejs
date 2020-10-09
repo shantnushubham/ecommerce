@@ -12,7 +12,7 @@
 						<i class="fa fa-chevron-right"></i>
 					</a>
 				</li>
-				<li>Shop</li>
+				<li>Items</li>
 			</ul>
 		</div>
 	</div>
@@ -29,6 +29,7 @@
 					<div class="collapse show" id="collapseFilters">
 						<form method="POST" action="/items">
 							<hr>
+							<% if (!(category.length == 1 && category[0] == '')) { %>
 							<div class="filter_type">
 								<h5>Categories</h5>
 								<ul>
@@ -43,6 +44,8 @@
 								</ul>
 							</div>
 							<hr>
+							<% } %>
+							<% if (!(subCategory.length == 1 && subCategory[0] == '')) { %>
 							<div class="filter_type">
 								<h5>Sub-Category</h5>
 								<ul>
@@ -57,6 +60,8 @@
 								</ul>
 							</div>
 							<hr>
+							<% } %>
+							<% if (!(tag.length == 1 && tag[0] == '')) { %>
 							<div class="filter_type">
 								<h5>Tags</h5>
 								<ul>
@@ -70,6 +75,7 @@
 									<% }); %>
 								</ul>
 							</div>
+							<% } %>
 							<button class="default-btn" type="submit">Search</button>
 						</form>
 
@@ -85,7 +91,6 @@
 					<div class="container">
 						<div class="row">
 							<% itemlist.forEach(el => { %>
-							<% if (el.active) { %>
 							<div class="col-lg-6 col-md-6 col-sm-6">
 								<div class="single-menu-item" style="background-color: white !important;">
 									<div class="menu-img">
@@ -108,7 +113,7 @@
 									</div>
 								</div>
 							</div>
-							<% }}) %>
+							<% }) %>
 						</div>
 					</div>
 					<!-- End Suitable Menu Area -->
