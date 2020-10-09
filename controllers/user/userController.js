@@ -1,7 +1,6 @@
 var User = require("../../models/User/User")
 var UserAddress = require("../../models/User/DeliveryAddress")
 // var Generator = require("../../common/Generator")
-var mailer = require("../common/Mailer")
 var mongoose = require('mongoose')
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
@@ -14,7 +13,7 @@ const axios = require('axios');
 const orderServices = require('../../openServices/order')
 const businessReg = require('../../models/User/businessAcc')
 const functions = require('../../Middlewares/common/functions')
-const mailer=require('../common/Mailer')
+const mailer = require('../common/Mailer')
 
 exports.register = (req, res) => {
   const { password, password2, phone } = req.body;
@@ -115,20 +114,20 @@ exports.recover = (req, res) => {
         .then(user => {
           // send email
           let link = "http://" + req.headers.host + "/reset/" + user.resetPasswordToken;
-          mailer.forgotPassword(user.email,user.resetPasswordToken,function(emailed){
-            req.flash('success','check email for token')
+          mailer.forgotPassword(user.email, user.resetPasswordToken, function (emailed) {
+            req.flash('success', 'check email for token')
             res.redirect('/recover')
           })
-          
+
         })
         .catch(err => {
-          req.flash('error','some error occured')
+          req.flash('error', 'some error occured')
           res.redirect('/recover')
         });
     })
     .catch(err => {
-      req.flash('error','could not find user')
-          res.redirect('/recover')
+      req.flash('error', 'could not find user')
+      res.redirect('/recover')
     });
 };
 
@@ -141,8 +140,8 @@ exports.reset = (req, res, next) => {
       return next();
     })
     .catch(err => {
-     req.flash('error','error in getting user')
-     res.redirect('/')
+      req.flash('error', 'error in getting user')
+      res.redirect('/')
     });
 };
 
@@ -153,7 +152,7 @@ exports.resetPassword = (req, res) => {
       User.findOne({ resetPasswordToken: req.body.token, resetPasswordExpires: { $gt: Date.now() } })
         .then((user) => {
           if (!user) {
-            req.flash('error','Password reset token is invalid or has expired.')
+            req.flash('error', 'Password reset token is invalid or has expired.')
             res.redirect('/')
           }
 
@@ -163,16 +162,15 @@ exports.resetPassword = (req, res) => {
 
             user.save(function (err) {
               if (err) {
-                req.flash('error','some error occured')
+                req.flash('error', 'some error occured')
                 res.redirect('/')
               }
-              else
-              {
-                mailer.changedPassword(user.email,function(sentmail){
-                  if(sentmail.success==false)
-                  req.flash('error','error in updating')
+              else {
+                mailer.changedPassword(user.email, function (sentmail) {
+                  if (sentmail.success == false)
+                    req.flash('error', 'error in updating')
                   else
-                  req.flash('success','success')
+                    req.flash('success', 'success')
                   res.redirect('/')
                 })
               }
@@ -181,9 +179,8 @@ exports.resetPassword = (req, res) => {
           })
         });
     }
-    else 
-    {
-      req.flash('error', 'Password doesn\'t match' )
+    else {
+      req.flash('error', 'Password doesn\'t match')
       res.redirect('/')
     }
   }
@@ -544,10 +541,9 @@ exports.revokeBizAcc = function (req, res) {
   })
 }
 
-exports.getBizReqByStatus=function(req,res)
-{
-  var st=req.params.status=='true'?true:false;
-  businessReg.find({isAccepted:st}, function (err, foundB) {
+exports.getBizReqByStatus = function (req, res) {
+  var st = req.params.status == 'true' ? true : false;
+  businessReg.find({ isAccepted: st }, function (err, foundB) {
     if (err) {
       req.flash('error', 'error could not find in db')
       res.redirect('/admin')
