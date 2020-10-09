@@ -60,6 +60,17 @@
 </head>
 
 <body>
+
+    <% if (error && error.length > 0) { %>
+    <div class="alert alert-danger" role="alert" style="text-align: center;">
+        <%= error %>
+    </div>
+    <% } else if (success && success.length > 0) { %>
+    <div class="alert alert-success" role="alert" style="text-align: center;">
+        <%= success %>
+    </div>
+    <% } %>
+
     <% var array = new Array() %>
     <% array.push({name : "Winter Uniforms", image: "", desc: ""}) %>
     <% array.push({name : "Books", image: "", desc: ""}) %>
@@ -142,7 +153,8 @@
                                         <a href="/items" class="nav-link">All Items</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="/cartPage" class="nav-link">Cart (0) &nbsp;<span uk-icon="cart"></span></a>
+                                        <a href="/cartPage" class="nav-link">Cart (0) &nbsp;<span
+                                                uk-icon="cart"></span></a>
                                     </li>
                                     <li class="nav-item" id="mobileLogin">
                                         <% if (currentUser != "") { %>

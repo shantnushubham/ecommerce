@@ -59,21 +59,25 @@
                                 <th>Payment Status</th>
                                 <th>Shipment Status</th>
                                 <th>Total</th>
+                                <th>Confirm Order</th>
+                                <th>Authorize Payment</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             <% orders.forEach(element => { %>
                             <tr>
-                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.orderId%></td></a>
-                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.uuid %></td></a>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.orderId%></a></td>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.uuid %></a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.paymentType.toUpperCase()%>
-                                </td></a>
+                                </a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.status.toUpperCase() %>
-                                </td></a>
+                                </a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.shipmentStatus.toUpperCase() %>
-                                </td></a>
-                                <td><a href="/admin/orders/<%=element.orderId%>">Rs. <%= element.total %></td></a>
+                                </a></td>
+                                <td><a href="/admin/orders/<%=element.orderId%>">Rs. <%= element.total %></a></td>
+                                <td><a class="ui small green button" href="/admin/confirm-order/<%=element.orderId%>">Confirm</a></td>
+                                <td><a class="ui small green button" href="/admin/authorize/<%=element.orderId%>">Authorize</a></td>
                             </tr>
                             <% }); %>
                         </tbody>

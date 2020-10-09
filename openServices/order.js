@@ -326,7 +326,7 @@ class order {
     }
 
     acceptOrder(orderId, data, callback) {
-        ordermodel.findOneAndUpdate({ order_id: orderId }, data, function (err, order) {
+        ordermodel.findOneAndUpdate({ orderId: orderId }, data, function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true })
         })
@@ -359,7 +359,7 @@ class order {
     }
 
     authorizeOrder(orderId, callback) {
-        ordermodel.findOneAndUpdate({ orderId: orderId }, { status: authorized }, function (err, updatedOrder) {
+        ordermodel.findOneAndUpdate({ orderId: orderId }, { status: "authorized" }, function (err, updatedOrder) {
             if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
             else
                 callback({ success: true })

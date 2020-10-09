@@ -375,7 +375,7 @@ exports.getAllCancellations = function (req, res) {
             res.redirect('/')
         }
         else {
-            res.render('adminCancelList', { cancellations: cancellations })
+            res.render('adminCancelList', { cancellations: cancellations.cancelReq })
         }
     })
 }
