@@ -1,0 +1,90 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Orders List</li>
+        </ol>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Orders Data Table</div>
+            <div class="row" style="margin: 5px;">
+                <div class="col-sm-1" style="text-align: center;">
+                    <a class="ui primary button" href="/admin/orders-filter-payment/initialised">Initialized</a>
+                </div>
+                <div class="col-sm-1" style="text-align: center;">
+                    <a class="ui primary button" href="/admin/orders-filter-payment/authorized">Authorized</a>
+                </div>
+                <div class="col-sm-1" style="text-align: center;">
+                    <a class="ui primary button" href="/admin/orders-filter-shipment/processing">Processing</a>
+                </div>
+                <div class="col-sm-1" style="text-align: center;">
+                    <a class="ui primary button" href="/admin/orders-filter-shipment/approved">Approved</a>
+                </div>
+                <div class="col-sm-1" style="text-align: center;">
+                    <a class="ui primary button" href="/admin/orders-filter-shipment/saved">Saved</a>
+                </div>
+                <div class="col-sm-1" style="text-align: center;">
+                    <a class="ui primary button"
+                        href="/admin/orders-filter-shipment/cancellation-processing">Cancellation Processing</a>
+                </div>
+                <div class="col-sm-1" style="text-align: center;">
+                    <a class="ui primary button" href="/admin/orders-filter-shipment/cancelled">Cancelled</a>
+                </div>
+                <div class="col-sm-1" style="text-align: center;">
+                    <a class="ui primary button" href="/admin/orders-filter-shipment/completed">Completed</a>
+                </div>
+                <div class="col-sm-1" style="text-align: center;">
+                    <a class="ui primary button" href="/admin/orders-filter-paymentType/cod">COD</a>
+                </div>
+                <div class="col-sm-1" style="text-align: center;">
+                    <a class="ui primary button" href="/admin/orders-filter-paymentType/online">Online</a>
+                </div>
+                <div class="col-sm-1" style="text-align: center;">
+                    <a class="ui primary button" href="/admin/orders-filter-paymentType/credit">Credit</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>User ID</th>
+                                <th>Payment Type</th>
+                                <th>Payment Status</th>
+                                <th>Shipment Status</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% orders.forEach(element => { %>
+                            <tr>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.orderId%></td></a>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.uuid %></td></a>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.paymentType.toUpperCase()%>
+                                </td></a>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.status.toUpperCase() %>
+                                </td></a>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.shipmentStatus.toUpperCase() %>
+                                </td></a>
+                                <td><a href="/admin/orders/<%=element.orderId%>">Rs. <%= element.total %></td></a>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /tables-->
+    </div>
+    <!-- /container-fluid-->
+</div>
+<!-- /container-wrapper-->
+
+<%- include('partials/adminFooter'); -%>

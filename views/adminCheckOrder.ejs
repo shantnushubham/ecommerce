@@ -1,0 +1,64 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">User Order List</li>
+        </ol>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> User's Order Table</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Payment Status</th>
+                                <th>Shipment Status</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% Olist.forEach(el => { %>
+                            <tr>
+                                <td>
+                                    <%=el.item.name%>
+                                </td>
+
+                                <td>
+                                    <%=el.quantity%>
+                                </td>
+
+                                <td>
+                                    <%=order.status.toUpperCase() %>
+                                </td>
+
+                                <td>
+                                    <%=order.shipmentStatus.toUpperCase()%></span>
+                                </td>
+
+                                <td>
+                                    <%var total =  parseInt(el.quantity * el.item.price) * 1.18%>
+                                    Rs. <%=total%>
+                                </td>
+                            </tr>
+                            <% })%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /tables-->
+    </div>
+    <!-- /container-fluid-->
+</div>
+<!-- /container-wrapper-->
+
+<%- include('partials/adminFooter'); -%>

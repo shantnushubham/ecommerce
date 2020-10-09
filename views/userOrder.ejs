@@ -4,7 +4,7 @@
 <div class="page-title-area item-bg-2">
     <div class="container">
         <div class="page-title-content">
-            <h2>Your Orders</h2>
+            <h2>Your Order</h2>
             <ul>
                 <li>
                     <a href="index.html">
@@ -29,45 +29,46 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">Order ID</th>
-                                    <th scope="col">Total Items Ordered</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Payment Status</th>
+                                    <th scope="col">Shipment Status</th>
                                     <th scope="col">Total</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <% order.forEach(el => { %>
+                                <% Olist.forEach(el => { %>
                                 <tr>
                                     <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>"><%=el.orderId%></a>
+                                        <%=el.item.name%>
                                     </td>
 
                                     <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>"><%=el.orderedItems.length%></a>
+                                        <%=el.quantity%>
                                     </td>
 
                                     <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>"><%=el.purchaseTime.toDateString() %></a>
+                                        <%=order.status.toUpperCase() %>
                                     </td>
 
-                                    <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>"><%=el.status.toUpperCase()%></a>
+                                    <td class="product-price">
+                                        <%=order.shipmentStatus.toUpperCase()%></span>
                                     </td>
 
-                                    <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>">Rs. <%=el.total%></a>
+                                    <td class="product-subtotal">
+                                        <%var total =  parseInt(el.quantity * el.item.price) * 1.18%>
+                                        Rs. <%=total%>
                                     </td>
                                 </tr>
-                                <% }) %>
+                                <% })%>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="cart-buttons">
                         <div class="row align-items-center">
-                            <div class="col-lg-4 col-sm-4 col-md-4">
+                            <div class="col-lg-7 col-sm-7 col-md-7">
                                 <div class="continue-shopping-box">
                                     <a href="/items" class="default-btn">
                                         Continue Shopping
@@ -75,17 +76,10 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-sm-4 col-md-4">
-                                <div style="text-align: center;">
-                                    <a href="/cancellations" class=" default-btn">
-                                        My Cancellations
-                                        <i class="flaticon-right-arrow-forward"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-4 col-md-4 text-right">
-                                <a href="/updateCart" class=" default-btn">
-                                    Update Cart
+                            <div class="col-lg-5 col-sm-5 col-md-5 text-right">
+                                <a href="/cancellation/request/<%=order.orderId%>" class=" default-btn"
+                                    style="background-color: red;">
+                                    Cancel Order
                                     <i class="flaticon-right-arrow-forward"></i>
                                 </a>
                             </div>

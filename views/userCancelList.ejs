@@ -4,7 +4,7 @@
 <div class="page-title-area item-bg-2">
     <div class="container">
         <div class="page-title-content">
-            <h2>Your Orders</h2>
+            <h2>Cancellations</h2>
             <ul>
                 <li>
                     <a href="index.html">
@@ -12,7 +12,7 @@
                         <i class="fa fa-chevron-right"></i>
                     </a>
                 </li>
-                <li>Your Orders</li>
+                <li>Your Cancellations</li>
             </ul>
         </div>
     </div>
@@ -30,36 +30,33 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Order ID</th>
-                                    <th scope="col">Total Items Ordered</th>
+                                    <th scope="col">Cancellation ID</th>
+                                    <th scope="col">Cancellation Status</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Total</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <% order.forEach(el => { %>
+                                <% cancellations.forEach(el => { %>
                                 <tr>
                                     <td class="product-name">
                                         <a href="/user-order/<%=el.orderId%>"><%=el.orderId%></a>
                                     </td>
 
                                     <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>"><%=el.orderedItems.length%></a>
+                                        <a href="/user-order/<%=el.orderId%>"><%=el.cancellationId%></a>
                                     </td>
 
                                     <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>"><%=el.purchaseTime.toDateString() %></a>
+                                        <a
+                                            href="/user-order/<%=el.orderId%>"><%=el.cancellationStatus.toUpperCase() %></a>
                                     </td>
 
                                     <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>"><%=el.status.toUpperCase()%></a>
-                                    </td>
-
-                                    <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>">Rs. <%=el.total%></a>
+                                        <a href="/user-order/<%=el.orderId%>"><%=el.dateCreated.toDateString() %></a>
                                     </td>
                                 </tr>
+                                </a>
                                 <% }) %>
                             </tbody>
                         </table>
@@ -67,7 +64,7 @@
 
                     <div class="cart-buttons">
                         <div class="row align-items-center">
-                            <div class="col-lg-4 col-sm-4 col-md-4">
+                            <div class="col-lg-7 col-sm-7 col-md-7">
                                 <div class="continue-shopping-box">
                                     <a href="/items" class="default-btn">
                                         Continue Shopping
@@ -75,16 +72,9 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-sm-4 col-md-4">
-                                <div style="text-align: center;">
-                                    <a href="/cancellations" class=" default-btn">
-                                        My Cancellations
-                                        <i class="flaticon-right-arrow-forward"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-sm-4 col-md-4 text-right">
-                                <a href="/updateCart" class=" default-btn">
+
+                            <div class="col-lg-5 col-sm-5 col-md-5 text-right">
+                                <a href="#" class=" default-btn">
                                     Update Cart
                                     <i class="flaticon-right-arrow-forward"></i>
                                 </a>

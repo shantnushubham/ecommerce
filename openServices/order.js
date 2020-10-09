@@ -266,6 +266,7 @@ class order {
                 callback({ success: false })
             else {
                 cancelOrderModel.create({ orderId: orderId, uuid: updatedOrder.uuid }, function (err, createdCancel) {
+                    console.log(err, createdCancel);
                     if (err || functions.isEmpty(createdCancel))
                         callback({ success: false })
                     else
@@ -337,7 +338,7 @@ class order {
             else callback({ success: true, order: order })
         })
     }
-    allOrders(callback) {
+    getAllOrders(callback) {
         ordermodel.find({}, function (err, order) {
             if (err || functions.isEmpty(order)) callback({ success: false })
             else callback({ success: true, order: order })
@@ -345,7 +346,7 @@ class order {
     }
     getOrderByPayment(status, callback) {
         ordermodel.find({ status: status }, function (err, order) {
-            if (err || functions.isEmpty(order)) callback({ success: false })
+            if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
     }
