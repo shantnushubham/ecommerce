@@ -14,6 +14,7 @@ const axios = require('axios');
 const orderServices = require('../../openServices/order')
 const businessReg = require('../../models/User/businessAcc')
 const functions = require('../../Middlewares/common/functions')
+const mailer=require('../common/Mailer')
 
 exports.register = (req, res) => {
   const { password, password2, phone } = req.body;
@@ -114,29 +115,21 @@ exports.recover = (req, res) => {
         .then(user => {
           // send email
           let link = "http://" + req.headers.host + "/reset/" + user.resetPasswordToken;
-          const mailOptions = {
-            to: user.email,
-            from: 'support@inversion.co.in',
-            subject: "Password change request",
-            text: `Hi ${user.username} \n 
-                    Please click on the following link ${link} to reset your password. \n\n 
-                    If you did not request this, please ignore this email and your password will remain unchanged.\n`,
-          };
-          sendgrid.send(mailOptions, (error, result) => {
-            if (error) {
-              console.log(error)
-              return res.status(500).json({ message: error.message });
-            }
-            req.flash(
-              'success_msg',
-              'A reset email has been sent to ' + user.email + '.'
-            );
-            res.redirect('/recover');
-          });
+          mailer.forgotPassword(user.email,user.resetPasswordToken,function(emailed){
+            req.flash('success','check email for token')
+            res.redirect('/recover')
+          })
+          
         })
-        .catch(err => res.status(500).json({ message: err.message }));
+        .catch(err => {
+          req.flash('error','some error occured')
+          res.redirect('/recover')
+        });
     })
-    .catch(err => res.status(500).json({ message: err.message }));
+    .catch(err => {
+      req.flash('error','could not find user')
+          res.redirect('/recover')
+    });
 };
 
 exports.reset = (req, res, next) => {
@@ -148,8 +141,8 @@ exports.reset = (req, res, next) => {
       return next();
     })
     .catch(err => {
-      console.log(err)
-      return res.status(500).json({ msg: err.message })
+     req.flash('error','error in getting user')
+     res.redirect('/')
     });
 };
 
@@ -159,33 +152,40 @@ exports.resetPassword = (req, res) => {
     if (req.body.password === req.body.password2) {
       User.findOne({ resetPasswordToken: req.body.token, resetPasswordExpires: { $gt: Date.now() } })
         .then((user) => {
-          if (!user) return res.status(401).json({ msg: 'Password reset token is invalid or has expired.' });
+          if (!user) {
+            req.flash('error','Password reset token is invalid or has expired.')
+            res.redirect('/')
+          }
 
           user.setPassword(req.body.password, function (err) {
             user.resetPasswordToken = undefined;
             user.resetPasswordExpires = undefined;
 
             user.save(function (err) {
-              if (err) return res.status(500).json({ msg: err.message });
-              const mailOptions = {
-                to: user.email,
-                from: 'support@inversion.co.in',
-                subject: "Your password has been changed",
-                text: `Hi ${user.username} \n 
-                      This is a confirmation that the password for your account ${user.email} has just been changed.\n`
-              };
+              if (err) {
+                req.flash('error','some error occured')
+                res.redirect('/')
+              }
+              else
+              {
+                mailer.changedPassword(user.email,function(sentmail){
+                  if(sentmail.success==false)
+                  req.flash('error','error in updating')
+                  else
+                  req.flash('success','success')
+                  res.redirect('/')
+                })
+              }
 
-              sendgrid.send(mailOptions, (error, result) => {
-                if (error) return res.status(500).json({ msg: error.message });
-
-                req.flash('success_msg', 'password changed successfully');
-                res.redirect('/users/login');
-              });
             });
           })
         });
     }
-    else return res.status(200).json({ success: false, msg: 'Pasword doesn\'t matched' });
+    else 
+    {
+      req.flash('error', 'Password doesn\'t match' )
+      res.redirect('/')
+    }
   }
 };
 

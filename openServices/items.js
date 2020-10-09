@@ -9,7 +9,7 @@ class items {
 
     }
     getAllItems(callback) {
-        itemModel.find({}, function (err, foundItems) {
+        itemModel.find({active:true}, function (err, foundItems) {
             if (err) {
                 console.log(err)
                 callback({ success: false, err: err })
@@ -32,7 +32,7 @@ class items {
 
     getItemById(iid, callback) {
         console.log("called", iid);
-        itemModel.findOne({ iid: iid }, function (err, foundItem) {
+        itemModel.findOne({ iid: iid,active:true }, function (err, foundItem) {
             if (err) callback({ success: false, err: err })
             else {
                 if (functions.isEmpty(foundItem)) callback({ success: false, })
@@ -86,7 +86,7 @@ class items {
     }
 
     filterItems(filterList, callback) {
-        itemModel.find({ $or: filterList }, function (err, foundItems) {
+        itemModel.find({ $or: filterList,active:true }, function (err, foundItems) {
             if (err) {
                 console.log(err)
                 callback({ success: false, err: err })

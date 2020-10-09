@@ -74,6 +74,10 @@ var itemsSchema = new mongoose.Schema({
     },
     shortDesc: {
         type: String
+    },
+    isService:{
+        type:Boolean,
+        default:false
     }
 });
 

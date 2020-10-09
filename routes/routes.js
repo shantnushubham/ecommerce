@@ -18,9 +18,10 @@ router.get('/', (req,res) => {
 })
 
 router.get('/address', ensureAuthenticated, (req, res) => {
-  return res.render('address', {user: req.user})
+  res.render('address', {user: req.user})
 });
-
+// const ab=require('../controllers/common/Mailer')
+// router.get('/emailtest',ab.Register)
 router.get('/dashboard', (req, res) => {
   res.render('dashboard', {
     user: req.user
@@ -30,14 +31,11 @@ router.get('/dashboard', (req, res) => {
 router.post('/checkPincodeValid', UserControl.checkPinCodeValid);
 
 router.get('/recover', forwardAuthenticated, (req, res) => res.render('recover'));
-router.get('/reset/:token', UserControl.reset, (req, res) => {
-  return res.render('resetPassword', {token: req.params.token})});
-
-
-  
-  
-
 router.post('/recover', UserControl.recover);
+
+router.get('/reset/:token', UserControl.reset, (req, res) => {
+   res.render('resetPassword', {token: req.params.token})});
+
 router.post('/resetpassword', UserControl.resetPassword);   
 // -> /users
 router.use('/users', require('./user/routes'));

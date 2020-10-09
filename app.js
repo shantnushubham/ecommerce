@@ -12,6 +12,7 @@ const app = express();
 var logger = require('morgan');
 var MongoStore  = require('connect-mongo')(session)
 const cors                    = require("cors");
+const axios=require('axios')
 
 
 
@@ -142,7 +143,6 @@ app.get('/auth/facebook/callback',
 
 
 app.use('/', require('./routes/routes'));
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
