@@ -206,27 +206,24 @@ class cart {
                         if (err) { callback({ success: false, message: 'db error' }) }
                         else {
                             var containsService = false, containsProduct = false
-                            foundS.forEach(el => {
-                                if (el.isService == true) {
+                            for (let i = 0; i < foundS.length; i++) {
+                                if (foundS[i].isService) {
                                     containsService = true
                                     break
                                 }
-                                if (el.isService == false) {
+                                if (!foundS[i].isService) {
                                     containsProduct = true
                                     break
                                 }
-
-                            })
-                            if((founditem.isService==false&&containsService==true)||(founditem.isService==true&&containsProduct==true))
-                            {
-                                callback({success:false,message:'cannot add a product with a service to cart'})
                             }
-                            else
-                            {
+                            if ((founditem.isService == false && containsService == true) || (founditem.isService == true && containsProduct == true)) {
+                                callback({ success: false, message: 'cannot add a product with a service to cart' })
+                            }
+                            else {
                                 cartmodel.findOne({ iid: iid, uuid: uuid }, function (err, foundItem) {
                                     if (err) {
                                         callback({ success: false, found: false })
-            
+
                                     }
                                     else {
                                         var cartelement
@@ -237,13 +234,13 @@ class cart {
                                                 quantity: quantity,
                                                 image: founditem.image,
                                                 name: founditem.name,
-            
+
                                             }
                                             cartmodel.create(cartelement, function (err, addedItem) {
                                                 if (err) {
                                                     console.log(err);
                                                     callback({ success: false, message: 'error in adding to cart' })
-            
+
                                                 }
                                                 else {
                                                     callback({ success: true, item: addedItem })
@@ -257,27 +254,27 @@ class cart {
                                                 quantity: parseInt(quantity) + foundItem.quantity,
                                                 image: founditem.image,
                                                 name: founditem.name,
-            
+
                                             }
                                             cartmodel.findOneAndUpdate({ uuid: uuid, iid: founditem.iid, }, { quantity: parseInt(quantity) + foundItem.quantity, }, function (err, updatedCart) {
                                                 if (err) {
                                                     console.log(err);
                                                     callback({ success: false, message: 'error in adding to cart' })
-            
+
                                                 }
                                                 else {
                                                     callback({ success: true, item: updatedCart })
                                                 }
                                             })
-            
+
                                         }
-            
-            
+
+
                                     }
                                 })
-            
-            
-            
+
+
+
                             }
 
                         }
@@ -285,7 +282,7 @@ class cart {
 
 
 
-                   
+
 
 
 

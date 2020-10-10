@@ -34,6 +34,16 @@
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
+    <% if (error && error.length > 0) { %>
+    <div class="alert alert-danger" role="alert" style="text-align: center;">
+        <%= error %>
+    </div>
+    <% } else if (success && success.length > 0) { %>
+    <div class="alert alert-success" role="alert" style="text-align: center;">
+        <%= success %>
+    </div>
+    <% } %>
+
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
         <a class="navbar-brand" href="index.html"><img src="/img/112cartLogo.png" data-retina="true" alt="" width="63"
@@ -68,6 +78,18 @@
                     <a class="nav-link" href="/admin/createDeal">
                         <i class="fa fa-fw fa-star"></i>
                         <span class="nav-link-text">Create Deal</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+                    <a class="nav-link" href="/admin/orders-filter">
+                        <i class="fa fa-fw fa-star"></i>
+                        <span class="nav-link-text">Orders</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+                    <a class="nav-link" href="/admin/cancels-filter">
+                        <i class="fa fa-fw fa-star"></i>
+                        <span class="nav-link-text">Cancellation Requests</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookmarks">

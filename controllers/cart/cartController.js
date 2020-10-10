@@ -27,16 +27,14 @@ exports.getAllItems = function (req, res) {
                 res.redirect('/items')
             }
             else {
-                var codAllowed=true
-                for(var i=0;i<found.length;i++)
-                {
-                    if(found[i].item.cod==false)
-                    {
-                        codAllowed=false
+                var codAllowed = true
+                for (var i = 0; i < found.length; i++) {
+                    if (found[i].item.cod == false) {
+                        codAllowed = false
                         break
                     }
                 }
-                res.render('cartpage', { cart: found, codAllowed:codAllowed })
+                res.render('cartpage', { cartlisting: found, codAllowed: codAllowed })
             }
         })
 
@@ -114,8 +112,9 @@ exports.getUpdateCart = function (req, res) {
         }
     })
 
-    cartlisting = cartservices.verifyCart(cartlisting, req.user.uuid)
-    
+    // cartlisting = cartservices.verifyCart(cartlisting, req.user.uuid)
+    console.log(cartlisting);
+    res.render('updateCart', { cartlisting: cartlisting })
 }
 
 exports.updateCart = function (req, res) {
@@ -164,11 +163,11 @@ exports.addManyToCart = function (req, res) {
 
     }
     Promise.all(promiseArr).then(result => {
-        req.flash('success','added all to cart')
+        req.flash('success', 'added all to cart')
         res.redirect('/items/' + req.params.iid)
 
     }).catch(errors => {
-        req.flash('error','error in one or more items in cart.Please check')
+        req.flash('error', 'error in one or more items in cart.Please check')
         res.redirect('/items/' + req.params.iid)
 
 

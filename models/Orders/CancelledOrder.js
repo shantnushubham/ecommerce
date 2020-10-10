@@ -8,7 +8,7 @@ var shortid=require('shortid')
 // 2:someError
 
 var cancelledOrderSchema = new mongoose.Schema({
-    order_id: {
+    orderId: {
         type: String,
         required:true
     },

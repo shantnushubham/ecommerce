@@ -266,6 +266,7 @@ class order {
                 callback({ success: false })
             else {
                 cancelOrderModel.create({ orderId: orderId, uuid: updatedOrder.uuid }, function (err, createdCancel) {
+                    console.log(err, createdCancel);
                     if (err || functions.isEmpty(createdCancel))
                         callback({ success: false })
                     else
@@ -325,7 +326,7 @@ class order {
     }
 
     acceptOrder(orderId, data, callback) {
-        ordermodel.findOneAndUpdate({ order_id: orderId }, data, function (err, order) {
+        ordermodel.findOneAndUpdate({ orderId: orderId }, data, function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true })
         })
@@ -337,7 +338,7 @@ class order {
             else callback({ success: true, order: order })
         })
     }
-    allOrders(callback) {
+    getAllOrders(callback) {
         ordermodel.find({}, function (err, order) {
             if (err || functions.isEmpty(order)) callback({ success: false })
             else callback({ success: true, order: order })
@@ -345,7 +346,7 @@ class order {
     }
     getOrderByPayment(status, callback) {
         ordermodel.find({ status: status }, function (err, order) {
-            if (err || functions.isEmpty(order)) callback({ success: false })
+            if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
     }
@@ -358,7 +359,7 @@ class order {
     }
 
     authorizeOrder(orderId, callback) {
-        ordermodel.findOneAndUpdate({ orderId: orderId }, { status: authorized }, function (err, updatedOrder) {
+        ordermodel.findOneAndUpdate({ orderId: orderId }, { status: "authorized" }, function (err, updatedOrder) {
             if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
             else
                 callback({ success: true })

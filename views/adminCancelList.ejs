@@ -1,0 +1,59 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Cancellation Requests</li>
+        </ol>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Cancellation Requests</div>
+                <div class="row" style="margin: 2px">
+                    <div class="col-sm-6" style="text-align: center;">
+                        <a class="ui primary button"
+                            href="/admin/cancels-filter/cancelled">Cancelled</a>
+                    </div>
+                    <div class="col-sm-6" style="text-align: center;">
+                        <a class="ui primary button"
+                            href="/admin/cancels-filter/cancellation-processing">Cancellation Processing</a>
+                    </div>
+                </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Cancellation ID</th>
+                                <th>Date</th>
+                                <th>Cancellation Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% cancellations.forEach(element => { %>
+                            <tr>
+                                <td><a href="/admin/cancellations/<%=element.cancellationId%>"><%= element.orderId%></a></td>
+                                <td><a href="/admin/cancellations/<%=element.cancellationId%>"><%= element.cancellationId %></a></td>
+                                <td><a href="/admin/cancellations/<%=element.cancellationId%>"><%= element.dateCreated.toDateString()%>
+                                </a></td>
+                                <td><a href="/admin/cancellations/<%=element.cancellationId%>"><%= element.cancellationStatus.toUpperCase() %>
+                                </a></td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /tables-->
+    </div>
+    <!-- /container-fluid-->
+</div>
+<!-- /container-wrapper-->
+
+<%- include('partials/adminFooter'); -%>
