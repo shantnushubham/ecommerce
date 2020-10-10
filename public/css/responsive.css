@@ -1688,5 +1688,8 @@
   #mobileLogin {
     display: block !important;
   }
+  #notOnMobile {
+    display: none;
+  }
 }
 /*# sourceMappingURL=responsive.css.map */

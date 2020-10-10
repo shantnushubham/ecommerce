@@ -97,7 +97,7 @@
     <% array.push({name : "Mechanical Engineer Lab", image: "", desc: ""}) %>
     <% array.push({name : "Laboratory Instrument", image: "", desc: ""}) %>
     <% array.push({name : "Chemicals", image: "", desc: ""}) %>
-    <% array.push({name : "Avantor Glassware", image: "", desc: ""}) %>
+    <% array.push({name : "Avantor Glassware" , image: "" , desc: "" }) %>
 
     <!-- Start Preloader Area -->
     <!-- <div class="preloader">
@@ -118,6 +118,19 @@
                     <a href="/" class="logo">
                         <img src="/img/112cartLogo.png" alt="Asahi Logo">
                     </a>
+                    <a class="logo" style="position: fixed; left: 75% !important; top: 13px !important" href="#" uk-search-icon></a>
+                    <div class="uk-navbar-dropdown" uk-drop="mode: click; cls-drop: uk-navbar-dropdown; boundary: !nav">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+                                <form class="uk-search uk-search-navbar uk-width-1-1">
+                                    <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                                </form>
+                            </div>
+                            <div class="uk-width-auto">
+                                <a class="uk-navbar-dropdown-close" href="#" uk-close></a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="scrollmenu">
                         <% array.forEach(element => { %>
                         <a href="#coming-soon" uk-toggle><%=element.name%></a>
@@ -132,40 +145,52 @@
                             <a class="navbar-brand" href="/">
                                 <img src="/img/112cartLogo.png" alt="112 Cart Logo">
                             </a>
-
                             <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-                                <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item">
-                                        <a href="/" class="nav-link">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">Offerings</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="nav-item">
-                                                <a href="menu-standard.html" class="nav-link">Categories</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="menu-classic.html" class="nav-link">Packages</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="/items" class="nav-link">All Items</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="/cartPage" class="nav-link">Cart (0) &nbsp;<span
-                                                uk-icon="cart"></span></a>
-                                    </li>
-                                    <li class="nav-item" id="mobileLogin">
-                                        <% if (currentUser != "") { %>
-                                        <a href="#" data-toggle="modal" data-target="#myModal2" class="nav-link"> My
-                                            Account</a>
-                                        <% } else { %>
-                                        <a href="/users/login" class="nav-link"> Login &nbsp;<span
-                                                uk-icon="user"></span></a>
-                                        <% } %>
-                                    </li>
-                                </ul>
+                                <div class="uk-navbar-left">
+                                    <ul class="navbar-nav ml-auto">
+                                        <li class="nav-item">
+                                            <a href="/" class="nav-link">Home</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Offerings</a>
+                                            <ul class="dropdown-menu">
+                                                <li class="nav-item">
+                                                    <a href="menu-standard.html" class="nav-link">Categories</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="menu-classic.html" class="nav-link">Packages</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/items" class="nav-link">All Items</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/cartPage" class="nav-link">Cart (0) &nbsp;<span
+                                                    uk-icon="cart"></span></a>
+                                        </li>
+                                        <li class="nav-item" id="mobileLogin">
+                                            <% if (currentUser != "") { %>
+                                            <a href="#" data-toggle="modal" data-target="#myModal2" class="nav-link"> My
+                                                Account</a>
+                                            <% } else { %>
+                                            <a href="/users/login" class="nav-link"> Login &nbsp;<span
+                                                    uk-icon="user"></span></a>
+                                            <% } %>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="uk-navbar-right" id="notOnMobile">
+                                    <div>
+                                        <a class="uk-navbar-toggle" uk-search-icon href="#"></a>
+                                        <div class="uk-drop" uk-drop="mode: click; pos: left-center; offset: 0">
+                                            <form class="uk-search uk-search-navbar uk-width-1-1">
+                                                <input class="uk-search-input" type="search" placeholder="Search..."
+                                                    autofocus>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="others-option">
                                     <% if (currentUser != "") { %>
                                     <span class="menu-btn contact-number">
