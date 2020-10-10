@@ -30,6 +30,24 @@ class items {
         })
     }
 
+    searchBar(st,callback)
+    {
+        // itemModel.find({
+        //     name: {
+        //       "$regex": "bio bubble",
+        //       "$options": "i"
+        //     }},function(err,foundItems){
+        //         if(err)
+        //         callback({success:false})
+        //         else
+        //         {}
+        //     })
+        itemModel.textSearch(st,function(err,foundS){
+            if(err)callback(err)
+            else
+            callback(foundS)
+        })
+    }
     getItemById(iid, callback) {
         console.log("called", iid);
         itemModel.findOne({ iid: iid,active:true }, function (err, foundItem) {

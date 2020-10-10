@@ -115,7 +115,7 @@ exports.getUpdateCart = function (req, res) {
     })
 
     cartlisting = cartservices.verifyCart(cartlisting, req.user.uuid)
-    res.render('updateCart', { cart: cartlisting })
+    
 }
 
 exports.updateCart = function (req, res) {

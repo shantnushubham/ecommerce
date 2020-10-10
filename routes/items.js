@@ -7,5 +7,5 @@ app.get('/items', itemController.getAllItems)
 app.get('/items/:iid', itemController.getItem)
 // app.post('/items/filter',itemController.filterItems)
 app.post('/items', itemController.filterItems)
-
+app.post('/sstest',itemController.test)
 module.exports = app
