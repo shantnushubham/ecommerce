@@ -89,32 +89,22 @@ exports.getUpdateCart = function (req, res) {
             res.render('cartpage', { cart: cartlisting })
         }
         else {
+            var promiseArr=[]
             cartitem.items.forEach(element => {
-                itemmodel.findOne({ iid: element.iid }, function (err, founditem) {
-                    if (err) {
-                        req.flash('error', 'error in fetching cart')
-                        res.render('cartpage', { cart: cartlisting })
-                    }
-                    else {
-                        var itemdata = {
-                            itemID: element.iid,
-                            itemName: founditem.name,
-                            quantity: element.quantity,
-                            price: founditem.price,
-                            image: founditem.image,
-                            uuid: req.user.uuid,
-                        }
-                        cartlisting.push(itemdata)
-
-                    }
-                })
+               promiseArr.push( cartservices.getItemForList(element.iid,element.quantity,req.user.uuid))
             });
+            Promise.all(promiseArr).then((respo) => {
+                res.render('updateCart', { cartlisting: respo })
+            }).catch(err => {
+                console.log(err);
+                res.redirect('/cartpage')
+            })
         }
     })
 
     // cartlisting = cartservices.verifyCart(cartlisting, req.user.uuid)
     console.log(cartlisting);
-    res.render('updateCart', { cartlisting: cartlisting })
+    
 }
 
 exports.updateCart = function (req, res) {

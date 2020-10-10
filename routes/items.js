@@ -5,7 +5,7 @@ app.get('/items/category/:category', itemController.categoryPages)
 
 app.get('/items', itemController.getAllItems)
 app.get('/items/:iid', itemController.getItem)
-// app.post('/items/filter',itemController.filterItems)
+
 app.post('/items', itemController.filterItems)
-app.post('/sstest',itemController.test)
+app.post('/search',itemController.search)
 module.exports = app
