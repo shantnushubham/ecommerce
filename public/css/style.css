@@ -870,7 +870,7 @@ Section Title
 Start Navbar Area Style
 ================================*/
 .asahi-nav .main-nav {
-  background-color: #000;
+  background-color: #303030 ;
   padding: 0;
 }
 
@@ -1061,9 +1061,9 @@ Start Navbar Area Style
   right: 0;
   margin: auto;
   z-index: 999;
-  background-color: #000;
-  -webkit-box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.4);
+  background-color: #303030 ;
+  -webkit-box-shadow: 0 8px 6px -6px #303030 ;
+  box-shadow: 0 8px 6px -6px #303030 ;
   -webkit-animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
   animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
   -webkit-transition: all 0.5s;
@@ -3500,7 +3500,7 @@ Start Navbar Area Style
 }
 
 .asahi-nav .main-nav.asahi-nav-style-three.asahi-nav-style-three::before {
-  background-color: #000;
+  background-color: #303030 ;
   opacity: 1;
 }
 
@@ -3523,7 +3523,7 @@ Start Navbar Area Style
 }
 
 .asahi-nav .main-nav.asahi-nav-style-three.asahi-nav-style-three .is-sticky {
-  background-color: #000;
+  background-color: #303030 ;
 }
 
 .asahi-nav
@@ -7487,8 +7487,8 @@ Single Menu Classic  Area Style
 /*# sourceMappingURL=style.css.map */
 
 div.scrollmenu {
-  background-color: #000;
-  overflow: scroll;
+  background-color: #303030 ;
+  padding-bottom: 1%;
   white-space: nowrap;
 }
 
