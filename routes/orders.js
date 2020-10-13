@@ -24,6 +24,7 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
             }
             else {
                 var totAmt = parseInt(foundOrder.order.total)
+                
                 if (foundOrder.creditAllowed == true && req.session.mode != undefined && req.session.mode === 'credit') {
                     totAmt = totAmt * (1 - (parseInt(foundOrder.order.creditPercent) / 100))
                     res.session.mode = ''
@@ -132,6 +133,14 @@ router.get("/redirect", ensureAuthenticated, function (req, res) {
     console.log('outside');
 });
 
+router.post('/order-cod',ensureAuthenticated,orderController.codPath)
+router.post('/save-order',ensureAuthenticated,orderController.saveOrder)
+router.get('/pay/save/cod/:orderId',ensureAuthenticated,orderController.savedToCod)
+router.get('/pay/save/online/:orderId',ensureAuthenticated,orderController.savedToCod)
+router.get('/pay/save/cred/:orderId',ensureAuthenticated,orderController.savedToCod)
+
+router.get('/allow-credit',functions.isAdmin,orderController.getAllowCred)
+router.post('/allow-credit',functions.isAdmin,orderController.allowCred)
 
 router.get('/checkout', ensureAuthenticated, orderController.getCheckout)
 router.post('/checkout', ensureAuthenticated, orderController.postCheckout)
@@ -159,9 +168,6 @@ router.get('/cancellations/:cancellationId', functions.isAdmin, orderController.
 router.get('/confirm-cancel/:cancellationId', functions.isAdmin, orderController.getConfirmCancellation)
 router.get('/confirm-cancel/:cancellationId', functions.isAdmin, orderController.postConfirmCancellation)
 router.get('/cancellations/:cancellationId', functions.isAdmin, orderController.getCancellationByIdAdmin)
-
-
-
 
 
 

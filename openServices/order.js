@@ -261,7 +261,7 @@ class order {
 
     cancelOrder(orderId, callback) {
 
-        ordermodel.findOneAndUpdate({ orderId: orderId, shipmentStatus: { $nin: ['cancelled', 'completed', 'cancellation processing'] } }, { shipmentStatus: 'cancellation processing' }, function (err, updatedOrder) {
+        ordermodel.findOneAndUpdate({ orderId: orderId, shipmentStatus: { $nin: ['cancelled', 'completed', 'cancellation-processing'] } }, { shipmentStatus: 'cancellation-processing' }, function (err, updatedOrder) {
             if (err || functions.isEmpty(updatedOrder))
                 callback({ success: false })
             else {
