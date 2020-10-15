@@ -1685,6 +1685,16 @@
     line-height: 1;
     width: 80px;
   }
+
+  .mobile-nav .logo1 {
+    z-index: 9;
+    color: white;
+    position: absolute;
+    top: 5px;
+    line-height: 1;
+    width: 80px;
+  }
+
   #mobileLogin {
     display: block !important;
   }

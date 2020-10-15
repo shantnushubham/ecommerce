@@ -58,7 +58,7 @@ $body-font-family: 'Barlow', sans-serif;
 $heading-font-family: 'PT Sans', sans-serif;
 
 $heading-color: #363636;
-$heading-span-color: #004aad;
+$heading-span-color: #fa7725;
 $body-color: #666666;
 $white-color: #ffffff;
 $coffee-color: #00214d;
@@ -178,7 +178,7 @@ LG Text  Style
 ================================*/
 .lg-text {
 	text-transform: uppercase;
-	background: linear-gradient(to right,#0058cc 0%, #004299 100%);
+	background: linear-gradient(to right,#fb8237 0%, #fa731e	 100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;   
 }
@@ -365,7 +365,7 @@ Go Top Style
 	position: relative;
 	top: 3px;
 	z-index: 1;
-	background: linear-gradient(to right,#0058cc, #004299);
+	background: linear-gradient(to right,#fb8237, #fa731e	);
 	i {
 		font-size: 20px;
 		font-weight: 700;
@@ -382,7 +382,7 @@ Go Top Style
 		height: 40px;
 		animation: ripple 1.6s ease-out infinite;
 		opacity: 0;
-		background: linear-gradient(to right,#0058cc, #004299);
+		background: linear-gradient(to right,#fb8237, #fa731e	);
 	}
 	&:hover {
 		background-color: #121232;
@@ -501,7 +501,7 @@ Video wave Style
 	position: relative;
 	top: 3px;
 	z-index: 1;
-	background: linear-gradient(to right,#0058cc, #004299);
+	background: linear-gradient(to right,#fb8237, #fa731e	);
 	i {
 		font-size: 20px;
 		font-weight: 700;
@@ -519,7 +519,7 @@ Video wave Style
 		animation: ripple 1.6s ease-out infinite;
 		opacity: 0;
 		border-radius: 50%;
-		background: linear-gradient(to right,#0058cc, #004299);
+		background: linear-gradient(to right,#fb8237, #fa731e	);
 	}
 	&:hover {
 		background-color: #121232;
@@ -545,7 +545,7 @@ Video wave Style
 Default Btn
 ================================*/
 .default-btn {
-	background: linear-gradient(to right,#0058cc, #004299);
+	background: linear-gradient(to right,#fb8237, #fa731e	);
 	padding: 12px 25px;
 	color: $white-color;
 	text-transform: uppercase;
@@ -574,7 +574,7 @@ Default Btn
 Default Btn Two
 ================================*/
 .default-btn-two {
-	background: linear-gradient(to right,#0058cc, #004299);
+	background: linear-gradient(to right,#fb8237, #fa731e	);
 	padding: 8px 40px 8px 15px;
 	color: $white-color;
 	text-transform: uppercase;
@@ -645,7 +645,7 @@ Start Navbar Area Style
 					font-size: 14px;
 					&.active {
 						text-transform: uppercase;
-						background: linear-gradient(to right,#0058cc 0%, #004299 100%);
+						background: linear-gradient(to right,#fb8237 0%, #fa731e	 100%);
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent; 
 						font-weight: 700;
@@ -708,7 +708,7 @@ Start Navbar Area Style
 			.menu-btn {
 				display: inline-block; 
 				&.book-table {
-					background: linear-gradient(to right,#0058cc, #004299);
+					background: linear-gradient(to right,#fb8237, #fa731e	);
 					padding: 7px 15px;
 					color: $white-color;
 					text-transform: uppercase;
@@ -1345,7 +1345,7 @@ Suitable Menu Area Style
 			i {
 				width: 40px;
 				height: 40px;
-				background: linear-gradient(to right,#0058cc 0%, #004299 100%);
+				background: linear-gradient(to right,#fb8237 0%, #fa731e	 100%);
 				display: inline-block;
 				text-align: center;
 				line-height: 40px;
@@ -1357,7 +1357,7 @@ Suitable Menu Area Style
 			i {
 				width: 40px;
 				height: 40px;
-				background: linear-gradient(to right,#0058cc 0%, #004299 100%);
+				background: linear-gradient(to right,#fb8237 0%, #fa731e	 100%);
 				display: inline-block;
 				text-align: center;
 				line-height: 40px;
@@ -1635,7 +1635,7 @@ Offer Area Style
 		display: inline-block;
 		text-align: center;
 		line-height: 175px;
-		background: linear-gradient(to right,#0058cc 0%, #004299 100%);
+		background: linear-gradient(to right,#fb8237 0%, #fa731e	 100%);
 		z-index: 1;
 		font-size: 35px;
 		float: center;
@@ -1744,7 +1744,7 @@ Our Talented Area Style
 		&.active {
 			&.center {
 				.talented-caption {
-					background: linear-gradient(to right,#0058cc 0%, #004299 100%);
+					background: linear-gradient(to right,#fb8237 0%, #fa731e	 100%);
 					a {
 						background-color: $white-color; 
 						color: $heading-span-color;
@@ -1768,7 +1768,7 @@ Our Talented Area Style
 			i {
 				width: 40px;
 				height: 40px;
-				background: linear-gradient(to right,#0058cc 0%, #004299 100%);
+				background: linear-gradient(to right,#fb8237 0%, #fa731e	 100%);
 				display: inline-block;
 				text-align: center;
 				line-height: 40px;
@@ -1780,7 +1780,7 @@ Our Talented Area Style
 			i {
 				width: 40px;
 				height: 40px;
-				background: linear-gradient(to right,#0058cc 0%, #004299 100%);
+				background: linear-gradient(to right,#fb8237 0%, #fa731e	 100%);
 				display: inline-block;
 				text-align: center;
 				line-height: 40px;
@@ -2286,7 +2286,7 @@ Subscribe Area Style
 		outline: 0;
 		border: none;
 		color: #ffffff;
-		background: linear-gradient(to right,#0058cc 0%, #004299 100%);
+		background: linear-gradient(to right,#fb8237 0%, #fa731e	 100%);
 		height: 44px;
 		padding: 0 20px;
 		transition: 0.5s;
@@ -2325,7 +2325,7 @@ Start Navbar Area Style
 				.menu-btn {
 					display: inline-block; 
 					&.side-menu {
-						background: linear-gradient(to right,#0058cc, #004299);
+						background: linear-gradient(to right,#fb8237, #fa731e	);
 						padding: 7px 20px;
 						color: $white-color;
 						text-transform: uppercase;

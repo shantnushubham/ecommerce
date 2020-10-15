@@ -28,6 +28,10 @@ router.get('/dashboard', (req, res) => {
   })
 });
 
+router.get('/covid19', (req, res) => {
+  res.render('covid19')
+})
+
 router.post('/checkPincodeValid', UserControl.checkPinCodeValid);
 
 router.get('/recover', forwardAuthenticated, (req, res) => res.render('recover'));
