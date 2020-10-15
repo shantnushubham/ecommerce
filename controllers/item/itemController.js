@@ -57,6 +57,19 @@ exports.filterItems = function (req, res) {
     })
 }
 
+exports.search=function(req,res){
+    itemservices.searchBar(req.body.test,function(itemlist){
+        if (itemlist.success == false) {
+            req.flash('error', 'error in getting items')
+            res.redirect('/items')
+        }
+        else {
+            // console.log('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
+
+            res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
+        }
+    })
+}
 exports.categoryPages = function (req, res) {
     console.log(req.body);
     var ca = [], su = [], ta = [];

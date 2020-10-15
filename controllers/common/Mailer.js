@@ -14,7 +14,7 @@ exports.Register = function (to,name,uuid,callback) {
         headers: {
             accept: 'application/json',
             'content-type': 'application/json',
-            'api-key': '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'
+            'api-key': envData.sendinblue
         },
         data: {
             sender: { name: 'inversion', email: 'support@112cart.com' },
@@ -41,7 +41,7 @@ exports.forgotPassword=function(to,token,callback)
         headers: {
             accept: 'application/json',
             'content-type': 'application/json',
-            'api-key': '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'
+            'api-key': envData.sendinblue
         },
         data: {
             sender: { name: 'inversion', email: 'support@112cart.com' },
@@ -67,7 +67,7 @@ exports.changedPassword=function(to,callback)
         headers: {
             accept: 'application/json',
             'content-type': 'application/json',
-            'api-key': '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'
+            'api-key': envData.sendinblue
         },
         data: {
             sender: { name: 'inversion', email: 'support@112cart.com' },

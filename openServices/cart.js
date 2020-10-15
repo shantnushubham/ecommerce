@@ -443,5 +443,26 @@ class cart {
 
     }
 
+    getItemForList(iid, qty,uuid) {
+        return new Promise((resolve, reject) => {
+            itemmodel.findOne({ iid: iid }, function (err, foundItem) {
+                if (err)
+                    reject({ success: false, item: {} })
+                else {
+                    var itemdata = {
+                        itemID: foundItem.iid,
+                        itemName: foundItem.name,
+                        quantity: parseInt(qty),
+                        price: foundItem.price,
+                        image: foundItem.image,
+                        uuid: uuid,
+                        item:foundItem
+                    }
+                    resolve(itemdata)
+                }
+            })
+        })
+    }
+
 }
 module.exports = new cart()

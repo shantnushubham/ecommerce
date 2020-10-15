@@ -219,7 +219,7 @@ exports.codPath = function (req, res) {
                                     state: userAdd.state,
                                     country: userAdd.country,
                                     pincode: userAdd.pincode,
-                                    total: finalAmt,
+                                    total: finalAmt * 1.18,
                                     orderedItems: cart.cartList,
                                     uuid: req.user.uuid,
                                     paymentType: 'COD',
@@ -520,29 +520,72 @@ exports.saveOrder = function (req, res) {
 }
 
 exports.savedToCod = function (req, res) {
-    orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'COD', shipmentStatus: 'processing' }, function (updatedOrder) {
-        if (updatedOrder.success == false) {
-            req.flash('error', 'error in processing order')
-            res.rediect('/saved-orders')
+    orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundCod) {
+        if (foundCod.success == false) {
+
         }
         else {
-            req.session.mode = ''
-            res.render('successPage', { order: updatedOrder.order })
+            codaAllow.find({}, function (err, foundThres) {
+                if (!err && foundThres.length >= 1 && foundCod.order.allowCOD == true) {
+                    if (foundCod.order.total < foundThres[0].from) {
+                        req.flash('error', 'COD not allowed')
+                        res.rediect('/saved-orders')
+                    }
+                    else {
+                        orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'COD', shipmentStatus: 'processing', total: parseInt(foundCod.order.total) * 1.18 }, function (updatedOrder) {
+                            if (updatedOrder.success == false) {
+                                req.flash('error', 'error in processing order')
+                                res.rediect('/saved-orders')
+                            }
+                            else {
+                                req.session.mode = ''
+                                res.render('successPage', { order: updatedOrder.order })
+                            }
+                        })
+                    }
+                }
+                else {
+                    req.flash('error', 'error in processing order')
+                    res.rediect('/saved-orders')
+                }
+
+            })
         }
     })
+
+  
 }
 
 exports.savedToCredit = function (req, res) {
-    orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'credit', shipmentStatus: 'processing' }, function (updatedOrder) {
-        if (updatedOrder.success == false) {
+    orderServices.findOrderById(req.params.orderId,req.user.uuid,function(foundOrder){
+        if(foundOrder.success==false)
+        {
             req.flash('error', 'error in processing order')
             res.rediect('/saved-orders')
         }
-        else {
-            req.session.mode = 'credit'
-            res.rediect('/order/' + updatedOrder.order.orderId + '/payment')
+        else
+        {
+            if(foundOrder.order.creditAllowed==false)
+            {
+                req.flash('error', 'credit not allowed')
+                res.rediect('/saved-orders')
+            }
+            else
+            {
+                orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'credit', shipmentStatus: 'processing' }, function (updatedOrder) {
+                    if (updatedOrder.success == false) {
+                        req.flash('error', 'error in processing order')
+                        res.rediect('/saved-orders')
+                    }
+                    else {
+                        req.session.mode = 'credit'
+                        res.rediect('/order/' + updatedOrder.order.orderId + '/payment')
+                    }
+                })
+            }
         }
     })
+   
 }
 exports.savedToPay = function (req, res) {
     orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'online', shipmentStatus: 'processing' }, function (updatedOrder) {

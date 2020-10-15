@@ -9,7 +9,7 @@ class items {
 
     }
     getAllItems(callback) {
-        itemModel.find({active:true}, function (err, foundItems) {
+        itemModel.find({ active: true }, function (err, foundItems) {
             if (err) {
                 console.log(err)
                 callback({ success: false, err: err })
@@ -30,9 +30,40 @@ class items {
         })
     }
 
+    searchBar(st, callback) {
+        
+        if (typeof (st) != "string") callback({ success: false })
+        else {
+            itemModel.find({ $text: { $search: st } }, function (err, foundItems) {
+                if (err) {
+                    console.log(err)
+                    callback({ success: false, err: err })
+                }
+                else {
+                    var category = new Set()
+                    var subCategory = new Set()
+                    var tag = new Set()
+                    foundItems.forEach(el => {
+                        category.add(el.category)
+                        subCategory.add(el.subCategory)
+                        tag.add(el.tag)
+
+                    })
+                    // console.log({ success: true, foundItems, err: null, category: Array.from(category), subCategory: Array.from(subCategory), tag: Array.from(tag) });
+                    callback({ success: true, foundItems, err: null, category: Array.from(category), subCategory: Array.from(subCategory), tag: Array.from(tag) })
+                }
+
+            })
+
+        }
+
+    }
+
+  
+
     getItemById(iid, callback) {
         console.log("called", iid);
-        itemModel.findOne({ iid: iid,active:true }, function (err, foundItem) {
+        itemModel.findOne({ iid: iid, active: true }, function (err, foundItem) {
             if (err) callback({ success: false, err: err })
             else {
                 if (functions.isEmpty(foundItem)) callback({ success: false, })
@@ -86,7 +117,7 @@ class items {
     }
 
     filterItems(filterList, callback) {
-        itemModel.find({ $or: filterList,active:true }, function (err, foundItems) {
+        itemModel.find({ $or: filterList, active: true }, function (err, foundItems) {
             if (err) {
                 console.log(err)
                 callback({ success: false, err: err })

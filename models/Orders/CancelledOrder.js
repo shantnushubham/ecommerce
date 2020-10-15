@@ -18,8 +18,8 @@ var cancelledOrderSchema = new mongoose.Schema({
     },
     cancellationStatus:{
         type:String,
-        default:"cancellation processing",
-        enum:['cancelled','cancellation processing']
+        default:"cancellation-processing",
+        enum:['cancelled','cancellation-processing']
     },
     uuid: {
         type:String,
