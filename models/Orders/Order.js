@@ -125,7 +125,7 @@ var orderSchema = new mongoose.Schema({
     shipmentStatus: {
         type: String,
         default: "processing",
-        enum: ['processing', 'approved', 'cancelled', 'completed', 'cancellation processing','saved']
+        enum: ['processing', 'approved', 'cancelled', 'completed', 'cancellation-processing','saved']
     },
     creditAllowed:{
         type:Boolean,

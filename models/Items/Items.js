@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const shortid = require("shortid");
 var mongooseHistory = require('mongoose-history')
-
+// var textSearch = require('mongoose-text-search');
+ 
 var itemsSchema = new mongoose.Schema({
     iid: {
         type: String,
@@ -74,9 +75,15 @@ var itemsSchema = new mongoose.Schema({
     },
     shortDesc: {
         type: String
+    },
+    isService:{
+        type:Boolean,
+        default:false
     }
 });
 
 itemsSchema.plugin(mongooseHistory)
+// itemsSchema.plugin(textSearch)
+itemsSchema.index({name:'text'})
 
 module.exports = mongoose.model("items", itemsSchema);

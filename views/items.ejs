@@ -37,7 +37,7 @@
 									<li>
 										<label>
 											<input type="checkbox" name="category" value="<%=element%>">&nbsp;
-											<b><%=element%></b>
+											<b><%=element.toUpperCase()%></b>
 										</label>
 									</li>
 									<% }); %>
@@ -53,7 +53,7 @@
 									<li>
 										<label>
 											<input type="checkbox" name="subCategory" value="<%=element%>">&nbsp;
-											<b><%=element%></b>
+											<b><%=element.toUpperCase()%></b>
 										</label>
 									</li>
 									<% }); %>
@@ -69,7 +69,7 @@
 									<li>
 										<label>
 											<input type="checkbox" name="tag" value="<%=element%>">&nbsp;
-											<b><%=element%></b>
+											<b><%=element.toUpperCase()%></b>
 										</label>
 									</li>
 									<% }); %>
@@ -95,14 +95,14 @@
 								<div class="single-menu-item" style="background-color: white !important;">
 									<div class="menu-img">
 										<a href="/items/<%= el.iid %>"><img src="<%=el.image[0]%>" loading="lazy"
-												alt="Shop"></a>
+												alt="<%= el.name %>"></a>
 										<div class="price">
 											<span style="font-size: small;">Rs. <%= el.price %></span>
 										</div>
 									</div>
 									<div class="item-text">
 										<h3>
-											<a href="#"><%= el.name %></a>
+											<a href="/items/<%= el.iid %>"></a><%= el.name %></a>
 										</h3>
 										<p><%= el.shortDesc%></p>
 										<ul>

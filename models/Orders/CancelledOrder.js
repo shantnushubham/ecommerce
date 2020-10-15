@@ -8,7 +8,7 @@ var shortid=require('shortid')
 // 2:someError
 
 var cancelledOrderSchema = new mongoose.Schema({
-    order_id: {
+    orderId: {
         type: String,
         required:true
     },
@@ -18,8 +18,8 @@ var cancelledOrderSchema = new mongoose.Schema({
     },
     cancellationStatus:{
         type:String,
-        default:"cancellation processing",
-        enum:['cancelled','cancellation processing']
+        default:"cancellation-processing",
+        enum:['cancelled','cancellation-processing']
     },
     uuid: {
         type:String,

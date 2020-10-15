@@ -27,16 +27,14 @@ exports.getAllItems = function (req, res) {
                 res.redirect('/items')
             }
             else {
-                var codAllowed=true
-                for(var i=0;i<found.length;i++)
-                {
-                    if(found[i].item.cod==false)
-                    {
-                        codAllowed=false
+                var codAllowed = true
+                for (var i = 0; i < found.length; i++) {
+                    if (found[i].item.cod == false) {
+                        codAllowed = false
                         break
                     }
                 }
-                res.render('cartpage', { cart: found, codAllowed:codAllowed })
+                res.render('cartpage', { cartlisting: found, codAllowed: codAllowed })
             }
         })
 
@@ -91,31 +89,22 @@ exports.getUpdateCart = function (req, res) {
             res.render('cartpage', { cart: cartlisting })
         }
         else {
+            var promiseArr=[]
             cartitem.items.forEach(element => {
-                itemmodel.findOne({ iid: element.iid }, function (err, founditem) {
-                    if (err) {
-                        req.flash('error', 'error in fetching cart')
-                        res.render('cartpage', { cart: cartlisting })
-                    }
-                    else {
-                        var itemdata = {
-                            itemID: element.iid,
-                            itemName: founditem.name,
-                            quantity: element.quantity,
-                            price: founditem.price,
-                            image: founditem.image,
-                            uuid: req.user.uuid,
-                        }
-                        cartlisting.push(itemdata)
-
-                    }
-                })
+               promiseArr.push( cartservices.getItemForList(element.iid,element.quantity,req.user.uuid))
             });
+            Promise.all(promiseArr).then((respo) => {
+                res.render('updateCart', { cartlisting: respo })
+            }).catch(err => {
+                console.log(err);
+                res.redirect('/cartpage')
+            })
         }
     })
 
-    cartlisting = cartservices.verifyCart(cartlisting, req.user.uuid)
-    res.render('updateCart', { cart: cartlisting })
+    // cartlisting = cartservices.verifyCart(cartlisting, req.user.uuid)
+    console.log(cartlisting);
+    
 }
 
 exports.updateCart = function (req, res) {
@@ -164,11 +153,11 @@ exports.addManyToCart = function (req, res) {
 
     }
     Promise.all(promiseArr).then(result => {
-        req.flash('success','added all to cart')
+        req.flash('success', 'added all to cart')
         res.redirect('/items/' + req.params.iid)
 
     }).catch(errors => {
-        req.flash('error','error in one or more items in cart.Please check')
+        req.flash('error', 'error in one or more items in cart.Please check')
         res.redirect('/items/' + req.params.iid)
 
 

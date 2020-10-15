@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 var shortid = require("shortid");
 
-var orderSchema = new mongoose.Schema({
+var codAllow = new mongoose.Schema({
     from:{
         type:Number,
         required:true,
@@ -10,3 +10,4 @@ var orderSchema = new mongoose.Schema({
     
 
 })
+module.exports=mongoose.model("codAllow", codAllow, 'codAllow');
