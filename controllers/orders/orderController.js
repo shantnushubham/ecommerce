@@ -4,6 +4,7 @@ const express = require('express')
 const router = express()
 const orderServices = require('../../openServices/order')
 const { ensureAuthenticated, forwardAuthenticated } = require('../../Middlewares/user/middleware');
+const mailer = require('../common/Mailer')
 require('dotenv').config()
 const envData = process.env
 const url = require('url')
@@ -152,39 +153,81 @@ exports.postCheckout = function (req, res) {
 }
 
 exports.creditPath = function (req, res) {
-    orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundOrder) {
-        if (foundOrder.success == false) {
-            req.flash('error', 'trouble in payment')
-            res.redirect('/cartpage')
-        }
-        else {
-            if (foundOrder.found == false) {
-                req.flash('error', 'could not find order by that id')
+    if (req.user.isBusiness == false) {
+        req.flash('error', 'credit not allowed')
+        res.redirect('/cartpage')
+    }
+    else {
+        cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
+            if (cart.success == false) {
+                console.log('error in getting cart list');
+                req.flash('error', 'error in getting cart list')
                 res.redirect('/cartpage')
             }
             else {
-                if (foundOrder.order.creditAllowed == false) {
-                    req.flash('error', 'error! credit not allowed by admin')
-                    res.redirect('/')
-                }
-                else {
-                    // var total = foundOrder.order.total * (1 - (foundOrder.order.creditPercent/100))
-                    orderServices.creditOrderUpdate(foundOrder.order.orderId, req.user.uuid, function (updatedOrder) {
-                        if (updatedOrder.success == false) {
+                codaAllow.find({}, function (err, foundThres) {
+                    var cod = true
+                    var credA = false;
+                    var credPerc = 0;
+                    if (req.user.isBusiness == true && req.body.perc != undefined && req.body.perc > 0) {
+                        credA = true
+                        credPerc = req.body.perc
 
-                            req.flash('error', 'error! credit path error')
-                            res.redirect('/')
-                        }
-                        else {
-                            res.redirect('/order/' + updatedOrder.order.orderId + '/payment')
-                        }
-                    })
 
-                }
+                        if (!err && foundThres.length >= 1 && cart.allowCOD == true) {
+                            if (cart.total < foundThres[0].from) {
+                                cod = false
+                            }
+                        }
+
+                        orderServices.findAddressByid(req.body.address, function (address) {//get address of user
+                            if (address.success == false) {
+                                console.log('error in getting address list');
+                                req.flash('error', 'error in getting address list')
+                                res.redirect('/cartpage')
+                            }
+                            else {
+                                var userAdd = address.address
+                                var finalAmt = cart.total
+                                var order = {
+                                    fullAddress: userAdd.fullAddress,
+                                    city: userAdd.city,
+                                    state: userAdd.state,
+                                    country: userAdd.country,
+                                    pincode: userAdd.pincode,
+                                    total: finalAmt,
+                                    orderedItems: cart.cartList,
+                                    uuid: req.user.uuid,
+                                    paymentType: 'credit',
+                                    codAllowed: cod,
+                                    shipmentStatus: 'processing',
+                                    creditAllowed: credA,
+                                    creditPercent: credPerc
+                                }
+                                orderServices.createOrder(order, function (createOrder) {
+                                    if (createOrder.success == false) {
+                                        console.log('error in creating order');
+                                        req.flash('error', 'error in creating order')
+                                        res.redirect('/cartpage')
+                                    }
+                                    else {
+                                        res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                    }
+                                })
+
+                            }
+                        })
+                    }
+                    else {
+                        req.flash('error', 'credit not allowed')
+                        res.redirect('/cartpage')
+                    }
+
+                })
+
             }
-        }
-    })
-
+        })
+    }
 }
 
 exports.codPath = function (req, res) {
@@ -466,6 +509,76 @@ exports.saveOrder = function (req, res) {
         else {
             codaAllow.find({}, function (err, foundThres) {
                 var cod = true
+                var credA = false;
+                var credPerc = 0;
+                if (req.user.isBusiness == true && req.body.perc != undefined && req.body.perc > 0) {
+                    credA = true
+                    credPerc = req.body.perc
+                }
+                if (!err && foundThres.length >= 1 && cart.allowCOD == true) {
+                    if (cart.total < foundThres[0].from) {
+                        cod = false
+                    }
+                }
+
+                orderServices.findAddressByid(req.body.address, function (address) {//get address of user
+                    if (address.success == false) {
+                        console.log('error in getting address list');
+                        req.flash('error', 'error in getting address list')
+                        res.redirect('/cartpage')
+                    }
+                    else {
+                        var userAdd = address.address
+                        var finalAmt = cart.total
+                        var order = {
+                            fullAddress: userAdd.fullAddress,
+                            city: userAdd.city,
+                            state: userAdd.state,
+                            country: userAdd.country,
+                            pincode: userAdd.pincode,
+                            total: finalAmt,
+                            orderedItems: cart.cartList,
+                            uuid: req.user.uuid,
+                            paymentType: 'online',
+                            codAllowed: cod,
+                            shipmentStatus: 'saved',
+                            creditAllowed: credA,
+                            creditPercent: credPerc
+                        }
+                        orderServices.createOrder(order, function (createOrder) {
+                            if (createOrder.success == false) {
+                                console.log('error in creating order');
+                                req.flash('error', 'error in creating order')
+                                res.redirect('/cartpage')
+                            }
+                            else {
+                                res.rediect('/saved-orders')
+                            }
+                        })
+
+                    }
+                })
+
+
+
+
+            })
+
+        }
+    })
+
+}
+
+exports.createQuotation = function (req, res) {
+    cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items from cart
+        if (cart.success == false) {
+            console.log('error in getting cart list');
+            req.flash('error', 'error in getting cart list')
+            res.redirect('/cartpage')
+        }
+        else {
+            codaAllow.find({}, function (err, foundThres) {//find cod threshold
+                var cod = true
 
                 if (!err && foundThres.length >= 1 && cart.allowCOD == true) {
                     if (cart.total < foundThres[0].from) {
@@ -493,16 +606,41 @@ exports.saveOrder = function (req, res) {
                             uuid: req.user.uuid,
                             paymentType: 'online',
                             codAllowed: cod,
-                            shipmentStatus: 'saved'
+                            shipmentStatus: 'saved',
+                            quoteAsked: true
                         }
-                        orderServices.createOrder(order, function (createOrder) {
-                            if (createOrder.success == false) {
+                        orderServices.createOrder(order, function (createdOrder) {
+                            if (createdOrder.success == false) {
                                 console.log('error in creating order');
                                 req.flash('error', 'error in creating order')
                                 res.redirect('/cartpage')
                             }
                             else {
-                                res.rediect('/saved-orders')
+
+                                var promiseArr = []
+                                createdOrder.order.orderedItems.forEach(element => {
+                                    promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
+                                });
+                                Promise.all(promiseArr).then(result => {
+                                    var d = {
+                                        user: req.user,
+                                        order: createdOrder.order,
+                                        list: result
+                                    }
+                                    mailer.askQuote(req.user.email, d, function (emailed) {
+                                        if (emailed.success == false)
+                                            req.flash('error', 'error in sending')
+                                        else
+                                            req.flash('success', 'check email for quotation')
+                                        res.rediect('/cartpage')
+                                    })
+                                    // res.render('adminCheckOrder', { success: true, found: true, order: foundOrder.order, Olist: result })
+                                }).catch(errors => {
+                                    req.flash('error', 'error in sending')
+                                    res.rediect('/cartpage')
+                                    // res.render('adminCheckOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
+                                })
+
                             }
                         })
 
@@ -553,25 +691,21 @@ exports.savedToCod = function (req, res) {
         }
     })
 
-  
+
 }
 
 exports.savedToCredit = function (req, res) {
-    orderServices.findOrderById(req.params.orderId,req.user.uuid,function(foundOrder){
-        if(foundOrder.success==false)
-        {
+    orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundOrder) {
+        if (foundOrder.success == false) {
             req.flash('error', 'error in processing order')
             res.rediect('/saved-orders')
         }
-        else
-        {
-            if(foundOrder.order.creditAllowed==false)
-            {
+        else {
+            if (foundOrder.order.creditAllowed == false) {
                 req.flash('error', 'credit not allowed')
                 res.rediect('/saved-orders')
             }
-            else
-            {
+            else {
                 orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'credit', shipmentStatus: 'processing' }, function (updatedOrder) {
                     if (updatedOrder.success == false) {
                         req.flash('error', 'error in processing order')
@@ -585,7 +719,7 @@ exports.savedToCredit = function (req, res) {
             }
         }
     })
-   
+
 }
 exports.savedToPay = function (req, res) {
     orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'online', shipmentStatus: 'processing' }, function (updatedOrder) {

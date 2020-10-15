@@ -134,13 +134,14 @@ router.get("/redirect", ensureAuthenticated, function (req, res) {
 });
 
 router.post('/order-cod',ensureAuthenticated,orderController.codPath)
+router.post('/order-credit',ensureAuthenticated)
 router.post('/save-order',ensureAuthenticated,orderController.saveOrder)
 router.get('/pay/save/cod/:orderId',ensureAuthenticated,orderController.savedToCod)
-router.get('/pay/save/online/:orderId',ensureAuthenticated,orderController.savedToCod)
-router.get('/pay/save/cred/:orderId',ensureAuthenticated,orderController.savedToCod)
+router.get('/pay/save/online/:orderId',ensureAuthenticated,orderController.savedToPay)
+router.get('/pay/save/cred/:orderId',ensureAuthenticated,orderController.savedToCredit)
 
-router.get('/allow-credit',functions.isAdmin,orderController.getAllowCred)
-router.post('/allow-credit',functions.isAdmin,orderController.allowCred)
+// router.get('/allow-credit',functions.isAdmin,orderController.getAllowCred)
+// router.post('/allow-credit',functions.isAdmin,orderController.allowCred)
 
 router.get('/checkout', ensureAuthenticated, orderController.getCheckout)
 router.post('/checkout', ensureAuthenticated, orderController.postCheckout)

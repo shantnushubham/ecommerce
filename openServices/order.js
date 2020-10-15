@@ -5,6 +5,7 @@ var UserAddress = require('../models/User/DeliveryAddress')
 var ordermodel = require('../models/Orders/Order')
 var cancelOrderModel = require('../models/Orders/CancelledOrder')
 var codemodel = require('../models/offer/codes')
+var itemServices=require('../openServices/items')
 
 var functions = require('../Middlewares/common/functions')
 
@@ -391,15 +392,31 @@ class order {
             })
     }
 
-    updateOrderDoc(orderId,data,callback)
-    {
-        ordermodel.findOneAndUpdate({ orderId: orderId,}, data, function (err, updatedOrder) {
+    updateOrderDoc(orderId, data, callback) {
+        ordermodel.findOneAndUpdate({ orderId: orderId, }, data, function (err, updatedOrder) {
             if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
             else
                 callback({ success: true, order: updatedOrder })
         })
     }
 
+    updateStockList(arr,callback)
+    {
+        if(arr.length==0)callback({success:false,message:"array empty for orders"})
+        else
+        {
+            var promisarr=[]
+            arr.forEach(element => {
+                arr.push(itemServices.updateStock(element.iid,element.quantity))
+            });
+
+            Promise.all(promisarr).then((result) => {
+                callback({success:true})
+            }).catch((err) => {
+                callback({success:false})
+            });
+        }
+    }
 
 
 }

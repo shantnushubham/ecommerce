@@ -321,5 +321,24 @@ class items {
             return val
     }
 
+    updateStock(iid, subtract) {
+        return new Promise((resolve, reject) => {
+            itemmodel.findOne({ iid: iid }, function (err, foundItem) {
+                if (err || functions.isEmpty(foundItem))
+                    reject({ success: false, iid: iid })
+                else {
+                    var st = parseInt(foundItem.stock) - parseInt(subtract);
+                    itemmodel.findOneAndUpdate({ iid: iid }, { stock: st }, function (err, updated) {
+                        if (err || functions.isEmpty(updated))
+                            reject({ success: false, iid: iid })
+                        else
+                            resolve({ success: true, iid: iid })
+                    })
+                }
+            })
+        })
+    }
+
+
 }
 module.exports = new items()
