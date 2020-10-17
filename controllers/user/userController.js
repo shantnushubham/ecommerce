@@ -552,3 +552,23 @@ exports.getBizReqByStatus = function (req, res) {
 
   })
 }
+
+exports.allowCredit=function(req,res){
+  User.findOne({uuid:req.params.uuid,isBusiness:true},function(err,foundBiz){
+    if(err||functions.isEmpty(foundBiz)){
+      req.flash('error','error in fetching user')
+      res.redirect('/admin')
+    }
+    else
+    {
+      User.findOneAndUpdate({uuid:req.params.uuid},{creditAllowed:true},function(err,updated){
+        if(err)
+        {req.flash('error','error in updating')}
+        else
+        req.flash('success','success')
+        res.redirect('/admin')
+      })
+    }
+    
+  })
+}

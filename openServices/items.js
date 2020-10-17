@@ -31,7 +31,7 @@ class items {
     }
 
     searchBar(st, callback) {
-        
+
         if (typeof (st) != "string") callback({ success: false })
         else {
             itemModel.find({ $text: { $search: st } }, function (err, foundItems) {
@@ -59,7 +59,7 @@ class items {
 
     }
 
-  
+
 
     getItemById(iid, callback) {
         console.log("called", iid);
@@ -320,6 +320,28 @@ class items {
         if (Array.isArray(val))
             return val
     }
+
+    updateStock(iid, subtract) {
+        return new Promise((resolve, reject) => {
+            itemmodel.findOne({ iid: iid }, function (err, foundItem) {
+                if (err || functions.isEmpty(foundItem))
+                    reject({ success: false, iid: iid })
+                else {
+                    if (foundItem.isService) { callback({ success: true }) }
+                    else {
+                        var st = parseInt(foundItem.stock) - parseInt(subtract);
+                        itemmodel.findOneAndUpdate({ iid: iid }, { stock: st }, function (err, updated) {
+                            if (err || functions.isEmpty(updated))
+                                reject({ success: false, iid: iid })
+                            else
+                                resolve({ success: true, iid: iid })
+                        })
+                    }
+                }
+            })
+        })
+    }
+
 
 }
 module.exports = new items()

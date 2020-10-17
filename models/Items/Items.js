@@ -79,6 +79,16 @@ var itemsSchema = new mongoose.Schema({
     isService:{
         type:Boolean,
         default:false
+    },
+    stock:{
+        type:Number,
+        default:0,
+        // validate:{
+        //     validator: function(num) {
+        //         return arr >= 0;
+        //       },
+        //       message: "stock must be greater than equal to 0"
+        // }
     }
 });
 

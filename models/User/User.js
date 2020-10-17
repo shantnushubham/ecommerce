@@ -70,6 +70,10 @@ var UserSchema  = new mongoose.Schema({
     isBusiness:{
         type:Boolean,
         default:false
+    },
+    creditAllowed:{
+        type:Boolean,
+        default:false
     }
 });
 

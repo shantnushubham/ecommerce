@@ -1,7 +1,11 @@
 var itemModel = require("../../models/Items/Items")
 var itemMetaModel = require("../../models/Items/ItemMetadata")
+var userModel = require('../../models/User/User')
+var bizModel = require('../../models/User/businessAcc')
 var itemservices = require('../../openServices/items')
+var orderServices = require('../../openServices/order')
 var mongoose = require("mongoose")
+var csv = require('csv-express')
 
 
 exports.getAllItems = function (req, res) {
@@ -108,10 +112,67 @@ exports.activateItem = function (req, res) {
     })
 }
 
-// exports.populate = function (req, res) {
-//     itemservices.populate(req.params.iid, function (foundItem) {
-//         console.log(foundItem);
-//     })
-// }
+exports.downloadSingleInvoice = function (req, res) {
+    orderServices.findOrderById(req.params.orderId, req.params.uuid, function (foundOrder) {
+        if (foundOrder.success == false || foundOrder.found == false) {
+            req.flash('error', 'empty file or error downloading')
+            res.redirect('/admin/orders-filter')
+        }
+        else {
+            var promiseArr = []
+            foundOrder.order.orderedItems.forEach(element => {
+                promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
+            });
+            Promise.all(promiseArr).then(result => {
+                res.render('invoice', { success: true, found: true, order: foundOrder.order, Olist: result })
+            }).catch(errors => {
+                req.flash('error', 'error in loading full data')
+                res.redirect('/admin/orders-filter')
+
+            })
+        }
+    })
+}
+
+exports.downloadInvoiceByRange = function (req, res) {
+    orderServices.getOrdersByDateRange(req.body.from,req.body.to,function(foundOrder){
+        if(foundOrder.success==false)
+        res.redirect('/admin/orders-filter')
+        else
+        res.csv(foundOrder.data)
+    })
+}
+
+exports.downloadUserList = function (req, res) {
+    userModel.find({},function(err,foundUsers){
+        if(err)
+        {
+            req.flash('error','error in downloading')
+            res.redirect('/admn')
+        }
+        else
+        res.csv(foundUsers)
+    })
+}
+
+exports.downloadBizAccList = function (req, res) {
+    userModel.find({isBusiness:true},function(err,foundUsers){
+        if(err)
+        {
+            req.flash('error','error in downloading')
+            res.redirect('/admn')
+        }
+        else
+        res.csv(foundUsers)
+    })
+}
 
 
+/**
+ * downloads
+ * order invoice
+ * order invoice between date
+ * orders invoice download by shipment status
+ * users list download
+ * business account download
+ */
