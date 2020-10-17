@@ -869,6 +869,10 @@ Section Title
 /*
 Start Navbar Area Style
 ================================*/
+#mobile-nav {
+  display: none;
+}
+
 .asahi-nav .main-nav {
   background-color: #fff ;
   padding: 0;

@@ -84,3 +84,28 @@ exports.changedPassword=function(to,callback)
         callback({success:false,error:err})
     });
 }
+exports.askQuote=function(to,data,callback)
+{
+    const options = {
+        method: 'POST',
+        url: 'https://api.sendinblue.com/v3/smtp/email',
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            'api-key': envData.sendinblue
+        },
+        data: {
+            sender: { name: 'inversion', email: 'support@112cart.com' },
+            to: [{ email: to, }],
+            params: data,
+            tags: ['Quotation'],
+            templateId: 1
+        },
+
+    };
+    axios(options).then((result) => {
+        callback({success:true})
+    }).catch((err) => {
+        callback({success:false,error:err})
+    });
+}

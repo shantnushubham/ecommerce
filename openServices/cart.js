@@ -202,19 +202,17 @@ class cart {
 
                 }
                 else {//item is not a service
-                    cartmodel.find({ isService: true }, function (err, foundS) {
+                    cartmodel.find({}, function (err, foundS) {
                         if (err) { callback({ success: false, message: 'db error' }) }
                         else {
                             var containsService = false, containsProduct = false
-                            for (let i = 0; i < foundS.length; i++) {
-                                if (foundS[i].isService) {
-                                    containsService = true
-                                    break
-                                }
-                                if (!foundS[i].isService) {
-                                    containsProduct = true
-                                    break
-                                }
+                            if (foundS.length > 0 && foundS[0].isService) {
+                                containsService = true
+
+                            }
+                            if (foundS.length > 0 && !foundS[0].isService) {
+                                containsProduct = true
+
                             }
                             if ((founditem.isService == false && containsService == true) || (founditem.isService == true && containsProduct == true)) {
                                 callback({ success: false, message: 'cannot add a product with a service to cart' })
@@ -228,44 +226,56 @@ class cart {
                                     else {
                                         var cartelement
                                         if (functions.isEmpty(foundItem)) {
-                                            cartelement = {
-                                                uuid: uuid,
-                                                iid: founditem.iid,
-                                                quantity: quantity,
-                                                image: founditem.image,
-                                                name: founditem.name,
+                                            if (quantity > founditem.stock)
+                                                callback({ success: false, message: "not enough items in stock" })
+                                            else {
 
+
+                                                cartelement = {
+                                                    uuid: uuid,
+                                                    iid: founditem.iid,
+                                                    quantity: quantity,
+                                                    image: founditem.image,
+                                                    name: founditem.name,
+
+                                                }
+                                                cartmodel.create(cartelement, function (err, addedItem) {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback({ success: false, message: 'error in adding to cart' })
+
+                                                    }
+                                                    else {
+                                                        callback({ success: true, item: addedItem })
+                                                    }
+                                                })
                                             }
-                                            cartmodel.create(cartelement, function (err, addedItem) {
-                                                if (err) {
-                                                    console.log(err);
-                                                    callback({ success: false, message: 'error in adding to cart' })
-
-                                                }
-                                                else {
-                                                    callback({ success: true, item: addedItem })
-                                                }
-                                            })
                                         }
                                         else {
-                                            cartelement = {
-                                                uuid: uuid,
-                                                iid: founditem.iid,
-                                                quantity: parseInt(quantity) + foundItem.quantity,
-                                                image: founditem.image,
-                                                name: founditem.name,
+                                            if (parseInt(quantity) + foundItem.quantity > founditem.stock)
+                                                callback({ success: false, message: "not enough items in stock" })
+                                            else {
 
+
+                                                cartelement = {
+                                                    uuid: uuid,
+                                                    iid: founditem.iid,
+                                                    quantity: parseInt(quantity) + foundItem.quantity,
+                                                    image: founditem.image,
+                                                    name: founditem.name,
+
+                                                }
+                                                cartmodel.findOneAndUpdate({ uuid: uuid, iid: founditem.iid, }, { quantity: parseInt(quantity) + foundItem.quantity, }, function (err, updatedCart) {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback({ success: false, message: 'error in adding to cart' })
+
+                                                    }
+                                                    else {
+                                                        callback({ success: true, item: updatedCart })
+                                                    }
+                                                })
                                             }
-                                            cartmodel.findOneAndUpdate({ uuid: uuid, iid: founditem.iid, }, { quantity: parseInt(quantity) + foundItem.quantity, }, function (err, updatedCart) {
-                                                if (err) {
-                                                    console.log(err);
-                                                    callback({ success: false, message: 'error in adding to cart' })
-
-                                                }
-                                                else {
-                                                    callback({ success: true, item: updatedCart })
-                                                }
-                                            })
 
                                         }
 
@@ -443,7 +453,7 @@ class cart {
 
     }
 
-    getItemForList(iid, qty,uuid) {
+    getItemForList(iid, qty, uuid) {
         return new Promise((resolve, reject) => {
             itemmodel.findOne({ iid: iid }, function (err, foundItem) {
                 if (err)
@@ -456,7 +466,7 @@ class cart {
                         price: foundItem.price,
                         image: foundItem.image,
                         uuid: uuid,
-                        item:foundItem
+                        item: foundItem
                     }
                     resolve(itemdata)
                 }
