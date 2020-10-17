@@ -97,6 +97,26 @@ class order {
 
         })
     }
+    getOrdersByDateRange(from,to,callback)
+    {
+        if(!(from instanceof Date)||!(to instanceof Date))
+            callback({success:false})
+        ordermodel.aggregate([
+            {$match:{purchaseTime:{$gte:from,$lte:to}}},
+            {$project:{
+                uuid:1,
+                total:1,
+                purchaseTime:1,
+                shipmentStatus:1,
+                status:1,
+
+            }}
+        ]).exec((err,foundOrder)=>{
+            if(err)callback({success:false})
+            else callback({success:true,data:foundOrder})
+
+        })
+    }
 
     getUserOrder(uuid, callback) {
         ordermodel.findOne({ uuid: uuid }, function (err, foundOrder) {

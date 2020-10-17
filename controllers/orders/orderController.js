@@ -153,7 +153,7 @@ exports.postCheckout = function (req, res) {
 }
 
 exports.creditPath = function (req, res) {
-    if (req.user.isBusiness == false) {
+    if (req.user.isBusiness == false || req.user.creditAllowed == false) {
         req.flash('error', 'credit not allowed')
         res.redirect('/cartpage')
     }
@@ -169,7 +169,7 @@ exports.creditPath = function (req, res) {
                     var cod = true
                     var credA = false;
                     var credPerc = 0;
-                    if (req.user.isBusiness == true && req.body.perc != undefined && req.body.perc > 0) {
+                    if (req.user.isBusiness == true && req.user.creditAllowed == true && req.body.perc != undefined && req.body.perc > 0) {
                         credA = true
                         credPerc = req.body.perc
 
@@ -211,6 +211,7 @@ exports.creditPath = function (req, res) {
                                         res.redirect('/cartpage')
                                     }
                                     else {
+                                        req.session.mode='credit'
                                         res.redirect('/order/' + createOrder.order.orderId + '/payment')
                                     }
                                 })
@@ -219,7 +220,7 @@ exports.creditPath = function (req, res) {
                         })
                     }
                     else {
-                        req.flash('error', 'credit not allowed')
+                        req.flash('error', 'credit not allowed.Please make sure credit value is greater than 0 and your account is a business account')
                         res.redirect('/cartpage')
                     }
 
@@ -483,9 +484,7 @@ exports.confirmOrder = function (req, res) {
     })
 }
 
-exports.getAllowCred = function (req, res) {
-    res.render('allowCred', { orderId: req.params.orderId })
-}
+
 exports.allowCred = function (req, res) {
     orderServices.allowCredit(req.params.orderId, req.body.percent, function (order) {
         if (order.success == false) {
