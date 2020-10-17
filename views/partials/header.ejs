@@ -61,6 +61,25 @@
 
 <body>
 
+    <style>
+        .uk-navbar-nav li a {
+            color: #303030;
+        }
+
+        .uk-navbar-nav li a:hover {
+            color: #FA7725;
+        }
+
+        #sideBtn {
+            background-color: #FA7725;
+            color: white;
+        }
+
+        #sideBtn:hover {
+            color: #303030;
+        }
+    </style>
+
     <% if (error && error.length > 0) { %>
     <div class="alert alert-danger" role="alert" style="text-align: center;">
         <%= error %>
@@ -99,119 +118,123 @@
 
     <div id="page" class="theia-exception">
 
-        <!-- Start Navbar Area -->
-        <div class="asahi-nav">
-            <div class="navbar-area fixed-top">
-                <!-- Menu For Mobile Device -->
-                <div class="mobile-nav">
-                    <a href="/" class="logo">
-                        <img src="/img/112cartLogo.png" alt="Asahi Logo">
-                    </a>
-                    <a class="logo" style="position: fixed; left: 75% !important; top: 13px !important" href="#"
-                        uk-search-icon></a>
-                    <div class="uk-navbar-dropdown" uk-drop="mode: click; cls-drop: uk-navbar-dropdown; boundary: !nav">
-                        <div class="uk-grid-small uk-flex-middle" uk-grid>
-                            <div class="uk-width-expand">
-                                <form class="uk-search uk-search-navbar uk-width-1-1">
-                                    <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
-                                </form>
-                            </div>
-                            <div class="uk-width-auto">
-                                <a class="uk-navbar-dropdown-close" href="#" uk-close></a>
-                            </div>
+        <!-- Start Desktop Navbar Area -->
+        <div style="background-color: white;" id="desktop-nav"
+            uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar">
+            <nav class="uk-navbar-container uk-margin" style="background-color: white;" uk-navbar>
+                <div class="uk-navbar-left">
+                    <a class="uk-navbar-item uk-logo" href="/"><img src="/img/112cartLogo.png" width="120px"></a>
+                </div>
+                <div class="uk-navbar-center">
+                    <ul class="uk-navbar-nav">
+                        <li><a href="/" class="nav-link">Home</a></li>
+                        <li><a href="/items" class="nav-link">All Items</a></li>
+                        <li><a href="/cartPage" class="nav-link">Cart (0) &nbsp;<span uk-icon="cart"></span></a></li>
+                    </ul>
+                </div>
+                <div class="uk-navbar-right">
+                    <div class="uk-navbar-item">
+                        <a class="uk-navbar-toggle" uk-search-icon href="#"></a>
+                        <div class="uk-drop" uk-drop="mode: click; pos: left-center; offset: 0">
+                            <form class="uk-search uk-search-navbar uk-width-1-1">
+                                <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                            </form>
                         </div>
                     </div>
-                    <div class="scrollmenu">
-                        <% array.forEach(element => { %>
-                        <a href="#coming-soon" uk-toggle><%=element.name%></a>
-                        <% }); %>
+                    <div class="uk-navbar-item">
+                        <% if (currentUser != "") { %>
+                        <ul class="uk-navbar-nav">
+                            <li><a class="nav-link" href="users/logout">Logout</a></li>
+                        </ul>
+                        <a href="#" data-toggle="modal" data-target="#myModal2" class="uk-button uk-button-default"
+                            id="sideBtn"><%=currentUser.name.split(" ")[0]%> &nbsp; <span uk-icon="menu"></span></a>
+                        <% } else { %>
+                        <a href="/users/login" class="uk-button uk-button-default" id="sideBtn">Login &nbsp; <span
+                                uk-icon="user"></span></a>
+                        <% } %>
                     </div>
                 </div>
-
-                <!-- Menu For Desktop Device -->
-                <div class="main-nav asahi-nav-style-two asahi-nav-style-three">
-                    <nav class="navbar navbar-expand-md navbar-light">
-                        <div class="container">
-                            <a class="navbar-brand" href="/">
-                                <img src="/img/112cartLogo.png" alt="112 Cart Logo">
-                            </a>
-                            <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-                                <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item">
-                                        <a href="/" class="nav-link">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="/items" class="nav-link">All Items</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="/cartPage" class="nav-link">Cart (0) &nbsp;<span
-                                                uk-icon="cart"></span></a>
-                                    </li>
-                                    <li class="nav-item" id="mobileLogin">
-                                        <% if (currentUser != "") { %>
-                                        <a href="#" data-toggle="modal" data-target="#myModal2" class="nav-link"> My
-                                            Account</a>
-                                        <% } else { %>
-                                        <a href="/users/login" class="nav-link"> Login &nbsp;<span
-                                                uk-icon="user"></span></a>
-                                        <% } %>
-                                    </li>
-                                </ul>
-                                <div class="others-option">
-                                    <% if (currentUser != "") { %>
-                                    <span class="menu-btn contact-number">
-                                        Hi! <%= currentUser.name %>
-                                    </span>
-                                    <a href="#" data-toggle="modal" data-target="#myModal2" class="menu-btn side-menu">
-                                        My Account
-                                        <i class="flaticon-menu"></i>
-                                    </a>
-                                    <% } else { %>
-                                    <a href="/users/login" class="menu-btn side-menu">
-                                        Login &nbsp;<span uk-icon="user"></span>
-                                        <i class="flaticon-user"></i>
-                                    </a>
-                                    <% } %>
-                                </div>
-                                <a class="uk-navbar-toggle" href="#" id="searchDesktop" uk-search-icon></a>
-                                <div class="uk-navbar-dropdown"
-                                    uk-drop="mode: click; cls-drop: uk-navbar-dropdown; boundary: !nav">
-                                    <div class="uk-grid-small uk-flex-middle" uk-grid>
-                                        <div class="uk-width-expand">
-                                            <form class="uk-search uk-search-navbar uk-width-1-1">
-                                                <input class="uk-search-input" type="search" placeholder="Search..."
-                                                    autofocus>
-                                            </form>
-                                        </div>
-                                        <div class="uk-width-auto">
-                                            <a class="uk-navbar-dropdown-close" href="#" uk-close></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-                <div class="scrollmenu">
-                    <div uk-slider>
-                        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
-                            <ul class="uk-slider-items">
-                                <% array.forEach(element => { %>
-                                <li>
-                                    <a href="<%=element.linkTo%>" class="navBtn" uk-toggle><%=element.name%></a>
-                                </li>
-                                <% }); %>
-                            </ul>
-                            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"
-                                uk-slidenav-previous uk-slider-item="previous"></a>
-                            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#"
-                                uk-slidenav-next uk-slider-item="next"></a>
-                        </div>
+            </nav>
+            <div class="scrollmenu">
+                <div uk-slider>
+                    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+                        <ul class="uk-slider-items">
+                            <% array.forEach(element => { %>
+                            <li>
+                                <a href="<%=element.linkTo%>" class="navBtn" uk-toggle><%=element.name%></a>
+                            </li>
+                            <% }); %>
+                        </ul>
+                        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"
+                            uk-slidenav-previous uk-slider-item="previous"></a>
+                        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+                            uk-slider-item="next"></a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End Navbar Area -->
+        <!-- End Desktop Navbar Area -->
+
+        <!-- Start Mobile Navbar Area -->
+        <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky" id="mobile-nav">
+            <nav class="uk-navbar-container" uk-navbar>
+                <div class="nav-overlay uk-navbar-left">
+                    <a class="uk-navbar-item uk-logo" href="/"><img src="/img/112cartLogo.png" width="70px"></a>
+                </div>
+                <div class="nav-overlay uk-navbar-right">
+                    <a class="uk-navbar-toggle" uk-search-icon
+                        uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+                    <a href="#toggle-animation" class="uk-navbar-toggle"
+                        uk-toggle="target: #toggle-animation; animation: uk-animation-fade" uk-navbar-toggle-icon></a>
+                    <div id="toggle-animation" style="width: 100%;" uk-dropdown="pos: bottom-center">
+                        <ul class="uk-nav uk-dropdown-nav">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/items">All Items</a></li>
+                            <li><a href="/cartPage">Cart (0) &nbsp;<span uk-icon="cart"></span></a></li>
+                            <li class="uk-nav-divider"></li>
+                            <% if (currentUser != "") { %>
+                            <li><a href="/users/logout">Logout</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#myModal2"
+                                    class="uk-button uk-button-default" id="sideBtn"><%=currentUser.name.split(" ")[0]%>
+                                    &nbsp; <span uk-icon="menu"></span></a></li>
+                            <% } else { %>
+                            <li><a href="/users/login" class="uk-button uk-button-default" id="sideBtn">Login &nbsp;
+                                    <span uk-icon="user"></span></a></li>
+                            <% } %>
+                        </ul>
+                    </div>
+                    <!-- <div id="toggle-animation" class="uk-card uk-card-default uk-card-body uk-margin-small">Animation
+                    </div> -->
+                </div>
+                <div class="nav-overlay uk-navbar-left uk-flex-1" hidden>
+                    <div class="uk-navbar-item uk-width-expand">
+                        <form class="uk-search uk-search-navbar uk-width-1-1">
+                            <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                        </form>
+                    </div>
+                    <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade"
+                        href="#"></a>
+                </div>
+            </nav>
+            <div class="scrollmenu">
+                <div uk-slider>
+                    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+                        <ul class="uk-slider-items">
+                            <% array.forEach(element => { %>
+                            <li>
+                                <a href="<%=element.linkTo%>" class="navBtn" uk-toggle><%=element.name%></a>
+                            </li>
+                            <% }); %>
+                        </ul>
+                        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"
+                            uk-slidenav-previous uk-slider-item="previous"></a>
+                        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+                            uk-slider-item="next"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Mobile Navbar Area -->
 
         <!-- Start Coming Soon Modal -->
         <div id="coming-soon" class="uk-flex-top" uk-modal>
