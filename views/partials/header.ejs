@@ -72,32 +72,21 @@
     <% } %>
 
     <% var array = new Array() %>
-    <% array.push({name : "Winter Uniforms", image: "", desc: ""}) %>
-    <% array.push({name : "Books", image: "", desc: ""}) %>
-    <% array.push({name : "Physics", image: "", desc: ""}) %>
-    <% array.push({name : "Chemistry", image: "", desc: ""}) %>
-    <% array.push({name : "Biology", image: "", desc: ""}) %>
-    <% array.push({name : "Mathematics", image: "", desc: ""}) %>
-    <% array.push({name : "Geography & Surveying", image: "", desc: ""}) %>
-    <% array.push({name : "Visual Teaching", image: "", desc: ""}) %>
-    <% array.push({name : "Education CD", image: "", desc: ""}) %>
-    <% array.push({name : "Portraits", image: "", desc: ""}) %>
-    <% array.push({name : "Electronics", image: "", desc: ""}) %>
-    <% array.push({name : "Pharmacy", image: "", desc: ""}) %>
-    <% array.push({name : "Sieves", image: "", desc: ""}) %>
-    <% array.push({name : "Applied Mathematics", image: "", desc: ""}) %>
-    <% array.push({name : "Psychology", image: "", desc: ""}) %>
-    <% array.push({name : "Entomology", image: "", desc: ""}) %>
-    <% array.push({name : "Metallurgy & Bio-Technology", image: "", desc: ""}) %>
-    <% array.push({name : "Pathology", image: "", desc: ""}) %>
-    <% array.push({name : "Histopathology", image: "", desc: ""}) %>
-    <% array.push({name : "Quartz Glassware", image: "", desc: ""}) %>
-    <% array.push({name : "ABDOS Lab Plastic-ware", image: "", desc: ""}) %>
-    <% array.push({name : "Nursing Products", image: "", desc: ""}) %>
-    <% array.push({name : "Mechanical Engineer Lab", image: "", desc: ""}) %>
-    <% array.push({name : "Laboratory Instrument", image: "", desc: ""}) %>
-    <% array.push({name : "Chemicals", image: "", desc: ""}) %>
-    <% array.push({name : "Avantor Glassware", image: "", desc: ""}) %>
+    <% array.push({name : "COVID-19 Solutions", linkTo: "/covid19", desc: ""}) %>
+    <% array.push({name : "Lab Solutions", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Pathology", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Histopathology", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Entomology", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Geography", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Surveying", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Visual Teaching", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Electronics", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Pharmacy", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Books", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Glassware", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Summer Uniforms", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Winter Uniforms", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Coming Soon", linkTo: "#coming-soon", desc: ""}) %>
 
     <!-- Start Preloader Area -->
     <!-- <div class="preloader">
@@ -118,6 +107,20 @@
                     <a href="/" class="logo">
                         <img src="/img/112cartLogo.png" alt="Asahi Logo">
                     </a>
+                    <a class="logo" style="position: fixed; left: 75% !important; top: 13px !important" href="#"
+                        uk-search-icon></a>
+                    <div class="uk-navbar-dropdown" uk-drop="mode: click; cls-drop: uk-navbar-dropdown; boundary: !nav">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+                                <form class="uk-search uk-search-navbar uk-width-1-1">
+                                    <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                                </form>
+                            </div>
+                            <div class="uk-width-auto">
+                                <a class="uk-navbar-dropdown-close" href="#" uk-close></a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="scrollmenu">
                         <% array.forEach(element => { %>
                         <a href="#coming-soon" uk-toggle><%=element.name%></a>
@@ -132,22 +135,10 @@
                             <a class="navbar-brand" href="/">
                                 <img src="/img/112cartLogo.png" alt="112 Cart Logo">
                             </a>
-
                             <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item">
                                         <a href="/" class="nav-link">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">Offerings</a>
-                                        <ul class="dropdown-menu">
-                                            <li class="nav-item">
-                                                <a href="menu-standard.html" class="nav-link">Categories</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="menu-classic.html" class="nav-link">Packages</a>
-                                            </li>
-                                        </ul>
                                     </li>
                                     <li class="nav-item">
                                         <a href="/items" class="nav-link">All Items</a>
@@ -182,14 +173,41 @@
                                     </a>
                                     <% } %>
                                 </div>
+                                <a class="uk-navbar-toggle" href="#" id="searchDesktop" uk-search-icon></a>
+                                <div class="uk-navbar-dropdown"
+                                    uk-drop="mode: click; cls-drop: uk-navbar-dropdown; boundary: !nav">
+                                    <div class="uk-grid-small uk-flex-middle" uk-grid>
+                                        <div class="uk-width-expand">
+                                            <form class="uk-search uk-search-navbar uk-width-1-1">
+                                                <input class="uk-search-input" type="search" placeholder="Search..."
+                                                    autofocus>
+                                            </form>
+                                        </div>
+                                        <div class="uk-width-auto">
+                                            <a class="uk-navbar-dropdown-close" href="#" uk-close></a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </nav>
                 </div>
                 <div class="scrollmenu">
-                    <% array.forEach(element => { %>
-                    <a href="#coming-soon" uk-toggle><%=element.name%></a>
-                    <% }); %>
+                    <div uk-slider>
+                        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+                            <ul class="uk-slider-items">
+                                <% array.forEach(element => { %>
+                                <li>
+                                    <a href="<%=element.linkTo%>" class="navBtn" uk-toggle><%=element.name%></a>
+                                </li>
+                                <% }); %>
+                            </ul>
+                            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"
+                                uk-slidenav-previous uk-slider-item="previous"></a>
+                            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#"
+                                uk-slidenav-next uk-slider-item="next"></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

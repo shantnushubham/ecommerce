@@ -1677,7 +1677,7 @@
 /** Only Mobile Menu **/
 @media only screen and (max-width: 991px) {
   .mean-container .mean-bar {
-    background-color: #000;
+    background-color: #303030 ;
     padding: 0;
   }
   .mobile-nav .logo {
@@ -1685,8 +1685,24 @@
     line-height: 1;
     width: 80px;
   }
+
+  .mobile-nav .logo1 {
+    z-index: 9;
+    color: white;
+    position: absolute;
+    top: 5px;
+    line-height: 1;
+    width: 80px;
+  }
+
   #mobileLogin {
     display: block !important;
+  }
+  #searchDesktop {
+    display: none;
+  }
+  div.scrollmenu {
+    padding-bottom: 5%;
   }
 }
 /*# sourceMappingURL=responsive.css.map */
