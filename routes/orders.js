@@ -6,6 +6,7 @@ const orderServices = require('../openServices/order')
 const orderController = require('../controllers/orders/orderController')
 const { ensureAuthenticated, forwardAuthenticated } = require('../Middlewares/user/middleware');
 const functions = require('../Middlewares/common/functions')
+const offers=require('../models/offer/offer')
 require('dotenv').config()
 const envData = process.env
 
@@ -172,7 +173,6 @@ router.get('/cancellations/:cancellationId', functions.isAdmin, orderController.
 router.get('/confirm-cancel/:cancellationId', functions.isAdmin, orderController.getConfirmCancellation)
 router.get('/confirm-cancel/:cancellationId', functions.isAdmin, orderController.postConfirmCancellation)
 router.get('/cancellations/:cancellationId', functions.isAdmin, orderController.getCancellationByIdAdmin)
-
 
 
 

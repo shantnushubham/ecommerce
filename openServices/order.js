@@ -5,7 +5,8 @@ var UserAddress = require('../models/User/DeliveryAddress')
 var ordermodel = require('../models/Orders/Order')
 var cancelOrderModel = require('../models/Orders/CancelledOrder')
 var codemodel = require('../models/offer/codes')
-var itemServices=require('../openServices/items')
+var itemServices = require('../openServices/items')
+var offersModel = require('../models/offer/offer')
 
 var functions = require('../Middlewares/common/functions')
 
@@ -97,23 +98,24 @@ class order {
 
         })
     }
-    getOrdersByDateRange(from,to,callback)
-    {
-        if(!(from instanceof Date)||!(to instanceof Date))
-            callback({success:false})
+    getOrdersByDateRange(from, to, callback) {
+        if (!(from instanceof Date) || !(to instanceof Date))
+            callback({ success: false })
         ordermodel.aggregate([
-            {$match:{purchaseTime:{$gte:from,$lte:to}}},
-            {$project:{
-                uuid:1,
-                total:1,
-                purchaseTime:1,
-                shipmentStatus:1,
-                status:1,
+            { $match: { purchaseTime: { $gte: from, $lte: to } } },
+            {
+                $project: {
+                    uuid: 1,
+                    total: 1,
+                    purchaseTime: 1,
+                    shipmentStatus: 1,
+                    status: 1,
 
-            }}
-        ]).exec((err,foundOrder)=>{
-            if(err)callback({success:false})
-            else callback({success:true,data:foundOrder})
+                }
+            }
+        ]).exec((err, foundOrder) => {
+            if (err) callback({ success: false })
+            else callback({ success: true, data: foundOrder })
 
         })
     }
@@ -420,25 +422,71 @@ class order {
         })
     }
 
-    updateStockList(arr,callback)
-    {
-        if(arr.length==0)callback({success:false,message:"array empty for orders"})
-        else
-        {
-            var promisarr=[]
+    updateStockList(arr, callback) {
+        if (arr.length == 0) callback({ success: false, message: "array empty for orders" })
+        else {
+            var promisarr = []
             arr.forEach(element => {
-                arr.push(itemServices.updateStock(element.iid,element.quantity))
+                arr.push(itemServices.updateStock(element.iid, element.quantity))
             });
 
             Promise.all(promisarr).then((result) => {
-                callback({success:true})
+                callback({ success: true })
             }).catch((err) => {
-                callback({success:false})
+                callback({ success: false })
             });
         }
     }
 
+    returnOfferPrice(code, cartList, uuid, total, callback) {
+        offersModel.findOne({ code: code, active: true, discount: { $gt: 0 } }, function (err, offer) {
+            if (err) {
+                callback({ success: false, message: 'error in fetching code' })
+            }
+            else if (functions.isEmpty(offer)) {
+                callback({ success: false, message: 'code invalid' })
+            }
+            else {
+                if (offer.used.includes(uuid)) {
+                    callback({ success: false, message: "This code has already been used by you." })
+                }
+                else {
+                    var valid = true
+                    if (offer.items.length > 0) {
 
+                        for (var i = 0; i < cartList.length; i++) {
+                            if (foundOffer.offer.items.includes(cartList[i].iid) == false) {
+                                valid = false
+                                break;
+                            }
+                        }
+
+                    }
+                    if (valid == false) {
+                        callback({ success: false, message: 'there are items in your cart on which this code is not applicable' })
+                    }
+                    else {
+                        if (offer.isPercentage)
+                            total = total * (1 - (parseInt(offer.discount) / 100))
+                        else
+                            total = total - offer.discount
+                        callback({success:true,total:total})
+                    }
+                }
+
+
+            }
+
+        })
+
+
+
+
+
+
+
+
+    }
 }
 
 module.exports = new order()

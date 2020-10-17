@@ -53,85 +53,51 @@ exports.postCheckout = function (req, res) {
                     // console.log(address.address);
                     var userAdd = address.address
                     var finalAmt = cart.total
-                    if (req.body.code && req.body.code != req.user.code && req.body.code != 'invalid')//check if code is valid
-                    {
-                        orderServices.checkIfCodeUsed(req.body.code, req.user.uuid, function (codeallow) {//check if user is allowed to use code
-                            if (codeallow.success == false) {
-                                req.flash('error', 'error in checking offer code')
-                                res.redirect('/cartpage')
+                    var order = {
+                        fullAddress: userAdd.fullAddress,
+                        city: userAdd.city,
+                        state: userAdd.state,
+                        country: userAdd.country,
+                        pincode: userAdd.pincode,
+                        total: finalAmt,
+                        orderedItems: cart.cartList,
+                        uuid: req.user.uuid
+                    }
+                    if (req.body.offer && req.body.offer.length > 1) {
+
+                        orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
+                            if (foundOffer.success == false) {
+                                req.flash('error', foundOffer.message)
+                                res.rediect('/cartpage')
                             }
                             else {
-                                if (codeallow.allow == true)//allowed user
-                                {
-                                    orderServices.getDiscountForCode(req.body.code, function (disc) {//get discount amount
 
-                                        if (disc.success)
-                                            finalAmt = finalAmt * (1 - disc.discount)
 
-                                        var order = {
-                                            fullAddress: userAdd.fullAddress,
-                                            city: userAdd.city,
-                                            state: userAdd.state,
-                                            country: userAdd.country,
-                                            pincode: userAdd.pincode,
-                                            total: finalAmt,
-                                            orderedItems: cart.cartList,
-                                            uuid: req.user.uuid,
-                                            code: disc.code
-                                        }
-                                        console.log(order);
-                                        orderServices.createOrder(order, function (createOrder) {//create total order
-                                            if (createOrder.success == false) {
-                                                console.log('error in creating order');
-                                                req.flash('error', 'error in creating order')
-                                                res.redirect('/cartpage')
-                                            }
-                                            else {
-                                                // console.log('success');
-                                                res.redirect('/order/' + createOrder.order.orderId + '/payment')
-                                            }
-                                        })
-                                    })
-                                }
-                                else {
-                                    var order = {
-                                        fullAddress: userAdd.fullAddress,
-                                        city: userAdd.city,
-                                        state: userAdd.state,
-                                        country: userAdd.country,
-                                        pincode: userAdd.pincode,
-                                        total: finalAmt,
-                                        orderedItems: cart.cartList,
-                                        uuid: req.user.uuid
+                                order["offerUsed"] = true
+                                order["offerCode"] = req.body.offer
+
+
+
+                                order["total"] = foundOffer.total
+
+                                orderServices.createOrder(order, function (createOrder) {
+                                    if (createOrder.success == false) {
+                                        console.log('error in creating order');
+                                        req.flash('error', 'error in creating order')
+                                        res.redirect('/cartpage')
                                     }
-                                    console.log(order);
-                                    orderServices.createOrder(order, function (createOrder) {
-                                        if (createOrder.success == false) {
-                                            console.log('error in creating order');
-                                            req.flash('error', 'error in creating order')
-                                            res.redirect('/cartpage')
-                                        }
-                                        else {
-                                            console.log('success');
-                                            res.redirect('/order/' + createOrder.order.orderId + '/payment')
-                                        }
-                                    })
-                                }
+                                    else {
+                                        console.log('success');
+                                        res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                    }
+                                })
                             }
                         })
 
+
                     }
                     else {
-                        var order = {
-                            fullAddress: userAdd.fullAddress,
-                            city: userAdd.city,
-                            state: userAdd.state,
-                            country: userAdd.country,
-                            pincode: userAdd.pincode,
-                            total: finalAmt,
-                            orderedItems: cart.cartList,
-                            uuid: req.user.uuid
-                        }
+
                         console.log(order);
                         orderServices.createOrder(order, function (createOrder) {
                             if (createOrder.success == false) {
@@ -204,18 +170,56 @@ exports.creditPath = function (req, res) {
                                     creditAllowed: credA,
                                     creditPercent: credPerc
                                 }
-                                orderServices.createOrder(order, function (createOrder) {
-                                    if (createOrder.success == false) {
-                                        console.log('error in creating order');
-                                        req.flash('error', 'error in creating order')
-                                        res.redirect('/cartpage')
-                                    }
-                                    else {
-                                        req.session.mode='credit'
-                                        res.redirect('/order/' + createOrder.order.orderId + '/payment')
-                                    }
-                                })
+                                if (req.body.offer && req.body.offer.length > 1) {
 
+                                    orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
+                                        if (foundOffer.success == false) {
+                                            req.flash('error', foundOffer.message)
+                                            res.rediect('/cartpage')
+                                        }
+                                        else {
+
+
+                                            order["offerUsed"] = true
+                                            order["offerCode"] = req.body.offer
+
+
+
+                                            order["total"] = foundOffer.total
+
+                                            orderServices.createOrder(order, function (createOrder) {
+                                                if (createOrder.success == false) {
+                                                    console.log('error in creating order');
+                                                    req.flash('error', 'error in creating order')
+                                                    res.redirect('/cartpage')
+                                                }
+                                                else {
+                                                    // console.log('success');
+                                                    req.session.mode = 'credit'
+                                                    res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                                }
+                                            })
+                                        }
+                                    })
+
+
+                                }
+                                else {
+
+
+                                    orderServices.createOrder(order, function (createOrder) {
+                                        if (createOrder.success == false) {
+                                            console.log('error in creating order');
+                                            req.flash('error', 'error in creating order')
+                                            res.redirect('/cartpage')
+                                        }
+                                        else {
+                                            req.session.mode = 'credit'
+                                            res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                        }
+                                    })
+
+                                }
                             }
                         })
                     }
