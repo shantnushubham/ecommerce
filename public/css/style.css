@@ -2678,7 +2678,7 @@ Blog Area CSS
 Footer Area CSS
 ================================*/
 .footer-area {
-  background: linear-gradient(to right, #FA7725 0%, #ff9068	 100%);
+  background: linear-gradient(to right, #122B76 50%, #F3904F	 100%);
 }
 
 .footer-area .single-widget {
@@ -7492,17 +7492,17 @@ Single Menu Classic  Area Style
 /*# sourceMappingURL=style.css.map */
 
 div.scrollmenu {
-  background-color: #fff ;
+  background-color: #122B76 ;
   padding-bottom: 1%;
   white-space: nowrap;
 }
 
 div.scrollmenu a.navBtn {
   display: inline-block;
-  color: white;
+  color: black;
   text-align: center;
   text-decoration: none;
-  background-color: #303030;
+  background-color: white;
   margin: 0 3px 0 3px;
   padding: 5px 15px 5px 15px !important;
   border-radius: 100px;
