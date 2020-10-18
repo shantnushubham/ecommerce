@@ -248,7 +248,7 @@ exports.codPath = function (req, res) {
                 var cod = false
                 if (!err && foundThres.length >= 1 && cart.allowCOD == true) {
                     if (cart.total < foundThres[0].from) {
-                        req.flash('error', 'cod not allowed')
+                        req.flash('error', 'cod not allowed on total less than Rs' + foundThres[0].from)
                         res.redirect('/cartpage')
                     }
                     else {
@@ -514,7 +514,7 @@ exports.saveOrder = function (req, res) {
                 var cod = true
                 var credA = false;
                 var credPerc = 0;
-                if (req.user.isBusiness == true && req.body.perc != undefined && req.body.perc > 0) {
+                if (req.user.isBusiness == true && req.user.codAllowed == true && req.body.perc != undefined && req.body.perc > 0) {
                     credA = true
                     credPerc = req.body.perc
                 }
@@ -548,16 +548,52 @@ exports.saveOrder = function (req, res) {
                             creditAllowed: credA,
                             creditPercent: credPerc
                         }
-                        orderServices.createOrder(order, function (createOrder) {
-                            if (createOrder.success == false) {
-                                console.log('error in creating order');
-                                req.flash('error', 'error in creating order')
-                                res.redirect('/cartpage')
-                            }
-                            else {
-                                res.rediect('/saved-orders')
-                            }
-                        })
+                        if (req.body.offer && req.body.offer.length > 1) {
+
+                            orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
+                                if (foundOffer.success == false) {
+                                    req.flash('error', foundOffer.message)
+                                    res.rediect('/cartpage')
+                                }
+                                else {
+
+
+                                    order["offerUsed"] = true
+                                    order["offerCode"] = req.body.offer
+
+
+
+                                    order["total"] = foundOffer.total
+
+                                    orderServices.createOrder(order, function (createOrder) {
+                                        if (createOrder.success == false) {
+                                            console.log('error in creating order');
+                                            req.flash('error', 'error in creating order')
+                                            res.redirect('/cartpage')
+                                        }
+                                        else {
+                                            res.rediect('/saved-orders')
+                                        }
+                                    })
+                                }
+                            })
+
+
+                        }
+                        else {
+
+
+                            orderServices.createOrder(order, function (createOrder) {
+                                if (createOrder.success == false) {
+                                    console.log('error in creating order');
+                                    req.flash('error', 'error in creating order')
+                                    res.redirect('/cartpage')
+                                }
+                                else {
+                                    res.rediect('/saved-orders')
+                                }
+                            })
+                        }
 
                     }
                 })
@@ -573,16 +609,21 @@ exports.saveOrder = function (req, res) {
 }
 
 exports.createQuotation = function (req, res) {
-    cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items from cart
+    cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
             res.redirect('/cartpage')
         }
         else {
-            codaAllow.find({}, function (err, foundThres) {//find cod threshold
+            codaAllow.find({}, function (err, foundThres) {
                 var cod = true
-
+                var credA = false;
+                var credPerc = 0;
+                if (req.user.isBusiness == true && req.user.codAllowed == true && req.body.perc != undefined && req.body.perc > 0) {
+                    credA = true
+                    credPerc = req.body.perc
+                }
                 if (!err && foundThres.length >= 1 && cart.allowCOD == true) {
                     if (cart.total < foundThres[0].from) {
                         cod = false
@@ -610,17 +651,122 @@ exports.createQuotation = function (req, res) {
                             paymentType: 'online',
                             codAllowed: cod,
                             shipmentStatus: 'saved',
+                            creditAllowed: credA,
+                            creditPercent: credPerc,
                             quoteAsked: true
                         }
-                        orderServices.createOrder(order, function (createdOrder) {
-                            if (createdOrder.success == false) {
-                                console.log('error in creating order');
-                                req.flash('error', 'error in creating order')
-                                res.redirect('/cartpage')
-                            }
-                            else {
+                        if (req.body.offer && req.body.offer.length > 1) {
 
-                                var promiseArr = []
+                            orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
+                                if (foundOffer.success == false) {
+                                    req.flash('error', foundOffer.message)
+                                    res.rediect('/cartpage')
+                                }
+                                else {
+
+
+                                    order["offerUsed"] = true
+                                    order["offerCode"] = req.body.offer
+
+
+
+                                    order["total"] = foundOffer.total
+
+                                    orderServices.createOrder(order, function (createOrder) {
+                                        if (createOrder.success == false) {
+                                            console.log('error in creating order');
+                                            req.flash('error', 'error in creating order')
+                                            res.redirect('/cartpage')
+                                        }
+                                        else {
+                                            req.flash('success', 'Quote Requested!')
+                                            res.rediect('/cartpage')
+                                            var promiseArr = []
+                                            createdOrder.order.orderedItems.forEach(element => {
+                                                promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
+                                            });
+                                            Promise.all(promiseArr).then(result => {
+                                                var d = {
+                                                    user: req.user,
+                                                    order: createdOrder.order,
+                                                    list: result
+                                                }
+                                                mailer.askQuote(req.user.email, d, function (emailed) {
+                                                    if (emailed.success == false)
+                                                        console.log('error', 'error in sending')
+                                                    else
+                                                        console.log('success', 'check email for quotation')
+                                                    // res.rediect('/cartpage')
+                                                })
+                                                // res.render('adminCheckOrder', { success: true, found: true, order: foundOrder.order, Olist: result })
+                                            }).catch(errors => {
+                                                console.log('error', 'error in sending')
+                                                // res.rediect('/cartpage')
+                                                // res.render('adminCheckOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+
+
+                        }
+                        else {
+
+
+                            orderServices.createOrder(order, function (createOrder) {
+                                if (createOrder.success == false) {
+                                    console.log('error in creating order');
+                                    req.flash('error', 'error in creating order')
+                                    res.redirect('/cartpage')
+                                }
+                                else {
+                                    req.flash('success', 'Quote Requested!')
+                                    res.rediect('/cartpage')
+                                    var promiseArr = []
+                                    createdOrder.order.orderedItems.forEach(element => {
+                                        promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
+                                    });
+                                    Promise.all(promiseArr).then(result => {
+                                        var d = {
+                                            user: req.user,
+                                            order: createdOrder.order,
+                                            list: result
+                                        }
+                                        mailer.askQuote(req.user.email, d, function (emailed) {
+                                            if (emailed.success == false)
+                                                console.log('error', 'error in sending')
+                                            else
+                                                console.log('success', 'check email for quotation')
+                                            // res.rediect('/cartpage')
+                                        })
+                                        // res.render('adminCheckOrder', { success: true, found: true, order: foundOrder.order, Olist: result })
+                                    }).catch(errors => {
+                                        console.log('error', 'error in sending')
+                                        // res.rediect('/cartpage')
+                                        // res.render('adminCheckOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
+                                    })
+                                }
+                            })
+                        }
+
+                    }
+                })
+
+
+
+
+            })
+
+        }
+    })
+
+}
+
+
+
+/**
+ *   var promiseArr = []
                                 createdOrder.order.orderedItems.forEach(element => {
                                     promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
                                 });
@@ -644,22 +790,7 @@ exports.createQuotation = function (req, res) {
                                     // res.render('adminCheckOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
                                 })
 
-                            }
-                        })
-
-                    }
-                })
-
-
-
-
-            })
-
-        }
-    })
-
-}
-
+ */
 exports.savedToCod = function (req, res) {
     orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundCod) {
         if (foundCod.success == false) {
