@@ -299,208 +299,7 @@ exports.codPath = function (req, res) {
     })
 
 }
-
-exports.getUserRefcode = function (req, res) {
-    orderServices.createVoucherCode(5, 5, true, 0, function (updatedCode) {
-        console.log("**");
-        console.log(updatedCode);
-        res.redirect('/');
-    })
-}
-
-exports.getdealCode = function (req, res) {
-    res.render('offerGenerator')
-}
-
-exports.postDealCode = function (req, res) {
-    orderServices.createVoucherCode(5, 5, false, req.body.discount, function (updatedCode) {
-        console.log("**");
-        console.log(updatedCode);
-        res.render('offerGenerator', { code: updatedCode });
-    })
-}
-
-exports.getDiscountCodeList = function (req, res) {
-    orderServices.getDiscountListing(function (foundcodes) {
-        if (foundcodes.success == false) {
-            req.flash('error', 'could not get listing for discount codes')
-            res.redirect('/admin')
-        }
-        else {
-            console.log(foundcodes.codelist);
-            res.render('discountListing', { codeArray: foundcodes.codelist })
-        }
-    })
-}
-
-exports.checkUserOrder = function (req, res) {
-
-    orderServices.checkOrderDetails(req.params.orderId, function (foundOrder) {
-        if (foundOrder.success == false || foundOrder.found == false) {
-            req.flash('error', 'error in getting order details')
-            res.redirect('/')
-        }
-        else {
-            if (foundOrder.order.uuid === req.user.uuid) {
-
-                var promiseArr = []
-                foundOrder.order.orderedItems.forEach(element => {
-                    promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
-                });
-                Promise.all(promiseArr).then(result => {
-                    console.log({ success: true, found: true, order: foundOrder.order, Olist: result })
-                    res.render('userOrder', { success: true, found: true, order: foundOrder.order, Olist: result })
-                }).catch(errors => {
-                    res.render('userOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
-                })
-            }
-            else {
-                req.flash('error', 'unauthorized')
-                res.redirect('/')
-            }
-
-        }
-
-    })
-
-}
-
-exports.cancelOrder = function (req, res) {
-    orderServices.cancelOrder(req.params.orderId, function (canceled) {
-        if (canceled.success == false) {
-            req.flash('error', 'error in creating Cancellation.please check cancelled requests')
-            res.redirect('/')
-        }
-        else {
-            req.flash('success', 'cancellation requested')
-            res.redirect('/')
-        }
-    })
-}
-
-exports.userCancellationList = function (req, res) {
-    orderServices.getCancellationsForUser(req.user.uuid, function (cancellations) {
-        if (cancellations.success == false) {
-            req.flash('error', 'error in fetching list')
-            res.redirect('/')
-        }
-        else {
-            res.render('userCancelList', { cancellations: cancellations.cancelReq })
-        }
-    })
-}
-
-exports.fetchCancellationById = function (req, res) {
-    orderServices.getCancellationById(req.params.id, function (cancellations) {
-        if (cancellations.success == false) {
-            req.flash('error', 'error in data')
-            res.redirect('/')
-        }
-        else {
-            res.render('cancellationDetail', { cancellations: cancellations })
-        }
-    })
-}
-
-exports.getCancellationByIdAdmin = function (req, res) {
-
-    orderServices.getCancellationById(req.params.id, function (cancellations) {
-        if (cancellations.success == false) {
-            req.flash('error', 'error in data')
-            res.redirect('/')
-        }
-        else {
-            res.render('cancellationDetailAdmin', { cancellations: cancellations })
-        }
-    })
-}
-
-exports.getAllCancellations = function (req, res) {
-
-    orderServices.getAllCancellations(function (cancellations) {
-        if (cancellations.success == false) {
-            req.flash('error', 'error in fetching list')
-            res.redirect('/')
-        }
-        else {
-            res.render('adminCancelList', { cancellations: cancellations.cancelReq })
-        }
-    })
-}
-
-exports.getCancellationsByStatus = function (req, res) {
-
-    orderServices.getCancellationByStatus(req.params.status, function (cancellations) {
-        if (cancellations.success == false) {
-            req.flash('error', 'error in fetching list')
-            res.redirect('/')
-        }
-        else {
-            res.render('adminCancelList', { cancellations: cancellations })
-        }
-    })
-}
-
-exports.getConfirmCancellation = function (req, res) {
-    res.render('adminConfCancel', { cancellationId: req.params.cancellationId })
-}
-
-exports.postConfirmCancellation = function (req, res) {
-    orderServices.acceptCancellation(req.params.cancellationId, req.body.transaction_id, function (cancelled) {
-        if (cancelled.success == false) {
-            req.flash('error', 'error in cancelling')
-            res.redirect('/admin/cancels-filter')
-        }
-        else {
-
-            req.flash('success', 'success')
-            res.redirect('/admin/cancels-filter')
-        }
-    })
-}
-
-exports.getConfirmOrder = function (req, res) {
-    res.render('confirmOrderAdmin', { orderId: req.params.orderId })
-}
-
-exports.confirmOrder = function (req, res) {
-    var d = {
-        shipmentStatus: 'approved',
-        shipmentConfirmed: true,
-        length: req.body.length,
-        breadth: req.body.breadth,
-        height: req.body.height,
-        weight: req.body.weight,
-        shipRocketId: req.body.shipRocketId,
-        paid: true,
-        status: 'authorized'
-
-    }
-    orderServices.acceptOrder(req.params.orderId, d, function (order) {
-        if (order.success == false) {
-            req.flash('error', 'error')
-            res.redirect('/admin/orders-filter')
-        }
-        else {
-            req.flash('success', 'success')
-            res.redirect('/admin/orders-filter')
-        }
-    })
-}
-
-
-exports.allowCred = function (req, res) {
-    orderServices.allowCredit(req.params.orderId, req.body.percent, function (order) {
-        if (order.success == false) {
-            req.flash('error', 'error')
-            res.redirect('/admin/orders-filter')
-        }
-        else {
-            req.flash('success', 'success')
-            res.redirect('/admin/orders-filter')
-        }
-    })
-}
+//------------------------------------------------------------------------------------------------------------
 
 exports.saveOrder = function (req, res) {
     cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
@@ -672,8 +471,8 @@ exports.createQuotation = function (req, res) {
 
                                     order["total"] = foundOffer.total
 
-                                    orderServices.createOrder(order, function (createOrder) {
-                                        if (createOrder.success == false) {
+                                    orderServices.createOrder(order, function (createdOrder) {
+                                        if (createdOrder.success == false) {
                                             console.log('error in creating order');
                                             req.flash('error', 'error in creating order')
                                             res.redirect('/cartpage')
@@ -681,29 +480,9 @@ exports.createQuotation = function (req, res) {
                                         else {
                                             req.flash('success', 'Quote Requested!')
                                             res.rediect('/cartpage')
-                                            var promiseArr = []
-                                            createdOrder.order.orderedItems.forEach(element => {
-                                                promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
-                                            });
-                                            Promise.all(promiseArr).then(result => {
-                                                var d = {
-                                                    user: req.user,
-                                                    order: createdOrder.order,
-                                                    list: result
-                                                }
-                                                mailer.askQuote(req.user.email, d, function (emailed) {
-                                                    if (emailed.success == false)
-                                                        console.log('error', 'error in sending')
-                                                    else
-                                                        console.log('success', 'check email for quotation')
-                                                    // res.rediect('/cartpage')
-                                                })
-                                                // res.render('adminCheckOrder', { success: true, found: true, order: foundOrder.order, Olist: result })
-                                            }).catch(errors => {
-                                                console.log('error', 'error in sending')
-                                                // res.rediect('/cartpage')
-                                                // res.render('adminCheckOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
-                                            })
+                                           mailer.askQuote(req.user,createdOrder,function(mailed){
+                                               console.log(mailed);
+                                           })
                                         }
                                     })
                                 }
@@ -723,28 +502,8 @@ exports.createQuotation = function (req, res) {
                                 else {
                                     req.flash('success', 'Quote Requested!')
                                     res.rediect('/cartpage')
-                                    var promiseArr = []
-                                    createdOrder.order.orderedItems.forEach(element => {
-                                        promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
-                                    });
-                                    Promise.all(promiseArr).then(result => {
-                                        var d = {
-                                            user: req.user,
-                                            order: createdOrder.order,
-                                            list: result
-                                        }
-                                        mailer.askQuote(req.user.email, d, function (emailed) {
-                                            if (emailed.success == false)
-                                                console.log('error', 'error in sending')
-                                            else
-                                                console.log('success', 'check email for quotation')
-                                            // res.rediect('/cartpage')
-                                        })
-                                        // res.render('adminCheckOrder', { success: true, found: true, order: foundOrder.order, Olist: result })
-                                    }).catch(errors => {
-                                        console.log('error', 'error in sending')
-                                        // res.rediect('/cartpage')
-                                        // res.render('adminCheckOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
+                                    mailer.askQuote(req.user,createdOrder,function(mailed){
+                                        console.log(mailed);
                                     })
                                 }
                             })
@@ -763,34 +522,8 @@ exports.createQuotation = function (req, res) {
 
 }
 
+//------------------------------------------------------------------------------------------------------------
 
-
-/**
- *   var promiseArr = []
-                                createdOrder.order.orderedItems.forEach(element => {
-                                    promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
-                                });
-                                Promise.all(promiseArr).then(result => {
-                                    var d = {
-                                        user: req.user,
-                                        order: createdOrder.order,
-                                        list: result
-                                    }
-                                    mailer.askQuote(req.user.email, d, function (emailed) {
-                                        if (emailed.success == false)
-                                            req.flash('error', 'error in sending')
-                                        else
-                                            req.flash('success', 'check email for quotation')
-                                        res.rediect('/cartpage')
-                                    })
-                                    // res.render('adminCheckOrder', { success: true, found: true, order: foundOrder.order, Olist: result })
-                                }).catch(errors => {
-                                    req.flash('error', 'error in sending')
-                                    res.rediect('/cartpage')
-                                    // res.render('adminCheckOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
-                                })
-
- */
 exports.savedToCod = function (req, res) {
     orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundCod) {
         if (foundCod.success == false) {
@@ -867,6 +600,217 @@ exports.savedToPay = function (req, res) {
         }
     })
 }
+//------------------------------------------------------------------------------------------------------------
+exports.getUserRefcode = function (req, res) {
+    orderServices.createVoucherCode(5, 5, true, 0, function (updatedCode) {
+        console.log("**");
+        console.log(updatedCode);
+        res.redirect('/');
+    })
+}
+
+exports.getdealCode = function (req, res) {
+    res.render('offerGenerator')
+}
+
+exports.postDealCode = function (req, res) {
+    orderServices.createVoucherCode(5, 5, false, req.body.discount, function (updatedCode) {
+        console.log("**");
+        console.log(updatedCode);
+        res.render('offerGenerator', { code: updatedCode });
+    })
+}
+
+exports.getDiscountCodeList = function (req, res) {
+    orderServices.getDiscountListing(function (foundcodes) {
+        if (foundcodes.success == false) {
+            req.flash('error', 'could not get listing for discount codes')
+            res.redirect('/admin')
+        }
+        else {
+            console.log(foundcodes.codelist);
+            res.render('discountListing', { codeArray: foundcodes.codelist })
+        }
+    })
+}
+//------------------------------------------------------------------------------------------------------------
+
+exports.checkUserOrder = function (req, res) {
+
+    orderServices.checkOrderDetails(req.params.orderId, function (foundOrder) {
+        if (foundOrder.success == false || foundOrder.found == false) {
+            req.flash('error', 'error in getting order details')
+            res.redirect('/')
+        }
+        else {
+            if (foundOrder.order.uuid === req.user.uuid) {
+
+                var promiseArr = []
+                foundOrder.order.orderedItems.forEach(element => {
+                    promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
+                });
+                Promise.all(promiseArr).then(result => {
+                    console.log({ success: true, found: true, order: foundOrder.order, Olist: result })
+                    res.render('userOrder', { success: true, found: true, order: foundOrder.order, Olist: result })
+                }).catch(errors => {
+                    res.render('userOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
+                })
+            }
+            else {
+                req.flash('error', 'unauthorized')
+                res.redirect('/')
+            }
+
+        }
+
+    })
+
+}
+
+exports.cancelOrder = function (req, res) {
+    orderServices.cancelOrder(req.params.orderId, function (canceled) {
+        if (canceled.success == false) {
+            req.flash('error', 'error in creating Cancellation.please check cancelled requests')
+            res.redirect('/')
+        }
+        else {
+            req.flash('success', 'cancellation requested')
+            res.redirect('/')
+        }
+    })
+}
+
+exports.userCancellationList = function (req, res) {
+    orderServices.getCancellationsForUser(req.user.uuid, function (cancellations) {
+        if (cancellations.success == false) {
+            req.flash('error', 'error in fetching list')
+            res.redirect('/')
+        }
+        else {
+            res.render('userCancelList', { cancellations: cancellations.cancelReq })
+        }
+    })
+}
+
+exports.fetchCancellationById = function (req, res) {
+    orderServices.getCancellationById(req.params.id, function (cancellations) {
+        if (cancellations.success == false) {
+            req.flash('error', 'error in data')
+            res.redirect('/')
+        }
+        else {
+            res.render('cancellationDetail', { cancellations: cancellations })
+        }
+    })
+}
+
+exports.getCancellationByIdAdmin = function (req, res) {
+
+    orderServices.getCancellationById(req.params.id, function (cancellations) {
+        if (cancellations.success == false) {
+            req.flash('error', 'error in data')
+            res.redirect('/')
+        }
+        else {
+            res.render('cancellationDetailAdmin', { cancellations: cancellations })
+        }
+    })
+}
+
+exports.getAllCancellations = function (req, res) {
+
+    orderServices.getAllCancellations(function (cancellations) {
+        if (cancellations.success == false) {
+            req.flash('error', 'error in fetching list')
+            res.redirect('/')
+        }
+        else {
+            res.render('adminCancelList', { cancellations: cancellations.cancelReq })
+        }
+    })
+}
+
+exports.getCancellationsByStatus = function (req, res) {
+
+    orderServices.getCancellationByStatus(req.params.status, function (cancellations) {
+        if (cancellations.success == false) {
+            req.flash('error', 'error in fetching list')
+            res.redirect('/')
+        }
+        else {
+            res.render('adminCancelList', { cancellations: cancellations })
+        }
+    })
+}
+
+exports.getConfirmCancellation = function (req, res) {
+    res.render('adminConfCancel', { cancellationId: req.params.cancellationId })
+}
+
+exports.postConfirmCancellation = function (req, res) {
+    orderServices.acceptCancellation(req.params.cancellationId, req.body.transaction_id, function (cancelled) {
+        if (cancelled.success == false) {
+            req.flash('error', 'error in cancelling')
+            res.redirect('/admin/cancels-filter')
+        }
+        else {
+
+            req.flash('success', 'success')
+            res.redirect('/admin/cancels-filter')
+        }
+    })
+}
+//------------------------------------------------------------------------------------------------------------
+
+exports.getConfirmOrder = function (req, res) {
+    res.render('confirmOrderAdmin', { orderId: req.params.orderId })
+}
+
+exports.confirmOrder = function (req, res) {
+    var d = {
+        shipmentStatus: 'approved',
+        shipmentConfirmed: true,
+        length: req.body.length,
+        breadth: req.body.breadth,
+        height: req.body.height,
+        weight: req.body.weight,
+        shipRocketId: req.body.shipRocketId,
+        paid: true,
+        status: 'authorized'
+
+    }
+    orderServices.acceptOrder(req.params.orderId, d, function (order) {
+        if (order.success == false) {
+            req.flash('error', 'error')
+            res.redirect('/admin/orders-filter')
+        }
+        else {
+            req.flash('success', 'success')
+            res.redirect('/admin/orders-filter')
+        }
+    })
+}
+
+exports.getAllowCred=function(req,res)
+{
+    res.render('allowCredOrder',{orderId:req.params.orderId})
+}
+
+exports.allowCred = function (req, res) {
+    orderServices.allowCredit(req.params.orderId, req.body.percent, function (order) {
+        if (order.success == false) {
+            req.flash('error', 'error')
+            res.redirect('/admin/orders-filter')
+        }
+        else {
+            req.flash('success', 'success')
+            res.redirect('/admin/orders-filter')
+        }
+    })
+}
+
+//------------------------------------------------------------------------------------------------------------
+
 exports.getOrderByShipStatus = function (req, res) {
     orderServices.getOrderByShipment(req.params.shipment, function (foundOrder) {
         if (foundOrder.success == false) {
@@ -902,6 +846,7 @@ exports.getOrderByPayment = function (req, res) {
         }
     })
 }
+//------------------------------------------------------------------------------------------------------------
 
 exports.adminCheckOrder = function (req, res) {
     orderServices.checkOrderDetails(req.params.orderId, function (foundOrder) {
@@ -956,3 +901,4 @@ exports.setShipmentStatus = function (req, res) {
         res.redirect('/admin/items')
     })
 }
+//------------------------------------------------------------------------------------------------------------

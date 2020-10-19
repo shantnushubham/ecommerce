@@ -27,7 +27,7 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                 var totAmt = parseInt(foundOrder.order.total)
                 
                 if (foundOrder.creditAllowed == true && req.session.mode != undefined && req.session.mode === 'credit') {
-                    totAmt = totAmt * (1 - (parseInt(foundOrder.order.creditPercent) / 100))
+                    totAmt = totAmt * (parseInt(foundOrder.order.creditPercent) / 100)
                     res.session.mode = ''
                 }
 
@@ -144,8 +144,8 @@ router.get('/pay/save/cod/:orderId',ensureAuthenticated,orderController.savedToC
 router.get('/pay/save/online/:orderId',ensureAuthenticated,orderController.savedToPay)
 router.get('/pay/save/cred/:orderId',ensureAuthenticated,orderController.savedToCredit)
 
-// router.get('/allow-credit',functions.isAdmin,orderController.getAllowCred)
-// router.post('/allow-credit',functions.isAdmin,orderController.allowCred)
+router.get('/allow-credit/:orderId',functions.isAdmin,orderController.getAllowCred)
+router.post('/allow-credit/:orderId',functions.isAdmin,orderController.allowCred)
 
 router.get('/checkout', ensureAuthenticated, orderController.getCheckout)
 router.post('/checkout', ensureAuthenticated, orderController.postCheckout)
