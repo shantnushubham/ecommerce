@@ -1683,5 +1683,18 @@
   #mobile-nav {
     display: block;
   }
+
+  #desktop-slider {
+    display: none;
+  }
+
+  #mobile-slider {
+    padding-top: 1.5vh;
+    display: block;
+  }
+
+  img.slider-image {
+		border-radius: 20px;
+	}
 }
 /*# sourceMappingURL=responsive.css.map */

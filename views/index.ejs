@@ -2,38 +2,19 @@
 
 <!-- Start Hero Slider Area -->
 <style>
-	.slider-item-bg-1 {
-		background-image: url(https://www.slatransitincapp.com/wp-content/uploads/2017/04/background1.jpg);
-	}
 
-	.slider-item-bg-2 {
-		background-image: url(../img/home-three/slider/2.jpg);
-	}
-
-	.slider-item-bg-3 {
-		background-image: url(../img/home-three/slider/3.jpg);
-	}
-
-	.slider-item-bg-4 {
-		background-image: url(../img/home-three/slider/1.jpg);
-	}
-
-	.slider-item-bg-5 {
-		background-image: url(../img/home-three/slider/2.jpg);
-	}
-
-	.slider-item-bg-6 {
-		background-image: url(../img/home-three/slider/3.jpg);
-	}
 </style>
 
 <section>
-	<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider="center: true" style="padding-top: 3%;">
+	<!-- Start Desktop Slider -->
+	<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider="center: true; sets: true"
+		style="padding-top: 3%;" id="desktop-slider">
 
-		<ul class="uk-slider-items uk-grid" >
+		<ul class="uk-slider-items uk-grid">
 			<li class="uk-width-4-5">
 				<div class="uk-panel">
-					<img src="https://www.slatransitincapp.com/wp-content/uploads/2017/04/background1.jpg" alt="">
+					<img class="slider-image"
+						src="https://www.slatransitincapp.com/wp-content/uploads/2017/04/background1.jpg" alt="">
 					<div class="uk-position-center uk-text-center">
 						<h2 uk-slider-parallax="x: 100,-100">Heading</h2>
 						<p uk-slider-parallax="x: 200,-200">Lorem ipsum dolor sit amet.</p>
@@ -42,7 +23,7 @@
 			</li>
 			<li class="uk-width-4-5">
 				<div class="uk-panel">
-					<img src="images/dark.jpg" alt="">
+					<img class="slider-image" src="images/dark.jpg" alt="">
 					<div class="uk-position-center uk-text-center">
 						<h2 uk-slider-parallax="x: 100,-100">Heading</h2>
 						<p uk-slider-parallax="x: 200,-200">Lorem ipsum dolor sit amet.</p>
@@ -51,7 +32,7 @@
 			</li>
 			<li class="uk-width-4-5">
 				<div class="uk-panel">
-					<img src="images/light.jpg" alt="">
+					<img class="slider-image" src="images/light.jpg" alt="">
 					<div class="uk-position-center uk-text-center">
 						<h2 uk-slider-parallax="x: 100,-100">Heading</h2>
 						<p uk-slider-parallax="x: 200,-200">Lorem ipsum dolor sit amet.</p>
@@ -60,7 +41,7 @@
 			</li>
 			<li class="uk-width-4-5">
 				<div class="uk-panel">
-					<img src="images/photo2.jpg" alt="">
+					<img class="slider-image" src="images/photo2.jpg" alt="">
 					<div class="uk-position-center uk-text-center">
 						<h2 uk-slider-parallax="x: 100,-100">Heading</h2>
 						<p uk-slider-parallax="x: 200,-200">Lorem ipsum dolor sit amet.</p>
@@ -69,7 +50,7 @@
 			</li>
 			<li class="uk-width-4-5">
 				<div class="uk-panel">
-					<img src="images/photo3.jpg" alt="">
+					<img class="slider-image" src="images/photo3.jpg" alt="">
 					<div class="uk-position-center uk-text-center">
 						<h2 uk-slider-parallax="x: 100,-100">Heading</h2>
 						<p uk-slider-parallax="x: 200,-200">Lorem ipsum dolor sit amet.</p>
@@ -77,11 +58,67 @@
 				</div>
 			</li>
 		</ul>
-	
-		<a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
-		<a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
-	
+		<a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+			uk-slider-item="previous"></a>
+		<a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+			uk-slider-item="next"></a>
 	</div>
+	<!-- End Desktop Slider -->
+
+	<!-- Start Mobile Slider -->
+	<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider="center: true; sets: true"
+		id="mobile-slider">
+		<ul class="uk-slider-items uk-grid uk-grid-match" uk-height-viewport="offset-top: true; offset-bottom: 40">
+			<li class="uk-width-3-4">
+				<div class="uk-cover-container">
+					<img class="slider-image"
+						src="https://www.slatransitincapp.com/wp-content/uploads/2017/04/background1.jpg" alt="" style="border-radius:20px"
+						uk-cover>
+					<div class="uk-position-center uk-panel">
+						<h1>1</h1>
+					</div>
+				</div>
+			</li>
+			<li class="uk-width-3-4">
+				<div class="uk-cover-container">
+					<img class="slider-image" src="images/dark.jpg" alt="">
+					<div class="uk-position-center uk-panel">
+						<h1>2</h1>
+					</div>
+				</div>
+			</li>
+			<li class="uk-width-3-4">
+				<div class="uk-cover-container">
+					<img class="slider-image" src="images/light.jpg" alt="" uk-cover>
+					<div class="uk-position-center uk-panel">
+						<h1>3</h1>
+					</div>
+				</div>
+			</li>
+			<li class="uk-width-3-4">
+				<div class="uk-cover-container">
+					<img class="slider-image" src="images/photo2.jpg" alt="" uk-cover>
+					<div class="uk-position-center uk-panel">
+						<h1>4</h1>
+					</div>
+				</div>
+			</li>
+			<li class="uk-width-3-4">
+				<div class="uk-cover-container">
+					<img class="slider-image" src="images/photo3.jpg" alt="" uk-cover>
+					<div class="uk-position-center uk-panel">
+						<h1>5</h1>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+			uk-slider-item="previous"></a>
+		<a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+			uk-slider-item="next"></a>
+	</div>
+	<!-- End Mobile Slider -->
+
 </section>
 <!-- End Hero Slider Area -->
 

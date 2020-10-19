@@ -7515,3 +7515,11 @@ div.scrollmenu a.navBtn:hover {
 #mobileLogin {
   display: none !important;
 }
+
+#mobile-slider {
+  display: none;
+}
+
+img.slider-image {
+  border-radius: 50px;
+}
