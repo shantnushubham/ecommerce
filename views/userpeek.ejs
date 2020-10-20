@@ -21,16 +21,18 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
+                                <th>Allow Credit</th>
                             </tr>
                         </thead>
-
                         <tbody>
                             <% user.forEach(element => { %>
                             <tr>
-                                <td><%= element.uuid %></td>
-                                <td><%= element.name %></td>
-                                <td><%= element.email %></td>
-                                <td><%= element.phone %></td>
+                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.uuid %></a></td>
+                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.name %></a></td>
+                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.email %></a></td>
+                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.phone %></a></td>
+                                <td><a class="ui green button" href="/business/allowCredit/<%=element.uuid%>">Allow
+                                        Credit</a></td>
                             </tr>
                             <% }); %>
                         </tbody>

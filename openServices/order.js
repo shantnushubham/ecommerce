@@ -309,6 +309,7 @@ class order {
 
     getCancellationById(cancellationId, callback) {
         cancelOrderModel.findOne({ cancellationId: cancellationId }, function (err, foundCancelReq) {
+            console.log(err);
             if (err) callback({ success: false })
             else
                 callback({ success: true, cancelReq: foundCancelReq })
@@ -363,7 +364,7 @@ class order {
     }
     getAllOrders(callback) {
         ordermodel.find({}, function (err, order) {
-            if (err || functions.isEmpty(order)) callback({ success: false })
+            if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
     }
@@ -470,7 +471,7 @@ class order {
                             total = total * (1 - (parseInt(offer.discount) / 100))
                         else
                             total = total - offer.discount
-                        callback({success:true,total:total})
+                        callback({ success: true, total: total })
                     }
                 }
 

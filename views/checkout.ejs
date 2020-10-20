@@ -43,7 +43,17 @@
 									</p>
 									<% }) %>
 								</div>
-								<button class="default-btn">Place Order</button>
+								<button class="default-btn" type="submit">Place Order</button>
+								<% if (codAllowed) { %>
+								<button class="default-btn" type="submit" formaction="/order-cod">Place Order as
+									COD</button>
+								<% } %>
+								<% if (currentUser.isBusiness && codAllowed) { %>
+								<button class="default-btn" type="submit" formaction="/order-credit">Place Order as
+									Credit</button>
+								<% } %>
+								<button class="default-btn" type="submit" formaction="/save-order">Save Order</button>
+								<button class="default-btn" type="submit" formaction="">Create Quote</button> <!-- Prakhar writes formaction-->
 							</form>
 						</div>
 					</div>
