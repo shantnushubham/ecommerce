@@ -1826,7 +1826,7 @@ Suitable Menu Area Style
   background-color: #ffffff;
 }
 
-.single-menu-item .item-text h3 {
+.single-menu-item .item-text h4 {
   margin-top: 20px;
   margin-bottom: 10px;
 }
@@ -2678,7 +2678,7 @@ Blog Area CSS
 Footer Area CSS
 ================================*/
 .footer-area {
-  background: linear-gradient(to right, #FA7725 0%, #ff9068	 100%);
+  background: linear-gradient(to right, #122B76 50%, #F3904F	 100%);
 }
 
 .footer-area .single-widget {
@@ -7492,8 +7492,9 @@ Single Menu Classic  Area Style
 /*# sourceMappingURL=style.css.map */
 
 div.scrollmenu {
-  background-color: #fff ;
-  padding-bottom: 1%;
+  padding-top: 0.5%;
+  background-color: white ;
+  padding-bottom: 0.5%;
   white-space: nowrap;
 }
 
@@ -7502,16 +7503,24 @@ div.scrollmenu a.navBtn {
   color: white;
   text-align: center;
   text-decoration: none;
-  background-color: #303030;
+  background-color: #fa7725;
   margin: 0 3px 0 3px;
   padding: 5px 15px 5px 15px !important;
   border-radius: 100px;
 }
 
 div.scrollmenu a.navBtn:hover {
-  background-color: #fa7725;
+  background-color: #122b76;
 }
 
 #mobileLogin {
   display: none !important;
+}
+
+#mobile-slider {
+  display: none;
+}
+
+img.slider-image {
+  border-radius: 50px;
 }

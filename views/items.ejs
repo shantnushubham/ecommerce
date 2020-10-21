@@ -1,7 +1,35 @@
 <%- include('partials/header', {title: "Welcome to 112Cart", desc: "Best Shopping Website"}); -%>
 
+<style>
+	#mainContainer {
+		margin: 5%;
+	}
+
+	#sidebar {
+		margin-top: 10px;
+	}
+
+	@media only screen and (min-width: 991px) {
+		#mobile-items {
+			display: none;
+		}
+	}
+
+	@media only screen and (max-width: 991px) {
+		#mainContainer {
+			margin: 0;
+			margin-top: 3%;
+		}
+
+		#desktop-items {
+			display: none;
+		}
+	}
+</style>
+
+
 <!-- Start Page Title Area -->
-<div class="page-title-area item-bg-7">
+<!-- <div class="page-title-area item-bg-7">
 	<div class="container">
 		<div class="page-title-content">
 			<h2>Shop</h2>
@@ -16,14 +44,14 @@
 			</ul>
 		</div>
 	</div>
-</div>
+</div> -->
 <!-- End Page Title Area -->
 
 <main>
 	<!--/hero_in-->
-	<div class="container margin_60_35">
-		<div class="row">
-			<aside class="col-lg-3" id="sidebar">
+	<div id="mainContainer">
+		<div uk-grid>
+			<aside class="uk-width-1-6@m" id="sidebar" style="margin-bottom: 5px;">
 				<div id="filters_col">
 					<a class="filters" style="font-weight: bold;">Collapse Filters</a>
 					<div class="collapse show" id="collapseFilters">
@@ -78,46 +106,69 @@
 							<% } %>
 							<button class="default-btn" type="submit">Search</button>
 						</form>
-
 					</div>
-					<!--/collapse -->
 				</div>
-				<!--/filters col-->
 			</aside>
 			<!-- /aside -->
 
-			<div class="col-lg-9">
-				<div class="row">
-					<div class="container">
-						<div class="row">
-							<% itemlist.forEach(el => { %>
-							<div class="col-lg-6 col-md-6 col-sm-6">
-								<div class="single-menu-item" style="background-color: white !important;">
-									<div class="menu-img">
-										<a href="/items/<%= el.iid %>"><img src="<%=el.image[0]%>" loading="lazy"
-												alt="<%= el.name %>"></a>
-										<div class="price">
-											<span style="font-size: small;">Rs. <%= el.price %></span>
-										</div>
-									</div>
-									<div class="item-text">
-										<h3>
-											<a href="/items/<%= el.iid %>"></a><%= el.name %></a>
-										</h3>
-										<p><%= el.shortDesc%></p>
-										<ul>
-											<li>
-												<a class="default-btn" href="/items/<%= el.iid %>">Order Now</a>
-											</li>
-										</ul>
-									</div>
+			<div class="uk-width-5-6@m" style="margin: 0;">
+				<!-- Start Desktop View -->
+				<div class="uk-grid-small uk-child-width-1-4@m uk-text-center" id="desktop-items" uk-grid>
+					<% itemlist.forEach(el => { %>
+					<div>
+						<div class="single-menu-item" style="background-color: white !important;">
+							<div class="menu-img">
+								<a href="/items/<%= el.iid %>"><img src="<%=el.image[0]%>" loading="lazy"
+										alt="<%= el.name %>"></a>
+								<div class="price">
+									<span style="font-size: small;">Rs. <%= el.price %></span>
 								</div>
 							</div>
-							<% }) %>
+							<div class="item-text">
+								<h4>
+									<a href="/items/<%= el.iid %>" style="color: black;"><%= el.name %></a>
+								</h4>
+								<p><%= el.shortDesc%></p>
+								<!-- <ul>
+									<li>
+										<a class="default-btn" href="/items/<%= el.iid %>">Order Now</a>
+									</li>
+								</ul> -->
+							</div>
 						</div>
 					</div>
-					<!-- End Suitable Menu Area -->
+					<% }); %>
 				</div>
+				<!-- End Desktop View -->
+
+				<!-- Start Mobile View -->
+				<div class="uk-grid-small uk-child-width-1-2 uk-text-center" id="mobile-items" uk-grid>
+					<% itemlist.forEach(el => { %>
+					<div>
+						<div class="single-menu-item" style="background-color: white !important;">
+							<div class="menu-img">
+								<a href="/items/<%= el.iid %>"><img src="<%=el.image[0]%>" loading="lazy"
+										alt="<%= el.name %>"></a>
+								<!-- <div class="price">
+									<span style="font-size: small;">Rs. <%= el.price %></span>
+								</div> -->
+							</div>
+							<div class="item-text">
+								<h5 style="margin-top: 5px; margin-bottom: 0px;">
+									<a href="/items/<%= el.iid %>" style="color: black;"><%= el.name %></a>
+								</h5>
+								<p style="margin-top: 5px"><%= el.shortDesc%></p>
+								<!-- <ul>
+									<li>
+										<a class="default-btn" href="/items/<%= el.iid %>">Order Now</a>
+									</li>
+								</ul> -->
+							</div>
+						</div>
+					</div>
+					<% }); %>
+				</div>
+				<!-- End Mobile View -->
 				<!-- /row -->
 			</div>
 			<!-- /col -->
