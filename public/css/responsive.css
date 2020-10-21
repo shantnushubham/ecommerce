@@ -1676,6 +1676,11 @@
 
 /** Only Mobile Menu **/
 @media only screen and (max-width: 991px) {
+  div.scrollmenu {
+    padding-top: 2%;
+    padding-bottom: 2%;
+  }
+
   #desktop-nav {
     display: none;
   }
@@ -1694,7 +1699,7 @@
   }
 
   img.slider-image {
-		border-radius: 20px;
-	}
+    border-radius: 20px;
+  }
 }
 /*# sourceMappingURL=responsive.css.map */

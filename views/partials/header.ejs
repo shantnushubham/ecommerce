@@ -78,6 +78,10 @@
         #sideBtn:hover {
             color: #303030;
         }
+
+        #searchBar::placeholder {
+            color: white;
+        }
     </style>
 
     <% if (error && error.length > 0) { %>
@@ -121,9 +125,9 @@
         <!-- Start Desktop Navbar Area -->
         <div style="background-color: #122B76;" id="desktop-nav"
             uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar">
-            <nav class="uk-navbar-container uk-margin" style="background-color: #122B76;" uk-navbar>
+            <nav class="uk-navbar-container uk-margin" style="background-color: #122B76; margin-bottom: 0;" uk-navbar>
                 <div class="uk-navbar-left">
-                    <a class="uk-navbar-item uk-logo" href="/"><img src="/img/newLogo.png" width="120px"></a>
+                    <a class="uk-navbar-item uk-logo" href="/"><img src="/img/newLogo.png" width="150px"></a>
                 </div>
                 <div class="uk-navbar-center">
                     <ul class="uk-navbar-nav">
@@ -134,10 +138,11 @@
                 </div>
                 <div class="uk-navbar-right">
                     <div class="uk-navbar-item">
-                        <a class="uk-navbar-toggle" uk-search-icon href="#"></a>
+                        <a class="uk-navbar-toggle" uk-search-icon href="#" style="color: white;"></a>
                         <div class="uk-drop" uk-drop="mode: click; pos: left-center; offset: 0">
                             <form class="uk-search uk-search-navbar uk-width-1-1">
-                                <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                                <input class="uk-search-input" type="search" placeholder="Search..." id="searchBar"
+                                    autofocus>
                             </form>
                         </div>
                     </div>
@@ -177,14 +182,14 @@
 
         <!-- Start Mobile Navbar Area -->
         <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky" id="mobile-nav">
-            <nav class="uk-navbar-container" uk-navbar>
+            <nav class="uk-navbar-container" style="background-color: #122B76; margin-bottom: 0;" uk-navbar>
                 <div class="nav-overlay uk-navbar-left">
-                    <a class="uk-navbar-item uk-logo" href="/"><img src="/img/112cartLogo.png" width="70px"></a>
+                    <a class="uk-navbar-item uk-logo" href="/"><img src="/img/newLogo.png" width="100px"></a>
                 </div>
                 <div class="nav-overlay uk-navbar-right">
-                    <a class="uk-navbar-toggle" uk-search-icon
+                    <a class="uk-navbar-toggle" uk-search-icon style="color: white;"
                         uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
-                    <a href="#toggle-animation" class="uk-navbar-toggle"
+                    <a href="#toggle-animation" class="uk-navbar-toggle" style="color: white;"
                         uk-toggle="target: #toggle-animation; animation: uk-animation-fade" uk-navbar-toggle-icon></a>
                     <div id="toggle-animation" style="width: 100%;" uk-dropdown="pos: bottom-center">
                         <ul class="uk-nav uk-dropdown-nav">
@@ -209,11 +214,12 @@
                 <div class="nav-overlay uk-navbar-left uk-flex-1" hidden>
                     <div class="uk-navbar-item uk-width-expand">
                         <form class="uk-search uk-search-navbar uk-width-1-1">
-                            <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                            <input class="uk-search-input" type="search" placeholder="Search..." id="searchBar"
+                                autofocus>
                         </form>
                     </div>
-                    <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade"
-                        href="#"></a>
+                    <a class="uk-navbar-toggle" style="color: white;" uk-close
+                        uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
                 </div>
             </nav>
             <div class="scrollmenu">

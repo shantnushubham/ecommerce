@@ -1826,7 +1826,7 @@ Suitable Menu Area Style
   background-color: #ffffff;
 }
 
-.single-menu-item .item-text h3 {
+.single-menu-item .item-text h4 {
   margin-top: 20px;
   margin-bottom: 10px;
 }
@@ -7492,24 +7492,25 @@ Single Menu Classic  Area Style
 /*# sourceMappingURL=style.css.map */
 
 div.scrollmenu {
-  background-color: #122B76 ;
-  padding-bottom: 1%;
+  padding-top: 0.5%;
+  background-color: white ;
+  padding-bottom: 0.5%;
   white-space: nowrap;
 }
 
 div.scrollmenu a.navBtn {
   display: inline-block;
-  color: black;
+  color: white;
   text-align: center;
   text-decoration: none;
-  background-color: white;
+  background-color: #fa7725;
   margin: 0 3px 0 3px;
   padding: 5px 15px 5px 15px !important;
   border-radius: 100px;
 }
 
 div.scrollmenu a.navBtn:hover {
-  background-color: #fa7725;
+  background-color: #122b76;
 }
 
 #mobileLogin {
