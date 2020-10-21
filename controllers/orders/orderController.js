@@ -24,7 +24,7 @@ exports.getCheckout = function (req, res) {
                     res.redirect('/cartpage')
                 }
                 else {
-                    res.render('checkout', { total: cart.total, cart: cart.cartList, address: address })
+                    res.render('checkout', { total: cart.total, cart: cart.cartList, address: address,codAllowed:cart.codAllowed })
                 }
             })
         }
@@ -33,7 +33,7 @@ exports.getCheckout = function (req, res) {
 
 exports.postCheckout = function (req, res) {
     // console.log('enter');
-    console.log(req.body);
+    // console.log(req.body);
     cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
@@ -68,7 +68,7 @@ exports.postCheckout = function (req, res) {
                         orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
                             if (foundOffer.success == false) {
                                 req.flash('error', foundOffer.message)
-                                res.rediect('/cartpage')
+                                res.redirect('/cartpage')
                             }
                             else {
 
@@ -98,7 +98,7 @@ exports.postCheckout = function (req, res) {
                     }
                     else {
 
-                        console.log(order);
+                        console.log("order Details=",order);
                         orderServices.createOrder(order, function (createOrder) {
                             if (createOrder.success == false) {
                                 console.log('error in creating order');
@@ -175,7 +175,7 @@ exports.creditPath = function (req, res) {
                                     orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
                                         if (foundOffer.success == false) {
                                             req.flash('error', foundOffer.message)
-                                            res.rediect('/cartpage')
+                                            res.redirect('/cartpage')
                                         }
                                         else {
 
@@ -236,7 +236,7 @@ exports.creditPath = function (req, res) {
 }
 
 exports.codPath = function (req, res) {
-    console.log(req.body);
+    // console.log(req.body);
     cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
@@ -280,6 +280,9 @@ exports.codPath = function (req, res) {
                                         res.redirect('/cartpage')
                                     }
                                     else {
+                                        orderServices.updateStockList(createOrder.order.orderedItems,function(stocks){
+                                            console.log("stock update status:",stocks.success);
+                                        })
                                         res.render('successPage', { order: createOrder.order })
                                     }
                                 })
@@ -351,8 +354,9 @@ exports.saveOrder = function (req, res) {
 
                             orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
                                 if (foundOffer.success == false) {
+                                    console.log(foundOffer.message);
                                     req.flash('error', foundOffer.message)
-                                    res.rediect('/cartpage')
+                                    res.redirect('/cartpage')
                                 }
                                 else {
 
@@ -371,7 +375,7 @@ exports.saveOrder = function (req, res) {
                                             res.redirect('/cartpage')
                                         }
                                         else {
-                                            res.rediect('/saved-orders')
+                                            res.redirect('/saved-orders')
                                         }
                                     })
                                 }
@@ -389,7 +393,7 @@ exports.saveOrder = function (req, res) {
                                     res.redirect('/cartpage')
                                 }
                                 else {
-                                    res.rediect('/saved-orders')
+                                    res.redirect('/saved-orders')
                                 }
                             })
                         }
@@ -459,7 +463,7 @@ exports.createQuotation = function (req, res) {
                             orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
                                 if (foundOffer.success == false) {
                                     req.flash('error', foundOffer.message)
-                                    res.rediect('/cartpage')
+                                    res.redirect('/cartpage')
                                 }
                                 else {
 
@@ -479,7 +483,7 @@ exports.createQuotation = function (req, res) {
                                         }
                                         else {
                                             req.flash('success', 'Quote Requested!')
-                                            res.rediect('/cartpage')
+                                            res.redirect('/cartpage')
                                            mailer.askQuote(req.user,createdOrder,function(mailed){
                                                console.log(mailed);
                                            })
@@ -501,7 +505,7 @@ exports.createQuotation = function (req, res) {
                                 }
                                 else {
                                     req.flash('success', 'Quote Requested!')
-                                    res.rediect('/cartpage')
+                                    res.redirect('/cartpage')
                                     mailer.askQuote(req.user,createdOrder,function(mailed){
                                         console.log(mailed);
                                     })
@@ -534,16 +538,19 @@ exports.savedToCod = function (req, res) {
                 if (!err && foundThres.length >= 1 && foundCod.order.allowCOD == true) {
                     if (foundCod.order.total < foundThres[0].from) {
                         req.flash('error', 'COD not allowed')
-                        res.rediect('/saved-orders')
+                        res.redirect('/saved-orders')
                     }
                     else {
                         orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'COD', shipmentStatus: 'processing', total: parseInt(foundCod.order.total) * 1.18 }, function (updatedOrder) {
                             if (updatedOrder.success == false) {
                                 req.flash('error', 'error in processing order')
-                                res.rediect('/saved-orders')
+                                res.redirect('/saved-orders')
                             }
                             else {
                                 req.session.mode = ''
+                                orderServices.updateStockList(updatedOrder.order.orderedItems,function(stocks){
+                                    console.log("stock update status:",stocks.success);
+                                })
                                 res.render('successPage', { order: updatedOrder.order })
                             }
                         })
@@ -551,7 +558,7 @@ exports.savedToCod = function (req, res) {
                 }
                 else {
                     req.flash('error', 'error in processing order')
-                    res.rediect('/saved-orders')
+                    res.redirect('/saved-orders')
                 }
 
             })
@@ -565,22 +572,22 @@ exports.savedToCredit = function (req, res) {
     orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundOrder) {
         if (foundOrder.success == false) {
             req.flash('error', 'error in processing order')
-            res.rediect('/saved-orders')
+            res.redirect('/saved-orders')
         }
         else {
             if (foundOrder.order.creditAllowed == false) {
                 req.flash('error', 'credit not allowed')
-                res.rediect('/saved-orders')
+                res.redirect('/saved-orders')
             }
             else {
                 orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'credit', shipmentStatus: 'processing' }, function (updatedOrder) {
                     if (updatedOrder.success == false) {
                         req.flash('error', 'error in processing order')
-                        res.rediect('/saved-orders')
+                        res.redirect('/saved-orders')
                     }
                     else {
                         req.session.mode = 'credit'
-                        res.rediect('/order/' + updatedOrder.order.orderId + '/payment')
+                        res.redirect('/order/' + updatedOrder.order.orderId + '/payment')
                     }
                 })
             }
@@ -592,11 +599,11 @@ exports.savedToPay = function (req, res) {
     orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'online', shipmentStatus: 'processing' }, function (updatedOrder) {
         if (updatedOrder.success == false) {
             req.flash('error', 'error in processing order')
-            res.rediect('/saved-orders')
+            res.redirect('/saved-orders')
         }
         else {
             req.session.mode = ''
-            res.rediect('/order/' + updatedOrder.order.orderId + '/payment')
+            res.redirect('/order/' + updatedOrder.order.orderId + '/payment')
         }
     })
 }

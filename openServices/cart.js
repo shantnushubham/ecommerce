@@ -440,14 +440,17 @@ class cart {
             else {
                 console.log(cartItem);
                 let total = 0
+                let allowCOD = true
+
                 cartItem.forEach(cartEl => {
+                    if (cartEl.item.cod == false) allowCOD = false
                     total = total + parseInt((parseInt(cartEl.price[0]) * (1 - cartEl.item.discount) * cartEl.quantity))
                 });
                 if (total <= 0) {
                     callback({ success: false, message: "cant checkout with empty cart" })
                 }
                 else
-                    callback({ success: true, cartList: cartItem, total: total })
+                    callback({ success: true, cartList: cartItem, total: total ,codAllowed:allowCOD})
             }
         })
 

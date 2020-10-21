@@ -25,10 +25,10 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
             }
             else {
                 var totAmt = parseInt(foundOrder.order.total)
-                
-                if (foundOrder.creditAllowed == true && req.session.mode != undefined && req.session.mode === 'credit') {
+                console.log(req.session.mode,foundOrder.order.creditAllowed);
+                if (foundOrder.order.creditAllowed == true && req.session.mode != undefined && req.session.mode === 'credit') {
                     totAmt = totAmt * (parseInt(foundOrder.order.creditPercent) / 100)
-                    res.session.mode = ''
+                    req.session.mode = ''
                 }
 
                 var request = require('request')
@@ -37,7 +37,7 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
                 var payload = {
                     purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
-                    amount: totAmt * 1.18,
+                    amount: parseInt(totAmt * 1.18),
                     phone: req.user.phone,
                     buyer_name: req.user.name,
                     redirect_url: envData.instamojoRedirect,

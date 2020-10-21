@@ -57,7 +57,13 @@ exports.createItem = function (req, res) {
         shortDesc: data.shortDesc,
         weight: data.weight,
         content: data.content,
-        color: data.color
+        color: data.color,
+        stock: data.stock,
+        isService:data.isService==true?true:false,
+        cod:data.cod==true?true:false,
+        
+
+
 
     }, function (createdItem) {
         res.redirect('/admin/items')
@@ -86,7 +92,10 @@ exports.updateItem = function (req, res) {
         shortDesc: data.shortDesc,
         weight: data.weight,
         content: data.content,
-        color: data.color
+        color: data.color,
+        stock: data.stock,
+        isService:data.isService==true?true:false,
+        cod:data.cod==true?true:false,
 
     }, function (createdItem) {
         if (createdItem.success == false) req.flash('error', 'error in update')
