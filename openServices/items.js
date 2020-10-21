@@ -172,6 +172,9 @@ class items {
             subCategory: data.subCategory,
             tag: data.tag,
             groupingTag: data.groupingTag,
+            stock: data.stock,
+            isService:data.isService==true?true:false,
+            cod:data.cod==true?true:false,
 
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
@@ -323,14 +326,14 @@ class items {
 
     updateStock(iid, subtract) {
         return new Promise((resolve, reject) => {
-            itemmodel.findOne({ iid: iid }, function (err, foundItem) {
+            itemModel.findOne({ iid: iid }, function (err, foundItem) {
                 if (err || functions.isEmpty(foundItem))
                     reject({ success: false, iid: iid })
                 else {
                     if (foundItem.isService) { callback({ success: true }) }
                     else {
                         var st = parseInt(foundItem.stock) - parseInt(subtract);
-                        itemmodel.findOneAndUpdate({ iid: iid }, { stock: st }, function (err, updated) {
+                        itemModel.findOneAndUpdate({ iid: iid }, { stock: st }, function (err, updated) {
                             if (err || functions.isEmpty(updated))
                                 reject({ success: false, iid: iid })
                             else

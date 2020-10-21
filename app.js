@@ -109,26 +109,29 @@ app.use(function (req, res, next) {
   next();
 });
 
-// app.use(function (req, res, next) {
-//   if (req.isAuthenticated()) {
-//     cartModel.countDocuments({ uuid: req.user.uuid }, function (err, count) {
-//       if (!err) {
-//         console.log(count)
-//         res.locals.cartCount = count
-//         console.log(res.locals);
-//       } else {
-//         console.log(count)
-//         res.locals.cartCount = 0
-//         console.log(res.locals);
-//       }
-//     })
+app.use(function (req, res, next) {
+  if (req.isAuthenticated()) {
+    cartModel.countDocuments({ uuid: req.user.uuid }, function (err, count) {
+      if (!err) {
+        console.log(count)
+        res.locals.cartCount = count
+        next();
+        // console.log(res.locals);
+      } else {
+        console.log(count)
+        res.locals.cartCount = 0
+        next();
+        // console.log(res.locals);
+      }
+    })
 
 
-//   } else {
-//     res.locals.cartCount = 0
-//   }
-//   next();
-// });
+  } else {
+    res.locals.cartCount = 0
+    next();
+  }
+  
+});
 
 // app.use('/', require('./routes/routes'));
 app.use(cartRoutes)

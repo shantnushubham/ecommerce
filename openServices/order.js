@@ -456,7 +456,7 @@ class order {
                     if (offer.items.length > 0) {
 
                         for (var i = 0; i < cartList.length; i++) {
-                            if (foundOffer.offer.items.includes(cartList[i].iid) == false) {
+                            if (offer.items.includes(cartList[i].iid) == false) {
                                 valid = false
                                 break;
                             }
@@ -467,10 +467,20 @@ class order {
                         callback({ success: false, message: 'there are items in your cart on which this code is not applicable' })
                     }
                     else {
-                        if (offer.isPercentage)
+                        
+
+                        if (offer.isPercent)
                             total = total * (1 - (parseInt(offer.discount) / 100))
                         else
                             total = total - offer.discount
+                            offersModel.findOneAndUpdate({ code: code, active: true, discount: { $gt: 0 } },
+                                {$push:{used:uuid}},function(err,updatedOffer){
+                                    if(err)
+                                    console.log("issue in noting user data to code");
+                                    else
+                                    console.log(uuid," used code", code);
+
+                                })
                         callback({ success: true, total: total })
                     }
                 }

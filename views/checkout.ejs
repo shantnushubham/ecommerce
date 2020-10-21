@@ -42,13 +42,14 @@
 												style="color: #fa7725; text-transform: uppercase;"><%=el.phone%></span></label>
 									</p>
 									<% }) %>
+									offer code:<input type="text" placeholder="offer code" name="offer" >
 								</div>
 								<button class="default-btn" type="submit">Place Order</button>
 								<% if (codAllowed) { %>
 								<button class="default-btn" type="submit" formaction="/order-cod">Place Order as
 									COD</button>
 								<% } %>
-								<% if (currentUser.isBusiness && codAllowed) { %>
+								<% if (currentUser.isBusiness && currentUser.creditAllowed) { %>
 								<button class="default-btn" type="submit" formaction="/order-credit">Place Order as
 									Credit</button>
 								<% } %>
