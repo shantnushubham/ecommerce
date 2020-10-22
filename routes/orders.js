@@ -140,6 +140,7 @@ router.get("/redirect", ensureAuthenticated, function (req, res) {
 router.post('/order-cod',ensureAuthenticated,orderController.codPath)
 router.post('/order-credit',ensureAuthenticated,orderController.creditPath)
 router.post('/save-order',ensureAuthenticated,orderController.saveOrder)
+router.post('/quotation',ensureAuthenticated,orderController.createQuotation)
 router.get('/pay/save/cod/:orderId',ensureAuthenticated,orderController.savedToCod)
 router.get('/pay/save/online/:orderId',ensureAuthenticated,orderController.savedToPay)
 router.get('/pay/save/cred/:orderId',ensureAuthenticated,orderController.savedToCredit)
@@ -175,20 +176,18 @@ router.get('/confirm-cancel/:cancellationId', functions.isAdmin, orderController
 // router.get('/cancellations/:cancellationId', functions.isAdmin, orderController.getCancellationByIdAdmin)
 
 
+router.get('/admin/offers',functions.isAdmin,orderController.getAllOffers)
+router.get('/admin/offers/create',functions.isAdmin,orderController.getCreateOffer)
+router.post('/admin/offers/create',functions.isAdmin,orderController.postCreateOffer)
+router.get('/admin/offers/:code',functions.isAdmin,orderController.getOfferByCode)
+router.get('/admin/offers/update/:code',functions.isAdmin,orderController.getUpdateOffer)
+router.post('/admin/offers/update/:code',functions.isAdmin,orderController.postUpdateOffer)
 
 
-/**
- * admin get all orders
- * admin see orders
- * admin confirm order
- * see order by shipmentStatus
- * see order by payment
- * 
- * cancel order
- * see all admin cancel orders
- * confirm cancel
- * 
- */
+router.get('/admin')
+
+
+
 
 
 module.exports = router

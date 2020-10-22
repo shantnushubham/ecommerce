@@ -24,7 +24,7 @@ exports.getCheckout = function (req, res) {
                     res.redirect('/cartpage')
                 }
                 else {
-                    res.render('checkout', { total: cart.total, cart: cart.cartList, address: address,codAllowed:cart.codAllowed })
+                    res.render('checkout', { total: cart.total, cart: cart.cartList, address: address, codAllowed: cart.codAllowed })
                 }
             })
         }
@@ -98,7 +98,7 @@ exports.postCheckout = function (req, res) {
                     }
                     else {
 
-                        console.log("order Details=",order);
+                        console.log("order Details=", order);
                         orderServices.createOrder(order, function (createOrder) {
                             if (createOrder.success == false) {
                                 console.log('error in creating order');
@@ -280,8 +280,8 @@ exports.codPath = function (req, res) {
                                         res.redirect('/cartpage')
                                     }
                                     else {
-                                        orderServices.updateStockList(createOrder.order.orderedItems,function(stocks){
-                                            console.log("stock update status:",stocks.success);
+                                        orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
+                                            console.log("stock update status:", stocks.success);
                                         })
                                         res.render('successPage', { order: createOrder.order })
                                     }
@@ -484,9 +484,9 @@ exports.createQuotation = function (req, res) {
                                         else {
                                             req.flash('success', 'Quote Requested!')
                                             res.redirect('/cartpage')
-                                           mailer.askQuote(req.user,createdOrder,function(mailed){
-                                               console.log(mailed);
-                                           })
+                                            mailer.askQuote(req.user, createdOrder, function (mailed) {
+                                                console.log(mailed);
+                                            })
                                         }
                                     })
                                 }
@@ -506,7 +506,7 @@ exports.createQuotation = function (req, res) {
                                 else {
                                     req.flash('success', 'Quote Requested!')
                                     res.redirect('/cartpage')
-                                    mailer.askQuote(req.user,createdOrder,function(mailed){
+                                    mailer.askQuote(req.user, createdOrder, function (mailed) {
                                         console.log(mailed);
                                     })
                                 }
@@ -548,8 +548,8 @@ exports.savedToCod = function (req, res) {
                             }
                             else {
                                 req.session.mode = ''
-                                orderServices.updateStockList(updatedOrder.order.orderedItems,function(stocks){
-                                    console.log("stock update status:",stocks.success);
+                                orderServices.updateStockList(updatedOrder.order.orderedItems, function (stocks) {
+                                    console.log("stock update status:", stocks.success);
                                 })
                                 res.render('successPage', { order: updatedOrder.order })
                             }
@@ -798,9 +798,8 @@ exports.confirmOrder = function (req, res) {
     })
 }
 
-exports.getAllowCred=function(req,res)
-{
-    res.render('allowCredOrder',{orderId:req.params.orderId})
+exports.getAllowCred = function (req, res) {
+    res.render('allowCredOrder', { orderId: req.params.orderId })
 }
 
 exports.allowCred = function (req, res) {
@@ -909,3 +908,95 @@ exports.setShipmentStatus = function (req, res) {
     })
 }
 //------------------------------------------------------------------------------------------------------------
+exports.getCreateOffer = function (req, res) {
+    res.render('Admin-CreateOffer')
+}
+exports.postCreateOffer = function (req, res) {
+    var data = {
+        code: req.body.code,
+        isPercent: req.body.percent,
+        discount: req.body.discount,
+        forBusiness: req.body.business,
+        items: req.body.items.length > 0 ? req.body.items.split("||") : []
+
+    }
+    orderServices.createOffer(data).then(createdOffer => { res.redirect('/admin/offers') })
+        .catch(err => {
+            req.flash('error', 'error')
+            res.redirect('/admin/offers')
+        })
+
+}
+exports.getAllOffers = function (req, res) {
+    orderServices.getAllOffers().then(offers=>{
+        res.render('offerList',{offer:offers.offer})
+    }).catch(err=>{
+        req.flash('error', 'error')
+        res.redirect('/admin/offers')
+    })
+}
+exports.getOfferByCode = function (req, res) {
+    orderServices.getOfferByCode(req.params.code,function(offers){
+        if(offers.success==false)
+        {
+            req.flash('error', 'error')
+            res.redirect('/admin/offers')
+        }
+        else
+        res.render('peekOffer',{offer:offers.offer})
+    })
+}
+exports.getUpdateOffer = function (req, res) {
+    orderServices.getOfferByCode(req.params.code,function(offers){
+        if(offers.success==false)
+        {
+            req.flash('error', 'error')
+            res.redirect('/admin/offers')
+        }
+        else
+        res.render('updateOffer',{offer:offers.offer})
+    })
+}
+exports.postUpdateOffer = function (req, res) {
+    var data = {
+        code: req.body.code,
+        isPercent: req.body.percent,
+        discount: req.body.discount,
+        forBusiness: req.body.business,
+        items: req.body.items.length > 0 ? req.body.items.split("||") : []
+
+    }
+    orderServices.updateOffer(req.body.code,data,function(updated){
+        if(updated.success==false)
+        {
+            req.flash('error','error')
+            res.redirect('/admin/filters')
+        }
+        else
+        {
+            req.flash('success','success')
+            res.redirect('/admin/offers')
+        }
+    })
+}
+//---------------------------------------------------------------------------------------------
+exports.getAllServiceQuotes=function(req,res)
+{
+
+}
+exports.getServiceQuoteById=function(req,res)
+{
+    
+}
+exports.createServiceQuote=function(req,res)
+{
+    
+}
+exports.getCreateServiceQuote=function(req,res)
+{
+    res.render('createQuote',{quoteId:req.params.quoteId})
+}
+exports.serviceQuoteStatus=function(req,res)
+{
+    
+}

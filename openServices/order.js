@@ -7,7 +7,7 @@ var cancelOrderModel = require('../models/Orders/CancelledOrder')
 var codemodel = require('../models/offer/codes')
 var itemServices = require('../openServices/items')
 var offersModel = require('../models/offer/offer')
-
+var quoteModel=require('../models/Orders/serviceQuote')
 var functions = require('../Middlewares/common/functions')
 
 var mongoose = require("mongoose")
@@ -438,6 +438,50 @@ class order {
             });
         }
     }
+    createOffer(data)
+    {
+        return new Promise((resolve,reject)=>{
+            offersModel.create(data,function(err,createdOffer){
+                if(err)reject({offer:null,message:"error"})
+                else
+                resolve({offer:createdOffer})
+            })
+        })
+    }
+    getAllOffers()
+    {
+        return new Promise((resolve,reject)=>{
+            offersModel.find({},function(err,createdOffer){
+                if(err)reject({offer:[],message:"error"})
+                else
+                resolve({offer:createdOffer})
+            })
+        })
+    }
+    getOffersByfilter(filter,callback)
+    {
+        offersModel.find(filter,function(err,createdOffer){
+            if(err)callback({offer:[],message:"error"})
+            else
+            callback({offer:createdOffer})
+        })
+    }
+    getOfferByCode(code,callback)
+    {
+        offersModel.findOne({code:code},function(err,createdOffer){
+            if(err)callback({success:false,offer:[],message:"error"})
+            else
+            callback({success:true,offer:createdOffer})
+        })
+    }
+    updateOffer(code,data,callback)
+    {
+        offersModel.findOneAndUpdate({code:code},data,function(err,createdOffer){
+            if(err)callback({offer:[],message:"error"})
+            else
+            callback({offer:createdOffer})
+        })
+    }
 
     returnOfferPrice(code, cartList, uuid, total, callback) {
         offersModel.findOne({ code: code, active: true, discount: { $gt: 0 } }, function (err, offer) {
@@ -492,12 +536,49 @@ class order {
 
 
 
-
-
-
-
-
     }
+
+    createQuote(data,callback)
+    {
+        quoteModel.create(data,function(err,quote){
+            if(err)
+            callback({success:false})
+            else
+            callback({success:true,quote})
+        })
+    }
+    markAsCompleteQuote(quoteId,callback)
+    {
+        quoteModel.findOneAndUpdate({quoteId:quoteId},{serviced:true},function(err,quote){
+            if(err)
+            callback({success:false})
+            else
+            callback({success:true,quote})
+        })
+    }
+    getAllQuotes(){
+        return new Promise((resolve,reject)=>{
+            quoteModel.find({},function(err,quote){
+                if(err)
+                reject(err)
+                else
+                resolve(quote)
+            })
+        })
+        
+    }
+    getQuoteById(quoteId)
+    {
+        return new Promise((resolve,reject)=>{
+            quoteModel.findOne({quoteId:quoteId},function(err,quote){
+                if(err)
+                reject(err)
+                else
+                resolve(quote)
+            })
+        })
+    }
+
 }
 
 module.exports = new order()
