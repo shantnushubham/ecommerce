@@ -184,7 +184,12 @@ router.get('/admin/offers/update/:code',functions.isAdmin,orderController.getUpd
 router.post('/admin/offers/update/:code',functions.isAdmin,orderController.postUpdateOffer)
 
 
-router.get('/admin')
+router.get('/admin/service',functions.isAdmin,orderController.getAllServiceQuotes)
+router.get('/service/:iid',orderController.getCreateServiceQuote)
+router.post('/service/:iid',orderController.createServiceQuote)
+router.get('/admin/service/:quoteId',functions.isAdmin,orderController.getServiceQuoteById)
+router.get('/admin/complete-service',functions.isAdmin,orderController.serviceQuoteStatus)
+
 
 
 

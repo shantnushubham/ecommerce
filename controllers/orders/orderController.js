@@ -982,21 +982,63 @@ exports.postUpdateOffer = function (req, res) {
 //---------------------------------------------------------------------------------------------
 exports.getAllServiceQuotes=function(req,res)
 {
-
+orderServices.getAllQuotes().then((result) => {
+    res.render('quoteList',{quotes:result})
+}).catch((err) => {
+    req.flash('error','error')
+    res.redirect('/admin')    
+});
 }
 exports.getServiceQuoteById=function(req,res)
 {
-    
+    orderServices.getQuoteById().then((result) => {
+        res.render('peekQuote',{quote:result})
+    }).catch((err) => {
+        req.flash('error','error')
+    res.redirect('/admin')    
+    });
 }
 exports.createServiceQuote=function(req,res)
 {
-    
+    var data={
+        email:req.body.mail,
+        phone:req.body.phone,
+        name:req.body.name,
+        iid:req.params.iid,
+        units:req.body.qty,
+        measurementUnit:req.body.unit,
+
+    },
+    if(req.user)
+    {
+       data["uuid"]=req.user.uuid 
+    }
+    orderServices.createQuote(data,function(created){
+        if(created.success==false)
+        {
+            req.flash('error','error in creating quote ')
+            
+        }
+        else
+        {
+            req.flash('success','Quote Requested')
+        }
+        res.redirect('/items/'+req.params.iid)
+
+    })
+
 }
 exports.getCreateServiceQuote=function(req,res)
 {
-    res.render('createQuote',{quoteId:req.params.quoteId})
+    res.render('createQuote',{quoteId:req.params.iid})
 }
 exports.serviceQuoteStatus=function(req,res)
 {
-    
+    orderServices.markAsCompleteQuote(req.params.quoteId,function(quote){
+        if(quote.success==false)
+        req.flash('error','error')
+        else
+        req.flash('success','success')
+        res.redirect('/admin/service')
+    })
 }

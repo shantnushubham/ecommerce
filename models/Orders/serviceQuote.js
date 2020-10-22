@@ -12,10 +12,12 @@ var quoteSchema = new mongoose.Schema({
         type: String
     },
     businessName: {
-        type: String
+        type: String,
+        default:undefined
     },
     businessCity: {
-        type: String
+        type: String,
+        default:undefined
     },
     name: {
         type: String,

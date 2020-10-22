@@ -570,11 +570,35 @@ class order {
     getQuoteById(quoteId)
     {
         return new Promise((resolve,reject)=>{
-            quoteModel.findOne({quoteId:quoteId},function(err,quote){
+            quoteModel.aggregate([
+                {$match:{quoteId:quoteId}},
+                { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
+                {$project:{
+                    "item": { "$arrayElemAt": ["$item", 0] },
+                    "quoteId":"$quoteId",
+                    "uuid":"$uuid",
+                    "businessName":"$businessName",
+                    "businessCity":"$businessCity",
+                    "name":"$name",
+                    "phone":"$phone",
+                    "email":"$email",
+                    "unit":"$unit",
+                    "measurementUnit":"$item.measurementUnit",
+                    "dateCreated":"$dateCreated",
+
+
+
+
+                }}
+            ]).exec(function(err,found){
                 if(err)
-                reject(err)
+                {
+                    reject(err)
+                }
                 else
-                resolve(quote)
+                {
+                    resolve(found)
+                }
             })
         })
     }
