@@ -1,0 +1,75 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Add Offer</li>
+        </ol>
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+                <h2><i class="fa fa-file"></i>Add Offer</h2>
+            </div>
+
+            <div class="container">
+                <br>
+                <h1>Add Offer</h1>
+                <br>
+                <br>
+                <form action="/admin/offers/create" method="POST">
+                    <div class="ui form">
+                        <div class="field">
+                            <label>Code</label>
+                            <input type="text" placeholder="Code" name="code" required>
+                        </div>
+                        <div class="inline fields">
+                            <label>Is this a percent value?</label>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="percent" value=true required>
+                                    <label>Yes</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="percent" value=false>
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Discount</label>
+                            <input type="number" placeholder="Discount" name="discount" required>
+                        </div>
+                        <div class="inline fields">
+                            <label>Is this for a business?</label>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="business" value=true required required>
+                                    <label>Yes</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="business" value=false>
+                                    <label>No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Exclusive ItemsIds (For multiple exclusive item IDs, separate links using "||", if
+                                left empty, the offer is applicable to all items)</label>
+                            <input type="text" placeholder="Items" name="items">
+                        </div>
+                    </div>
+                    <button class="ui button" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/adminFooter'); -%></div>

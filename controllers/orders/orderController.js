@@ -8,6 +8,7 @@ const mailer = require('../common/Mailer')
 require('dotenv').config()
 const envData = process.env
 const url = require('url')
+const itemServices = require("../../openServices/items")
 
 exports.getCheckout = function (req, res) {
 
@@ -909,7 +910,7 @@ exports.setShipmentStatus = function (req, res) {
 }
 //------------------------------------------------------------------------------------------------------------
 exports.getCreateOffer = function (req, res) {
-    res.render('Admin-CreateOffer')
+    res.render('adminCreateOffer')
 }
 exports.postCreateOffer = function (req, res) {
     var data = {
@@ -928,33 +929,31 @@ exports.postCreateOffer = function (req, res) {
 
 }
 exports.getAllOffers = function (req, res) {
-    orderServices.getAllOffers().then(offers=>{
-        res.render('offerList',{offer:offers.offer})
-    }).catch(err=>{
+    orderServices.getAllOffers().then(offers => {
+        res.render('offerList', { offer: offers.offer })
+    }).catch(err => {
         req.flash('error', 'error')
         res.redirect('/admin/offers')
     })
 }
 exports.getOfferByCode = function (req, res) {
-    orderServices.getOfferByCode(req.params.code,function(offers){
-        if(offers.success==false)
-        {
+    orderServices.getOfferByCode(req.params.code, function (offers) {
+        if (offers.success == false) {
             req.flash('error', 'error')
             res.redirect('/admin/offers')
         }
         else
-        res.render('peekOffer',{offer:offers.offer})
+            res.render('peekOffer', { offer: offers.offer })
     })
 }
 exports.getUpdateOffer = function (req, res) {
-    orderServices.getOfferByCode(req.params.code,function(offers){
-        if(offers.success==false)
-        {
+    orderServices.getOfferByCode(req.params.code, function (offers) {
+        if (offers.success == false) {
             req.flash('error', 'error')
             res.redirect('/admin/offers')
         }
         else
-        res.render('updateOffer',{offer:offers.offer})
+            res.render('updateOffer', { offer: offers.offer })
     })
 }
 exports.postUpdateOffer = function (req, res) {
@@ -966,79 +965,77 @@ exports.postUpdateOffer = function (req, res) {
         items: req.body.items.length > 0 ? req.body.items.split("||") : []
 
     }
-    orderServices.updateOffer(req.body.code,data,function(updated){
-        if(updated.success==false)
-        {
-            req.flash('error','error')
+    orderServices.updateOffer(req.body.code, data, function (updated) {
+        if (updated.success == false) {
+            req.flash('error', 'error')
             res.redirect('/admin/filters')
         }
-        else
-        {
-            req.flash('success','success')
+        else {
+            req.flash('success', 'success')
             res.redirect('/admin/offers')
         }
     })
 }
 //---------------------------------------------------------------------------------------------
-exports.getAllServiceQuotes=function(req,res)
-{
-orderServices.getAllQuotes().then((result) => {
-    res.render('quoteList',{quotes:result})
-}).catch((err) => {
-    req.flash('error','error')
-    res.redirect('/admin')    
-});
-}
-exports.getServiceQuoteById=function(req,res)
-{
-    orderServices.getQuoteById().then((result) => {
-        res.render('peekQuote',{quote:result})
+exports.getAllServiceQuotes = function (req, res) {
+    orderServices.getAllQuotes().then((result) => {
+        res.render('quoteList', { quotes: result })
     }).catch((err) => {
-        req.flash('error','error')
-    res.redirect('/admin')    
+        req.flash('error', 'error')
+        res.redirect('/admin')
     });
 }
-exports.createServiceQuote=function(req,res)
-{
-    var data={
-        email:req.body.mail,
-        phone:req.body.phone,
-        name:req.body.name,
-        iid:req.params.iid,
-        units:req.body.qty,
-        measurementUnit:req.body.unit,
+exports.getServiceQuoteById = function (req, res) {
+    orderServices.getQuoteById().then((result) => {
+        res.render('peekQuote', { quote: result })
+    }).catch((err) => {
+        req.flash('error', 'error')
+        res.redirect('/admin')
+    });
+}
+exports.createServiceQuote = function (req, res) {
+    var data = {
+        email: req.body.mail,
+        phone: req.body.phone,
+        name: req.body.name,
+        iid: req.params.iid,
+        units: req.body.qty,
+        measurementUnit: req.body.unit,
 
-    },
-    if(req.user)
-    {
-       data["uuid"]=req.user.uuid 
     }
-    orderServices.createQuote(data,function(created){
-        if(created.success==false)
-        {
-            req.flash('error','error in creating quote ')
-            
+    if (req.user) {
+        data["uuid"] = req.user.uuid
+    }
+    orderServices.createQuote(data, function (created) {
+        if (created.success == false) {
+            req.flash('error', 'error in creating quote ')
+
         }
-        else
-        {
-            req.flash('success','Quote Requested')
+        else {
+            req.flash('success', 'Quote Requested')
         }
-        res.redirect('/items/'+req.params.iid)
+        res.redirect('/items/' + req.params.iid)
 
     })
 
 }
-exports.getCreateServiceQuote=function(req,res)
-{
-    res.render('createQuote',{quoteId:req.params.iid})
+exports.getCreateServiceQuote = function (req, res) {
+    itemServices.getItemById(req.params.iid, function(foundItem) {
+        if (!foundItem.success) {
+            req.flash('error', 'An error has occurred!');
+            res.redirect('/items/' + req.params.iid)
+        } else {
+            res.render('createQuote', { item : foundItem.totalDetails })
+        }
+    })
 }
-exports.serviceQuoteStatus=function(req,res)
-{
-    orderServices.markAsCompleteQuote(req.params.quoteId,function(quote){
-        if(quote.success==false)
-        req.flash('error','error')
+
+exports.serviceQuoteStatus = function (req, res) {
+    orderServices.markAsCompleteQuote(req.params.quoteId, function (quote) {
+        if (quote.success == false)
+            req.flash('error', 'error')
         else
-        req.flash('success','success')
+            req.flash('success', 'success')
         res.redirect('/admin/service')
     })
 }
