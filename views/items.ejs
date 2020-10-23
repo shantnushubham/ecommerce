@@ -29,10 +29,10 @@
 
 
 <!-- Start Page Title Area -->
-<!-- <div class="page-title-area item-bg-7">
+<div class="page-title-area item-bg-7">
 	<div class="container">
 		<div class="page-title-content">
-			<h2>Shop</h2>
+			<h2>Items</h2>
 			<ul>
 				<li>
 					<a href="/">
@@ -44,7 +44,7 @@
 			</ul>
 		</div>
 	</div>
-</div> -->
+</div>
 <!-- End Page Title Area -->
 
 <main>
@@ -142,34 +142,31 @@
 				<!-- End Desktop View -->
 
 				<!-- Start Mobile View -->
-				<div class="uk-grid-small uk-child-width-1-2 uk-text-center" id="mobile-items" uk-grid>
+				<div id="mobile-items">
 					<% itemlist.forEach(el => { %>
-					<div>
-						<div class="single-menu-item" style="background-color: white !important;">
+					<div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2 uk-margin" uk-grid>
+						<div class="uk-card-media-left uk-cover-container">
 							<div class="menu-img">
-								<a href="/items/<%= el.iid %>"><img src="<%=el.image[0]%>" loading="lazy"
-										alt="<%= el.name %>"></a>
-								<!-- <div class="price">
-									<span style="font-size: small;">Rs. <%= el.price %></span>
-								</div> -->
+								<a href="/items/<%= el.iid %>">
+									<img src="<%=el.image[0]%>" loading="lazy" alt="<%= el.name %>"
+										style="margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+										<canvas height="400px"></canvas>
+								</a>
 							</div>
-							<div class="item-text">
-								<h5 style="margin-top: 5px; margin-bottom: 0px;">
-									<a href="/items/<%= el.iid %>" style="color: black;"><%= el.name %></a>
-								</h5>
-								<p style="margin-top: 5px"><%= el.shortDesc%></p>
-								<!-- <ul>
-									<li>
-										<a class="default-btn" href="/items/<%= el.iid %>">Order Now</a>
-									</li>
-								</ul> -->
+						</div>
+						<div>
+							<div class="uk-card-body" style="padding: 5%;">
+								<a href="/items/<%= el.iid %>" style="color: black;">
+									<h4 class="uk-title"><%=el.name%></h4>
+									<span style="color: black; font-size: medium;">Rs. <%=el.price%></span>
+								</a>
+								<p style="margin-top: 7px;"><%=el.shortDesc%></p>
 							</div>
 						</div>
 					</div>
-					<% }); %>
+					<% }) %>
 				</div>
 				<!-- End Mobile View -->
-				<!-- /row -->
 			</div>
 			<!-- /col -->
 		</div>

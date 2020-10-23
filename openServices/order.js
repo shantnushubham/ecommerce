@@ -382,6 +382,15 @@ class order {
         })
     }
 
+    getAllSavedOrders(uuid, callback) {
+        ordermodel.find({ uuid: uuid, shipmentStatus: "saved" }, function (err, order) {
+            if (err) callback({ success: false })
+            else callback({ success: true, order: order })
+        })
+    }
+
+    
+
     authorizeOrder(orderId, callback) {
         ordermodel.findOneAndUpdate({ orderId: orderId }, { status: "authorized" }, function (err, updatedOrder) {
             if (err || functions.isEmpty(updatedOrder)) callback({ success: false })

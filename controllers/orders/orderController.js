@@ -9,6 +9,7 @@ require('dotenv').config()
 const envData = process.env
 const url = require('url')
 const itemServices = require("../../openServices/items")
+const order = require('../../openServices/order')
 
 exports.getCheckout = function (req, res) {
 
@@ -675,6 +676,38 @@ exports.checkUserOrder = function (req, res) {
 
 }
 
+exports.checkSavedUserOrder = function (req, res) {
+
+    orderServices.checkOrderDetails(req.params.orderId, function (foundOrder) {
+        if (foundOrder.success == false || foundOrder.found == false) {
+            req.flash('error', 'error in getting order details')
+            res.redirect('/')
+        }
+        else {
+            if (foundOrder.order.uuid === req.user.uuid) {
+
+                var promiseArr = []
+                foundOrder.order.orderedItems.forEach(element => {
+                    promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
+                });
+                Promise.all(promiseArr).then(result => {
+                    console.log({ success: true, found: true, order: foundOrder.order, Olist: result })
+                    res.render('savedUserOrder', { success: true, found: true, order: foundOrder.order, Olist: result })
+                }).catch(errors => {
+                    res.render('savedUserOrder', { success: false, found: true, order: foundOrder.order, Olist: errors })
+                })
+            }
+            else {
+                req.flash('error', 'unauthorized')
+                res.redirect('/')
+            }
+
+        }
+
+    })
+
+}
+
 exports.cancelOrder = function (req, res) {
     orderServices.cancelOrder(req.params.orderId, function (canceled) {
         if (canceled.success == false) {
@@ -1020,12 +1053,12 @@ exports.createServiceQuote = function (req, res) {
 
 }
 exports.getCreateServiceQuote = function (req, res) {
-    itemServices.getItemById(req.params.iid, function(foundItem) {
+    itemServices.getItemById(req.params.iid, function (foundItem) {
         if (!foundItem.success) {
             req.flash('error', 'An error has occurred!');
             res.redirect('/items/' + req.params.iid)
         } else {
-            res.render('createQuote', { item : foundItem.totalDetails })
+            res.render('createQuote', { item: foundItem.totalDetails })
         }
     })
 }
@@ -1037,5 +1070,16 @@ exports.serviceQuoteStatus = function (req, res) {
         else
             req.flash('success', 'success')
         res.redirect('/admin/service')
+    })
+}
+
+exports.getAllSavedOrders = function (req, res) {
+    orderServices.getAllSavedOrders(req.user.uuid, function (allOrders) {
+        if (!allOrders.success) {
+            req.flash('error', "Could not find orders for the given user");
+            res.redirect("/")
+        } else {
+            res.render("savedOListUser", { allOrders: allOrders.order })
+        }
     })
 }

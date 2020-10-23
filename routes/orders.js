@@ -155,7 +155,8 @@ router.get('/orders', ensureAuthenticated, orderController.userOrderList)
 router.get('/cancellation/request/:orderId', ensureAuthenticated, orderController.cancelOrder)
 router.get('/cancellations', ensureAuthenticated, orderController.userCancellationList)
 router.get('/cancellations/:id', ensureAuthenticated, orderController.fetchCancellationById)
-
+router.get("/saved-orders", ensureAuthenticated, orderController.getAllSavedOrders)
+router.get("/saved-orders/:orderId", ensureAuthenticated, orderController.checkSavedUserOrder)
 
 
 router.get('/admin/orders-filter', functions.isAdmin, orderController.getAllOrders)
