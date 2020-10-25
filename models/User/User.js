@@ -74,6 +74,16 @@ var UserSchema  = new mongoose.Schema({
     creditAllowed:{
         type:Boolean,
         default:false
+    },
+    /**
+     * 112-admin
+     * 1- base user (no authority)
+     * 2-ops
+     * 
+     */
+    level:{
+        type:Number,
+        default:1
     }
 });
 

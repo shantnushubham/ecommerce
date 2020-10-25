@@ -43,22 +43,24 @@
 									</p>
 									<% }) %>
 								</div>
+								<% if (currentUser.isBusiness && currentUser.creditAllowed) { %>
 								<div class="payment-method">
 									<div class="uk-child-width-expand@s uk-text-center" uk-grid>
 										<p>
-											<input type="radio" id="5P" name="radio-group">
+											<input type="radio" id="5P" value=5 name="perc">
 											<label for="5P" value=5>5%</label>
 										</p>
 										<p>
-											<input type="radio" id="10P" name="radio-group">
+											<input type="radio" id="10P" value=10 name="perc">
 											<label for="10P" value=10>10%</label>
 										</p>
 										<p>
-											<input type="radio" id="20P" name="radio-group">
+											<input type="radio" id="20P" value=20 name="perc">
 											<label for="20P" value=20>20%</label>
 										</p>
 									</div>
 								</div>
+								<%}%>
 								<div class="col-lg-6 col-md-6">
 									<div class="form-group">
 										<input type="text" class="form-control" placeholder="Offer Code" name="offer">
