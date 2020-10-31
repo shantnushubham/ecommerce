@@ -89,8 +89,8 @@
 					<h3>Cart Totals</h3>
 					<ul>
 						<li>Subtotal <span>Rs. <%= x %>.00</span></li>
-						<li>GST (18%) <span>Rs. <%= (x*(0.18)) %>.00</span></li>
-						<li>Total <span><b>Rs. <%= (x*(1.18)) %>.00</b></span></li>
+						<li>GST (18%) <span>Rs. <%= Math.ceil(x*(0.18)) %>.00</span></li>
+						<li>Total <span><b>Rs. <%= Math.ceil(x*(1.18)) %>.00</b></span></li>
 					</ul>
 					<a href="/checkout" class="default-btn">
 						Proceed to Checkout

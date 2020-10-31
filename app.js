@@ -45,15 +45,15 @@ app.use(cors());
 mongoose.connect(envData.DB, { useUnifiedTopology: true, useNewUrlParser: true });
 
 app.use(mongooseMorgan({
-  collection: 'Log',
-  connectionString: envData.DB,
+    collection: 'Log',
+    connectionString: envData.DB,
 },
-  {
-    skip: function (req, res) {
-      return res.statusCode < 400;
-    }
-  },
-  'dev'
+    {
+        skip: function (req, res) {
+            return res.statusCode < 400;
+        }
+    },
+    'dev'
 ));
 
 app.use(logger('dev'));
@@ -65,20 +65,20 @@ app.use(compression());
 
 
 app.use(session({
-  secret: 'my-secret',
-  resave: false,
-  saveUninitialized: false,
-  // store: new MongoStore({ mongooseConnection: mongoose.connection }),
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24 * 3 // two weeks
-  }
+    secret: 'my-secret',
+    resave: false,
+    saveUninitialized: false,
+    // store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 3 // two weeks
+    }
 }));
 
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 
@@ -91,46 +91,42 @@ app.use(passport.session());
 
 // Global variables
 app.use(function (req, res, next) {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  next();
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    next();
 });
 app.use(function (req, res, next) {
-  if (req.isAuthenticated()) {
-    res.locals.currentUser = req.user;
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash('error');
-  } else {
-    res.locals.currentUser = "";
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash('error');
-  }
-  next();
+    if (req.isAuthenticated()) {
+        res.locals.currentUser = req.user;
+        res.locals.success = req.flash('success');
+        res.locals.error = req.flash('error');
+    } else {
+        res.locals.currentUser = "";
+        res.locals.success = req.flash('success');
+        res.locals.error = req.flash('error');
+    }
+    next();
 });
 
 app.use(function (req, res, next) {
-  if (req.isAuthenticated()) {
-    cartModel.countDocuments({ uuid: req.user.uuid }, function (err, count) {
-      if (!err) {
-        console.log(count)
-        res.locals.cartCount = count
-        next();
-        // console.log(res.locals);
-      } else {
-        console.log(count)
+    if (req.isAuthenticated()) {
+        cartModel.countDocuments({ uuid: req.user.uuid }, function (err, count) {
+            if (!err) {
+                res.locals.cartCount = count
+                next();
+                // console.log(res.locals);
+            } else {
+                res.locals.cartCount = 0
+                next();
+                // console.log(res.locals);
+            }
+        })
+    } else {
         res.locals.cartCount = 0
         next();
-        // console.log(res.locals);
-      }
-    })
+    }
 
-
-  } else {
-    res.locals.cartCount = 0
-    next();
-  }
-  
 });
 
 // app.use('/', require('./routes/routes'));
@@ -144,29 +140,29 @@ app.use(vendorRoutes)
 
 
 app.get('/auth/google', passport.authenticate('google', {
-  scope: [
-    'https://www.googleapis.com/auth/userinfo.profile',
-    'https://www.googleapis.com/auth/userinfo.email'
-  ]
+    scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email'
+    ]
 }));
 
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function (req, res) {
-    res.redirect('/');
-  }
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    function (req, res) {
+        res.redirect('/');
+    }
 );
 
 app.get('/auth/facebook',
-  passport.authenticate('facebook', {
-    scope: 'email'
-  }));
+    passport.authenticate('facebook', {
+        scope: 'email'
+    }));
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-  })
+    passport.authenticate('facebook', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    })
 );
 
 
@@ -174,23 +170,23 @@ app.use('/', require('./routes/routes'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error("Not Found");
-  err.status = 404;
-  next(err);
+    var err = new Error("Not Found");
+    err.status = 404;
+    next(err);
 });
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error", { error: err });
+    // render the error page
+    res.status(err.status || 500);
+    res.render("error", { error: err });
 });
 
 
 app.listen(3000, process.env.IP, function () {
-  console.log("Server is up and running! Go ahead make your move.");
+    console.log("Server is up and running! Go ahead make your move.");
 });
