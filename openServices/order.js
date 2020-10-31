@@ -376,7 +376,7 @@ class order {
     }
 
     getOrderByUUID(uuid, callback) {
-        ordermodel.find({ uuid: uuid }, function (err, order) {
+        ordermodel.find({ uuid: uuid, shipmentStatus:{$ne:'saved'} }, function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })

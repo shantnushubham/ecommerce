@@ -121,6 +121,7 @@ exports.postCheckout = function (req, res) {
 }
 
 exports.creditPath = function (req, res) {
+    console.log("credit=",req.body);
     if (req.user.isBusiness == false || req.user.creditAllowed == false) {
         req.flash('error', 'credit not allowed')
         res.redirect('/cartpage')
