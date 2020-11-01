@@ -6196,7 +6196,7 @@ h6 {
 }
 @media (max-width: 991px) {
     .navUser-section .material-icons {
-        color: #fff;
+        color: #2a3746;
     }
 }
 @media (max-width: 544px) {
@@ -11670,8 +11670,8 @@ body.hasAdminBar .navPages-container.is-open {
 @media (max-width: 991px) {
     .mobileMenu-toggle .mobileMenu-toggleIcon,
     .mobileMenu-toggle .mobileMenu-toggleIcon::after,
-    .mobileMenu-toggle .mobileMenu-toggleIcon::before {
-        background: #fff;
+    .mobileMenu-toggle .mobileMenu-toggleIcon::before {--
+        background: #2a3746;
     }
 }
 .mobileMenu-toggle .mobileMenu-toggleIcon {
