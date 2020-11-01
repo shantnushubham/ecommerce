@@ -1,0 +1,34 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Cancellation Details</li>
+        </ol>
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+                <h2><i class="fa fa-file"></i>Cancellation Details</h2>
+            </div>
+            <div class="container">
+                <br>
+                <h1>Cancellation Details</h1>
+                <br>
+                <br>
+                <h3>Order ID: <%=cancellations.cancelReq.orderId%></h3>
+                <h3>Payment Refund Status: <%=cancellations.cancelReq.paymentRefundStatus%></h3>
+                <h3>Cancellation Status: <%=cancellations.cancelReq.cancellationStatus%></h3>
+                <h3>Cancellation ID: <%=cancellations.cancelReq.cancellationId%></h3>
+                <h3>Transaction ID: <%=cancellations.cancelReq.transaction_id%></h3>
+                <h3>Date: <%=cancellations.cancelReq.dateCreated.toLocaleDateString()%></h3>
+            </div>
+            <a class="ui red button" href="/confirm-cancel/<%=cancellations.cancelReq.cancellationId%>">Confirm
+                Cancellation</a>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/adminFooter'); -%>

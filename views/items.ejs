@@ -1,131 +1,687 @@
-<%- include('partials/header', {title: "Welcome to 112Cart", desc: "Best Shopping Website"}); -%>
+<%- include("partials/newHeader") %>
 
-<!-- Start Page Title Area -->
-<div class="page-title-area item-bg-7">
-	<div class="container">
-		<div class="page-title-content">
-			<h2>Shop</h2>
-			<ul>
-				<li>
-					<a href="/">
-						Home
-						<i class="fa fa-chevron-right"></i>
-					</a>
-				</li>
-				<li>Items</li>
-			</ul>
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="INR">
+
+	<div class="home-content">
+
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label">Laptop</span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="https://demo-store9.mybigcommerce.com/" class="breadcrumb-label"
+								itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<meta itemprop="item" content="https://demo-store9.mybigcommerce.com/laptop/">
+							<span class="breadcrumb-label" itemprop="name">Laptop</span>
+							<meta itemprop="position" content="2" />
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="page container">
+			<div class="row">
+				<aside class="page-sidebar" id="faceted-search-container">
+					<nav>
+						<div id="facetedSearch" class="facetedSearch">
+							<div class="facetedSearch-refineFilters">
+								<h5 class="sidebarBlock-heading">
+									Filters
+								</h5>
+
+							</div>
+
+							<a href="#facetedSearch-navList" role="button" class="facetedSearch-toggle toggleLink"
+								data-collapsible>
+								<span class="facetedSearch-toggle-text">
+									Browse by Brand, Color &amp; more
+
+								</span>
+
+								<span class="facetedSearch-toggle-indicator">
+									<span class="toggleLink-text toggleLink-text--on">
+										Hide Filters
+
+										<i class="icon" aria-hidden="true">
+											<svg>
+												<use xlink:href="#icon-keyboard-arrow-up" /></svg>
+										</i>
+									</span>
+
+									<span class="toggleLink-text toggleLink-text--off">
+										Show Filters
+
+										<i class="icon" aria-hidden="true">
+											<svg>
+												<use xlink:href="#icon-keyboard-arrow-down" /></svg>
+										</i>
+									</span>
+								</span>
+							</a>
+
+							<div id="facetedSearch-navList" class="facetedSearch-navList blocker-container">
+								<form method="POST" action="/items">
+									<div class="accordion accordion--navList">
+
+										<% if (!(category.length == 1 && category[0] == '')) { %>
+										<div class="accordion-block">
+											<div class="accordion-navigation toggleLink  is-open " role="button"
+												data-collapsible="#facetedSearch-content--brand">
+												<h5 class="accordion-title">
+													Category
+												</h5>
+
+												<div class="accordion-navigation-actions">
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--off">
+														<use xlink:href="#icon-add" />
+													</svg>
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--on">
+														<use xlink:href="#icon-remove" />
+													</svg>
+												</div>
+											</div>
+											<% category.forEach(element => { %>
+											<div id="facetedSearch-content--brand" class="accordion-content  is-open ">
+												<ul id="facetedSearch-navList--brand" data-facet="brand" class="navList"
+													data-has-more-results="false">
+													<li class="navList-item">
+														<input type="checkbox" name="category"
+															value="<%=element%>">&nbsp; <%=element.toUpperCase()%>
+														<span class="navList-action-close" aria-hidden="true">
+															<svg class="icon">
+																<use xlink:href="#icon-close" />
+															</svg>
+														</span>
+													</li>
+												</ul>
+											</div>
+											<% }) %>
+										</div>
+										<% } %>
+
+										<% if (!(subCategory.length == 1 && subCategory[0] == '')) { %>
+										<div class="accordion-block">
+											<div class="accordion-navigation toggleLink  is-open " role="button"
+												data-collapsible="#facetedSearch-content--Color">
+												<h5 class="accordion-title">
+													Sub-Categories
+												</h5>
+
+												<div class="accordion-navigation-actions">
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--off">
+														<use xlink:href="#icon-add" />
+													</svg>
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--on">
+														<use xlink:href="#icon-remove" />
+													</svg>
+												</div>
+											</div>
+
+											<div id="facetedSearch-content--Color" class="accordion-content  is-open ">
+												<ul id="facetedSearch-navList--Color" data-facet="Color" class="navList"
+													data-has-more-results="false">
+													<% subCategory.forEach(element => { %>
+													<li class="navList-item">
+														<input type="checkbox" name="category"
+															value="<%=element%>">&nbsp; <%=element.toUpperCase()%>
+
+														<span class="navList-action-close" aria-hidden="true">
+															<svg class="icon">
+																<use xlink:href="#icon-close" />
+															</svg>
+														</span>
+														</a>
+													</li>
+													<% }) %>
+												</ul>
+
+											</div>
+										</div>
+										<% } %>
+
+										<% if (!(tag.length == 1 && tag[0] == '')) { %>
+										<div class="accordion-block">
+											<div class="accordion-navigation toggleLink  is-open " role="button"
+												data-collapsible="#facetedSearch-content--Color">
+												<h5 class="accordion-title">
+													Tags
+												</h5>
+
+												<div class="accordion-navigation-actions">
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--off">
+														<use xlink:href="#icon-add" />
+													</svg>
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--on">
+														<use xlink:href="#icon-remove" />
+													</svg>
+												</div>
+											</div>
+
+											<div id="facetedSearch-content--Color" class="accordion-content  is-open ">
+												<ul id="facetedSearch-navList--Color" data-facet="Color" class="navList"
+													data-has-more-results="false">
+													<% tag.forEach(element => { %>
+													<li class="navList-item">
+														<input type="checkbox" name="category"
+															value="<%=element%>">&nbsp; <%=element.toUpperCase()%>
+
+														<span class="navList-action-close" aria-hidden="true">
+															<svg class="icon">
+																<use xlink:href="#icon-close" />
+															</svg>
+														</span>
+														</a>
+													</li>
+													<% }) %>
+												</ul>
+
+											</div>
+										</div>
+										<% } %>
+									</div>
+									<div style="text-align: center;">
+										<button class="button button--small card-figcaption-button" type="submit">
+											<span class="material-icons">add</span>
+											Submit
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</nav>
+				</aside>
+
+				<main class="page-content" id="product-listing-container">
+
+					<ul class="productGrid">
+						<% itemlist.forEach(el => { %>
+						<li class="product">
+							<article class="card ">
+								<figure class="card-figure">
+									<div class="sale-flag-side"> </div>
+									<a href="/items/<%= el.iid %>">
+										<div class="card-img-container">
+											<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+												data-sizes="auto" class="lazyload card-image" />
+										</div>
+									</a>
+									<figcaption class="card-figcaption">
+										<div class="card-figcaption-body">
+											<a href="/wishlist.php?action=add&amp;product_id=111"
+												class="button button--small card-figcaption-button tt-wishlist"><span
+													class="material-icons">favorite_border</span></a>
+											<label class="button button--small card-figcaption-button tt-compare"
+												title="Compare" data-product-compare for="compare-111">
+												<span class="material-icons">sync</span>
+												<input type="checkbox" class="tt-comparecheck" name="products[]"
+													value="111" id="compare-111" data-compare-id="111">
+											</label>
+											<a class="button button--small card-figcaption-button quickview"
+												title="Quick view" data-product-id="111">
+												<span class="material-icons">remove_red_eye</span>
+											</a>
+										</div>
+									</figcaption>
+								</figure>
+
+								<div class="card-body">
+									<h4 class="card-title">
+										<a href="/items/<%= el.iid %>"><%=el.name%></a>
+									</h4>
+									<div class="card-text tt-price" data-test-info-type="price">
+
+										<div class="price-section price-section--withTax rrp-price--withTax"
+											style="display: none;">
+											MSRP:
+											<span data-product-rrp-with-tax class="price price--rrp">
+											</span>
+										</div>
+
+										<div class="price-section price-section--withTax">
+											<span class="price-label" style="display: none;">
+
+											</span>
+											<span class="price-now-label">
+											</span>
+											<span data-product-price-with-tax
+												class="price price--withTax">₹<%=el.price%></span>
+										</div>
+										<div class="price-section price-section--withTax non-sale-price--withTax">
+											<span data-product-non-sale-price-with-tax class="price price--non-sale">
+												₹<%=(1.20) * el.price%>
+											</span>
+										</div>
+									</div>
+
+									<div class="tt-cart-btn">
+										<a href="/items/<%= el.iid %>" data-event-type="product-click"
+											title="Add to Cart" class="button button--small card-figcaption-button">
+											<span class="material-icons">add</span>
+											Buy Now
+										</a>
+									</div>
+								</div>
+							</article>
+						</li>
+						<% }) %>
+					</ul>
+
+					<div data-content-region="category_below_content"></div>
+				</main>
+			</div>
+		</div>
+
+
+	</div>
+	<div id="modal" class="modal" data-reveal data-prevent-quick-search-close>
+		<a href="#" class="modal-close" aria-label="Close" role="button">
+			<span aria-hidden="true">&#215;</span>
+		</a>
+		<div class="modal-content"></div>
+		<div class="loadingOverlay"></div>
+	</div>
+	<div id="alert-modal" class="modal modal--alert modal--small" data-reveal data-prevent-quick-search-close>
+		<div class="swal2-icon swal2-error swal2-icon-show"><span class="swal2-x-mark"><span
+					class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div>
+
+		<div class="modal-content"></div>
+
+		<div class="button-container"><button type="button" class="confirm button" data-reveal-close>OK</button>
 		</div>
 	</div>
 </div>
-<!-- End Page Title Area -->
+<!-- 
+        <div class="banners" data-banner-location="bottom">
+            <div class="banner">
+                <div id='1252724102'><p><img class="__mce_add_custom__" title="left-banner-1.jpg" src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/product_images/uploaded_images/left-banner-1.jpg" alt="left-banner-1.jpg" width="290" height="390" /></p></div>
+            </div>
+        </div>
 
-<main>
-	<!--/hero_in-->
-	<div class="container margin_60_35">
-		<div class="row">
-			<aside class="col-lg-3" id="sidebar">
-				<div id="filters_col">
-					<a class="filters" style="font-weight: bold;">Collapse Filters</a>
-					<div class="collapse show" id="collapseFilters">
-						<form method="POST" action="/items">
-							<hr>
-							<% if (!(category.length == 1 && category[0] == '')) { %>
-							<div class="filter_type">
-								<h5>Categories</h5>
-								<ul>
-									<% category.forEach(element => { %>
-									<li>
-										<label>
-											<input type="checkbox" name="category" value="<%=element%>">&nbsp;
-											<b><%=element.toUpperCase()%></b>
-										</label>
-									</li>
-									<% }); %>
-								</ul>
-							</div>
-							<hr>
-							<% } %>
-							<% if (!(subCategory.length == 1 && subCategory[0] == '')) { %>
-							<div class="filter_type">
-								<h5>Sub-Category</h5>
-								<ul>
-									<% subCategory.forEach(element => { %>
-									<li>
-										<label>
-											<input type="checkbox" name="subCategory" value="<%=element%>">&nbsp;
-											<b><%=element.toUpperCase()%></b>
-										</label>
-									</li>
-									<% }); %>
-								</ul>
-							</div>
-							<hr>
-							<% } %>
-							<% if (!(tag.length == 1 && tag[0] == '')) { %>
-							<div class="filter_type">
-								<h5>Tags</h5>
-								<ul>
-									<% tag.forEach(element => { %>
-									<li>
-										<label>
-											<input type="checkbox" name="tag" value="<%=element%>">&nbsp;
-											<b><%=element.toUpperCase()%></b>
-										</label>
-									</li>
-									<% }); %>
-								</ul>
-							</div>
-							<% } %>
-							<button class="default-btn" type="submit">Search</button>
-						</form>
+ -->
+<footer class="footer" role="contentinfo">
 
-					</div>
-					<!--/collapse -->
+	<div class="tt-subscription">
+		<div class="container">
+			<article class="full-subscription" data-section-type="newsletterSubscription">
+				<div class="newsletter-tittle">
+					<h5 class="footer-info-headings">
+						<span class="material-icons">drafts</span>
+						Sign Up For Newsletter
+					</h5>
+					<span class="newletter-desc">...and receive $20 coupon on next shopping</span>
 				</div>
-				<!--/filters col-->
-			</aside>
-			<!-- /aside -->
 
-			<div class="col-lg-9">
-				<div class="row">
-					<div class="container">
-						<div class="row">
-							<% itemlist.forEach(el => { %>
-							<div class="col-lg-6 col-md-6 col-sm-6">
-								<div class="single-menu-item" style="background-color: white !important;">
-									<div class="menu-img">
-										<a href="/items/<%= el.iid %>"><img src="<%=el.image[0]%>" loading="lazy"
-												alt="<%= el.name %>"></a>
-										<div class="price">
-											<span style="font-size: small;">Rs. <%= el.price %></span>
-										</div>
-									</div>
-									<div class="item-text">
-										<h3>
-											<a href="/items/<%= el.iid %>"></a><%= el.name %></a>
-										</h3>
-										<p><%= el.shortDesc%></p>
-										<ul>
-											<li>
-												<a class="default-btn" href="/items/<%= el.iid %>">Order Now</a>
-											</li>
-										</ul>
-									</div>
+				<div class="newsletter-contents">
+					<form class="form" action="/subscribe.php" method="post">
+						<fieldset class="form-fieldset">
+							<input type="hidden" name="action" value="subscribe">
+							<input type="hidden" name="nl_first_name" value="bc">
+							<input type="hidden" name="check" value="1">
+							<div class="form-field">
+								<label class="form-label is-srOnly" for="nl_email">Email Address</label>
+								<div class="form-prefixPostfix wrap">
+									<input class="form-input" id="nl_email" name="nl_email" type="email" value=""
+										placeholder="Your email address">
+									<input class="button button--primary form-prefixPostfix-button--postfix"
+										type="submit" value="Subscribe" />
 								</div>
 							</div>
-							<% }) %>
-						</div>
-					</div>
-					<!-- End Suitable Menu Area -->
+						</fieldset>
+					</form>
 				</div>
-				<!-- /row -->
-			</div>
-			<!-- /col -->
+			</article>
 		</div>
-		<!-- /row -->
 	</div>
-	<!-- /container -->
-</main>
-<!--/main-->
 
-<%- include('partials/footer'); -%>
+	<div class="tt-footer-link">
+		<div class="container">
+			<section class="footer-info">
+				<div class="storeinfo-payment footer-info-col">
+					<article class="footer-info-col footer-info-col--small tt-storeInfo" data-section-type="storeInfo">
+						<h5 class="footer-info-heading">Info</h5>
+						<ul class="footer-info-list tt-address">
+							<li>
+								<address class="tt-contact-info">
+									<span class="material-icons">location_on</span>
+									<div class="tt-address">
+										Acme Widgets<br>
+										123 Widget Street<br>
+										Acmeville, AC 12345<br>
+										United States of America
+									</div>
+								</address>
+							</li>
+							<li>
+								<div class="email-img">
+									<div class="content"><span class="material-icons">mail_outline</span><a
+											href="mailto:">support@yourstore.com</a></div>
+								</div>
+							</li>
+							<li>
+								<div class="tt-contact-number">
+									<span class="material-icons">local_phone</span>
+									<div class="tt-call">
+										9876543210
+									</div>
+								</div>
+							</li>
+
+						</ul>
+					</article>
+				</div>
+				<article class="footer-info-col footer-info-col--small tt-webPages" data-section-type="footer-webPages">
+					<h5 class="footer-info-heading">Navigate</h5>
+					<ul class="footer-info-list">
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/specials/">Specials</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/about-as/">About As</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/contact-us/">Contact Us</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/affiliate/">Affiliate</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/blog/">Our Blogs</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/gift-certificates/"> Gift
+								Certificates</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/shipping-returns/">Shipping &amp;
+								Returns</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/delivery-information/">Delivery
+								Information</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/terms-conditions/">Terms &amp;
+								Conditions</a>
+						</li>
+						<li>
+							<a href="/sitemap.php">Sitemap</a>
+						</li>
+					</ul>
+				</article>
+
+				<article class="footer-info-col footer-info-col--small tt-categories"
+					data-section-type="footer-categories">
+					<h5 class="footer-info-heading">Categories</h5>
+					<ul class="footer-info-list">
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/shop-all/">Shop All</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/laptop/">Laptop</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/computers/">Computers</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/speakers/">Speakers</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/computers/boerboel/beagle/">Beagle</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/computers/boerboel/basenji/">Basenji</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/computers/barbet/">Barbet</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/tablets/">Tablets</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/ipods/">Ipods</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/laptop-stand/">Laptop Stand</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/gadgets/">Gadgets</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/cell-phones/">Cell Phones</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/mouse/">Mouse</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/computers/video-games/">Video Games</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/cameras/">Cameras</a>
+						</li>
+					</ul>
+				</article>
+
+
+				<article class="footer-info-col footer-info-col--small tt-brands" data-section-type="footer-brands">
+					<h5 class="footer-info-heading">Popular Brands</h5>
+					<ul class="footer-info-list">
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/brands/common-good/">Shoppe Fabs</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/mountain-climbing/">Mountain Climbing</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/premium-quality/">Premium Quality</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/brands/ofs/">Summer Camping</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/brands/sagaform/">Wintage Spoon</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/foodzone/">Foodzone</a>
+						</li>
+						<li>
+							<a href="https://demo-store9.mybigcommerce.com/walking-dreams/">Walking Dreams</a>
+						</li>
+						<li><a href="https://demo-store9.mybigcommerce.com/brands/">View All</a></li>
+					</ul>
+				</article>
+
+				<div class="footer-sevices">
+					<div class="container">
+						<article class="footer-payment tt-payment" data-section-type="footer-payment">
+							<h5 class="footer-info-heading">Payment Methods</h5>
+							<ul class="footer-payment-icons">
+								<li><svg class="footer-payment-icon">
+										<use xlink:href="#icon-logo-american-express"></use>
+									</svg></li>
+								<li><svg class="footer-payment-icon">
+										<use xlink:href="#icon-logo-discover"></use>
+									</svg></li>
+								<li><svg class="footer-payment-icon">
+										<use xlink:href="#icon-logo-mastercard"></use>
+									</svg></li>
+								<li><svg class="footer-payment-icon">
+										<use xlink:href="#icon-logo-paypal"></use>
+									</svg></li>
+							</ul>
+						</article>
+						<ul class="tt-sevices footerservices-carousel row">
+							<li>
+								<div class="tt-shipping ttservice footer-info-heading">
+									<span class="material-icons">airplanemode_active</span>
+									<span class="service-title">Free Shipping</span>
+								</div>
+							</li>
+							<li>
+								<div class="tt-support ttservice footer-info-heading">
+									<span class="material-icons">headset_mic</span>
+									<span class="service-title">24/7 Free Support</span>
+								</div>
+							</li>
+							<li>
+								<div class="tt-discount ttservice footer-info-heading">
+									<span class="material-icons">local_offer</span>
+									<span class="service-title">Daily Discount</span>
+								</div>
+							</li>
+							<li>
+								<div class="tt-sendgift ttservice footer-info-heading">
+									<span class="material-icons">card_giftcard</span>
+									<span class="service-title">Send A Free Gift</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</section>
+		</div>
+	</div>
+	<div class="social-copyright footer-bottom">
+		<div class="container">
+			<article class="footer-info-col
+                    footer-info-col--social
+                    footer-info-col--right" data-section-type="footer-webPages">
+				<h5 class="footer-info-heading">Connect With Us</h5>
+				<ul class="socialLinks socialLinks--alt">
+					<li class="socialLinks-item">
+						<a class="icon icon--twitter" href="https://twitter.com/" title="Twitter" target="_blank"
+							rel="noopener">
+							<svg>
+								<use xlink:href="#icon-twitter" /></svg>
+							Twitter
+						</a>
+					</li>
+					<li class="socialLinks-item">
+						<a class="icon icon--pinterest" href="https://in.pinterest.com/" title="Pinterest"
+							target="_blank" rel="noopener">
+							<svg>
+								<use xlink:href="#icon-pinterest" /></svg>
+							Pinterest
+						</a>
+					</li>
+					<li class="socialLinks-item">
+						<a class="icon icon--linkedin" href="https://in.linkedin.com/" title="LinkedIn" target="_blank"
+							rel="noopener">
+							<svg>
+								<use xlink:href="#icon-linkedin" /></svg>
+							LinkedIn
+						</a>
+					</li>
+					<li class="socialLinks-item">
+						<a class="icon icon--facebook" href="https://www.facebook.com/" title="Facebook" target="_blank"
+							rel="noopener">
+							<svg>
+								<use xlink:href="#icon-facebook" /></svg>
+							Facebook
+						</a>
+					</li>
+					<li class="socialLinks-item">
+						<a class="icon icon--instagram" href="https://www.instagram.com/" title="Instagram"
+							target="_blank" rel="noopener">
+							<svg>
+								<use xlink:href="#icon-instagram" /></svg>
+							Instagram
+						</a>
+					</li>
+					<li class="socialLinks-item">
+						<a class="icon icon--youtube" href="https://www.youtube.com/" title="YouTube" target="_blank"
+							rel="noopener">
+							<svg>
+								<use xlink:href="#icon-youtube" /></svg>
+							YouTube
+						</a>
+					</li>
+				</ul>
+			</article>
+
+			<div class="tt-copyright tt-left">
+				<div class="footer-copyright">
+					<p class="powered-by">Powered by <a
+							href="https://www.bigcommerce.com?utm_source=merchant&amp;utm_medium=poweredbyBC"
+							rel="nofollow">BigCommerce</a></p>
+				</div>
+				<div class="footer-copyright">
+					<p class="powered-by">&copy; 2020 PayeeShop </p>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+<!-- Start ScrollToTop  -->
+<a href="#" class="scrollToTop" title="Back to Top" style="display:none">
+	<span class="material-icons">keyboard_arrow_up</span>
+</a>
+<!-- End ScrollToTop  -->
+
+<script>
+
+	$('.quickSearchResults').on('click', function () {
+		// console.log('click-close');
+		$('.quickSearchResults').fadeOut();
+	});
+
+	$(document).on('click', '.quickSearchResults .modal-close', function () {
+		// console.log('click-close');
+		$('.quickSearchResults').fadeOut();
+	});
+
+	$('.dropdown--quickSearch .form-input').on('click', function () {
+		$('.quickSearchResults').fadeIn();
+	});
+
+</script>
+
+<script>
+	var myVar;
+
+	function myFunction() {
+		myVar = setTimeout(showPage, 100);
+	}
+	function showPage() {
+		document.getElementById("ttloader").style.display = "none";
+	}
+
+</script>
+
+
+<script>window.__webpack_public_path__ = "https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/dist/";</script>
+<script
+	src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/dist/theme-bundle.main.js"></script>
+<script>
+	// Exported in app.js
+	window.stencilBootstrap("category", "{\"categoryProductsPerPage\":10,\"themeSettings\":{\"alert-backgroundColor\":\"#ffffff\",\"alert-color\":\"#333333\",\"alert-color-alt\":\"#ffffff\",\"applePay-button\":\"black\",\"banner-bg\":\"#ffffff\",\"blockquote-cite-font-color\":\"#999999\",\"blog_size\":\"870x1000\",\"body-bg\":\"#ffffff\",\"body-font\":\"Google_Roboto_400\",\"brand_size\":\"250x325\",\"brandpage_products_per_page\":10,\"button--default-backgroundColor\":\"#2A3746\",\"button--default-backgroundColorActive\":\"#FFAA3D\",\"button--default-backgroundColorHover\":\"#FFAA3D\",\"button--default-borderColor\":\"#e5e5e5\",\"button--default-borderColorActive\":\"#757575\",\"button--default-borderColorHover\":\"#999999\",\"button--default-color\":\"#ffffff\",\"button--default-colorActive\":\"#111111\",\"button--default-colorHover\":\"#111111\",\"button--disabled-backgroundColor\":\"#cccccc\",\"button--disabled-borderColor\":\"transparent\",\"button--disabled-color\":\"#ffffff\",\"button--icon-svg-color\":\"#666666\",\"button--icon-svg-hover-color\":\"#ffffff\",\"button--primary-backgroundColor\":\"#ffaa3d\",\"button--primary-backgroundColorActive\":\"#2a3746\",\"button--primary-backgroundColorHover\":\"#2a3746\",\"button--primary-color\":\"#111111\",\"button--primary-colorActive\":\"#ffffff\",\"button--primary-colorHover\":\"#ffffff\",\"card--alternate-backgroundColor\":\"#ffffff\",\"card--alternate-borderColor\":\"transparent\",\"card--alternate-color--hover\":\"#111111\",\"card-figcaption-button-background\":\"#ffaa3d\",\"card-figcaption-button-color\":\"#000000\",\"card-title-color\":\"#444444\",\"card-title-color-hover\":\"#111111\",\"carousel-arrow-bgColor\":\"#ffffff\",\"carousel-arrow-borderColor\":\"#e5e5e5\",\"carousel-arrow-color\":\"#777777\",\"carousel-bgColor\":\"transparent\",\"carousel-description-color\":\"#333333\",\"carousel-dot-bgColor\":\"#ffaa3d\",\"carousel-dot-color\":\"#ffffff\",\"carousel-dot-color-active\":\"#ffaa3d\",\"carousel-title-color\":\"#111111\",\"categorypage_products_per_page\":10,\"checkRadio-backgroundColor\":\"#ffffff\",\"checkRadio-borderColor\":\"#cccccc\",\"checkRadio-color\":\"#333333\",\"color-black\":\"#ffffff\",\"color-error\":\"#cc4749\",\"color-errorLight\":\"#ffdddd\",\"color-grey\":\"#999999\",\"color-greyDark\":\"#666666\",\"color-greyDarker\":\"#333333\",\"color-greyDarkest\":\"#000000\",\"color-greyLight\":\"#999999\",\"color-greyLighter\":\"#cccccc\",\"color-greyLightest\":\"#e5e5e5\",\"color-greyMedium\":\"#757575\",\"color-info\":\"#666666\",\"color-infoLight\":\"#dfdfdf\",\"color-primary\":\"#666666\",\"color-primaryDark\":\"#111111\",\"color-primaryDarker\":\"#000000\",\"color-primaryLight\":\"#aaaaaa\",\"color-secondary\":\"#ffffff\",\"color-secondaryDark\":\"#e5e5e5\",\"color-secondaryDarker\":\"#cccccc\",\"color-success\":\"#008a06\",\"color-successLight\":\"#d5ffd8\",\"color-textBase\":\"#666666\",\"color-textBase--active\":\"#111111\",\"color-textBase--hover\":\"#111111\",\"color-textHeading\":\"#111111\",\"color-textLink\":\"#666666\",\"color-textLink--active\":\"#111111\",\"color-textLink--hover\":\"#111111\",\"color-textSecondary\":\"#666666\",\"color-textSecondary--active\":\"#111111\",\"color-textSecondary--hover\":\"#111111\",\"color-warning\":\"#f1a500\",\"color-warningLight\":\"#fffdea\",\"color-white\":\"#ffffff\",\"color-whitesBase\":\"#e5e5e5\",\"color_badge_product_sale_badges\":\"#ffaa3d\",\"color_hover_product_sale_badges\":\"#FFAA3D\",\"color_text_product_sale_badges\":\"#000000\",\"container-border-global-color-base\":\"#e5e5e5\",\"container-fill-base\":\"#ffffff\",\"container-fill-dark\":\"#e5e5e5\",\"default_image_brand\":\"img/BrandDefault.gif\",\"default_image_gift_certificate\":\"img/GiftCertificate.png\",\"default_image_product\":\"img/ProductDefault.gif\",\"dropdown--quickSearch-backgroundColor\":\"#ffffff\",\"dropdown--wishList-backgroundColor\":\"#ffffff\",\"fontSize-h1\":22,\"fontSize-h2\":16,\"fontSize-h3\":16,\"fontSize-h4\":20,\"fontSize-h5\":18,\"fontSize-h6\":14,\"fontSize-root\":14,\"footer-TextColor\":\"666666\",\"footer-TextHoverColor\":\"111111\",\"footer-TitleColor\":\"#000000\",\"footer-backgroundColor\":\"#ffffff\",\"footer-borderColor\":\"#e5e5e5\",\"footer-bottombackgroundColor\":\"f5f5f5\",\"footer-bottomtextColor\":\"666666\",\"footer-bottomtexthoverColor\":\"111111\",\"footer-topbackgroundColor\":\"#2a3746\",\"footer-toptextColor\":\"#ffffff\",\"form-label-font-color\":\"#666666\",\"gallery_size\":\"300x300\",\"geotrust_ssl_common_name\":\"\",\"geotrust_ssl_seal_size\":\"M\",\"header--bottom-borderColor\":\"transparent\",\"header-backgroundColor\":\"#2a3746\",\"header-bottom-backgroundColor\":\"#2a3746\",\"header-responsivetextColor\":\"#ffffff\",\"header-textColor\":\"#ffffff\",\"headings-font\":\"Google_Roboto_400\",\"hide_blog_page_heading\":false,\"hide_breadcrumbs\":false,\"hide_category_page_heading\":false,\"hide_contact_us_page_heading\":false,\"hide_content_navigation\":false,\"hide_page_heading\":false,\"homepage_blog_posts_count\":8,\"homepage_featured_products_column_count\":4,\"homepage_featured_products_count\":8,\"homepage_new_products_column_count\":4,\"homepage_new_products_count\":8,\"homepage_show_blog\":true,\"homepage_show_carousel\":true,\"homepage_show_carousel_arrows\":true,\"homepage_show_subcategories\":true,\"homepage_stretch_carousel_images\":false,\"homepage_top_products_column_count\":4,\"homepage_top_products_count\":8,\"icon-color\":\"#666666\",\"icon-color-hover\":\"#000000\",\"icon-ratingEmpty\":\"#ffaa3d\",\"icon-ratingFull\":\"#ffaa3d\",\"input-bg-color\":\"#ffffff\",\"input-border-color\":\"#e5e5e5\",\"input-border-color-active\":\"#999999\",\"input-disabled-bg\":\"#ffffff\",\"input-font-color\":\"#666666\",\"label-backgroundColor\":\"#03c04a\",\"label-color\":\"#ffffff\",\"lazyload_mode\":\"lazyload+lqip\",\"loadingOverlay-backgroundColor\":\"#ffffff\",\"logo-position\":\"center\",\"logo_fontSize\":28,\"logo_size\":\"220x70\",\"navPages-color\":\"#333333\",\"navPages-color-hover\":\"#111111\",\"navPages-subMenu-backgroundColor\":\"#ffffff\",\"navPages-subMenu-separatorColor\":\"#eeeeee\",\"navUser-color\":\"#ffffff\",\"navUser-color-hover\":\"#ffaa3d\",\"navUser-dropdown-backgroundColor\":\"#ffffff\",\"navUser-dropdown-borderColor\":\"#e5e5e5\",\"navUser-indicator-backgroundColor\":\"#ffaa3d\",\"navigation_design\":\"simple\",\"optimizedCheckout-backgroundImage\":\"\",\"optimizedCheckout-backgroundImage-size\":\"1000x400\",\"optimizedCheckout-body-backgroundColor\":\"#ffffff\",\"optimizedCheckout-buttonPrimary-backgroundColor\":\"#333333\",\"optimizedCheckout-buttonPrimary-backgroundColorActive\":\"#000000\",\"optimizedCheckout-buttonPrimary-backgroundColorDisabled\":\"#cccccc\",\"optimizedCheckout-buttonPrimary-backgroundColorHover\":\"#666666\",\"optimizedCheckout-buttonPrimary-borderColor\":\"#333333\",\"optimizedCheckout-buttonPrimary-borderColorActive\":\"transparent\",\"optimizedCheckout-buttonPrimary-borderColorDisabled\":\"transparent\",\"optimizedCheckout-buttonPrimary-borderColorHover\":\"transparent\",\"optimizedCheckout-buttonPrimary-color\":\"#ffffff\",\"optimizedCheckout-buttonPrimary-colorActive\":\"#ffffff\",\"optimizedCheckout-buttonPrimary-colorDisabled\":\"#ffffff\",\"optimizedCheckout-buttonPrimary-colorHover\":\"#ffffff\",\"optimizedCheckout-buttonPrimary-font\":\"Google_Roboto_500\",\"optimizedCheckout-buttonSecondary-backgroundColor\":\"#ffffff\",\"optimizedCheckout-buttonSecondary-backgroundColorActive\":\"#e5e5e5\",\"optimizedCheckout-buttonSecondary-backgroundColorHover\":\"#f5f5f5\",\"optimizedCheckout-buttonSecondary-borderColor\":\"#cccccc\",\"optimizedCheckout-buttonSecondary-borderColorActive\":\"#757575\",\"optimizedCheckout-buttonSecondary-borderColorHover\":\"#999999\",\"optimizedCheckout-buttonSecondary-color\":\"#333333\",\"optimizedCheckout-buttonSecondary-colorActive\":\"#000000\",\"optimizedCheckout-buttonSecondary-colorHover\":\"#333333\",\"optimizedCheckout-buttonSecondary-font\":\"Google_Roboto_500\",\"optimizedCheckout-colorFocus\":\"#4496f6\",\"optimizedCheckout-contentPrimary-color\":\"#333333\",\"optimizedCheckout-contentPrimary-font\":\"Google_Roboto_500\",\"optimizedCheckout-contentSecondary-color\":\"#757575\",\"optimizedCheckout-contentSecondary-font\":\"Google_Roboto_500\",\"optimizedCheckout-discountBanner-backgroundColor\":\"#e5e5e5\",\"optimizedCheckout-discountBanner-iconColor\":\"#333333\",\"optimizedCheckout-discountBanner-textColor\":\"#333333\",\"optimizedCheckout-form-textColor\":\"#666666\",\"optimizedCheckout-formChecklist-backgroundColor\":\"#ffffff\",\"optimizedCheckout-formChecklist-backgroundColorSelected\":\"#f5f5f5\",\"optimizedCheckout-formChecklist-borderColor\":\"#cccccc\",\"optimizedCheckout-formChecklist-color\":\"#333333\",\"optimizedCheckout-formField-backgroundColor\":\"#ffffff\",\"optimizedCheckout-formField-borderColor\":\"#cccccc\",\"optimizedCheckout-formField-errorColor\":\"#d14343\",\"optimizedCheckout-formField-inputControlColor\":\"#476bef\",\"optimizedCheckout-formField-placeholderColor\":\"#999999\",\"optimizedCheckout-formField-shadowColor\":\"transparent\",\"optimizedCheckout-formField-textColor\":\"#333333\",\"optimizedCheckout-header-backgroundColor\":\"#f5f5f5\",\"optimizedCheckout-header-borderColor\":\"#dddddd\",\"optimizedCheckout-header-textColor\":\"#333333\",\"optimizedCheckout-headingPrimary-color\":\"#333333\",\"optimizedCheckout-headingPrimary-font\":\"Google_Roboto_700\",\"optimizedCheckout-headingSecondary-color\":\"#333333\",\"optimizedCheckout-headingSecondary-font\":\"Google_Roboto_700\",\"optimizedCheckout-link-color\":\"#476bef\",\"optimizedCheckout-link-font\":\"Google_Roboto_500\",\"optimizedCheckout-link-hoverColor\":\"#002fe1\",\"optimizedCheckout-loadingToaster-backgroundColor\":\"#333333\",\"optimizedCheckout-loadingToaster-textColor\":\"#ffffff\",\"optimizedCheckout-logo\":\"\",\"optimizedCheckout-logo-position\":\"left\",\"optimizedCheckout-logo-size\":\"250x100\",\"optimizedCheckout-orderSummary-backgroundColor\":\"#ffffff\",\"optimizedCheckout-orderSummary-borderColor\":\"#dddddd\",\"optimizedCheckout-show-backgroundImage\":false,\"optimizedCheckout-show-logo\":\"none\",\"optimizedCheckout-step-backgroundColor\":\"#757575\",\"optimizedCheckout-step-borderColor\":\"#dddddd\",\"optimizedCheckout-step-textColor\":\"#ffffff\",\"overlay-backgroundColor\":\"#333333\",\"pace-progress-backgroundColor\":\"#999999\",\"paymentbuttons-paypal-color\":\"gold\",\"paymentbuttons-paypal-fundingicons\":false,\"paymentbuttons-paypal-label\":\"checkout\",\"paymentbuttons-paypal-layout\":\"vertical\",\"paymentbuttons-paypal-shape\":\"pill\",\"paymentbuttons-paypal-size\":\"responsive\",\"paymentbuttons-paypal-tagline\":false,\"pdp-custom-fields-tab-label\":\"Additional Information\",\"pdp-non-sale-price-label\":\"Was:\",\"pdp-price-label\":\"\",\"pdp-retail-price-label\":\"MSRP:\",\"pdp-sale-price-label\":\"Now:\",\"price_ranges\":true,\"product_list_display_mode\":\"grid\",\"product_sale_badges\":\"topleft\",\"product_size\":\"570x684\",\"productgallery_size\":\"250x325\",\"productpage_related_products_count\":10,\"productpage_reviews_count\":9,\"productpage_similar_by_views_count\":10,\"productpage_videos_count\":8,\"productthumb_size\":\"100x110\",\"productview_thumb_size\":\"100x110\",\"restrict_to_login\":false,\"searchpage_products_per_page\":10,\"select-arrow-color\":\"#111111\",\"select-bg-color\":\"#f5f5f5\",\"shop_by_brand_show_footer\":true,\"shop_by_price_visibility\":true,\"show_accept_amazonpay\":false,\"show_accept_amex\":true,\"show_accept_discover\":true,\"show_accept_googlepay\":false,\"show_accept_mastercard\":true,\"show_accept_paypal\":true,\"show_accept_visa\":false,\"show_copyright_footer\":true,\"show_custom_fields_tabs\":false,\"show_powered_by\":true,\"show_product_details_tabs\":true,\"show_product_dimensions\":false,\"show_product_quantity_box\":true,\"show_product_quick_view\":true,\"show_product_reviews_tabs\":true,\"show_product_weight\":true,\"social_icon_placement_bottom\":\"bottom_right\",\"social_icon_placement_top\":true,\"spinner-borderColor-dark\":\"#999999\",\"spinner-borderColor-light\":\"#ffffff\",\"storeName-color\":\"#ffffff\",\"supported_card_type_icons\":[\"american_express\",\"diners\",\"discover\",\"mastercard\",\"visa\"],\"supported_payment_methods\":[\"card\",\"paypal\"],\"swatch_option_size\":\"20x20\",\"thumb_size\":\"100x110\",\"zoom_size\":\"1280x1280\"},\"genericError\":\"Oops! Something went wrong.\",\"maintenanceMode\":{\"header\":null,\"message\":null,\"notice\":null,\"password\":null,\"securePath\":\"https://demo-store9.mybigcommerce.com\"},\"urls\":{\"account\":{\"add_address\":\"/account.php?action=add_shipping_address\",\"addresses\":\"/account.php?action=address_book\",\"details\":\"/account.php?action=account_details\",\"inbox\":\"/account.php?action=inbox\",\"index\":\"/account.php\",\"orders\":{\"all\":\"/account.php?action=order_status\",\"completed\":\"/account.php?action=view_orders\",\"save_new_return\":\"/account.php?action=save_new_return\"},\"recent_items\":\"/account.php?action=recent_items\",\"returns\":\"/account.php?action=view_returns\",\"send_message\":\"/account.php?action=send_message\",\"update_action\":\"/account.php?action=update_account\",\"wishlists\":{\"add\":\"/wishlist.php?action=addwishlist\",\"all\":\"/wishlist.php\",\"delete\":\"/wishlist.php?action=deletewishlist\",\"edit\":\"/wishlist.php?action=editwishlist\"}},\"auth\":{\"check_login\":\"/login.php?action=check_login\",\"create_account\":\"/login.php?action=create_account\",\"forgot_password\":\"/login.php?action=reset_password\",\"login\":\"/login.php\",\"logout\":\"/login.php?action=logout\",\"save_new_account\":\"/login.php?action=save_new_account\",\"save_new_password\":\"/login.php?action=save_new_password\",\"send_password_email\":\"/login.php?action=send_password_email\"},\"brands\":\"https://demo-store9.mybigcommerce.com/brands/\",\"cart\":\"/cart.php\",\"checkout\":{\"multiple_address\":\"/checkout.php?action=multiple\",\"single_address\":\"/checkout\"},\"compare\":\"/compare\",\"contact_us_submit\":\"/pages.php?action=sendContactForm\",\"gift_certificate\":{\"balance\":\"/giftcertificates.php?action=balance\",\"purchase\":\"/giftcertificates.php\",\"redeem\":\"/giftcertificates.php?action=redeem\"},\"home\":\"https://demo-store9.mybigcommerce.com/\",\"product\":{\"post_review\":\"/postreview.php\"},\"rss\":{\"products\":[]},\"search\":\"/search.php\",\"sitemap\":\"/sitemap.php\",\"subscribe\":{\"action\":\"/subscribe.php\"}},\"secureBaseUrl\":\"https://demo-store9.mybigcommerce.com\",\"cartId\":null,\"template\":\"pages/category\"}").load();
+</script>
+
+<script type="text/javascript"
+	src="https://cdn11.bigcommerce.com/shared/js/csrf-protection-header-14d7a517a359072d0dc53537c6a3e7070e54b6c0.js"></script>
+
+</body>
+
+</html>

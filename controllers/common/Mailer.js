@@ -2,6 +2,7 @@
 require('dotenv').config()
 const envData = process.env
 const axios = require('axios')
+const orderServices=require('../../openServices/order')
 // var clientId = process.env.CLIENTID
 // var clientSecret = process.env.CLIENTSECRET
 // var refreshToken = process.env.REFRESHTOKEN
@@ -84,28 +85,47 @@ exports.changedPassword=function(to,callback)
         callback({success:false,error:err})
     });
 }
-exports.askQuote=function(to,data,callback)
+exports.askQuote=function(user,order,callback)
 {
-    const options = {
-        method: 'POST',
-        url: 'https://api.sendinblue.com/v3/smtp/email',
-        headers: {
-            accept: 'application/json',
-            'content-type': 'application/json',
-            'api-key': envData.sendinblue
-        },
-        data: {
-            sender: { name: 'inversion', email: 'support@112cart.com' },
-            to: [{ email: to, }],
-            params: data,
-            tags: ['Quotation'],
-            templateId: 1
-        },
-
-    };
-    axios(options).then((result) => {
-        callback({success:true})
-    }).catch((err) => {
-        callback({success:false,error:err})
+    var promiseArr = []
+    order.orderedItems.forEach(element => {
+        promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
     });
+    Promise.all(promiseArr).then(result => {
+        var d = {
+            mail: user.email,
+            name:user.name,
+            order: createdOrder.order,
+            list: result
+        }
+        const options = {
+            method: 'POST',
+            url: 'https://api.sendinblue.com/v3/smtp/email',
+            headers: {
+                accept: 'application/json',
+                'content-type': 'application/json',
+                'api-key': envData.sendinblue
+            },
+            data: {
+                sender: { name: 'inversion', email: 'support@112cart.com' },
+                to: [{ email: d.mail, }],
+                params: d,
+                tags: ['Quotation'],
+                templateId: 1
+            },
+    
+        };
+        axios(options).then((mailed) => {
+            console.log("request completed")
+        }).catch((err) => {
+            console.log(err)
+        });
+        
+    }).catch(errors => {
+        console.log('error', 'error in sending')
+       
+    })
+    
+    callback({success:true})
+    
 }

@@ -1,267 +1,233 @@
-<!doctype html>
-<html lang="zxx">
+<%- include("partials/newHeader") %>
 
-<head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="INR">
 
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/bootstrap.min.css">
-	<!-- Owl Theme Default CSS -->
-	<link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/owl.theme.default.min.css">
-	<!-- Owl Carousel CSS -->
-	<link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/owl.carousel.min.css">
-	<!-- Animate CSS -->
-	<link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/animate.min.css">
-	<!-- Flaticon CSS -->
-	<link rel="stylesheet" href="/css/flaticon.css">
-	<!-- Font Awesome CSS -->
-	<link rel="stylesheet" href="/css/font-awesome.min.css">
-	<!-- Nice Select CSS -->
-	<link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/nice-select.css">
-	<!-- Imagelightbox CSS -->
-	<link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/imagelightbox.min.css">
-	<!-- Meanmenu CSS -->
-	<link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/meanmenu.min.css">
-	<!-- Date Picker CSS -->
-	<link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/date-picker.min.css">
-	<!-- Date Picker CSS -->
-	<link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/odometer.min.css">
-	<!-- Style CSS -->
-	<link rel="stylesheet" href="/css/style.css">
-	<!-- Responsive CSS -->
-	<link rel="stylesheet" href="/css/responsive.css">
-
-	<!-- Favicon -->
-	<link rel="apple-touch-icon" sizes="180x180" href="/img//apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
-	<link rel="manifest" href="/img/site.webmanifest">
-	<!-- TITLE -->
-	<title>Asahi - Food & Restaurant HTML Template</title>
-</head>
-
-<body>
-	<!-- Start Preloader Area -->
-	<div class="preloader">
-		<div class="spinner">
-			<div class="double-bounce1"></div>
-			<div class="double-bounce2"></div>
-		</div>
-	</div>
-	<!-- End Preloader Area -->
-
-	<!-- Start Sign-up Area -->
-	<section class="sign-up-area">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-6 col-md-6 p-0">
-					<div class="sign-up-bg"></div>
-				</div>
-				<div class="col-lg-6 col-md-6 p-0">
-					<% if(typeof errors != 'undefined'){ %> <% errors.forEach(function(error) { %>
-					<div role="alert">
-						<%= error.msg %>
-						<button type="button" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<% }); %> <% } %> <% if(success_msg != ''){ %>
-					<div class="alert alert-success alert-dismissible fade show" role="alert">
-						<%= success_msg %>
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<% } %> <% if(error_msg != ''){ %>
-					<div class="alert alert-danger alert-dismissible fade show" role="alert">
-						<%= error_msg %>
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<% } %> <% if(error != ''){ %>
-					<div class="alert alert-danger alert-dismissible fade show" role="alert">
-						<%= error %>
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<% } %>
-					<div class="sign-up-form">
-						<h3>Create your Account</h3>
-						<form action="/users/register" method="POST">
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Name</label>
-										<input name="user[name]" type="text" class="form-control" placeholder="	Name"
-											required>
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Email</label>
-										<input type="email" name="email" class="form-control"
-											placeholder="Email Address" required
-											value="<%= typeof email != 'undefined' ? email : '' %>">
-									</div>
-								</div>
-								<div class="col-lg-12">
-									<div class="form-group">
-										<label>Phone</label>
-										<input name="phone" type="number" class="form-control" required
-											placeholder="Phone Number">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Landmark</label>
-										<input name="address[landmark]" type="text" class="form-control"
-											placeholder="Landmark">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Full Address</label>
-										<input name="address[fullAddress]" type="text" class="form-control"
-											placeholder="Full Address">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>city</label>
-										<input name="address[city]" type="text" class="form-control" placeholder="city">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Locality</label>
-										<input name="address[locality]" type="text" class="form-control"
-											placeholder="Locality">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Pincode</label>
-										<input name="address[pincode]" type="number" required class="form-control"
-											placeholder="Pincode Number">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>District</label>
-										<input name="address[district]" type="text" required class="form-control"
-											placeholder="District">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>State</label>
-										<input name="address[state]" type="text" required class="form-control"
-											placeholder="State">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Country</label>
-										<input name="address[country]" type="text" required class="form-control"
-											placeholder="Country">
-									</div>
-								</div>
-
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Password</label>
-										<input type="password" name="password" required class="form-control"
-											placeholder="Password"
-											value="<%= typeof password != 'undefined' ? password : '' %>">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<label>Confirm Password</label>
-										<input type="password" name="password2" required class="form-control"
-											placeholder="Confirm Password"
-											value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
-									</div>
-								</div>
-								<div class="col-md-6 offset-md-3">
-									<button type="submit" class="btn default-btn">
-										Sign Up
-									</button>
-								</div>
-								<div class="col-lg-12">
-									<p>
-										Already a registered user?
-										<a href="/users/login">Login!</a>
-									</p>
-								</div>
-								<div class="col-lg-12">
-									<ul class="social-list">
-										<li>
-											<a href="#">
-												<i class="fa fa-facebook"></i>
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<i class="fa fa-twitter"></i>
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<i class="fa fa-google-plus"></i>
-											</a>
-										</li>
-										<li>
-											<a href="#">
-												<i class="fa fa-linkedin"></i>
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</form>
-					</div>
+	<div class="home-content">
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label">Create Account</span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<meta itemprop="item">
+							<span class="breadcrumb-label" itemprop="name">Create Account</span>
+							<meta itemprop="position" content="2" />
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
-	</section>
-	<!-- End Sign-up Area -->
+		<div class="tt-create-account page-content--centered">
+			<h1 class="page-heading">Create Account</h1>
 
+			<div class="account tt-account-create">
+				<div class="account-body">
+					<form action="/users/register" data-create-account-form method="POST" class="form">
+						<div class="form-row form-row--half">
+							<div class="form-field" id="FormField_1"
+								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Email Address&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+								data-type="EmailAddress">
+								<label class="form-label" for="FormField_1_input">Email Address
+									<small>Required</small>
+								</label>
+								<input type="text" id="FormField_1_input" data-label="Email Address" name="email"
+									class="form-input" aria-required="true" data-field-type="EmailAddress" required>
+							</div>
 
-	<!-- Jquery Slim JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/jquery-3.2.1.slim.min.js"></script>
-	<!-- Popper JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/popper.min.js"></script>
-	<!-- Bootstrap JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/bootstrap.min.js"></script>
-	<!-- Meanmenu JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/jquery.meanmenu.js"></script>
-	<!-- Nice Select JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/jquery.nice-select.min.js"></script>
-	<!-- Wow JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/wow.min.js"></script>
-	<!-- Owl Carousel JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/owl.carousel.js"></script>
-	<!-- Bootstrap Datepicker JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/bootstrap-datepicker.min.js"></script>
-	<!-- Imagelightbox JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/imagelightbox.min.js"></script>
-	<!-- Appear JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/jquery.appear.js"></script>
-	<!-- Odometer JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/odometer.min.js"></script>
-	<!-- Form Ajaxchimp JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/jquery.ajaxchimp.min.js"></script>
-	<!-- Form Validator JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/form-validator.min.js"></script>
-	<!-- Contact Form JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/contact-form-script.js"></script>
-	<!-- Custom JS -->
-	<script src="https://d6fhaebhrj3za.cloudfront.net/js/custom.js"></script>
-</body>
+							<div class="form-field" id="FormField_2"
+								data-validation="{&quot;type&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Password&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:8}"
+								data-type="Password">
+								<label class="form-label" for="FormField_2_input">Password
+									<small>Required</small>
+								</label>
+								<input type="password" class="form-input" id="FormField_2_input" data-label="Password"
+									value="<%= typeof password != 'undefined' ? password : '' %>" name="password"
+									autocomplete="off" aria-required="true" data-field-type="Password" required>
+							</div>
 
-</html>
+							<div class="form-field" id="FormField_3"
+								data-validation="{&quot;type&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Confirm Password&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+								data-type="ConfirmPassword">
+								<label class="form-label" for="FormField_3_input">Confirm Password
+									<small>Required</small>
+								</label>
+								<input type="password" class="form-input" id="FormField_3_input"
+									data-label="Confirm Password" name="password2"
+									value="<%= typeof password2 != 'undefined' ? password2 : '' %>" autocomplete="off"
+									aria-required="true" data-field-type="ConfirmPassword" required>
+							</div>
+
+							<div class="form-field" id="FormField_4"
+								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;First Name&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+								data-type="FirstName">
+								<label class="form-label" for="FormField_4_input">Name
+									<small>Required</small>
+								</label>
+								<input type="text" id="FormField_4_input" data-label="Name" name="user[name]"
+									class="form-input" aria-required="true" data-field-type="FirstName" required>
+							</div>
+
+							<div class="form-field" id="FormField_7"
+								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Phone Number&quot;,&quot;required&quot;:false,&quot;maxlength&quot;:0}"
+								data-type="Phone">
+								<label class="form-label" for="FormField_7_input">Phone Number
+
+								</label>
+								<input type="text" id="FormField_7_input" data-label="Phone Number" name="phone"
+									class="form-input" aria-required="false" data-field-type="Phone">
+							</div>
+
+							<div class="form-field" id="FormField_9"
+								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Address Line 2&quot;,&quot;required&quot;:false,&quot;maxlength&quot;:0}"
+								data-type="AddressLine2">
+								<label class="form-label" for="FormField_9_input">Full Address
+
+								</label>
+								<input type="text" id="FormField_9_input" data-label="Full Address"
+									name="address[fullAddress]" class="form-input" aria-required="false"
+									data-field-type="AddressLine2">
+							</div>
+
+							<div class="form-field" id="FormField_8"
+								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Address Line 1&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+								data-type="AddressLine1">
+								<label class="form-label" for="FormField_8_input">Landmark
+									<small>Required</small>
+								</label>
+								<input type="text" id="FormField_8_input" data-label="Landmark" name="address[landmark]"
+									class="form-input" aria-required="true" data-field-type="AddressLine1">
+							</div>
+
+							<div class="form-field" id="FormField_10"
+								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Suburb\/City&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+								data-type="City">
+								<label class="form-label" for="FormField_10_input">City
+									<small>Required</small>
+								</label>
+								<input type="text" id="FormField_10_input" data-label="City" name="address[city]"
+									class="form-input" aria-required="true" data-field-type="City">
+							</div>
+
+							<div class="form-field" id="FormField_10"
+								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Suburb\/City&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+								data-type="City">
+								<label class="form-label" for="FormField_10_input">Locality
+									<small>Required</small>
+								</label>
+								<input type="text" id="FormField_10_input" data-label="Locality"
+									name="address[locality]" class="form-input" aria-required="true"
+									data-field-type="City">
+							</div>
+
+							<div class="form-field" id="FormField_10"
+								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Suburb\/City&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+								data-type="City">
+								<label class="form-label" for="FormField_10_input">PIN
+									<small>Required</small>
+								</label>
+								<input type="number" id="FormField_10_input" data-label="Locality"
+									name="address[pincode]" class="form-input" aria-required="true"
+									data-field-type="City">
+							</div>
+
+							<div class="form-field" id="FormField_11"
+								data-validation="{&quot;type&quot;:&quot;singleselect&quot;,&quot;label&quot;:&quot;Country&quot;,&quot;required&quot;:true,&quot;prefix&quot;:&quot;Choose a Country&quot;}"
+								data-type="Country">
+								<label class="form-label" for="FormField_11_select">State
+									<small>Required</small>
+								</label>
+								<select class=" form-select" id="FormField_11_select" data-label="State"
+									aria-required="true" name="address[state]" data-field-type="Country">
+									<option value="Andhra Pradesh">Andhra Pradesh</option>
+									<option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+									<option value="Arunachal Pradesh">Arunachal Pradesh</option>
+									<option value="Assam">Assam</option>
+									<option value="Bihar">Bihar</option>
+									<option value="Chandigarh">Chandigarh</option>
+									<option value="Chhattisgarh">Chhattisgarh</option>
+									<option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+									<option value="Daman and Diu">Daman and Diu</option>
+									<option value="Delhi">Delhi</option>
+									<option value="Lakshadweep">Lakshadweep</option>
+									<option value="Puducherry">Puducherry</option>
+									<option value="Goa">Goa</option>
+									<option value="Gujarat">Gujarat</option>
+									<option value="Haryana">Haryana</option>
+									<option value="Himachal Pradesh">Himachal Pradesh</option>
+									<option value="Jammu and Kashmir">Jammu and Kashmir</option>
+									<option value="Jharkhand">Jharkhand</option>
+									<option value="Karnataka">Karnataka</option>
+									<option value="Kerala">Kerala</option>
+									<option value="Ladakh">Ladakh</option>
+									<option value="Madhya Pradesh">Madhya Pradesh</option>
+									<option value="Maharashtra">Maharashtra</option>
+									<option value="Manipur">Manipur</option>
+									<option value="Meghalaya">Meghalaya</option>
+									<option value="Mizoram">Mizoram</option>
+									<option value="Nagaland">Nagaland</option>
+									<option value="Odisha">Odisha</option>
+									<option value="Punjab">Punjab</option>
+									<option value="Rajasthan">Rajasthan</option>
+									<option value="Sikkim">Sikkim</option>
+									<option value="Tamil Nadu">Tamil Nadu</option>
+									<option value="Telangana">Telangana</option>
+									<option value="Tripura">Tripura</option>
+									<option value="Uttar Pradesh">Uttar Pradesh</option>
+									<option value="Uttarakhand">Uttarakhand</option>
+									<option value="West Bengal">West Bengal</option>
+								</select>
+							</div>
+
+							<div class="form-field" id="FormField_12"
+								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;State\/Province&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+								data-type="State">
+								<label class="form-label" for="FormField_12_input">Country
+									<small>Required</small>
+								</label>
+								<input type="text" id="FormField_12_input" data-label="Country" name="address[country]"
+									class="form-input" aria-required="true" data-field-type="State">
+							</div>
+
+						</div>
+						<br />
+						<div class="form-actions">
+							<input type="submit" class="button button--primary" value="Create Account" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div id="modal" class="modal" data-reveal data-prevent-quick-search-close>
+		<a href="#" class="modal-close" aria-label="Close" role="button">
+			<span aria-hidden="true">&#215;</span>
+		</a>
+		<div class="modal-content"></div>
+		<div class="loadingOverlay"></div>
+	</div>
+	<div id="alert-modal" class="modal modal--alert modal--small" data-reveal data-prevent-quick-search-close>
+		<div class="swal2-icon swal2-error swal2-icon-show"><span class="swal2-x-mark"><span
+					class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div>
+
+		<div class="modal-content"></div>
+
+		<div class="button-container"><button type="button" class="confirm button" data-reveal-close>OK</button>
+		</div>
+	</div>
+</div>
+
+<%- include("partials/newFooter") %>

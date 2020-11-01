@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const shortid = require("shortid");
-var mongooseHistory = require('mongoose-history')
+var mongooseHistory = require('mongoose-history');
+const { unix } = require("moment");
 // var textSearch = require('mongoose-text-search');
  
 var itemsSchema = new mongoose.Schema({
@@ -89,6 +90,10 @@ var itemsSchema = new mongoose.Schema({
         //       },
         //       message: "stock must be greater than equal to 0"
         // }
+    },
+    measurementUnit : {
+        type: String,
+        default: "Units"
     }
 });
 

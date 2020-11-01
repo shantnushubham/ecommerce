@@ -7,32 +7,39 @@
             <li class="breadcrumb-item">
                 <a href="#">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">User List</li>
+            <li class="breadcrumb-item active">Vendors List</li>
         </ol>
         <div class="card mb-3">
             <div class="card-header">
-                <i class="fa fa-table"></i> Users Data Table</div>
+                <i class="fa fa-table"></i> Vendors Table</div>
             <div class="card-body">
+                <div style="text-align: center;">
+                    <a href="/admin/createVendor" class="ui large green button" style="margin-bottom: 5px;">Create Vendor</a>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>UUID</th>
+                                <th>VendorID</th>
                                 <th>Name</th>
-                                <th>Email</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>State</th>
                                 <th>Phone</th>
-                                <th>Allow Credit</th>
+                                <th>Email</th>
                             </tr>
                         </thead>
+
                         <tbody>
-                            <% user.forEach(element => { %>
+                            <% vendors.forEach(element => { %>
                             <tr>
-                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.uuid %></a></td>
-                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.name %></a></td>
-                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.email %></a></td>
-                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.phone %></a></td>
-                                <td><a class="ui green button" href="/business/allowCredit/<%=element.uuid%>">Allow
-                                        Credit</a></td>
+                                <td><%= element.vendorId %></td>
+                                <td><%= element.name %></td>
+                                <td><%= element.address %></td>
+                                <td><%= element.city %></td>
+                                <td><%= element.state %></td>
+                                <td><%= element.phone %></td>
+                                <td><%= element.email %></td>
                             </tr>
                             <% }); %>
                         </tbody>

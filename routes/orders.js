@@ -6,6 +6,7 @@ const orderServices = require('../openServices/order')
 const orderController = require('../controllers/orders/orderController')
 const { ensureAuthenticated, forwardAuthenticated } = require('../Middlewares/user/middleware');
 const functions = require('../Middlewares/common/functions')
+const offers=require('../models/offer/offer')
 require('dotenv').config()
 const envData = process.env
 
@@ -24,10 +25,10 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
             }
             else {
                 var totAmt = parseInt(foundOrder.order.total)
-                
-                if (foundOrder.creditAllowed == true && req.session.mode != undefined && req.session.mode === 'credit') {
-                    totAmt = totAmt * (1 - (parseInt(foundOrder.order.creditPercent) / 100))
-                    res.session.mode = ''
+                console.log(req.session.mode,foundOrder.order.creditAllowed);
+                if (foundOrder.order.creditAllowed == true && req.session.mode != undefined && req.session.mode === 'credit') {
+                    totAmt = totAmt * (parseInt(foundOrder.order.creditPercent) / 100)
+                    req.session.mode = ''
                 }
 
                 var request = require('request')
@@ -36,7 +37,7 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
                 var payload = {
                     purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
-                    amount: totAmt * 1.18,
+                    amount: parseInt(totAmt * 1.18),
                     phone: req.user.phone,
                     buyer_name: req.user.name,
                     redirect_url: envData.instamojoRedirect,
@@ -139,12 +140,13 @@ router.get("/redirect", ensureAuthenticated, function (req, res) {
 router.post('/order-cod',ensureAuthenticated,orderController.codPath)
 router.post('/order-credit',ensureAuthenticated,orderController.creditPath)
 router.post('/save-order',ensureAuthenticated,orderController.saveOrder)
+router.post('/quotation',ensureAuthenticated,orderController.createQuotation)
 router.get('/pay/save/cod/:orderId',ensureAuthenticated,orderController.savedToCod)
 router.get('/pay/save/online/:orderId',ensureAuthenticated,orderController.savedToPay)
 router.get('/pay/save/cred/:orderId',ensureAuthenticated,orderController.savedToCredit)
 
-// router.get('/allow-credit',functions.isAdmin,orderController.getAllowCred)
-// router.post('/allow-credit',functions.isAdmin,orderController.allowCred)
+router.get('/allow-credit/:orderId',functions.isAdmin,orderController.getAllowCred)
+router.post('/allow-credit/:orderId',functions.isAdmin,orderController.allowCred)
 
 router.get('/checkout', ensureAuthenticated, orderController.getCheckout)
 router.post('/checkout', ensureAuthenticated, orderController.postCheckout)
@@ -153,7 +155,8 @@ router.get('/orders', ensureAuthenticated, orderController.userOrderList)
 router.get('/cancellation/request/:orderId', ensureAuthenticated, orderController.cancelOrder)
 router.get('/cancellations', ensureAuthenticated, orderController.userCancellationList)
 router.get('/cancellations/:id', ensureAuthenticated, orderController.fetchCancellationById)
-
+router.get("/saved-orders", ensureAuthenticated, orderController.getAllSavedOrders)
+router.get("/saved-orders/:orderId", ensureAuthenticated, orderController.checkSavedUserOrder)
 
 
 router.get('/admin/orders-filter', functions.isAdmin, orderController.getAllOrders)
@@ -171,24 +174,26 @@ router.get('/admin/cancels-filter/:status', functions.isAdmin, orderController.g
 router.get('/cancellations/:cancellationId', functions.isAdmin, orderController.getCancellationByIdAdmin)
 router.get('/confirm-cancel/:cancellationId', functions.isAdmin, orderController.getConfirmCancellation)
 router.get('/confirm-cancel/:cancellationId', functions.isAdmin, orderController.postConfirmCancellation)
-router.get('/cancellations/:cancellationId', functions.isAdmin, orderController.getCancellationByIdAdmin)
+// router.get('/cancellations/:cancellationId', functions.isAdmin, orderController.getCancellationByIdAdmin)
+
+
+router.get('/admin/offers',functions.isAdmin,orderController.getAllOffers)
+router.get('/admin/offers/create',functions.isAdmin,orderController.getCreateOffer)
+router.post('/admin/offers/create',functions.isAdmin,orderController.postCreateOffer)
+router.get('/admin/offers/:code',functions.isAdmin,orderController.getOfferByCode)
+router.get('/admin/offers/update/:code',functions.isAdmin,orderController.getUpdateOffer)
+router.post('/admin/offers/update/:code',functions.isAdmin,orderController.postUpdateOffer)
+
+
+router.get('/admin/service',functions.isAdmin,orderController.getAllServiceQuotes)
+router.get('/service/:iid',orderController.getCreateServiceQuote)
+router.post('/service/:iid',orderController.createServiceQuote)
+router.get('/admin/service/:quoteId',functions.isAdmin,orderController.getServiceQuoteById)
+router.get('/admin/complete-service',functions.isAdmin,orderController.serviceQuoteStatus)
 
 
 
 
-
-/**
- * admin get all orders
- * admin see orders
- * admin confirm order
- * see order by shipmentStatus
- * see order by payment
- * 
- * cancel order
- * see all admin cancel orders
- * confirm cancel
- * 
- */
 
 
 module.exports = router

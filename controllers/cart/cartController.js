@@ -8,9 +8,7 @@ var async = require('async')
 
 //get items from cart
 exports.getAllItems = function (req, res) {
-    console.log('user=' + req.user);
-    console.log('body=' + req.body);
-
+    
     cartmodel.aggregate([
         { $match: { uuid: req.user.uuid } },
         { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },

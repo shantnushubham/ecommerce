@@ -5,8 +5,9 @@ var UserAddress = require('../models/User/DeliveryAddress')
 var ordermodel = require('../models/Orders/Order')
 var cancelOrderModel = require('../models/Orders/CancelledOrder')
 var codemodel = require('../models/offer/codes')
-var itemServices=require('../openServices/items')
-
+var itemServices = require('../openServices/items')
+var offersModel = require('../models/offer/offer')
+var quoteModel = require('../models/Orders/serviceQuote')
 var functions = require('../Middlewares/common/functions')
 
 var mongoose = require("mongoose")
@@ -97,23 +98,24 @@ class order {
 
         })
     }
-    getOrdersByDateRange(from,to,callback)
-    {
-        if(!(from instanceof Date)||!(to instanceof Date))
-            callback({success:false})
+    getOrdersByDateRange(from, to, callback) {
+        if (!(from instanceof Date) || !(to instanceof Date))
+            callback({ success: false })
         ordermodel.aggregate([
-            {$match:{purchaseTime:{$gte:from,$lte:to}}},
-            {$project:{
-                uuid:1,
-                total:1,
-                purchaseTime:1,
-                shipmentStatus:1,
-                status:1,
+            { $match: { purchaseTime: { $gte: from, $lte: to } } },
+            {
+                $project: {
+                    uuid: 1,
+                    total: 1,
+                    purchaseTime: 1,
+                    shipmentStatus: 1,
+                    status: 1,
 
-            }}
-        ]).exec((err,foundOrder)=>{
-            if(err)callback({success:false})
-            else callback({success:true,data:foundOrder})
+                }
+            }
+        ]).exec((err, foundOrder) => {
+            if (err) callback({ success: false })
+            else callback({ success: true, data: foundOrder })
 
         })
     }
@@ -307,6 +309,7 @@ class order {
 
     getCancellationById(cancellationId, callback) {
         cancelOrderModel.findOne({ cancellationId: cancellationId }, function (err, foundCancelReq) {
+            console.log(err);
             if (err) callback({ success: false })
             else
                 callback({ success: true, cancelReq: foundCancelReq })
@@ -361,7 +364,7 @@ class order {
     }
     getAllOrders(callback) {
         ordermodel.find({}, function (err, order) {
-            if (err || functions.isEmpty(order)) callback({ success: false })
+            if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
     }
@@ -373,11 +376,20 @@ class order {
     }
 
     getOrderByUUID(uuid, callback) {
-        ordermodel.find({ uuid: uuid }, function (err, order) {
+        ordermodel.find({ uuid: uuid, shipmentStatus:{$ne:'saved'} }, function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
     }
+
+    getAllSavedOrders(uuid, callback) {
+        ordermodel.find({ uuid: uuid, shipmentStatus: "saved" }, function (err, order) {
+            if (err) callback({ success: false })
+            else callback({ success: true, order: order })
+        })
+    }
+
+    
 
     authorizeOrder(orderId, callback) {
         ordermodel.findOneAndUpdate({ orderId: orderId }, { status: "authorized" }, function (err, updatedOrder) {
@@ -420,24 +432,176 @@ class order {
         })
     }
 
-    updateStockList(arr,callback)
-    {
-        if(arr.length==0)callback({success:false,message:"array empty for orders"})
-        else
-        {
-            var promisarr=[]
+    updateStockList(arr, callback) {
+        if (arr.length == 0) callback({ success: false, message: "array empty for orders" })
+        else {
+            var promisarr = []
             arr.forEach(element => {
-                arr.push(itemServices.updateStock(element.iid,element.quantity))
+                arr.push(itemServices.updateStock(element.iid, element.quantity))
             });
 
             Promise.all(promisarr).then((result) => {
-                callback({success:true})
+                callback({ success: true })
             }).catch((err) => {
-                callback({success:false})
+                callback({ success: false })
             });
         }
     }
+    createOffer(data) {
+        return new Promise((resolve, reject) => {
+            offersModel.create(data, function (err, createdOffer) {
+                if (err) reject({ offer: null, message: "error" })
+                else
+                    resolve({ offer: createdOffer })
+            })
+        })
+    }
+    getAllOffers() {
+        return new Promise((resolve, reject) => {
+            offersModel.find({}, function (err, createdOffer) {
+                if (err) reject({ offer: [], message: "error" })
+                else
+                    resolve({ offer: createdOffer })
+            })
+        })
+    }
+    getOffersByfilter(filter, callback) {
+        offersModel.find(filter, function (err, createdOffer) {
+            if (err) callback({ offer: [], message: "error" })
+            else
+                callback({ offer: createdOffer })
+        })
+    }
+    getOfferByCode(code, callback) {
+        offersModel.findOne({ code: code }, function (err, createdOffer) {
+            if (err) callback({ success: false, offer: [], message: "error" })
+            else
+                callback({ success: true, offer: createdOffer })
+        })
+    }
+    updateOffer(code, data, callback) {
+        offersModel.findOneAndUpdate({ code: code }, data, function (err, createdOffer) {
+            console.log(err)
+            if (err) callback({ offer: [], message: "error" })
+            else
+                callback({ offer: createdOffer })
+        })
+    }
 
+    returnOfferPrice(code, cartList, uuid, total, callback) {
+        offersModel.findOne({ code: code, active: true, discount: { $gt: 0 } }, function (err, offer) {
+            if (err) {
+                callback({ success: false, message: 'error in fetching code' })
+            }
+            else if (functions.isEmpty(offer)) {
+                callback({ success: false, message: 'code invalid' })
+            }
+            else {
+                if (offer.used.includes(uuid)) {
+                    callback({ success: false, message: "This code has already been used by you." })
+                }
+                else {
+                    var valid = true
+                    if (offer.items.length > 0) {
+
+                        for (var i = 0; i < cartList.length; i++) {
+                            if (offer.items.includes(cartList[i].iid) == false) {
+                                valid = false
+                                break;
+                            }
+                        }
+
+                    }
+                    if (valid == false) {
+                        callback({ success: false, message: 'there are items in your cart on which this code is not applicable' })
+                    }
+                    else {
+                        if (offer.isPercent)
+                            total = total * (1 - (parseInt(offer.discount) / 100))
+                        else
+                            total = total - offer.discount
+                        offersModel.findOneAndUpdate({ code: code, active: true, discount: { $gt: 0 } },
+                            { $push: { used: uuid } }, function (err, updatedOffer) {
+                                if (err)
+                                    console.log("issue in noting user data to code");
+                                else
+                                    console.log(uuid, " used code", code);
+
+                            })
+                        callback({ success: true, total: total })
+                    }
+                }
+
+
+            }
+
+        })
+
+
+
+    }
+
+    createQuote(data, callback) {
+        quoteModel.create(data, function (err, quote) {
+            if (err)
+                callback({ success: false })
+            else
+                callback({ success: true, quote })
+        })
+    }
+    markAsCompleteQuote(quoteId, callback) {
+        quoteModel.findOneAndUpdate({ quoteId: quoteId }, { serviced: true }, function (err, quote) {
+            if (err)
+                callback({ success: false })
+            else
+                callback({ success: true, quote })
+        })
+    }
+    getAllQuotes() {
+        return new Promise((resolve, reject) => {
+            quoteModel.find({}, function (err, quote) {
+                if (err)
+                    reject(err)
+                else
+                    resolve(quote)
+            })
+        })
+
+    }
+    getQuoteById(quoteId) {
+        return new Promise((resolve, reject) => {
+            quoteModel.aggregate([
+                { $match: { quoteId: quoteId } },
+                { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
+                {
+                    $project: {
+                        "item": { "$arrayElemAt": ["$item", 0] },
+                        "quoteId": "$quoteId",
+                        "uuid": "$uuid",
+                        "businessName": "$businessName",
+                        "businessCity": "$businessCity",
+                        "name": "$name",
+                        "phone": "$phone",
+                        "email": "$email",
+                        "unit": "$unit",
+                        "measurementUnit": "$item.measurementUnit",
+                        "dateCreated": "$dateCreated",
+
+
+
+
+                    }
+                }
+            ]).exec(function (err, found) {
+                if (err) {
+                    reject(err)
+                }
+                else {
+                    resolve(found)
+                }
+            })
+        })
+    }
 
 }
 

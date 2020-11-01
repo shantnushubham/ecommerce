@@ -138,6 +138,14 @@ var orderSchema = new mongoose.Schema({
     codAllowed:{
         type:Boolean,
         default:false
+    },
+    offerUsed:{
+        type:Boolean,
+        default:false
+    },
+    offerCode:{
+        type:String,
+        default:"no_code"
     }
 
 });
