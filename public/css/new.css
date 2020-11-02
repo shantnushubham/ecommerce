@@ -12821,8 +12821,8 @@ body.default header {
     float: right;
     text-align: left;
     position: relative;
-    padding: 20px 15px;
-    background: #ffaa3d;
+    padding: 50px 15px;
+    background: #fff;
     border-radius: 0 0 5px 5px;
     margin: 0 0 25px;
     width: auto;
@@ -12861,12 +12861,12 @@ body.default header {
     text-align: left;
     margin: 0 0 4px;
 }
-.tt-phone-number .content a {
+/* .tt-phone-number .content a {
     color: #111;
     float: right;
     font: 700 16px/20px Roboto, sans-serif;
     width: 100%;
-}
+} */
 .tt-phone-number:hover .contact-icon .material-icons {
     transform: rotateY(180deg);
 }
