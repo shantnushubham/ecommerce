@@ -25,35 +25,24 @@
         "autoplay": true,
         "autoplaySpeed": 5000,
         "lazyLoad": "anticipated"
-    }'>
-			<a href="https://demo-store9.mybigcommerce.com/" id="slider-slider1">
+	}'>
+
+			<% var bannerArray = new Array() %>
+			<% bannerArray.push({src: "/img/banner1.jpeg", linkTo: ""}) %>
+			<% bannerArray.push({src: "/img/banner2.jpeg", linkTo: ""}) %>
+			<% bannerArray.push({src: "/img/banner3.jpeg", linkTo: ""}) %>
+			<% bannerArray.push({src: "/img/banner4.jpeg", linkTo: ""}) %>
+			<% bannerArray.push({src: "/img/banner5.jpeg", linkTo: ""}) %>
+			<% bannerArray.push({src: "/img/banner6.jpeg", linkTo: ""}) %>
+
+
+			<% bannerArray.forEach((banner, index) => { %>
+			<a href="<%=banner.linkTo%>" id="slider-slider<%=index%>">
 				<div class="heroCarousel-slide">
-					<img class="heroCarousel-image"
-						src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/carousel/12/slider-01__80936.jpg?c=1"
-						alt="slider1" title="slider1" />
+					<img class="heroCarousel-image" src="<%=banner.src%>" alt="" />
 				</div>
 			</a>
-			<a href="https://demo-store9.mybigcommerce.com/" id="slider-slider2">
-				<div class="heroCarousel-slide">
-					<img class="heroCarousel-image"
-						src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/carousel/13/slider-02__42161.jpg?c=1"
-						alt="slider2" title="slider2" />
-				</div>
-			</a>
-			<a href="https://demo-store9.mybigcommerce.com/" id="slider-slider3">
-				<div class="heroCarousel-slide">
-					<img class="heroCarousel-image"
-						src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/carousel/14/slider-03__76582.jpg?c=1"
-						alt="slider3" title="slider3" />
-				</div>
-			</a>
-			<a href="https://demo-store9.mybigcommerce.com/" id="slider-slider4">
-				<div class="heroCarousel-slide">
-					<img class="heroCarousel-image"
-						src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/carousel/15/slider-04__97090.jpg?c=1"
-						alt="slider4" title="slider4" />
-				</div>
-			</a>
+			<% }) %>
 		</section>
 	</div>
 
