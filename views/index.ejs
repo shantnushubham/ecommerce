@@ -28,12 +28,12 @@
 	}'>
 
 			<% var bannerArray = new Array() %>
-			<% bannerArray.push({src: "/img/banner1.jpeg", linkTo: ""}) %>
-			<% bannerArray.push({src: "/img/banner2.jpeg", linkTo: ""}) %>
-			<% bannerArray.push({src: "/img/banner3.jpeg", linkTo: ""}) %>
-			<% bannerArray.push({src: "/img/banner4.jpeg", linkTo: ""}) %>
-			<% bannerArray.push({src: "/img/banner5.jpeg", linkTo: ""}) %>
-			<% bannerArray.push({src: "/img/banner6.jpeg", linkTo: ""}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner1.jpeg", linkTo: ""}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner2.jpeg", linkTo: ""}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner3.jpeg", linkTo: ""}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner4.jpeg", linkTo: ""}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner5.jpeg", linkTo: ""}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner6.jpeg", linkTo: ""}) %>
 
 
 			<% bannerArray.forEach((banner, index) => { %>
@@ -58,90 +58,34 @@
 
 			<div class="allcategories container">
 				<section class="subcategories-carousel row">
+					<% var featuredCategories = new Array() %>
+
+					<% featuredCategories.push({name: "Lab Solutions", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc1.jpg", linkTo: ""}) %>
+					<% featuredCategories.push({name: "Covid-19 Solutions", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc2.jpg", linkTo: ""}) %>
+					<% featuredCategories.push({name: "Cleaning Chemicals", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc3.jpg", linkTo: ""}) %>
+					<% featuredCategories.push({name: "Books", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc4.jpg", linkTo: ""}) %>
+					<% featuredCategories.push({name: "School Uniforms", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc5.jpg", linkTo: ""}) %>
+
+					<% featuredCategories.forEach(category => { %>
 					<div class="tt-categories subcategories-23">
 						<div class="content">
 							<div class="image">
-								<a class="subcat-img" href="https://demo-store9.mybigcommerce.com/shop-all/">
+								<a class="subcat-img" href="<%=category.linkTo%>">
 									<img class="lazyload" data-sizes="auto" alt=""
 										src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/img/loading.svg"
-										data-src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/p/category-img-06__37886.original.jpg">
+										data-src="<%=category.imageSrc%>">
 								</a>
 							</div>
 							<div class="caption">
 								<div class="cat-title">
-									<h4><a href="https://demo-store9.mybigcommerce.com/shop-all/">COVID-19 Solutions</a>
+									<h4><a href="<%=category.linkTo%>"><%=category.name%></a>
 									</h4>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="tt-categories subcategories-18">
-						<div class="content">
-							<div class="image">
-								<a class="subcat-img" href="https://demo-store9.mybigcommerce.com/laptop/">
-									<img class="lazyload" data-sizes="auto" alt=""
-										src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/img/loading.svg"
-										data-src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/v/category-img-01__58748.original.jpg">
-								</a>
-							</div>
-							<div class="caption">
-								<div class="cat-title">
-									<h4><a href="https://demo-store9.mybigcommerce.com/laptop/">Lab Solutions</a></h4>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="tt-categories subcategories-27">
-						<div class="content">
-							<div class="image">
-								<a class="subcat-img" href="https://demo-store9.mybigcommerce.com/computers/">
-									<img class="lazyload" data-sizes="auto" alt=""
-										src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/img/loading.svg"
-										data-src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/i/category-img-04__86929.original.jpg">
-								</a>
-							</div>
-							<div class="caption">
-								<div class="cat-title">
-									<h4><a href="https://demo-store9.mybigcommerce.com/computers/">Electronics</a></h4>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="tt-categories subcategories-19">
-						<div class="content">
-							<div class="image">
-								<a class="subcat-img" href="https://demo-store9.mybigcommerce.com/speakers/">
-									<img class="lazyload" data-sizes="auto" alt=""
-										src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/img/loading.svg"
-										data-src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/e/category-img-02__12056.original.jpg">
-								</a>
-							</div>
-							<div class="caption">
-								<div class="cat-title">
-									<h4><a href="https://demo-store9.mybigcommerce.com/speakers/">Books</a></h4>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="tt-categories subcategories-39">
-						<div class="content">
-							<div class="image">
-								<a class="subcat-img"
-									href="https://demo-store9.mybigcommerce.com/computers/boerboel/beagle/">
-									<img class="lazyload" data-sizes="auto" alt=""
-										src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/img/loading.svg"
-										data-src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/c/category-img-05__65253.original.jpg">
-								</a>
-							</div>
-							<div class="caption">
-								<div class="cat-title">
-									<h4><a href="https://demo-store9.mybigcommerce.com/computers/boerboel/beagle/">Winter
-											Uniforms</a>
-									</h4>
-								</div>
-							</div>
-						</div>
-					</div>
+					<% }) %>
+
 				</section>
 			</div>
 			<!-- END CATEGORIES DIV ---->
@@ -212,87 +156,48 @@
 					]
 				}'>
 
+				<% var sanitationChem = new Array() %>
+				<% sanitationChem.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+				<% sanitationChem.push({name: "Alstasan LF125 (Quaternary Ammonium Compound based Aerial Fumigation Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/6e9de14a-b767-4154-8ed1-e221a1be7870-315x315.jpg", price: 4490}) %>
+				<% sanitationChem.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/649cb967-2ebf-42f1-8746-0ba894996fb8-315x315.jpg", price: 1390}) %>
+				<% sanitationChem.push({name: "Chemtex Alstacol 25+ (Instant Spray Disinfectant, Kill time 5 seconds)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/0a87e186-00b9-4ab2-ac8d-9d7c640fa89e-315x315.jpg", price: 1790}) %>
+				<% sanitationChem.push({name: "Chemtex Alstasan Silvox 150 MIST (Fog and Spray – Universal Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/7e234b3a-c43d-4d5d-8c78-4b51d5befff7-1-315x315.jpg", price: 5490}) %>
+				<% sanitationChem.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/05/Alstasan-Hand-Rub_x56-315x315.jpg", price: 1990}) %>
+				<% sanitationChem.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+
+				<% sanitationChem.forEach(sanitationItem => { %>
 				<div class="productCarousel-slide">
 					<article class="card ">
 						<figure class="card-figure">
-							<a href="https://demo-store9.mybigcommerce.com/orbit-terrarium-large/">
+							<a href="<%=sanitationItem.linkTo%>">
 								<div class="card-img-container">
-									<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/80/438/13__13205.1589167739.jpg?c=1"
-										alt="Quaerat outt voluptatem" title="Quaerat outt voluptatem" data-sizes="auto"
-										srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/80/438/13__13205.1589167739.jpg?c=1"
-										data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/80/438/13__13205.1589167739.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/80/438/13__13205.1589167739.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/80/438/13__13205.1589167739.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/80/438/13__13205.1589167739.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/80/438/13__13205.1589167739.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/80/438/13__13205.1589167739.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/80/438/13__13205.1589167739.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/80/438/13__13205.1589167739.jpg?c=1 2560w"
+									<img src="<%=sanitationItem.imageSrc%>" alt="<%=sanitationItem.name%>"
+										title="<%=sanitationItem.name%>" data-sizes="auto"
+										srcset="<%=sanitationItem.imageSrc%>" data-srcset="<%=sanitationItem.imageSrc%>"
 										class="lazyload card-image" />
-
 								</div>
 							</a>
-
-							<figcaption class="card-figcaption">
-								<div class="card-figcaption-body">
-
-									<a href="/wishlist.php?action=add&amp;product_id=80"
-										class="button button--small card-figcaption-button tt-wishlist"><span
-											class="material-icons">favorite_border</span></a>
-
-									<label class="button button--small card-figcaption-button tt-compare"
-										title="Compare" data-product-compare for="compare-80">
-										<span class="material-icons">sync</span>
-										<input type="checkbox" class="tt-comparecheck" name="products[]" value="80"
-											id="compare-80" data-compare-id="80">
-									</label>
-									<a class="button button--small card-figcaption-button quickview" title="Quick view"
-										data-product-id="80">
-										<span class="material-icons">remove_red_eye</span>
-									</a>
-								</div>
-							</figcaption>
 						</figure>
 
-
 						<div class="card-body">
-
-
-							<div class="card-text rating-block" data-test-info-type="productRating">
-								<span class="rating--small">
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-								</span>
-							</div>
 							<h4 class="card-title">
-								<a href="https://demo-store9.mybigcommerce.com/orbit-terrarium-large/">Quaerat outt
-									voluptatem</a>
+								<a href="<%=sanitationItem.linkTo%>"><%=sanitationItem.name%></a>
 							</h4>
 
-
 							<div class="card-text tt-price" data-test-info-type="price">
-
 								<div class="price-section price-section--withTax rrp-price--withTax"
 									style="display: none;">
 									MSRP:
 									<span data-product-rrp-with-tax class="price price--rrp">
-
 									</span>
 								</div>
 
 								<div class="price-section price-section--withTax">
-									<span class="price-label">
-
-									</span>
+									<span class="price-label"> </span>
 									<span class="price-now-label" style="display: none;">
 									</span>
-									<span data-product-price-with-tax class="price price--withTax">₹409.00</span>
+									<span data-product-price-with-tax class="price price--withTax">₹
+										<%=sanitationItem.price%></span>
 								</div>
 								<div class="price-section price-section--withTax non-sale-price--withTax"
 									style="display: none;">
@@ -303,759 +208,39 @@
 							</div>
 
 							<div class="tt-cart-btn">
-								<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=80"
-									data-event-type="product-click" title="Add to Cart"
-									class="button button--small card-figcaption-button">
+								<a href="/items" title="Go to Item" class="button button--small card-figcaption-button">
 									<span class="material-icons">add</span>
-									Add to Cart
+									Go to Items
 								</a>
 							</div>
 						</div>
 					</article>
-
-
 				</div>
+				<% }) %>
 
-				<div class="productCarousel-slide">
-					<article class="card ">
-						<figure class="card-figure">
-							<div class="sale-flag-side">
-								<span class="sale-text">Sale</span>
-							</div>
-							<a href="https://demo-store9.mybigcommerce.com/able-brewing-system/">
-								<div class="card-img-container">
-									<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/86/426/11__43953.1589167644.jpg?c=1"
-										alt="Neque porro quisquam" title="Neque porro quisquam" data-sizes="auto"
-										srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/86/426/11__43953.1589167644.jpg?c=1"
-										data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/86/426/11__43953.1589167644.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/86/426/11__43953.1589167644.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/86/426/11__43953.1589167644.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/86/426/11__43953.1589167644.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/86/426/11__43953.1589167644.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/86/426/11__43953.1589167644.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/86/426/11__43953.1589167644.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/86/426/11__43953.1589167644.jpg?c=1 2560w"
-										class="lazyload card-image" />
-
-
-								</div>
-							</a>
-
-
-							<figcaption class="card-figcaption">
-								<div class="card-figcaption-body">
-
-									<a href="/wishlist.php?action=add&amp;product_id=86"
-										class="button button--small card-figcaption-button tt-wishlist"><span
-											class="material-icons">favorite_border</span></a>
-
-									<label class="button button--small card-figcaption-button tt-compare"
-										title="Compare" data-product-compare for="compare-86">
-										<span class="material-icons">sync</span>
-										<input type="checkbox" class="tt-comparecheck" name="products[]" value="86"
-											id="compare-86" data-compare-id="86">
-									</label>
-									<a class="button button--small card-figcaption-button quickview" title="Quick view"
-										data-product-id="86">
-										<span class="material-icons">remove_red_eye</span>
-									</a>
-								</div>
-							</figcaption>
-						</figure>
-
-
-						<div class="card-body">
-
-
-							<div class="card-text rating-block" data-test-info-type="productRating">
-								<span class="rating--small">
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-								</span>
-							</div>
-							<h4 class="card-title">
-								<a href="https://demo-store9.mybigcommerce.com/able-brewing-system/">Neque porro
-									quisquam</a>
-							</h4>
-
-
-							<div class="card-text tt-price" data-test-info-type="price">
-
-								<div class="price-section price-section--withTax rrp-price--withTax"
-									style="display: none;">
-									MSRP:
-									<span data-product-rrp-with-tax class="price price--rrp">
-
-									</span>
-								</div>
-
-								<div class="price-section price-section--withTax">
-									<span class="price-label" style="display: none;">
-
-									</span>
-									<span class="price-now-label">
-									</span>
-									<span data-product-price-with-tax class="price price--withTax">₹225.00</span>
-								</div>
-								<div class="price-section price-section--withTax non-sale-price--withTax">
-									<span data-product-non-sale-price-with-tax class="price price--non-sale">
-										₹250.00
-									</span>
-								</div>
-							</div>
-
-							<div class="tt-cart-btn">
-								<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=86"
-									data-event-type="product-click" title="Add to Cart"
-									class="button button--small card-figcaption-button">
-									<span class="material-icons">add</span>
-									Add to Cart
-								</a>
-							</div>
-						</div>
-					</article>
-
-
-				</div>
-
-				<div class="productCarousel-slide">
-					<article class="card ">
-						<figure class="card-figure">
-							<a href="https://demo-store9.mybigcommerce.com/chemex-coffeemaker-3-cup/">
-								<div class="card-img-container">
-									<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/88/450/18__48766.1589167872.jpg?c=1"
-										alt="Tempora quiidunt utlabore" title="Tempora quiidunt utlabore"
-										data-sizes="auto"
-										srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/88/450/18__48766.1589167872.jpg?c=1"
-										data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/88/450/18__48766.1589167872.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/88/450/18__48766.1589167872.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/88/450/18__48766.1589167872.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/88/450/18__48766.1589167872.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/88/450/18__48766.1589167872.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/88/450/18__48766.1589167872.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/88/450/18__48766.1589167872.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/88/450/18__48766.1589167872.jpg?c=1 2560w"
-										class="lazyload card-image" />
-
-
-								</div>
-							</a>
-
-
-							<figcaption class="card-figcaption">
-								<div class="card-figcaption-body">
-
-									<a href="/wishlist.php?action=add&amp;product_id=88"
-										class="button button--small card-figcaption-button tt-wishlist"><span
-											class="material-icons">favorite_border</span></a>
-
-									<label class="button button--small card-figcaption-button tt-compare"
-										title="Compare" data-product-compare for="compare-88">
-										<span class="material-icons">sync</span>
-										<input type="checkbox" class="tt-comparecheck" name="products[]" value="88"
-											id="compare-88" data-compare-id="88">
-									</label>
-									<a class="button button--small card-figcaption-button quickview" title="Quick view"
-										data-product-id="88">
-										<span class="material-icons">remove_red_eye</span>
-									</a>
-								</div>
-							</figcaption>
-						</figure>
-
-
-						<div class="card-body">
-
-
-							<div class="card-text rating-block" data-test-info-type="productRating">
-								<span class="rating--small">
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-								</span>
-							</div>
-							<h4 class="card-title">
-								<a href="https://demo-store9.mybigcommerce.com/chemex-coffeemaker-3-cup/">Tempora
-									quiidunt utlabore</a>
-							</h4>
-
-
-							<div class="card-text tt-price" data-test-info-type="price">
-
-								<div class="price-section price-section--withTax rrp-price--withTax"
-									style="display: none;">
-									MSRP:
-									<span data-product-rrp-with-tax class="price price--rrp">
-
-									</span>
-								</div>
-								<div class="price-section price-section--withTax non-sale-price--withTax"
-									style="display: none;">
-									Was:
-									<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-									</span>
-								</div>
-								<div class="price-section price-section--withTax">
-									<span class="price-label"></span>
-									<span class="price-now-label" style="display: none;">Now:</span>
-									<span data-product-price-with-tax class="price price--withTax">₹499.00 -
-										₹620.00</span>
-								</div>
-
-							</div>
-
-							<div class="tt-cart-btn">
-								<a href="https://demo-store9.mybigcommerce.com/chemex-coffeemaker-3-cup/"
-									data-event-type="product-click" class="button button--small card-figcaption-button"
-									title="Choose Options" data-product-id="88">Choose Options</a>
-							</div>
-						</div>
-					</article>
-
-
-				</div>
-
-				<div class="productCarousel-slide">
-					<article class="card ">
-						<figure class="card-figure">
-							<div class="sale-flag-side">
-								<span class="sale-text">Sale</span>
-							</div>
-							<a href="https://demo-store9.mybigcommerce.com/1-l-le-parfait-jar/">
-								<div class="card-img-container">
-									<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/93/418/10__77709.1589167608.jpg?c=1"
-										alt="Magni dolores eosquies" title="Magni dolores eosquies" data-sizes="auto"
-										srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/93/418/10__77709.1589167608.jpg?c=1"
-										data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/93/418/10__77709.1589167608.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/93/418/10__77709.1589167608.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/93/418/10__77709.1589167608.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/93/418/10__77709.1589167608.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/93/418/10__77709.1589167608.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/93/418/10__77709.1589167608.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/93/418/10__77709.1589167608.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/93/418/10__77709.1589167608.jpg?c=1 2560w"
-										class="lazyload card-image" />
-
-
-								</div>
-							</a>
-
-
-							<figcaption class="card-figcaption">
-								<div class="card-figcaption-body">
-
-									<a href="/wishlist.php?action=add&amp;product_id=93"
-										class="button button--small card-figcaption-button tt-wishlist"><span
-											class="material-icons">favorite_border</span></a>
-
-									<label class="button button--small card-figcaption-button tt-compare"
-										title="Compare" data-product-compare for="compare-93">
-										<span class="material-icons">sync</span>
-										<input type="checkbox" class="tt-comparecheck" name="products[]" value="93"
-											id="compare-93" data-compare-id="93">
-									</label>
-									<a class="button button--small card-figcaption-button quickview" title="Quick view"
-										data-product-id="93">
-										<span class="material-icons">remove_red_eye</span>
-									</a>
-								</div>
-							</figcaption>
-						</figure>
-
-
-						<div class="card-body">
-
-
-							<div class="card-text rating-block" data-test-info-type="productRating">
-								<span class="rating--small">
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-								</span>
-							</div>
-							<h4 class="card-title">
-								<a href="https://demo-store9.mybigcommerce.com/1-l-le-parfait-jar/">Magni dolores
-									eosquies</a>
-							</h4>
-
-
-							<div class="card-text tt-price" data-test-info-type="price">
-
-								<div class="price-section price-section--withTax rrp-price--withTax">
-									MSRP:
-									<span data-product-rrp-with-tax class="price price--rrp">
-										₹10.00
-									</span>
-								</div>
-
-								<div class="price-section price-section--withTax">
-									<span class="price-label" style="display: none;">
-
-									</span>
-									<span class="price-now-label">
-									</span>
-									<span data-product-price-with-tax class="price price--withTax">₹7.00</span>
-								</div>
-								<div class="price-section price-section--withTax non-sale-price--withTax">
-									<span data-product-non-sale-price-with-tax class="price price--non-sale">
-										₹239.95
-									</span>
-								</div>
-							</div>
-
-							<div class="tt-cart-btn">
-								<a href="https://demo-store9.mybigcommerce.com/1-l-le-parfait-jar/"
-									data-event-type="product-click" class="button button--small card-figcaption-button"
-									title="Choose Options" data-product-id="93">Choose Options</a>
-							</div>
-						</div>
-					</article>
-
-
-				</div>
-
-				<div class="productCarousel-slide">
-					<article class="card ">
-						<figure class="card-figure">
-							<a href="https://demo-store9.mybigcommerce.com/oak-cheese-grater/">
-								<div class="card-img-container">
-									<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/94/416/08__80802.1589167555.jpg?c=1"
-										alt="Perspiciatis unde omnis" title="Perspiciatis unde omnis" data-sizes="auto"
-										srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/94/416/08__80802.1589167555.jpg?c=1"
-										data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/94/416/08__80802.1589167555.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/94/416/08__80802.1589167555.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/94/416/08__80802.1589167555.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/94/416/08__80802.1589167555.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/94/416/08__80802.1589167555.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/94/416/08__80802.1589167555.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/94/416/08__80802.1589167555.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/94/416/08__80802.1589167555.jpg?c=1 2560w"
-										class="lazyload card-image" />
-
-
-								</div>
-							</a>
-
-
-							<figcaption class="card-figcaption">
-								<div class="card-figcaption-body">
-
-									<a href="/wishlist.php?action=add&amp;product_id=94"
-										class="button button--small card-figcaption-button tt-wishlist"><span
-											class="material-icons">favorite_border</span></a>
-
-									<label class="button button--small card-figcaption-button tt-compare"
-										title="Compare" data-product-compare for="compare-94">
-										<span class="material-icons">sync</span>
-										<input type="checkbox" class="tt-comparecheck" name="products[]" value="94"
-											id="compare-94" data-compare-id="94">
-									</label>
-									<a class="button button--small card-figcaption-button quickview" title="Quick view"
-										data-product-id="94">
-										<span class="material-icons">remove_red_eye</span>
-									</a>
-								</div>
-							</figcaption>
-						</figure>
-
-
-						<div class="card-body">
-
-
-							<div class="card-text rating-block" data-test-info-type="productRating">
-								<span class="rating--small">
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-								</span>
-							</div>
-							<h4 class="card-title">
-								<a href="https://demo-store9.mybigcommerce.com/oak-cheese-grater/">Perspiciatis unde
-									omnis</a>
-							</h4>
-
-
-							<div class="card-text tt-price" data-test-info-type="price">
-
-								<div class="price-section price-section--withTax rrp-price--withTax"
-									style="display: none;">
-									MSRP:
-									<span data-product-rrp-with-tax class="price price--rrp">
-
-									</span>
-								</div>
-
-								<div class="price-section price-section--withTax">
-									<span class="price-label">
-
-									</span>
-									<span class="price-now-label" style="display: none;">
-									</span>
-									<span data-product-price-with-tax class="price price--withTax">₹34.95</span>
-								</div>
-								<div class="price-section price-section--withTax non-sale-price--withTax"
-									style="display: none;">
-									<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-									</span>
-								</div>
-							</div>
-
-							<div class="tt-cart-btn">
-								<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=94"
-									data-event-type="product-click" title="Add to Cart"
-									class="button button--small card-figcaption-button">
-									<span class="material-icons">add</span>
-									Add to Cart
-								</a>
-							</div>
-						</div>
-					</article>
-
-
-				</div>
-
-				<div class="productCarousel-slide">
-					<article class="card ">
-						<figure class="card-figure">
-							<a href="https://demo-store9.mybigcommerce.com/tiered-wire-basket/">
-								<div class="card-img-container">
-									<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/97/406/07__37672.1589167510.jpg?c=1"
-										alt="Quis autem veleuminium" title="Quis autem veleuminium" data-sizes="auto"
-										srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/97/406/07__37672.1589167510.jpg?c=1"
-										data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/97/406/07__37672.1589167510.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/97/406/07__37672.1589167510.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/97/406/07__37672.1589167510.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/97/406/07__37672.1589167510.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/97/406/07__37672.1589167510.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/97/406/07__37672.1589167510.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/97/406/07__37672.1589167510.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/97/406/07__37672.1589167510.jpg?c=1 2560w"
-										class="lazyload card-image" />
-
-
-								</div>
-							</a>
-
-
-							<figcaption class="card-figcaption">
-								<div class="card-figcaption-body">
-
-									<a href="/wishlist.php?action=add&amp;product_id=97"
-										class="button button--small card-figcaption-button tt-wishlist"><span
-											class="material-icons">favorite_border</span></a>
-
-									<label class="button button--small card-figcaption-button tt-compare"
-										title="Compare" data-product-compare for="compare-97">
-										<span class="material-icons">sync</span>
-										<input type="checkbox" class="tt-comparecheck" name="products[]" value="97"
-											id="compare-97" data-compare-id="97">
-									</label>
-									<a class="button button--small card-figcaption-button quickview" title="Quick view"
-										data-product-id="97">
-										<span class="material-icons">remove_red_eye</span>
-									</a>
-								</div>
-							</figcaption>
-						</figure>
-
-
-						<div class="card-body">
-
-
-							<div class="card-text rating-block" data-test-info-type="productRating">
-								<span class="rating--small">
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-								</span>
-							</div>
-							<h4 class="card-title">
-								<a href="https://demo-store9.mybigcommerce.com/tiered-wire-basket/">Quis autem
-									veleuminium</a>
-							</h4>
-
-
-							<div class="card-text tt-price" data-test-info-type="price">
-
-								<div class="price-section price-section--withTax rrp-price--withTax"
-									style="display: none;">
-									MSRP:
-									<span data-product-rrp-with-tax class="price price--rrp">
-
-									</span>
-								</div>
-
-								<div class="price-section price-section--withTax">
-									<span class="price-label">
-
-									</span>
-									<span class="price-now-label" style="display: none;">
-									</span>
-									<span data-product-price-with-tax class="price price--withTax">₹119.95</span>
-								</div>
-								<div class="price-section price-section--withTax non-sale-price--withTax"
-									style="display: none;">
-									<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-									</span>
-								</div>
-							</div>
-
-							<div class="tt-cart-btn">
-								<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=97"
-									data-event-type="product-click" title="Add to Cart"
-									class="button button--small card-figcaption-button">
-									<span class="material-icons">add</span>
-									Add to Cart
-								</a>
-							</div>
-						</div>
-					</article>
-
-
-				</div>
-
-				<div class="productCarousel-slide">
-					<article class="card ">
-						<figure class="card-figure">
-							<a href="https://demo-store9.mybigcommerce.com/laundry-detergent/">
-								<div class="card-img-container">
-									<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/98/403/06__53465.1589167485.jpg?c=1"
-										alt="Aliquam quat voluptatem" title="Aliquam quat voluptatem" data-sizes="auto"
-										srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/98/403/06__53465.1589167485.jpg?c=1"
-										data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/98/403/06__53465.1589167485.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/98/403/06__53465.1589167485.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/98/403/06__53465.1589167485.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/98/403/06__53465.1589167485.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/98/403/06__53465.1589167485.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/98/403/06__53465.1589167485.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/98/403/06__53465.1589167485.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/98/403/06__53465.1589167485.jpg?c=1 2560w"
-										class="lazyload card-image" />
-
-
-								</div>
-							</a>
-
-
-							<figcaption class="card-figcaption">
-								<div class="card-figcaption-body">
-
-									<a href="/wishlist.php?action=add&amp;product_id=98"
-										class="button button--small card-figcaption-button tt-wishlist"><span
-											class="material-icons">favorite_border</span></a>
-
-									<label class="button button--small card-figcaption-button tt-compare"
-										title="Compare" data-product-compare for="compare-98">
-										<span class="material-icons">sync</span>
-										<input type="checkbox" class="tt-comparecheck" name="products[]" value="98"
-											id="compare-98" data-compare-id="98">
-									</label>
-									<a class="button button--small card-figcaption-button quickview" title="Quick view"
-										data-product-id="98">
-										<span class="material-icons">remove_red_eye</span>
-									</a>
-								</div>
-							</figcaption>
-						</figure>
-
-
-						<div class="card-body">
-
-
-							<div class="card-text rating-block" data-test-info-type="productRating">
-								<span class="rating--small">
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-								</span>
-							</div>
-							<h4 class="card-title">
-								<a href="https://demo-store9.mybigcommerce.com/laundry-detergent/">Aliquam quat
-									voluptatem</a>
-							</h4>
-
-
-							<div class="card-text tt-price" data-test-info-type="price">
-
-								<div class="price-section price-section--withTax rrp-price--withTax"
-									style="display: none;">
-									MSRP:
-									<span data-product-rrp-with-tax class="price price--rrp">
-
-									</span>
-								</div>
-
-								<div class="price-section price-section--withTax">
-									<span class="price-label">
-
-									</span>
-									<span class="price-now-label" style="display: none;">
-									</span>
-									<span data-product-price-with-tax class="price price--withTax">₹129.95</span>
-								</div>
-								<div class="price-section price-section--withTax non-sale-price--withTax"
-									style="display: none;">
-									<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-									</span>
-								</div>
-							</div>
-
-							<div class="tt-cart-btn">
-								<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=98"
-									data-event-type="product-click" title="Add to Cart"
-									class="button button--small card-figcaption-button">
-									<span class="material-icons">add</span>
-									Add to Cart
-								</a>
-							</div>
-						</div>
-					</article>
-
-
-				</div>
-
-				<div class="productCarousel-slide">
-					<article class="card ">
-						<figure class="card-figure">
-							<a href="https://demo-store9.mybigcommerce.com/dustpan-brush/">
-								<div class="card-img-container">
-									<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/107/376/03__90583.1589167096.jpg?c=1"
-										alt="Aspetur autodit autfugit" title="Aspetur autodit autfugit"
-										data-sizes="auto"
-										srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/107/376/03__90583.1589167096.jpg?c=1"
-										data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/107/376/03__90583.1589167096.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/107/376/03__90583.1589167096.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/107/376/03__90583.1589167096.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/107/376/03__90583.1589167096.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/107/376/03__90583.1589167096.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/107/376/03__90583.1589167096.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/107/376/03__90583.1589167096.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/107/376/03__90583.1589167096.jpg?c=1 2560w"
-										class="lazyload card-image" />
-
-
-								</div>
-							</a>
-
-
-							<figcaption class="card-figcaption">
-								<div class="card-figcaption-body">
-
-									<a href="/wishlist.php?action=add&amp;product_id=107"
-										class="button button--small card-figcaption-button tt-wishlist"><span
-											class="material-icons">favorite_border</span></a>
-
-									<label class="button button--small card-figcaption-button tt-compare"
-										title="Compare" data-product-compare for="compare-107">
-										<span class="material-icons">sync</span>
-										<input type="checkbox" class="tt-comparecheck" name="products[]" value="107"
-											id="compare-107" data-compare-id="107">
-									</label>
-									<a class="button button--small card-figcaption-button quickview" title="Quick view"
-										data-product-id="107">
-										<span class="material-icons">remove_red_eye</span>
-									</a>
-								</div>
-							</figcaption>
-						</figure>
-
-
-						<div class="card-body">
-
-
-							<div class="card-text rating-block" data-test-info-type="productRating">
-								<span class="rating--small">
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingFull">
-										<span class="material-icons">star_rate</span>
-									</span>
-									<span class="icon icon--ratingEmpty">
-										<span class="material-icons">star_border</span>
-									</span>
-								</span>
-							</div>
-							<h4 class="card-title">
-								<a href="https://demo-store9.mybigcommerce.com/dustpan-brush/">Aspetur autodit
-									autfugit</a>
-							</h4>
-
-
-							<div class="card-text tt-price" data-test-info-type="price">
-
-								<div class="price-section price-section--withTax rrp-price--withTax"
-									style="display: none;">
-									MSRP:
-									<span data-product-rrp-with-tax class="price price--rrp">
-
-									</span>
-								</div>
-
-								<div class="price-section price-section--withTax">
-									<span class="price-label">
-
-									</span>
-									<span class="price-now-label" style="display: none;">
-									</span>
-									<span data-product-price-with-tax class="price price--withTax">₹234.95</span>
-								</div>
-								<div class="price-section price-section--withTax non-sale-price--withTax"
-									style="display: none;">
-									<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-									</span>
-								</div>
-							</div>
-
-							<div class="tt-cart-btn">
-								<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=107"
-									data-event-type="product-click" title="Add to Cart"
-									class="button button--small card-figcaption-button">
-									<span class="material-icons">add</span>
-									Add to Cart
-								</a>
-							</div>
-						</div>
-					</article>
-
-
-				</div>
 			</section>
+
+			<!-- <div data-content-region="home_below_featured_products"></div> -->
+		</div>
+		<!-- END FEATURED PRODUCT CAROUSEL DIV -->
+
+		<!-- START FEATURED PRODUCT CAROUSEL DIV -->
+		<div class="tt-featured container">
+			<h2 class="page-heading">Need of the hour </h2>
+
+			<div class="uk-text-center" uk-grid>
+				<div class="uk-width-expand@m">
+					<img src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/biobubble.png">
+				</div>
+				<div class="uk-width-1-3@m">
+					<h1 class="uk-heading-large" style="padding-top: 15px;">Book our service today at the lowest prices
+					</h1>
+					<a href="/items/category/sanitation"
+						style="font-weight: light; font-size: large; background-color: #ffaa3d; border-radius: 50px; padding: 10px">Book
+						a Service</a>
+				</div>
+
+			</div>
 
 			<!-- <div data-content-region="home_below_featured_products"></div> -->
 		</div>
@@ -1094,261 +279,111 @@
 		<!-- START NEW PRODUCT CAROUSEL DIV -->
 		<div class="tt-new">
 			<div class="container">
-				<h2 class="page-heading">New Products</h2>
+				<h2 class="page-heading">Sanitation Equipments &nbsp;<a href="/items/category/sanitation"
+						style="font-weight: light; font-size: medium; color: #ffaa3d">View All</a></h2>
 
 				<section class="productCarousel row" data-list-name="" data-slick='{
-        "dots": false,
-        "infinite": false,
-		"autoplay": false,
-        "mobileFirst": true,
-        "slidesToShow": 4,
-        "slidesToScroll": 1,
-         "responsive": [
-         	{
-              "breakpoint": 1710,
-              "settings": {
-                "slidesToShow": 7,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 1460,
-              "settings": {
-                "slidesToShow": 6,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 1199,
-              "settings": {
-                "slidesToShow": 5,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 991,
-              "settings": {
-                "slidesToShow": 4,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 767,
-              "settings": {
-                "slidesToShow": 3,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 320,
-              "settings": {
-                "slidesToShow": 2,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 0,
-              "settings": {
-                "slidesToShow": 2,
-                "slidesToScroll": 1
-              }
-            }
-        ]
-    }'>
+							"dots": false,
+							"infinite": false,
+							"autoplay": false,
+							"mobileFirst": true,
+							"slidesToShow": 4,
+							"slidesToScroll": 1,
+							"responsive": [
+								{
+								"breakpoint": 1710,
+								"settings": {
+									"slidesToShow": 7,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 1460,
+								"settings": {
+									"slidesToShow": 6,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 1199,
+								"settings": {
+									"slidesToShow": 5,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 991,
+								"settings": {
+									"slidesToShow": 4,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 767,
+								"settings": {
+									"slidesToShow": 3,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 320,
+								"settings": {
+									"slidesToShow": 2,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 0,
+								"settings": {
+									"slidesToShow": 2,
+									"slidesToScroll": 1
+								}
+								}
+							]
+						}'>
 
+					<% var sanitationEquip = new Array() %>
+					<% sanitationEquip.push({name: "Chemtex Alstacol 25+ (Instant Spray Disinfectant, Kill time 5 seconds)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/0a87e186-00b9-4ab2-ac8d-9d7c640fa89e-315x315.jpg", price: 1790}) %>
+					<% sanitationEquip.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+					<% sanitationEquip.push({name: "Chemtex Alstasan Silvox 150 MIST (Fog and Spray – Universal Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/7e234b3a-c43d-4d5d-8c78-4b51d5befff7-1-315x315.jpg", price: 5490}) %>
+					<% sanitationEquip.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/05/Alstasan-Hand-Rub_x56-315x315.jpg", price: 1990}) %>
+					<% sanitationEquip.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+					<% sanitationEquip.push({name: "Alstasan LF125 (Quaternary Ammonium Compound based Aerial Fumigation Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/6e9de14a-b767-4154-8ed1-e221a1be7870-315x315.jpg", price: 4490}) %>
+					<% sanitationEquip.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/649cb967-2ebf-42f1-8746-0ba894996fb8-315x315.jpg", price: 1390}) %>
+
+					<% sanitationEquip.forEach(sanitationItem => { %>
 					<div class="productCarousel-slide">
 						<article class="card ">
 							<figure class="card-figure">
-								<div class="sale-flag-side">
-									<span class="sale-text">Sale</span>
-								</div>
-								<a href="https://demo-store9.mybigcommerce.com/smith-journal-13/">
+								<a href="<%=sanitationItem.linkTo%>">
 									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/111/399/02__65651.1589167373.jpg?c=1"
-											alt="Suscipit laboriosam nisi" title="Suscipit laboriosam nisi"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/111/399/02__65651.1589167373.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/111/399/02__65651.1589167373.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/111/399/02__65651.1589167373.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/111/399/02__65651.1589167373.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/111/399/02__65651.1589167373.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/111/399/02__65651.1589167373.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/111/399/02__65651.1589167373.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/111/399/02__65651.1589167373.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/111/399/02__65651.1589167373.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
+										<img src="<%=sanitationItem.imageSrc%>" alt="<%=sanitationItem.name%>"
+											title="<%=sanitationItem.name%>" data-sizes="auto"
+											srcset="<%=sanitationItem.imageSrc%>"
+											data-srcset="<%=sanitationItem.imageSrc%>" class="lazyload card-image" />
 									</div>
 								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=111"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-111">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="111"
-												id="compare-111" data-compare-id="111">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="111">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
 							</figure>
 
-
 							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
 								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/smith-journal-13/">Suscipit
-										laboriosam nisi</a>
+									<a href="<%=sanitationItem.linkTo%>"><%=sanitationItem.name%></a>
 								</h4>
 
-
 								<div class="card-text tt-price" data-test-info-type="price">
-
 									<div class="price-section price-section--withTax rrp-price--withTax"
 										style="display: none;">
 										MSRP:
 										<span data-product-rrp-with-tax class="price price--rrp">
-
 										</span>
 									</div>
 
 									<div class="price-section price-section--withTax">
-										<span class="price-label" style="display: none;">
-
-										</span>
-										<span class="price-now-label">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹115.00</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-											₹125.00
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=111"
-										data-event-type="product-click" title="Add to Cart"
-										class="button button--small card-figcaption-button">
-										<span class="material-icons">add</span>
-										Add to Cart
-									</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<a href="https://demo-store9.mybigcommerce.com/dustpan-brush/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/107/376/03__90583.1589167096.jpg?c=1"
-											alt="Aspetur autodit autfugit" title="Aspetur autodit autfugit"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/107/376/03__90583.1589167096.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/107/376/03__90583.1589167096.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/107/376/03__90583.1589167096.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/107/376/03__90583.1589167096.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/107/376/03__90583.1589167096.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/107/376/03__90583.1589167096.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/107/376/03__90583.1589167096.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/107/376/03__90583.1589167096.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/107/376/03__90583.1589167096.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=107"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-107">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="107"
-												id="compare-107" data-compare-id="107">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="107">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/dustpan-brush/">Aspetur autodit
-										autfugit</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label">
-
-										</span>
+										<span class="price-label"> </span>
 										<span class="price-now-label" style="display: none;">
 										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹234.95</span>
+										<span data-product-price-with-tax class="price price--withTax">₹
+											<%=sanitationItem.price%></span>
 									</div>
 									<div class="price-section price-section--withTax non-sale-price--withTax"
 										style="display: none;">
@@ -1359,659 +394,17 @@
 								</div>
 
 								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=107"
-										data-event-type="product-click" title="Add to Cart"
+									<a href="/items" title="Go to Item"
 										class="button button--small card-figcaption-button">
 										<span class="material-icons">add</span>
-										Add to Cart
+										Go to Items
 									</a>
 								</div>
 							</div>
 						</article>
-
-
 					</div>
+					<% }) %>
 
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<a href="https://demo-store9.mybigcommerce.com/utility-caddy/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/104/387/04__22620.1589167171.jpg?c=1"
-											alt="Neque porro quisquamest" title="Neque porro quisquamest"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/104/387/04__22620.1589167171.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/104/387/04__22620.1589167171.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/104/387/04__22620.1589167171.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/104/387/04__22620.1589167171.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/104/387/04__22620.1589167171.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/104/387/04__22620.1589167171.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/104/387/04__22620.1589167171.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/104/387/04__22620.1589167171.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/104/387/04__22620.1589167171.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=104"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-104">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="104"
-												id="compare-104" data-compare-id="104">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="104">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/utility-caddy/">Neque porro
-										quisquamest</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label">
-
-										</span>
-										<span class="price-now-label" style="display: none;">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹45.95</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax"
-										style="display: none;">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=104"
-										data-event-type="product-click" title="Add to Cart"
-										class="button button--small card-figcaption-button">
-										<span class="material-icons">add</span>
-										Add to Cart
-									</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<div class="sale-flag-side">
-									<span class="sale-text">Sale</span>
-								</div>
-								<a href="https://demo-store9.mybigcommerce.com/canvas-laundry-cart/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/103/390/05__68914.1589167217.jpg?c=1"
-											alt="Sint incidunt utlabore" title="Sint incidunt utlabore"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/103/390/05__68914.1589167217.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/103/390/05__68914.1589167217.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/103/390/05__68914.1589167217.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/103/390/05__68914.1589167217.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/103/390/05__68914.1589167217.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/103/390/05__68914.1589167217.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/103/390/05__68914.1589167217.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/103/390/05__68914.1589167217.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/103/390/05__68914.1589167217.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=103"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-103">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="103"
-												id="compare-103" data-compare-id="103">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="103">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/canvas-laundry-cart/">Sint
-										incidunt utlabore</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label" style="display: none;">
-
-										</span>
-										<span class="price-now-label">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹200.00</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-											₹249.00
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/canvas-laundry-cart/"
-										data-event-type="product-click"
-										class="button button--small card-figcaption-button" title="Choose Options"
-										data-product-id="103">Choose Options</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<a href="https://demo-store9.mybigcommerce.com/laundry-detergent/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/98/403/06__53465.1589167485.jpg?c=1"
-											alt="Aliquam quat voluptatem" title="Aliquam quat voluptatem"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/98/403/06__53465.1589167485.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/98/403/06__53465.1589167485.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/98/403/06__53465.1589167485.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/98/403/06__53465.1589167485.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/98/403/06__53465.1589167485.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/98/403/06__53465.1589167485.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/98/403/06__53465.1589167485.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/98/403/06__53465.1589167485.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/98/403/06__53465.1589167485.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=98"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-98">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="98"
-												id="compare-98" data-compare-id="98">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="98">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/laundry-detergent/">Aliquam quat
-										voluptatem</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label">
-
-										</span>
-										<span class="price-now-label" style="display: none;">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹129.95</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax"
-										style="display: none;">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=98"
-										data-event-type="product-click" title="Add to Cart"
-										class="button button--small card-figcaption-button">
-										<span class="material-icons">add</span>
-										Add to Cart
-									</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<a href="https://demo-store9.mybigcommerce.com/tiered-wire-basket/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/97/406/07__37672.1589167510.jpg?c=1"
-											alt="Quis autem veleuminium" title="Quis autem veleuminium"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/97/406/07__37672.1589167510.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/97/406/07__37672.1589167510.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/97/406/07__37672.1589167510.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/97/406/07__37672.1589167510.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/97/406/07__37672.1589167510.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/97/406/07__37672.1589167510.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/97/406/07__37672.1589167510.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/97/406/07__37672.1589167510.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/97/406/07__37672.1589167510.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=97"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-97">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="97"
-												id="compare-97" data-compare-id="97">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="97">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/tiered-wire-basket/">Quis autem
-										veleuminium</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label">
-
-										</span>
-										<span class="price-now-label" style="display: none;">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹119.95</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax"
-										style="display: none;">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=97"
-										data-event-type="product-click" title="Add to Cart"
-										class="button button--small card-figcaption-button">
-										<span class="material-icons">add</span>
-										Add to Cart
-									</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<a href="https://demo-store9.mybigcommerce.com/oak-cheese-grater/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/94/416/08__80802.1589167555.jpg?c=1"
-											alt="Perspiciatis unde omnis" title="Perspiciatis unde omnis"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/94/416/08__80802.1589167555.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/94/416/08__80802.1589167555.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/94/416/08__80802.1589167555.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/94/416/08__80802.1589167555.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/94/416/08__80802.1589167555.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/94/416/08__80802.1589167555.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/94/416/08__80802.1589167555.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/94/416/08__80802.1589167555.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/94/416/08__80802.1589167555.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=94"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-94">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="94"
-												id="compare-94" data-compare-id="94">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="94">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/oak-cheese-grater/">Perspiciatis
-										unde omnis</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label">
-
-										</span>
-										<span class="price-now-label" style="display: none;">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹34.95</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax"
-										style="display: none;">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=94"
-										data-event-type="product-click" title="Add to Cart"
-										class="button button--small card-figcaption-button">
-										<span class="material-icons">add</span>
-										Add to Cart
-									</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<div class="sale-flag-side">
-									<span class="sale-text">Sale</span>
-								</div>
-								<a href="https://demo-store9.mybigcommerce.com/1-l-le-parfait-jar/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/93/418/10__77709.1589167608.jpg?c=1"
-											alt="Magni dolores eosquies" title="Magni dolores eosquies"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/93/418/10__77709.1589167608.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/93/418/10__77709.1589167608.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/93/418/10__77709.1589167608.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/93/418/10__77709.1589167608.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/93/418/10__77709.1589167608.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/93/418/10__77709.1589167608.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/93/418/10__77709.1589167608.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/93/418/10__77709.1589167608.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/93/418/10__77709.1589167608.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=93"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-93">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="93"
-												id="compare-93" data-compare-id="93">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="93">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/1-l-le-parfait-jar/">Magni
-										dolores eosquies</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-											₹10.00
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label" style="display: none;">
-
-										</span>
-										<span class="price-now-label">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹7.00</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-											₹239.95
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/1-l-le-parfait-jar/"
-										data-event-type="product-click"
-										class="button button--small card-figcaption-button" title="Choose Options"
-										data-product-id="93">Choose Options</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
 				</section>
 
 				<!--  <div data-content-region="home_below_new_products"></div> -->
@@ -2045,259 +438,111 @@
 
 		<div class="tt-top-seller">
 			<div class="container">
-				<h2 class="page-heading">Best Sellers</h2>
+				<h2 class="page-heading">Sanitation Consumables&nbsp;<a href="/items/category/sanitation"
+						style="font-weight: light; font-size: medium; color: #ffaa3d">View All</a></h2>
 
 				<section class="productCarousel row" data-list-name="" data-slick='{
-        "dots": false,
-        "infinite": false,
-		"autoplay": false,
-        "mobileFirst": true,
-        "slidesToShow": 4,
-        "slidesToScroll": 1,
-         "responsive": [
-         	{
-              "breakpoint": 1710,
-              "settings": {
-                "slidesToShow": 7,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 1460,
-              "settings": {
-                "slidesToShow": 6,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 1199,
-              "settings": {
-                "slidesToShow": 5,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 991,
-              "settings": {
-                "slidesToShow": 4,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 767,
-              "settings": {
-                "slidesToShow": 3,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 320,
-              "settings": {
-                "slidesToShow": 2,
-                "slidesToScroll": 1
-              }
-            },
-            {
-              "breakpoint": 0,
-              "settings": {
-                "slidesToShow": 2,
-                "slidesToScroll": 1
-              }
-            }
-        ]
-    }'>
+						"dots": false,
+						"infinite": false,
+						"autoplay": false,
+						"mobileFirst": true,
+						"slidesToShow": 4,
+						"slidesToScroll": 1,
+						"responsive": [
+							{
+							"breakpoint": 1710,
+							"settings": {
+								"slidesToShow": 7,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 1460,
+							"settings": {
+								"slidesToShow": 6,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 1199,
+							"settings": {
+								"slidesToShow": 5,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 991,
+							"settings": {
+								"slidesToShow": 4,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 767,
+							"settings": {
+								"slidesToShow": 3,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 320,
+							"settings": {
+								"slidesToShow": 2,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 0,
+							"settings": {
+								"slidesToShow": 2,
+								"slidesToScroll": 1
+							}
+							}
+						]
+					}'>
 
+					<% var sanitationCons = new Array() %>
+					<% sanitationCons.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+					<% sanitationCons.push({name: "Alstasan LF125 (Quaternary Ammonium Compound based Aerial Fumigation Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/6e9de14a-b767-4154-8ed1-e221a1be7870-315x315.jpg", price: 4490}) %>
+					<% sanitationCons.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/649cb967-2ebf-42f1-8746-0ba894996fb8-315x315.jpg", price: 1390}) %>
+					<% sanitationCons.push({name: "Chemtex Alstasan Silvox 150 MIST (Fog and Spray – Universal Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/7e234b3a-c43d-4d5d-8c78-4b51d5befff7-1-315x315.jpg", price: 5490}) %>
+					<% sanitationCons.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/05/Alstasan-Hand-Rub_x56-315x315.jpg", price: 1990}) %>
+					<% sanitationCons.push({name: "Chemtex Alstacol 25+ (Instant Spray Disinfectant, Kill time 5 seconds)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/0a87e186-00b9-4ab2-ac8d-9d7c640fa89e-315x315.jpg", price: 1790}) %>
+					<% sanitationCons.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+
+					<% sanitationCons.forEach(sanitationItem => { %>
 					<div class="productCarousel-slide">
 						<article class="card ">
 							<figure class="card-figure">
-								<div class="sale-flag-side">
-									<span class="sale-text">Sale</span>
-								</div>
-								<a href="https://demo-store9.mybigcommerce.com/canvas-laundry-cart/">
+								<a href="<%=sanitationItem.linkTo%>">
 									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/103/390/05__68914.1589167217.jpg?c=1"
-											alt="Sint incidunt utlabore" title="Sint incidunt utlabore"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/103/390/05__68914.1589167217.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/103/390/05__68914.1589167217.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/103/390/05__68914.1589167217.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/103/390/05__68914.1589167217.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/103/390/05__68914.1589167217.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/103/390/05__68914.1589167217.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/103/390/05__68914.1589167217.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/103/390/05__68914.1589167217.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/103/390/05__68914.1589167217.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
+										<img src="<%=sanitationItem.imageSrc%>" alt="<%=sanitationItem.name%>"
+											title="<%=sanitationItem.name%>" data-sizes="auto"
+											srcset="<%=sanitationItem.imageSrc%>"
+											data-srcset="<%=sanitationItem.imageSrc%>" class="lazyload card-image" />
 									</div>
 								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=103"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-103">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="103"
-												id="compare-103" data-compare-id="103">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="103">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
 							</figure>
 
-
 							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
 								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/canvas-laundry-cart/">Sint
-										incidunt utlabore</a>
+									<a href="<%=sanitationItem.linkTo%>"><%=sanitationItem.name%></a>
 								</h4>
 
-
 								<div class="card-text tt-price" data-test-info-type="price">
-
 									<div class="price-section price-section--withTax rrp-price--withTax"
 										style="display: none;">
 										MSRP:
 										<span data-product-rrp-with-tax class="price price--rrp">
-
 										</span>
 									</div>
 
 									<div class="price-section price-section--withTax">
-										<span class="price-label" style="display: none;">
-
-										</span>
-										<span class="price-now-label">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹200.00</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-											₹249.00
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/canvas-laundry-cart/"
-										data-event-type="product-click"
-										class="button button--small card-figcaption-button" title="Choose Options"
-										data-product-id="103">Choose Options</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<a href="https://demo-store9.mybigcommerce.com/tiered-wire-basket/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/97/406/07__37672.1589167510.jpg?c=1"
-											alt="Quis autem veleuminium" title="Quis autem veleuminium"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/97/406/07__37672.1589167510.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/97/406/07__37672.1589167510.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/97/406/07__37672.1589167510.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/97/406/07__37672.1589167510.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/97/406/07__37672.1589167510.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/97/406/07__37672.1589167510.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/97/406/07__37672.1589167510.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/97/406/07__37672.1589167510.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/97/406/07__37672.1589167510.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=97"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-97">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="97"
-												id="compare-97" data-compare-id="97">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="97">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/tiered-wire-basket/">Quis autem
-										veleuminium</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label">
-
-										</span>
+										<span class="price-label"> </span>
 										<span class="price-now-label" style="display: none;">
 										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹119.95</span>
+										<span data-product-price-with-tax class="price price--withTax">₹
+											<%=sanitationItem.price%></span>
 									</div>
 									<div class="price-section price-section--withTax non-sale-price--withTax"
 										style="display: none;">
@@ -2308,657 +553,16 @@
 								</div>
 
 								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=97"
-										data-event-type="product-click" title="Add to Cart"
+									<a href="/items" title="Go to Item"
 										class="button button--small card-figcaption-button">
 										<span class="material-icons">add</span>
-										Add to Cart
+										Go to Items
 									</a>
 								</div>
 							</div>
 						</article>
-
-
 					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<div class="sale-flag-side">
-									<span class="sale-text">Sale</span>
-								</div>
-								<a href="https://demo-store9.mybigcommerce.com/able-brewing-system/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/86/426/11__43953.1589167644.jpg?c=1"
-											alt="Neque porro quisquam" title="Neque porro quisquam" data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/86/426/11__43953.1589167644.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/86/426/11__43953.1589167644.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/86/426/11__43953.1589167644.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/86/426/11__43953.1589167644.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/86/426/11__43953.1589167644.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/86/426/11__43953.1589167644.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/86/426/11__43953.1589167644.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/86/426/11__43953.1589167644.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/86/426/11__43953.1589167644.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=86"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-86">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="86"
-												id="compare-86" data-compare-id="86">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="86">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/able-brewing-system/">Neque porro
-										quisquam</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label" style="display: none;">
-
-										</span>
-										<span class="price-now-label">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹225.00</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-											₹250.00
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=86"
-										data-event-type="product-click" title="Add to Cart"
-										class="button button--small card-figcaption-button">
-										<span class="material-icons">add</span>
-										Add to Cart
-									</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<a href="https://demo-store9.mybigcommerce.com/chemex-coffeemaker-3-cup/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/88/450/18__48766.1589167872.jpg?c=1"
-											alt="Tempora quiidunt utlabore" title="Tempora quiidunt utlabore"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/88/450/18__48766.1589167872.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/88/450/18__48766.1589167872.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/88/450/18__48766.1589167872.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/88/450/18__48766.1589167872.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/88/450/18__48766.1589167872.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/88/450/18__48766.1589167872.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/88/450/18__48766.1589167872.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/88/450/18__48766.1589167872.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/88/450/18__48766.1589167872.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=88"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-88">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="88"
-												id="compare-88" data-compare-id="88">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="88">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/chemex-coffeemaker-3-cup/">Tempora
-										quiidunt utlabore</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax"
-										style="display: none;">
-										Was:
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-										</span>
-									</div>
-									<div class="price-section price-section--withTax">
-										<span class="price-label"></span>
-										<span class="price-now-label" style="display: none;">Now:</span>
-										<span data-product-price-with-tax class="price price--withTax">₹499.00 -
-											₹620.00</span>
-									</div>
-
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/chemex-coffeemaker-3-cup/"
-										data-event-type="product-click"
-										class="button button--small card-figcaption-button" title="Choose Options"
-										data-product-id="88">Choose Options</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<div class="sale-flag-side">
-									<span class="sale-text">Sale</span>
-								</div>
-								<a href="https://demo-store9.mybigcommerce.com/fog-linen-chambray-towel-beige-stripe/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/77/449/14__05697.1592305188.jpg?c=1"
-											alt="perfect beach towel" title="perfect beach towel" data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/77/449/14__05697.1592305188.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/77/449/14__05697.1592305188.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/77/449/14__05697.1592305188.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/77/449/14__05697.1592305188.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/77/449/14__05697.1592305188.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/77/449/14__05697.1592305188.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/77/449/14__05697.1592305188.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/77/449/14__05697.1592305188.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/77/449/14__05697.1592305188.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=77"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-77">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="77"
-												id="compare-77" data-compare-id="77">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="77">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a
-										href="https://demo-store9.mybigcommerce.com/fog-linen-chambray-towel-beige-stripe/">Aliquam
-										quaerat voluptatem</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-											₹370.00
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label" style="display: none;">
-
-										</span>
-										<span class="price-now-label">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹340.00</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-											₹349.00
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/fog-linen-chambray-towel-beige-stripe/"
-										data-event-type="product-click"
-										class="button button--small card-figcaption-button" title="Choose Options"
-										data-product-id="77">Choose Options</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<a href="https://demo-store9.mybigcommerce.com/oak-cheese-grater/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/94/416/08__80802.1589167555.jpg?c=1"
-											alt="Perspiciatis unde omnis" title="Perspiciatis unde omnis"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/94/416/08__80802.1589167555.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/94/416/08__80802.1589167555.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/94/416/08__80802.1589167555.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/94/416/08__80802.1589167555.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/94/416/08__80802.1589167555.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/94/416/08__80802.1589167555.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/94/416/08__80802.1589167555.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/94/416/08__80802.1589167555.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/94/416/08__80802.1589167555.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=94"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-94">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="94"
-												id="compare-94" data-compare-id="94">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="94">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/oak-cheese-grater/">Perspiciatis
-										unde omnis</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label">
-
-										</span>
-										<span class="price-now-label" style="display: none;">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹34.95</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax"
-										style="display: none;">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=94"
-										data-event-type="product-click" title="Add to Cart"
-										class="button button--small card-figcaption-button">
-										<span class="material-icons">add</span>
-										Add to Cart
-									</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<a href="https://demo-store9.mybigcommerce.com/orbit-terrarium-large/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/80/438/13__13205.1589167739.jpg?c=1"
-											alt="Quaerat outt voluptatem" title="Quaerat outt voluptatem"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/80/438/13__13205.1589167739.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/80/438/13__13205.1589167739.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/80/438/13__13205.1589167739.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/80/438/13__13205.1589167739.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/80/438/13__13205.1589167739.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/80/438/13__13205.1589167739.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/80/438/13__13205.1589167739.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/80/438/13__13205.1589167739.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/80/438/13__13205.1589167739.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=80"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-80">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="80"
-												id="compare-80" data-compare-id="80">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="80">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingFull">
-											<span class="material-icons">star_rate</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/orbit-terrarium-large/">Quaerat
-										outt voluptatem</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label">
-
-										</span>
-										<span class="price-now-label" style="display: none;">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹409.00</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax"
-										style="display: none;">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=80"
-										data-event-type="product-click" title="Add to Cart"
-										class="button button--small card-figcaption-button">
-										<span class="material-icons">add</span>
-										Add to Cart
-									</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
-
-					<div class="productCarousel-slide">
-						<article class="card ">
-							<figure class="card-figure">
-								<a href="https://demo-store9.mybigcommerce.com/orbit-terrarium-small/">
-									<div class="card-img-container">
-										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/250x325/products/81/436/12__13125.1589167692.jpg?c=1"
-											alt="Voluptas sit aspernatur" title="Voluptas sit aspernatur"
-											data-sizes="auto"
-											srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/81/436/12__13125.1589167692.jpg?c=1"
-											data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/81/436/12__13125.1589167692.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/81/436/12__13125.1589167692.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/81/436/12__13125.1589167692.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/81/436/12__13125.1589167692.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/81/436/12__13125.1589167692.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/81/436/12__13125.1589167692.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/81/436/12__13125.1589167692.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/81/436/12__13125.1589167692.jpg?c=1 2560w"
-											class="lazyload card-image" />
-
-
-									</div>
-								</a>
-
-
-								<figcaption class="card-figcaption">
-									<div class="card-figcaption-body">
-
-										<a href="/wishlist.php?action=add&amp;product_id=81"
-											class="button button--small card-figcaption-button tt-wishlist"><span
-												class="material-icons">favorite_border</span></a>
-
-										<label class="button button--small card-figcaption-button tt-compare"
-											title="Compare" data-product-compare for="compare-81">
-											<span class="material-icons">sync</span>
-											<input type="checkbox" class="tt-comparecheck" name="products[]" value="81"
-												id="compare-81" data-compare-id="81">
-										</label>
-										<a class="button button--small card-figcaption-button quickview"
-											title="Quick view" data-product-id="81">
-											<span class="material-icons">remove_red_eye</span>
-										</a>
-									</div>
-								</figcaption>
-							</figure>
-
-
-							<div class="card-body">
-
-
-								<div class="card-text rating-block" data-test-info-type="productRating">
-									<span class="rating--small">
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-										<span class="icon icon--ratingEmpty">
-											<span class="material-icons">star_border</span>
-										</span>
-									</span>
-								</div>
-								<h4 class="card-title">
-									<a href="https://demo-store9.mybigcommerce.com/orbit-terrarium-small/">Voluptas
-										sit aspernatur</a>
-								</h4>
-
-
-								<div class="card-text tt-price" data-test-info-type="price">
-
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-
-										</span>
-									</div>
-
-									<div class="price-section price-section--withTax">
-										<span class="price-label">
-
-										</span>
-										<span class="price-now-label" style="display: none;">
-										</span>
-										<span data-product-price-with-tax class="price price--withTax">₹89.00</span>
-									</div>
-									<div class="price-section price-section--withTax non-sale-price--withTax"
-										style="display: none;">
-										<span data-product-non-sale-price-with-tax class="price price--non-sale">
-
-										</span>
-									</div>
-								</div>
-
-								<div class="tt-cart-btn">
-									<a href="https://demo-store9.mybigcommerce.com/cart.php?action=add&amp;product_id=81"
-										data-event-type="product-click" title="Add to Cart"
-										class="button button--small card-figcaption-button">
-										<span class="material-icons">add</span>
-										Add to Cart
-									</a>
-								</div>
-							</div>
-						</article>
-
-
-					</div>
+					<% }) %>
 				</section>
 
 				<!-- <div data-content-region="home_below_top_products"></div> -->

@@ -10,6 +10,8 @@
 
 	<link href="https://cdn11.bigcommerce.com/r-ddd8051de0aea5d72a2236ec7e8beccdcbc02929/img/bc_favicon.ico"
 		rel="shortcut icon">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/css/uikit.min.css" />
+
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
 
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -52,7 +54,8 @@
 				<h1 class="header-logo header-logo--center">
 					<a href="/">
 						<span class="header-logo-image-container">
-							<img class="header-logo-image" src="/img/112cartLogoUp.png" width="175px" alt="112Cart.com" title="112Cart.com">
+							<img class="header-logo-image" src="/img/112cartLogoUp.png" width="175px" alt="112Cart.com"
+								title="112Cart.com">
 						</span>
 					</a>
 				</h1>
@@ -87,11 +90,9 @@
 				</div>
 
 				<div class="tt-phone-number">
-					<div class="contact-icon">
-						<span class="material-icons">phone_in_talk</span>
-					</div>
 					<div class="content">
-						<div class="contact-title"><br>Get in touch</div>
+						<div class="contact-title"><a href="">Delivery Information</a> | <a href="">Terms and
+								Conditions</a></div>
 						<!-- <a href="tel:09277077088">9876543210</a> -->
 					</div>
 				</div>
@@ -503,7 +504,9 @@
 									<span class="material-icons">perm_identity</span>
 								</div>
 								<ul class="dropdown-menu dropdown-menu-right account-link-toggle">
+
 									<li class="navUser-item navUser-item--account">
+										<% if (currentUser == "") { %>
 										<a class="navUser-action" href="/users/login">
 											<span class="material-icons">lock_open</span>
 											Sign in
@@ -512,6 +515,12 @@
 											<span class="material-icons">person</span>
 											Register
 										</a>
+										<% } else { %>
+										<a class="navUser-action" href="/orders">
+											<span class="material-icons">lock_open</span>
+											My Orders
+										</a>
+										<% } %>
 									</li>
 
 								</ul>
