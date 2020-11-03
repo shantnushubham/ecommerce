@@ -2,16 +2,16 @@ var itemMetaModel = require("../models/Items/ItemMetadata")
 var itemmodel = require('../models/Items/Items')
 var cartmodel = require('../models/cart/cart')
 var UserAddress = require('../models/User/DeliveryAddress')
-var userModel=require('../models/User/User')
+var userModel = require('../models/User/User')
 var ordermodel = require('../models/Orders/Order')
-var vendorModel=require('../models/Items/vendor')
+var vendorModel = require('../models/Items/vendor')
 var cancelOrderModel = require('../models/Orders/CancelledOrder')
 var codemodel = require('../models/offer/codes')
 var itemServices = require('../openServices/items')
 var offersModel = require('../models/offer/offer')
 var quoteModel = require('../models/Orders/serviceQuote')
 var functions = require('../Middlewares/common/functions')
-
+var axios=require('axios')
 var mongoose = require("mongoose")
 class order {
     constructor() {
@@ -352,30 +352,36 @@ class order {
     }
 
     acceptOrder(orderId, data, callback) {
-        ordermodel.findOne({orderId:orderId,shipmentStatus:"processing"},function(err,foundOrder){
-            if(err||functions.isEmpty(foundOrder))
-            {
-                callback({success:false,message:"db error"})
+        ordermodel.findOne({ orderId: orderId, shipmentStatus: "processing" }, function (err, foundOrder) {
+            if (err || functions.isEmpty(foundOrder)) {
+                callback({ success: false, message: "db error" })
             }
-            else
-            {
-                vendorModel.findOne({vendorId:foundOrder.vendorId},function(err,foundVendor){
-                    if(err)
-                    {
-                        callback({success:false,message:"db error"})
+            else {
+                vendorModel.findOne({ vendorId: data.vendorId }, function (err, foundVendor) {
+                    if (err) {
+                        callback({ success: false, message: "db error" })
                     }
-                    else
-                    {
-                        userModel.findOne({uuid:foundOrder.uuid},function(err,foundUser){
-                            if(err)
-                            callback({success:false,message:"db error"})
-                            else
-                            {
+                    else {
+                        userModel.findOne({ uuid: foundOrder.uuid }, function (err, foundUser) {
+                            if (err)
+                                callback({ success: false, message: "db error" })
+                            else {
+                                var orderitems = []
+                                for (var i = 0; i < foundOrder.orderedItems.length; i++) {
+                                    orderitems.push({
+                                        selling_price: foundOrder.orderedItems[i].selling_price,
+                                        name: foundOrder.orderedItems[i].name,
+                                        units: foundOrder.orderedItems[i].quantity,
+                                        sku: foundOrder.orderedItems[i].sku,
+                                    })
+                                }
+
                                 var shipment = {
                                     "order_id": foundOrder.orderId,
-                                    "order_date": Date.now(),
+                                    "order_date": foundOrder.purchaseTime,
                                     "pickup_location": foundVendor.pickup_location,
                                     "billing_customer_name": foundUser.name,
+                                    "billing_last_name":foundUser.lastname,
                                     "billing_address": foundOrder.fullAddress,
                                     "billing_city": foundOrder.city,
                                     "billing_pincode": foundOrder.pincode,
@@ -384,24 +390,40 @@ class order {
                                     "billing_email": foundUser.email,
                                     "billing_phone": foundUser.phone,
                                     "shipping_is_billing": true,
-                                    "order_items": [{ "name": "Kunai", "sku": "chakra123", "units": 10, "selling_price": "900", }],
+                                    "order_items": orderitems,
                                     "payment_method": "Prepaid",
-                                    "shipping_charges": 0,
-                                    "giftwrap_charges": 0,
-                                    "transaction_charges": 0,
-                                    "total_discount": 0,
-                                    "sub_total": 9000,
-                                    "length": 10, "breadth": 15, "height": 20, "weight": 2.5
+                                    "sub_total": foundOrder.total,
+                                    "length": data.length, "breadth": data.breadth, "height": data.height, "weight": data.weight
                                 }
+                                console.log(shipment);
+                                var d=JSON.stringify(shipment)
+                                var config = {
+                                    method: 'post',
+                                    url: 'https://apiv2.shiprocket.in/v1/external/orders/create/adhoc',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjk0NDk2OCwiaXNzIjoiaHR0cHM6Ly9hcGl2Mi5zaGlwcm9ja2V0LmluL3YxL2V4dGVybmFsL2F1dGgvbG9naW4iLCJpYXQiOjE2MDQyOTgyMzksImV4cCI6MTYwNTE2MjIzOSwibmJmIjoxNjA0Mjk4MjM5LCJqdGkiOiJHZnJsT1o5RU5zc3BmdTlEIn0.VEyBDUshxqCRNTov4NWMiQwEfRHeRJ2KmsYcVtsb8mg'
+                                    },
+                                    data: d
+                                };
+
+                                axios(config)
+                                    .then(function (response) {
+                                        console.log(JSON.stringify(response.data));
+                                    })
+                                    .catch(function (error) {
+                                        console.log(error);
+                                    });
+                                callback({ success: true })
                             }
                         })
-                       
+
                     }
                 })
             }
         })
 
-       
+
     }
 
     getOrderByShipment(status, callback) {

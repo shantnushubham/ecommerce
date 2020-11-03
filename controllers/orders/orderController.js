@@ -816,9 +816,9 @@ exports.confirmOrder = function (req, res) {
         breadth: req.body.breadth,
         height: req.body.height,
         weight: req.body.weight,
-        shipRocketId: req.body.shipRocketId,
         paid: true,
-        status: 'authorized'
+        status: 'authorized',
+        vendorId:req.body.vendorId
 
     }
     orderServices.acceptOrder(req.params.orderId, d, function (order) {
