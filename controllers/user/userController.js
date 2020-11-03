@@ -120,7 +120,7 @@ exports.recover = (req, res) => {
 
                 })
                 .catch(err => {
-                    req.flash('error', 'some error occured')
+                    req.flash('error', 'some error occurred')
                     res.redirect('/recover')
                 });
         })
