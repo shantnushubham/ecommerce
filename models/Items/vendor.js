@@ -25,6 +25,10 @@ var vendorSchema = new mongoose.Schema({
         type: String,
 
     },
-});
+    pickup_location:{
+        type:String,
+        required:true
+    }
 
+})
 module.exports = mongoose.model("vendors", vendorSchema, "vendors");

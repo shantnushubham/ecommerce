@@ -9,7 +9,8 @@ const functions = require('../Middlewares/common/functions')
 const offers=require('../models/offer/offer')
 require('dotenv').config()
 const envData = process.env
-
+const jssha=require('jssha')
+const uniq=require('generate-unique-id')
 
 router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
@@ -34,41 +35,51 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                 var request = require('request')
 
                 var headers = { 'X-Api-Key': envData.X_Api_Key, 'X-Auth-Token': envData.X_Auth_Token };
+               
 
                 var payload = {
-                    purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
+                    key:"7rnFly",
+                    txnid:uniq(20),
                     amount: parseInt(totAmt * 1.18),
+                    productinfo:'Auth Trx for order with order ID ' + foundOrder.order.orderId,
+                    firstname:req.user.name,
+                    purpose:'Auth Trx for order with order ID ' + foundOrder.order.orderId, 
                     phone: req.user.phone,
                     buyer_name: req.user.name,
-                    redirect_url: envData.instamojoRedirect,
-                    send_email: true,
-                    webhook: '',
-                    send_sms: true,
+                    surl: "http://localhost:3000/payment/success",
+                    furl: "http://localhost:3000/payment/failure",
+                    service_provider:"payu_paisa",
+                    // send_email: true,
+                    // webhook: '',
+                    // send_sms: true,
                     email: req.user.email,
-                    allow_repeated_payments: false
+                    // allow_repeated_payments: false
                 }
-                request.post(envData.instamojoLink, { form: payload, headers: headers }, function (error, response, body) {
+
+                const hashString = '7rnFly' //store in in different file
+                + '|' + payload.txnid
+                + '|' + payload.amount 
+                + '|' + payload.productinfo 
+                + '|' + payload.firstname 
+                + '|' + payload.email 
+                + '|' + '||||||||||'
+                + 'pjVQAWpA' //store in in different file
+               const sha = new jssha('SHA-512', "TEXT");
+               sha.update(hashString);
+               //Getting hashed value from sha module
+                const hash = sha.getHash("HEX");
+               payload.hash=hash
+                request.post('https://sandboxsecure.payu.in/_payment', { form: payload, headers: headers }, function (error, response, body) {
                     // console.log(response);
+                    console.log(error);
                     console.log(response.statusCode);
                     console.log(body);
-                    if (!error && response.statusCode == 201) {
-                        var body = JSON.parse(body);
-                        console.log(body);
-                        var x = body["payment_request"]["longurl"];
-                        req.body["payment_request_id"] = body["payment_request"]["id"];
-                        orderServices.addInstaMojoDetails(foundOrder.order.orderId, body["payment_request"]["longurl"], body["payment_request"]["id"], function (instaAdded) {
-                            if (instaAdded.success == false) {
-                                console.log(instaAdded.message);
-                                req.flash(instaAdded.message)
-                                res.redirect('/dashboard')
-                            }
-                            else {
-
-                                res.redirect(x);
-                            }
-                        })
-
-                    }
+                    if (response.statusCode === 200) {
+                        res.send(body);
+                        } else if (response.statusCode >= 300 && 
+                        response.statusCode <= 400) {
+                        res.redirect(response.headers.location.toString());
+                        }
                 })
 
             }
@@ -82,6 +93,16 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
 
 })
+router.post('/payment/success', (req, res) => {
+    //Payumoney will send Success Transaction data to req body. 
+     //Based on the response Implement UI as per you want
+     res.send(req.body);
+    })
+router.post('/payment/failure', (req, res) => {
+        //Payumoney will send Success Transaction data to req body. 
+        // Based on the response Implement UI as per you want
+         res.send(req.body);
+        })
 
 router.get("/redirect", ensureAuthenticated, function (req, res) {
     var payment_id = req.query.payment_id;

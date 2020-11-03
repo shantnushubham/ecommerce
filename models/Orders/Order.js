@@ -146,6 +146,12 @@ var orderSchema = new mongoose.Schema({
     offerCode:{
         type:String,
         default:"no_code"
+    },
+    shiprocket_shipent_id:{
+        type:String
+    },
+    shiprocket_order_id:{
+        type:String
     }
 
 });

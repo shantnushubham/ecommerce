@@ -77,9 +77,8 @@ exports.register = (req, res) => {
                             sendgrid.send(mailOptions, (error, result) => {
                                 if (error) {
                                     console.log(error)
-                                    return res.status(500).json({ message: error.message });
                                 }
-                                console.log('f')
+
                                 res.redirect('/');
                             });
                         });
@@ -324,8 +323,17 @@ exports.addUserAddress = (req, res) => {
                     res.redirect('/address');
                 }
                 else {
-                    req.flash('success_msg', 'succesfully added address')
-                    res.redirect('/');
+                    User.findOneAndUpdate({ uuid: req.user.uuid }, { active: true }, function (err, updated) {
+                        if (err) {
+                            req.flash('success_msg', 'error in updating user')
+                            res.redirect('/');
+                        }
+                        else {
+                            req.flash('success_msg', 'succesfully added address')
+                            res.redirect('/');
+                        }
+                    })
+
                 }
             }
 

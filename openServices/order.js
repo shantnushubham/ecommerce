@@ -2,7 +2,9 @@ var itemMetaModel = require("../models/Items/ItemMetadata")
 var itemmodel = require('../models/Items/Items')
 var cartmodel = require('../models/cart/cart')
 var UserAddress = require('../models/User/DeliveryAddress')
+var userModel=require('../models/User/User')
 var ordermodel = require('../models/Orders/Order')
+var vendorModel=require('../models/Items/vendor')
 var cancelOrderModel = require('../models/Orders/CancelledOrder')
 var codemodel = require('../models/offer/codes')
 var itemServices = require('../openServices/items')
@@ -350,10 +352,56 @@ class order {
     }
 
     acceptOrder(orderId, data, callback) {
-        ordermodel.findOneAndUpdate({ orderId: orderId }, data, function (err, order) {
-            if (err) callback({ success: false })
-            else callback({ success: true })
+        ordermodel.findOne({orderId:orderId,shipmentStatus:"processing"},function(err,foundOrder){
+            if(err||functions.isEmpty(foundOrder))
+            {
+                callback({success:false,message:"db error"})
+            }
+            else
+            {
+                vendorModel.findOne({vendorId:foundOrder.vendorId},function(err,foundVendor){
+                    if(err)
+                    {
+                        callback({success:false,message:"db error"})
+                    }
+                    else
+                    {
+                        userModel.findOne({uuid:foundOrder.uuid},function(err,foundUser){
+                            if(err)
+                            callback({success:false,message:"db error"})
+                            else
+                            {
+                                var shipment = {
+                                    "order_id": foundOrder.orderId,
+                                    "order_date": Date.now(),
+                                    "pickup_location": foundVendor.pickup_location,
+                                    "billing_customer_name": foundUser.name,
+                                    "billing_address": foundOrder.fullAddress,
+                                    "billing_city": foundOrder.city,
+                                    "billing_pincode": foundOrder.pincode,
+                                    "billing_state": foundOrder.state,
+                                    "billing_country": "India",
+                                    "billing_email": foundUser.email,
+                                    "billing_phone": foundUser.phone,
+                                    "shipping_is_billing": true,
+                                    "order_items": [{ "name": "Kunai", "sku": "chakra123", "units": 10, "selling_price": "900", }],
+                                    "payment_method": "Prepaid",
+                                    "shipping_charges": 0,
+                                    "giftwrap_charges": 0,
+                                    "transaction_charges": 0,
+                                    "total_discount": 0,
+                                    "sub_total": 9000,
+                                    "length": 10, "breadth": 15, "height": 20, "weight": 2.5
+                                }
+                            }
+                        })
+                       
+                    }
+                })
+            }
         })
+
+       
     }
 
     getOrderByShipment(status, callback) {
@@ -376,7 +424,7 @@ class order {
     }
 
     getOrderByUUID(uuid, callback) {
-        ordermodel.find({ uuid: uuid, shipmentStatus:{$ne:'saved'} }, function (err, order) {
+        ordermodel.find({ uuid: uuid, shipmentStatus: { $ne: 'saved' } }, function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
@@ -389,7 +437,7 @@ class order {
         })
     }
 
-    
+
 
     authorizeOrder(orderId, callback) {
         ordermodel.findOneAndUpdate({ orderId: orderId }, { status: "authorized" }, function (err, updatedOrder) {

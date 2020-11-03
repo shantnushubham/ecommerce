@@ -160,7 +160,9 @@ app.get('/auth/google/callback',
 app.get('/auth/facebook',
   passport.authenticate('facebook', {
     scope: 'email'
-  }));
+  }),function(req,res){
+    console.log("fb");
+  });
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
