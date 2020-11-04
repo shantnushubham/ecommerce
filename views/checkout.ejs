@@ -1,623 +1,117 @@
-<html>
+<%- include("partials/newHeader.ejs") %>
 
-<head>
-	<style data-merge-styles="true"></style>
-	<link rel="stylesheet" href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/checkout-f7e542a5.css">
-	<title>PayeeShop</title>
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="EUR">
 
-
-
-	<link href="https://cdn11.bigcommerce.com/r-6b8a083f14da33ee4f83a30ef8a290dd4dd1c5d8/img/bc_favicon.ico"
-		rel="shortcut icon">
-
-	<base href="/" target="_top">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link href="https://cdn11.bigcommerce.com/shared/css/open_sans-5ec63c5b7015207649f715d5bf81d7d45e5a5496.css"
-		rel="stylesheet" type="text/css">
-
-
-	<link href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/checkout-f7e542a5.css" rel="stylesheet"
-		type="text/css">
-
-
-	<script type="text/javascript">
-		var BCData = { "csrf_token": "cd36370d682412efd9965863c07da173256f12a6c66e831a10b0d06d5188305d" };
-	</script>
-
-
-
-	<link data-stencil-stylesheet=""
-		href="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/css/optimized-checkout-87cee9a0-cb18-0138-055d-0242ac11000e.css"
-		rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&amp;display=swap" rel="stylesheet">
-
-	<script type="text/javascript">
-		window.language = { "locale": "en", "locales": {}, "translations": {} };
-	</script>
-
-
-
-
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/billing-ec85f1e6.js">
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/billing~shipping-74d2384b.js">
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/cart-summary-drawer-18e0d49f.js">
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/cart-summary-e65ffaec.js">
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/cart-summary~cart-summary-drawer-8d4609a5.js">
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/customer-dead47f1.js">
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/order-summary-drawer-2b6ed735.js">
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/order-summary-d4d76c76.js">
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/payment-93dec249.js">
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/shipping-684624e4.js">
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/vendors~billing~payment~shipping-c3d89df4.js">
-	<link as="script" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/vendors~billing~shipping-60ba4d45.js">
-	<link as="style" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/billing~shipping-afd81211.css">
-	<link as="style" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/cart-summary~cart-summary-drawer-ad2d875f.css">
-	<link as="style" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/payment-7adf16f8.css">
-	<link as="style" rel="prefetch"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/shipping-37c935e6.css">
-	<link rel="stylesheet" type="text/css"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/cart-summary~cart-summary-drawer-ad2d875f.css">
-	<script charset="utf-8"
-		src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/cart-summary~cart-summary-drawer-8d4609a5.js"></script>
-	<script charset="utf-8"
-		src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/cart-summary-e65ffaec.js"></script>
-	<script charset="utf-8"
-		src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/vendors~billing~payment~shipping-c3d89df4.js"></script>
-	<script charset="utf-8"
-		src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/vendors~billing~shipping-60ba4d45.js"></script>
-	<link rel="stylesheet" type="text/css"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/billing~shipping-afd81211.css">
-	<script charset="utf-8"
-		src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/billing~shipping-74d2384b.js"></script>
-	<link rel="stylesheet" type="text/css"
-		href="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/shipping-37c935e6.css">
-	<script charset="utf-8"
-		src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/shipping-684624e4.js"></script>
-</head>
-
-<body style="">
-	<header class="checkoutHeader optimizedCheckout-header">
-		<div class="checkoutHeader-content">
-			<h1 class="is-srOnly">Checkout</h1>
-			<h2 class="checkoutHeader-heading">
-				<a class="checkoutHeader-link" href="https://demo-store9.mybigcommerce.com/">
-					<img alt="PayeeShop" class="checkoutHeader-logo" id="logoImage"
-						src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/product_images/logo_01_1596263683__90290.png">
-				</a>
-			</h2>
-		</div>
-	</header>
-
-	<script>
-		window.checkoutVariantIdentificationToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvZGVtby1zdG9yZTkubXliaWdjb21tZXJjZS5jb20iLCJpYXQiOjE2MDQzMjI4MTksImRvbWFpbiI6eyJjYXJ0SWQiOiI1ZmM1ZTA5OC01NjI4LTQzNTEtODY5YS1mYThiMWI1ZDcxMjYiLCJjaGVja291dFZhcmlhbnQiOiJvcHRpbWl6ZWRfb25lX3BhZ2VfY2hlY2tvdXQifX0.HQWlN9k0PrW7chotteTC-WY9I60Ttuufgb02f3qA_So';
-	</script>
-
-	<script>
-		document.body.style.display = 'none';
-	</script>
-
-	<script src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/loader-1.96.0.js"></script>
-
-	<script>
-		checkoutLoader.loadFiles({ publicPath: 'https://cdn11.bigcommerce.com/shared/microapp/checkout/dist' })
-			.then(function (app) {
-				document.body.style.display = '';
-
-				app.renderCheckout({
-					checkoutId: '5fc5e098-5628-4351-869a-fa8b1b5d7126',
-					containerId: 'checkout-app',
-					sentryConfig: { "release": "checkout-js@1.96.0", "whitelistUrls": ["https:\/\/cdn11.bigcommerce.com\/shared\/microapp\/checkout\/dist"], "dsn": "https:\/\/418e8e81a209403e9c8740c4fdbff5a6@sentry.io\/1542560", "environment": "production", "tags": { "environment": "production", "tier": 1 } },
-				});
-			});
-	</script>
-	<!-- <script src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/runtime-20172433.js"></script>
-	<script src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/polyfill~checkout-bedae8d2.js"></script>
-	<script src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/transients~checkout-fe450fb6.js"></script>
-	<script src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/sentry~checkout-062dfa73.js"></script>
-	<script src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/vendors~checkout-b446dc18.js"></script>
-	<script src="https://cdn11.bigcommerce.com/shared/microapp/checkout/dist/checkout-f199beb3.js"></script> -->
-
-	<div id="checkout-app">
-		<div class="">
-			<div class="layout optimizedCheckout-contentPrimary">
-				<div>
-					<div class="layout-main">
-						<ol class="checkout-steps">
-							<li class="checkout-step optimizedCheckout-checkoutStep checkout-step--customer">
-								<div class="checkout-view-header"><a class="stepHeader">
-										<div class="stepHeader-figure stepHeader-column">
-											<div
-												class="icon stepHeader-counter optimizedCheckout-step stepHeader-counter--complete">
-												<svg height="24" viewBox="0 0 24 24" width="24"
-													xmlns="http://www.w3.org/2000/svg">
-													<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
-												</svg></div>
-											<h2 class="stepHeader-title optimizedCheckout-headingPrimary">Customer</h2>
-										</div>
-										<div class="stepHeader-body stepHeader-column optimizedCheckout-contentPrimary"
-											data-test="step-info">
-											<div class="customerView" data-test="checkout-customer-info">
-												<div class="customerView-body optimizedCheckout-contentPrimary"
-													data-test="customer-info">shantanu0707@gmail.com</div>
-												<div class="customerView-actions"></div>
-											</div>
-										</div>
-										<div class="stepHeader-actions stepHeader-column"><button
-												class="button button--tertiary button--tiny optimizedCheckout-buttonSecondary"
-												data-test="step-edit-button" type="button">Edit</button></div>
-									</a></div>
-							</li>
-							<li class="checkout-step optimizedCheckout-checkoutStep checkout-step--shipping">
-								<div class="checkout-view-header"><a class="stepHeader is-readonly">
-										<div class="stepHeader-figure stepHeader-column">
-											<div class="icon stepHeader-counter optimizedCheckout-step"><svg height="24"
-													viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-													<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
-												</svg></div>
-											<h2 class="stepHeader-title optimizedCheckout-headingPrimary">Shipping</h2>
-										</div>
-										<div class="stepHeader-body stepHeader-column optimizedCheckout-contentPrimary"
-											data-test="step-info"></div>
-									</a></div>
-								<div class="checkout-view-content checkout-view-content-enter-done">
-									<div class="checkout-form">
-										<div class="form-legend-container">
-											<legend class="form-legend optimizedCheckout-headingSecondary"
-												data-test="shipping-address-heading">Shipping Address</legend>
-										</div>
-										<div>
-											<div>
-												<form autocomplete="on" novalidate="">
-													<fieldset class="form-fieldset">
-														<div class="form-body">
-															<fieldset id="checkoutShippingAddress"
-																class="form-fieldset">
-																<div class="form-body">
-																	<div>
-																		<fieldset class="form-fieldset">
-																			<div class="form-body">
-																				<div class="checkout-address">
-																					<div
-																						class="dynamic-form-field dynamic-form-field--firstName">
-																						<div class="form-field"><label
-																								for="firstNameInput"
-																								class="form-label optimizedCheckout-form-label">First
-																								Name</label><input
-																								autocomplete="given-name"
-																								id="firstNameInput"
-																								name="shippingAddress.firstName"
-																								class="form-input optimizedCheckout-form-input"
-																								type="text"
-																								data-test="firstNameInput-text"
-																								value=""
-																								spellcheck="false"
-																								data-ms-editor="true">
-																						</div>
-																					</div>
-																					<div
-																						class="dynamic-form-field dynamic-form-field--lastName">
-																						<div class="form-field"><label
-																								for="lastNameInput"
-																								class="form-label optimizedCheckout-form-label">Last
-																								Name</label><input
-																								autocomplete="family-name"
-																								id="lastNameInput"
-																								name="shippingAddress.lastName"
-																								class="form-input optimizedCheckout-form-input"
-																								type="text"
-																								data-test="lastNameInput-text"
-																								value=""
-																								spellcheck="false"
-																								data-ms-editor="true">
-																						</div>
-																					</div>
-																					<div
-																						class="dynamic-form-field dynamic-form-field--company">
-																						<div class="form-field"><label
-																								for="companyInput"
-																								class="form-label optimizedCheckout-form-label">Company
-																								Name<small
-																									class="optimizedCheckout-contentSecondary">(Optional)</small></label><input
-																								autocomplete="organization"
-																								id="companyInput"
-																								name="shippingAddress.company"
-																								class="form-input optimizedCheckout-form-input"
-																								type="text"
-																								data-test="companyInput-text"
-																								value=""
-																								spellcheck="false"
-																								data-ms-editor="true">
-																						</div>
-																					</div>
-																					<div
-																						class="dynamic-form-field dynamic-form-field--phone">
-																						<div class="form-field"><label
-																								for="phoneInput"
-																								class="form-label optimizedCheckout-form-label">Phone
-																								Number<small
-																									class="optimizedCheckout-contentSecondary">(Optional)</small></label><input
-																								autocomplete="tel"
-																								id="phoneInput"
-																								name="shippingAddress.phone"
-																								class="form-input optimizedCheckout-form-input"
-																								type="text"
-																								data-test="phoneInput-text"
-																								value=""
-																								spellcheck="false"
-																								data-ms-editor="true">
-																						</div>
-																					</div>
-																					<div
-																						class="dynamic-form-field dynamic-form-field--addressLine1">
-																						<div class="form-field"><label
-																								for="addressLine1Input"
-																								class="form-label optimizedCheckout-form-label">Address</label><input
-																								autocomplete="address-line1"
-																								id="addressLine1Input"
-																								name="shippingAddress.address1"
-																								class="form-input optimizedCheckout-form-input"
-																								type="text"
-																								data-test="addressLine1Input-text"
-																								value=""
-																								spellcheck="false"
-																								data-ms-editor="true">
-																						</div>
-																					</div>
-																					<div
-																						class="dynamic-form-field dynamic-form-field--addressLine2">
-																						<div class="form-field"><label
-																								for="addressLine2Input"
-																								class="form-label optimizedCheckout-form-label">Apartment/Suite/Building<small
-																									class="optimizedCheckout-contentSecondary">(Optional)</small></label><input
-																								autocomplete="address-line2"
-																								id="addressLine2Input"
-																								name="shippingAddress.address2"
-																								class="form-input optimizedCheckout-form-input"
-																								type="text"
-																								data-test="addressLine2Input-text"
-																								value=""
-																								spellcheck="false"
-																								data-ms-editor="true">
-																						</div>
-																					</div>
-																					<div
-																						class="dynamic-form-field dynamic-form-field--city">
-																						<div class="form-field"><label
-																								for="cityInput"
-																								class="form-label optimizedCheckout-form-label">City</label><input
-																								autocomplete="address-level2"
-																								id="cityInput"
-																								name="shippingAddress.city"
-																								class="form-input optimizedCheckout-form-input"
-																								type="text"
-																								data-test="cityInput-text"
-																								value=""
-																								spellcheck="false"
-																								data-ms-editor="true">
-																						</div>
-																					</div>
-																					<div
-																						class="dynamic-form-field dynamic-form-field--countryCode">
-																						<div class="form-field"><label
-																								for="countryCodeInput"
-																								class="form-label optimizedCheckout-form-label">Country</label><select
-																								autocomplete="country"
-																								class="form-select optimizedCheckout-form-select"
-																								data-test="countryCodeInput-select"
-																								id="countryCodeInput"
-																								name="shippingAddress.countryCode">
-																								<option value="">Select
-																									a country</option>
-																								<option value="IN">India
-																								</option>
-																							</select></div>
-																					</div>
-																					<div
-																						class="dynamic-form-field dynamic-form-field--provinceCode">
-																						<div class="form-field"><label
-																								for="provinceCodeInput"
-																								class="form-label optimizedCheckout-form-label">State/Province<small
-																									class="optimizedCheckout-contentSecondary">(Optional)</small></label><select
-																								autocomplete="address-level1"
-																								class="form-select optimizedCheckout-form-select"
-																								data-test="provinceCodeInput-select"
-																								id="provinceCodeInput"
-																								name="shippingAddress.stateOrProvinceCode">
-																								<option value="">Select
-																									a state</option>
-																								<option value="AN">
-																									Andaman and Nicobar
-																									Islands</option>
-																								<option value="AP">
-																									Andhra Pradesh
-																								</option>
-																								<option value="AR">
-																									Arunachal Pradesh
-																								</option>
-																								<option value="AS">Assam
-																								</option>
-																								<option value="BR">Bihar
-																								</option>
-																								<option value="CH">
-																									Chandigarh</option>
-																								<option value="CT">
-																									Chhattisgarh
-																								</option>
-																								<option value="DN">Dadra
-																									and Nagar Haveli
-																								</option>
-																								<option value="DD">Daman
-																									&amp; Diu</option>
-																								<option value="DL">Delhi
-																								</option>
-																								<option value="GA">Goa
-																								</option>
-																								<option value="GJ">
-																									Gujarat</option>
-																								<option value="HR">
-																									Haryana</option>
-																								<option value="HP">
-																									Himachal Pradesh
-																								</option>
-																								<option value="JK">Jammu
-																									&amp; Kashmir
-																								</option>
-																								<option value="JH">
-																									Jharkhand</option>
-																								<option value="KA">
-																									Karnataka</option>
-																								<option value="KL">
-																									Kerala</option>
-																								<option value="LD">
-																									Lakshadweep</option>
-																								<option value="MP">
-																									Madhya Pradesh
-																								</option>
-																								<option value="MH">
-																									Maharashtra</option>
-																								<option value="MN">
-																									Manipur</option>
-																								<option value="ML">
-																									Meghalaya</option>
-																								<option value="MZ">
-																									Mizoram</option>
-																								<option value="NL">
-																									Nagaland</option>
-																								<option value="OR">
-																									Orissa</option>
-																								<option value="PY">
-																									Pondicherry</option>
-																								<option value="PB">
-																									Punjab</option>
-																								<option value="RJ">
-																									Rajasthan</option>
-																								<option value="SK">
-																									Sikkim</option>
-																								<option value="TN">Tamil
-																									Nadu</option>
-																								<option value="TS">
-																									Telangana</option>
-																								<option value="TR">
-																									Tripura</option>
-																								<option value="UP">Uttar
-																									Pradesh</option>
-																								<option value="UT">
-																									Uttarakhand</option>
-																								<option value="WB">West
-																									Bengal</option>
-																							</select></div>
-																					</div>
-																					<div
-																						class="dynamic-form-field dynamic-form-field--postCode">
-																						<div class="form-field"><label
-																								for="postCodeInput"
-																								class="form-label optimizedCheckout-form-label">Postal
-																								Code</label><input
-																								autocomplete="postal-code"
-																								id="postCodeInput"
-																								name="shippingAddress.postalCode"
-																								class="form-input optimizedCheckout-form-input"
-																								type="text"
-																								data-test="postCodeInput-text"
-																								value=""
-																								spellcheck="false"
-																								data-ms-editor="true">
-																						</div>
-																					</div>
-																				</div>
-																			</div>
-																		</fieldset>
-																	</div>
-																</div>
-															</fieldset>
-															<div class="form-body">
-																<div class="form-field"><input
-																		name="billingSameAsShipping"
-																		class="form-checkbox optimizedCheckout-form-checkbox"
-																		id="sameAsBilling" type="checkbox" value="true"
-																		checked=""><label for="sameAsBilling"
-																		class="form-label optimizedCheckout-form-label">My
-																		billing address is the same as my shipping
-																		address.</label></div>
-															</div>
-														</div>
-													</fieldset>
-													<fieldset id="checkout-shipping-options" class="form-fieldset">
-														<legend class="form-legend optimizedCheckout-headingSecondary">
-															Shipping Method</legend>
-														<div class="form-body">
-															<div class="loadingOverlay-container">
-																<div
-																	class="shippingOptions-panel optimizedCheckout-overlay">
-																	<p
-																		class="shippingOptions-panel-message optimizedCheckout-primaryContent">
-																		Please enter a shipping address in order to see
-																		shipping quotes</p>
-																</div>
-															</div>
-														</div>
-													</fieldset>
-													<fieldset class="form-fieldset"
-														data-test="checkout-shipping-comments">
-														<legend class="form-legend optimizedCheckout-headingSecondary">
-															Order Comments</legend>
-														<div class="form-body">
-															<div class="form-field"><label for="orderComment"
-																	class="form-label is-srOnly optimizedCheckout-form-label">Order
-																	Comments</label><input name="orderComment"
-																	autocomplete="off" maxlength="2000"
-																	class="form-input optimizedCheckout-form-input"
-																	type="text" value="" spellcheck="false"
-																	data-ms-editor="true"></div>
-														</div>
-													</fieldset>
-													<div class="form-actions"><button id="checkout-shipping-continue"
-															class="button button--primary optimizedCheckout-buttonPrimary"
-															type="submit">Continue</button></div>
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li class="checkout-step optimizedCheckout-checkoutStep checkout-step--billing">
-								<div class="checkout-view-header"><a class="stepHeader is-readonly">
-										<div class="stepHeader-figure stepHeader-column">
-											<div class="icon stepHeader-counter optimizedCheckout-step"><svg height="24"
-													viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-													<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
-												</svg></div>
-											<h2 class="stepHeader-title optimizedCheckout-headingPrimary">Billing</h2>
-										</div>
-										<div class="stepHeader-body stepHeader-column optimizedCheckout-contentPrimary"
-											data-test="step-info"></div>
-									</a></div>
-							</li>
-							<li class="checkout-step optimizedCheckout-checkoutStep checkout-step--payment">
-								<div class="checkout-view-header"><a class="stepHeader is-readonly">
-										<div class="stepHeader-figure stepHeader-column">
-											<div class="icon stepHeader-counter optimizedCheckout-step"><svg height="24"
-													viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-													<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
-												</svg></div>
-											<h2 class="stepHeader-title optimizedCheckout-headingPrimary">Payment</h2>
-										</div>
-										<div class="stepHeader-body stepHeader-column optimizedCheckout-contentPrimary"
-											data-test="step-info"></div>
-									</a></div>
-							</li>
-						</ol>
-					</div>
-					<aside class="layout-cart">
-						<article class="cart optimizedCheckout-orderSummary" data-test="cart">
-							<header class="cart-header">
-								<h3 class="cart-title optimizedCheckout-headingSecondary">Order Summary</h3><a
-									class="cart-header-link" data-test="cart-edit-link"
-									href="https://demo-store9.mybigcommerce.com/cart.php" id="cart-edit-link"
-									target="_top">Edit Cart</a>
-							</header>
-							<section class="cart-section optimizedCheckout-orderSummary-cartSection">
-								<h3 class="cart-section-heading optimizedCheckout-contentPrimary"
-									data-test="cart-count-total">3 Items</h3>
-								<ul aria-live="polite" class="productList">
-									<li class="productList-item is-visible">
-										<div class="product" data-test="cart-item">
-											<figure class="product-column product-figure"><img
-													alt="Quaerat outt voluptatem" data-test="cart-item-image"
-													src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/products/80/images/438/13__13205.1589167739.220.290.jpg?c=1">
-											</figure>
-											<div class="product-column product-body">
-												<h5 class="product-title optimizedCheckout-contentPrimary"
-													data-test="cart-item-product-title">3 x Quaerat outt voluptatem</h5>
-												<ul class="product-options optimizedCheckout-contentSecondary"
-													data-test="cart-item-product-options"></ul>
-											</div>
-											<div class="product-column product-actions">
-												<div class="product-price optimizedCheckout-contentPrimary"
-													data-test="cart-item-product-price">€14.72</div>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</section>
-							<section class="cart-section optimizedCheckout-orderSummary-cartSection">
-								<div data-test="cart-subtotal">
-									<div aria-live="polite"
-										class="cart-priceItem optimizedCheckout-contentPrimary cart-priceItem--subtotal">
-										<span class="cart-priceItem-label"><span data-test="cart-price-label">Subtotal
-											</span></span><span class="cart-priceItem-value"><span
-												data-test="cart-price-value">€14.72</span></span></div>
-								</div>
-								<div data-test="cart-shipping">
-									<div aria-live="polite" class="cart-priceItem optimizedCheckout-contentPrimary">
-										<span class="cart-priceItem-label"><span data-test="cart-price-label">Shipping
-											</span></span><span class="cart-priceItem-value"><span
-												data-test="cart-price-value">--</span></span></div>
-								</div>
-								<div data-test="cart-taxes">
-									<div aria-live="polite" class="cart-priceItem optimizedCheckout-contentPrimary">
-										<span class="cart-priceItem-label"><span data-test="cart-price-label">Tax
-											</span></span><span class="cart-priceItem-value"><span
-												data-test="cart-price-value">€0.00</span></span></div>
-								</div><a class="redeemable-label" data-test="redeemable-label" href="#">Coupon/Gift
-									Certificate</a>
-							</section>
-							<section class="cart-section optimizedCheckout-orderSummary-cartSection">
-								<div data-test="cart-total">
-									<div aria-live="polite"
-										class="cart-priceItem optimizedCheckout-contentPrimary cart-priceItem--total">
-										<span class="cart-priceItem-label"><span data-test="cart-price-label">Estimated
-												Total (EUR) </span></span><span class="cart-priceItem-value"><span
-												data-test="cart-price-value">€14.72</span><sup
-												data-test="cart-price-value-superscript">*</sup></span></div>
-								</div>
-								<p class="cart-priceItem--totalNote" data-test="cart-price-item-total-note">*You will be
-									charged and invoiced ₹1,227.00 (INR) for this order.</p>
-							</section>
-						</article>
-					</aside>
+	<div class="home-content">
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label">Checkout</span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/" class="breadcrumb-label"
+								itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/items" class="breadcrumb-label" itemprop="item"><span
+									itemprop="name">Cart</span></a>
+							<meta itemprop="position" content="2" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<meta itemprop="item" content="https://demo-store9.mybigcommerce.com/laundry-detergent/">
+							<span class="breadcrumb-label" itemprop="name">Checkout</span>
+							<meta itemprop="position" content="3" />
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<script type="text/javascript"
-		src="https://cdn11.bigcommerce.com/shared/js/csrf-protection-header-14d7a517a359072d0dc53537c6a3e7070e54b6c0.js"></script>
-
-
-
-	<script type="text/javascript"
-		src="https://cdn11.bigcommerce.com/shared/js/csrf-protection-header-14d7a517a359072d0dc53537c6a3e7070e54b6c0.js"></script>
-
-
-
-
-
-	<div class="ReactModalPortal"></div>
-</body>
-<editor-card style="position:absolute;top:0px;left:0px;z-index:auto;display: block !important">
-	<div dir="ltr" style="all: initial;">
-		<div
-			style="animation: initial; transition: initial; color: initial; color-scheme: initial; font: initial; font-feature-settings: initial; font-kerning: initial; font-optical-sizing: initial; font-variation-settings: initial; forced-color-adjust: initial; text-orientation: initial; text-rendering: initial; -webkit-font-smoothing: initial; -webkit-locale: initial; -webkit-text-orientation: initial; -webkit-writing-mode: initial; writing-mode: initial; zoom: initial; place-content: initial; place-items: initial; place-self: initial; alignment-baseline: initial; appearance: initial; backdrop-filter: initial; backface-visibility: initial; background: initial; background-blend-mode: initial; baseline-shift: initial; block-size: initial; border-block-end: initial; border-block-start: initial; border: initial; border-radius: initial; border-collapse: initial; border-inline-end: initial; border-inline-start: initial; bottom: initial; box-shadow: initial; box-sizing: initial; break-after: initial; break-before: initial; break-inside: initial; buffered-rendering: initial; caption-side: initial; caret-color: initial; clear: initial; clip: initial; clip-path: initial; clip-rule: initial; color-interpolation: initial; color-interpolation-filters: initial; color-rendering: initial; columns: initial; column-fill: initial; gap: initial; column-rule: initial; column-span: initial; contain: initial; contain-intrinsic-size: initial; content: initial; content-visibility: initial; counter-increment: initial; counter-reset: initial; counter-set: initial; cursor: initial; cx: initial; cy: initial; d: initial; display: initial; dominant-baseline: initial; empty-cells: initial; fill: initial; fill-opacity: initial; fill-rule: initial; filter: initial; flex: initial; flex-flow: initial; float: initial; flood-color: initial; flood-opacity: initial; grid: initial; grid-area: initial; height: initial; hyphens: initial; image-orientation: initial; image-rendering: initial; inline-size: initial; isolation: initial; left: initial; letter-spacing: initial; lighting-color: initial; line-break: initial; list-style: initial; margin-block-end: initial; margin-block-start: initial; margin: initial; margin-inline-end: initial; margin-inline-start: initial; marker: initial; mask: initial; mask-type: initial; max-block-size: initial; max-height: initial; max-inline-size: initial; max-width: initial; min-block-size: initial; min-height: initial; min-inline-size: initial; min-width: initial; mix-blend-mode: initial; object-fit: initial; object-position: initial; offset: initial; opacity: initial; order: initial; origin-trial-test-property: initial; orphans: initial; outline: initial; outline-offset: initial; overflow-anchor: initial; overflow-wrap: initial; overflow: initial; overscroll-behavior-block: initial; overscroll-behavior-inline: initial; overscroll-behavior: initial; padding-block-end: initial; padding-block-start: initial; padding: initial; padding-inline-end: initial; padding-inline-start: initial; page: initial; page-orientation: initial; paint-order: initial; perspective: initial; perspective-origin: initial; pointer-events: initial; position: absolute; quotes: initial; r: initial; resize: initial; right: initial; ruby-position: initial; rx: initial; ry: initial; scroll-behavior: initial; scroll-margin-block: initial; scroll-margin: initial; scroll-margin-inline: initial; scroll-padding-block: initial; scroll-padding: initial; scroll-padding-inline: initial; scroll-snap-align: initial; scroll-snap-stop: initial; scroll-snap-type: initial; shape-image-threshold: initial; shape-margin: initial; shape-outside: initial; shape-rendering: initial; size: initial; speak: initial; stop-color: initial; stop-opacity: initial; stroke: initial; stroke-dasharray: initial; stroke-dashoffset: initial; stroke-linecap: initial; stroke-linejoin: initial; stroke-miterlimit: initial; stroke-opacity: initial; stroke-width: initial; tab-size: initial; table-layout: initial; text-align: initial; text-align-last: initial; text-anchor: initial; text-combine-upright: initial; text-decoration: initial; text-decoration-skip-ink: initial; text-indent: initial; text-overflow: initial; text-shadow: initial; text-size-adjust: initial; text-transform: initial; text-underline-position: initial; top: initial; touch-action: initial; transform: initial; transform-box: initial; transform-origin: initial; transform-style: initial; user-select: initial; vector-effect: initial; vertical-align: initial; visibility: initial; -webkit-app-region: initial; border-spacing: initial; -webkit-border-image: initial; -webkit-box-align: initial; -webkit-box-decoration-break: initial; -webkit-box-direction: initial; -webkit-box-flex: initial; -webkit-box-ordinal-group: initial; -webkit-box-orient: initial; -webkit-box-pack: initial; -webkit-box-reflect: initial; -webkit-font-size-delta: initial; -webkit-highlight: initial; -webkit-hyphenate-character: initial; -webkit-line-break: initial; -webkit-line-clamp: initial; -webkit-mask-box-image: initial; -webkit-mask: initial; -webkit-mask-composite: initial; -webkit-perspective-origin-x: initial; -webkit-perspective-origin-y: initial; -webkit-print-color-adjust: initial; -webkit-rtl-ordering: initial; -webkit-ruby-position: initial; -webkit-tap-highlight-color: initial; -webkit-text-combine: initial; -webkit-text-decorations-in-effect: initial; -webkit-text-emphasis: initial; -webkit-text-emphasis-position: initial; -webkit-text-fill-color: initial; -webkit-text-security: initial; -webkit-text-stroke: initial; -webkit-transform-origin-x: initial; -webkit-transform-origin-y: initial; -webkit-transform-origin-z: initial; -webkit-user-drag: initial; -webkit-user-modify: initial; white-space: initial; widows: initial; width: initial; will-change: initial; word-break: initial; word-spacing: initial; x: initial; y: initial; z-index: 2147483647;">
-			<link rel="stylesheet" href="chrome-extension://hokifickgkhplphjiodbggjmoafhignh/fonts/fabric-icons.css">
-			<div style="all: initial;"></div>
+		<div class="page page-content--centered">
+			<table class="ui very basic collapsing celled table">
+				<thead>
+					<tr>
+						<th>Employee</th>
+						<th>Correct Guesses</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<h4 class="ui image header">
+								<img src="/images/avatar2/small/lena.png" class="ui mini rounded image">
+								<div class="content">
+									Lena
+									<div class="sub header">Human Resources
+									</div>
+								</div>
+							</h4>
+						</td>
+						<td>
+							22
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h4 class="ui image header">
+								<img src="/images/avatar2/small/matthew.png" class="ui mini rounded image">
+								<div class="content">
+									Matthew
+									<div class="sub header">Fabric Design
+									</div>
+								</div>
+							</h4>
+						</td>
+						<td>
+							15
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h4 class="ui image header">
+								<img src="/images/avatar2/small/lindsay.png" class="ui mini rounded image">
+								<div class="content">
+									Lindsay
+									<div class="sub header">Entertainment
+									</div>
+								</div>
+							</h4>
+						</td>
+						<td>
+							12
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h4 class="ui image header">
+								<img src="/images/avatar2/small/mark.png" class="ui mini rounded image">
+								<div class="content">
+									Mark
+									<div class="sub header">Executive
+									</div>
+								</div>
+							</h4>
+						</td>
+						<td>
+							11
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
-</editor-card>
+</div>
 
-</html>
+<%- include("partials/newFooter.ejs") %>

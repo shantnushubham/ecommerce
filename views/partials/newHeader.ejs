@@ -11,6 +11,7 @@
 	<link href="https://cdn11.bigcommerce.com/r-ddd8051de0aea5d72a2236ec7e8beccdcbc02929/img/bc_favicon.ico"
 		rel="shortcut icon">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/css/uikit.min.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
 
@@ -91,7 +92,7 @@
 
 				<div class="tt-phone-number">
 					<div class="content">
-						<div class="contact-title"><a href="">Delivery Information</a> | <a href="">Terms and
+						<div class="contact-title"><a href="">Delivery Information</a> | <a href="">Terms &
 								Conditions</a></div>
 						<!-- <a href="tel:09277077088">9876543210</a> -->
 					</div>
@@ -114,333 +115,29 @@
 							</div>
 							<ul class="navPages-list cat-Menu-toggle navPages-list-simple">
 								<li class="navPages-item navPages-item-page">
-									<a class="navPages-action" href="https://demo-store9.mybigcommerce.com/">Home</a>
+									<a class="navPages-action" href="/">Home</a>
 								</li>
+								<% var categories = new Array() %>
+								<% categories.push({name: "Sanitation", linkTo: ""}) %>
+								<% categories.push({name: "Cleaning & Hygiene Solutions", linkTo: ""}) %>
+								<% categories.push({name: "Lab Solutions", linkTo: ""}) %>
+								<% categories.push({name: "Pathology & Histopathology", linkTo: ""}) %>
+								<% categories.push({name: "Entomology", linkTo: ""}) %>
+								<% categories.push({name: "Geography and Surveying", linkTo: ""}) %>
+								<% categories.push({name: "Visual Teaching", linkTo: ""}) %>
+								<% categories.push({name: "Electronics", linkTo: ""}) %>
+								<% categories.push({name: "Pharmacy", linkTo: ""}) %>
+								<% categories.push({name: "Books", linkTo: ""}) %>
+								<% categories.push({name: "Winter Uniforms", linkTo: ""}) %>
+								
+								<% categories.forEach(category => { %>
 								<li class="navPages-item">
-									<a class="navPages-action" href="https://demo-store9.mybigcommerce.com/shop-all/">
+									<a class="navPages-action" href="/items">
 										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Shop All
+										<%= category.name%>
 									</a>
 								</li>
-								<li class="navPages-item">
-									<a class="navPages-action has-subMenu"
-										href="https://demo-store9.mybigcommerce.com/laptop/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Laptop
-										<span class="material-icons tt-right-arrow"
-											data-collapsible="navPages-18">keyboard_arrow_down</span>
-									</a>
-									<div class="navPage-subMenu" id="navPages-18" aria-hidden="true" tabindex="-1">
-										<ul class="navPage-subMenu-list grid-3">
-											<li class="navPage-subMenu-item">
-												<a class="navPage-subMenu-action navPages-action has-subMenu"
-													href="https://demo-store9.mybigcommerce.com/laptop/camcorders/">
-													Camcorders <span class="material-icons tt-right-arrow"
-														data-collapsible="navPages-25">keyboard_arrow_down</span>
-												</a>
-												<ul class="navPage-childList" id="navPages-25">
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/camcorders/manuals/">Manuals</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/camcorders/mp3-players/">MP3
-															Players</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/camcorders/portable-audio/">Portable
-															Audio</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/camcorders/selling-center/">Selling
-															Center</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/camcorders/cameras/">Cameras</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/camcorders/gadgets/">Gadgets</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/camcorders/lighting/">Lighting</a>
-													</li>
-												</ul>
-											</li>
-											<li class="navPage-subMenu-item">
-												<a class="navPage-subMenu-action navPages-action has-subMenu"
-													href="https://demo-store9.mybigcommerce.com/laptop/television/">
-													Television <span class="material-icons tt-right-arrow"
-														data-collapsible="navPages-24">keyboard_arrow_down</span>
-												</a>
-												<ul class="navPage-childList" id="navPages-24">
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/television/car-video/">Car
-															Video</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/television/ipads/">ipads</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/television/television/">Television</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/television/video-games/">Video
-															Games</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/bath/women/casual/">Casual</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/television/dvd/">DVD</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/television/ipods/">iPods</a>
-													</li>
-												</ul>
-											</li>
-											<li class="navPage-subMenu-item">
-												<a class="navPage-subMenu-action navPages-action has-subMenu"
-													href="https://demo-store9.mybigcommerce.com/laptop/headphones/">
-													Headphones <span class="material-icons tt-right-arrow"
-														data-collapsible="navPages-28">keyboard_arrow_down</span>
-												</a>
-												<ul class="navPage-childList" id="navPages-28">
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/headphones/dvd/">DVD</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/headphones/gadegets/">Gadegets</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/headphones/mac-01/">Mac-01</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/headphones/mac-02/">Mac-02</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/headphones/mouse/">Mouse</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/headphones/price-drop/">Price
-															Drop</a>
-													</li>
-
-													<li class="navPage-childList-item">
-														<a class="navPage-childList-action navPages-action"
-															href="https://demo-store9.mybigcommerce.com/laptop/headphones/mac-03/">Mac-03</a>
-													</li>
-												</ul>
-											</li>
-										</ul>
-										<div class="banners">
-											<a class="subcat-img" href="https://demo-store9.mybigcommerce.com/laptop/">
-												<img class="lazyload" data-sizes="auto" alt=""
-													src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/img/loading.svg"
-													data-src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/v/category-img-01__58748.original.jpg">
-											</a>
-										</div>
-									</div>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action" href="https://demo-store9.mybigcommerce.com/computers/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Computers
-									</a>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action has-subMenu"
-										href="https://demo-store9.mybigcommerce.com/speakers/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Speakers
-										<span class="material-icons tt-right-arrow"
-											data-collapsible="navPages-19">keyboard_arrow_down</span>
-									</a>
-									<div class="navPage-subMenu" id="navPages-19" aria-hidden="true" tabindex="-1">
-										<ul class="navPage-subMenu-list grid-3">
-											<li class="navPage-subMenu-item">
-												<a class="navPage-subMenu-action navPages-action"
-													href="https://demo-store9.mybigcommerce.com/computers/boerboel/">Boerboel</a>
-											</li>
-											<li class="navPage-subMenu-item">
-												<a class="navPage-subMenu-action navPages-action"
-													href="https://demo-store9.mybigcommerce.com/speakers/home-audio/">Home
-													Audio</a>
-											</li>
-											<li class="navPage-subMenu-item">
-												<a class="navPage-subMenu-action navPages-action"
-													href="https://demo-store9.mybigcommerce.com/speakers/home-speakers/">Home
-													Speakers</a>
-											</li>
-										</ul>
-										<div class="banners">
-											<a class="subcat-img"
-												href="https://demo-store9.mybigcommerce.com/speakers/">
-												<img class="lazyload" data-sizes="auto" alt=""
-													src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/img/loading.svg"
-													data-src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/e/category-img-02__12056.original.jpg">
-											</a>
-										</div>
-									</div>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/computers/boerboel/beagle/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Beagle
-									</a>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/computers/boerboel/basenji/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Basenji
-									</a>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/computers/barbet/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Barbet
-									</a>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action" href="https://demo-store9.mybigcommerce.com/tablets/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Tablets
-									</a>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action" href="https://demo-store9.mybigcommerce.com/ipods/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Ipods
-									</a>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/laptop-stand/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Laptop Stand
-									</a>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action" href="https://demo-store9.mybigcommerce.com/gadgets/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Gadgets
-									</a>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/cell-phones/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Cell Phones
-									</a>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action" href="https://demo-store9.mybigcommerce.com/mouse/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Mouse
-									</a>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/computers/video-games/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Video Games
-									</a>
-								</li>
-								<li class="navPages-item">
-									<a class="navPages-action" href="https://demo-store9.mybigcommerce.com/cameras/">
-										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										Cameras
-									</a>
-								</li>
-								<li class="navPages-item navPages-item-page">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/specials/"><span
-											class="material-icons tt-left-arrow">arrow_forward</span>Specials</a>
-								</li>
-								<li class="navPages-item navPages-item-page">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/about-as/"><span
-											class="material-icons tt-left-arrow">arrow_forward</span>About As</a>
-								</li>
-								<li class="navPages-item navPages-item-page">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/contact-us/"><span
-											class="material-icons tt-left-arrow">arrow_forward</span>Contact Us</a>
-								</li>
-								<li class="navPages-item navPages-item-page">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/affiliate/"><span
-											class="material-icons tt-left-arrow">arrow_forward</span>Affiliate</a>
-								</li>
-								<li class="navPages-item navPages-item-page">
-									<a class="navPages-action" href="https://demo-store9.mybigcommerce.com/blog/"><span
-											class="material-icons tt-left-arrow">arrow_forward</span>Our Blogs</a>
-								</li>
-								<li class="navPages-item navPages-item-page">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/gift-certificates/"><span
-											class="material-icons tt-left-arrow">arrow_forward</span> Gift
-										Certificates</a>
-								</li>
-								<li class="navPages-item navPages-item-page">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/shipping-returns/"><span
-											class="material-icons tt-left-arrow">arrow_forward</span>Shipping &amp;
-										Returns</a>
-								</li>
-								<li class="navPages-item navPages-item-page">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/delivery-information/"><span
-											class="material-icons tt-left-arrow">arrow_forward</span>Delivery
-										Information</a>
-								</li>
-								<li class="navPages-item navPages-item-page">
-									<a class="navPages-action"
-										href="https://demo-store9.mybigcommerce.com/terms-conditions/"><span
-											class="material-icons tt-left-arrow">arrow_forward</span>Terms &amp;
-										Conditions</a>
-								</li>
+								<% }) %>
 							</ul>
 
 							<!--Search button was here now at header html page-->
@@ -449,7 +146,7 @@
 
 					<div class="tt-menu-link col-8" id="menu-link" data-menu>
 						<div class="navPages-item-page">
-							<a class="link-action" href="https://demo-store9.mybigcommerce.com/specials/">Specials</a>
+							<a class="link-action" href="/offers">Offers</a>
 						</div>
 						<div class="navPages-item-page">
 							<a class="link-action" href="https://demo-store9.mybigcommerce.com/about-as/">About As</a>
@@ -459,7 +156,7 @@
 								Us</a>
 						</div>
 						<div class="navPages-item-page">
-							<a class="link-action" href="https://demo-store9.mybigcommerce.com/affiliate/">Affiliate</a>
+							<a class="link-action" href="https://demo-store9.mybigcommerce.com/affiliate/">Blogs</a>
 						</div>
 						<div class="navPages-item-page">
 							<a class="link-action" href="https://demo-store9.mybigcommerce.com/blog/">Our Blogs</a>
