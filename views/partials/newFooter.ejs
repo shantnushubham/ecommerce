@@ -61,7 +61,7 @@
                                 <div class="tt-contact-number">
                                     <span class="material-icons">local_phone</span>
                                     <div class="tt-call">
-                                        9876543210
+                                        <a href="tel:9431105474">9431105474</a>
                                     </div>
                                 </div>
                             </li>
@@ -113,51 +113,24 @@
                     data-section-type="footer-categories">
                     <h5 class="footer-info-heading">Categories</h5>
                     <ul class="footer-info-list">
+                        <% var categories = new Array() %>
+                        <% categories.push({name: "Sanitation", linkTo: ""}) %>
+                        <% categories.push({name: "Cleaning & Hygiene Solutions", linkTo: ""}) %>
+                        <% categories.push({name: "Lab Solutions", linkTo: ""}) %>
+                        <% categories.push({name: "Pathology & Histopathology", linkTo: ""}) %>
+                        <% categories.push({name: "Entomology", linkTo: ""}) %>
+                        <% categories.push({name: "Geography and Surveying", linkTo: ""}) %>
+                        <% categories.push({name: "Visual Teaching", linkTo: ""}) %>
+                        <% categories.push({name: "Electronics", linkTo: ""}) %>
+                        <% categories.push({name: "Pharmacy", linkTo: ""}) %>
+                        <% categories.push({name: "Books", linkTo: ""}) %>
+                        <% categories.push({name: "Winter Uniforms", linkTo: ""}) %>
+
+                        <% categories.forEach(category => { %>
                         <li>
-                            <a href="https://demo-store9.mybigcommerce.com/shop-all/">Shop All</a>
+                            <a href="/items"><%=category.name%></a>
                         </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/laptop/">Laptop</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/computers/">Computers</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/speakers/">Speakers</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/computers/boerboel/beagle/">Beagle</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/computers/boerboel/basenji/">Basenji</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/computers/barbet/">Barbet</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/tablets/">Tablets</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/ipods/">Ipods</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/laptop-stand/">Laptop Stand</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/gadgets/">Gadgets</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/cell-phones/">Cell Phones</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/mouse/">Mouse</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/computers/video-games/">Video Games</a>
-                        </li>
-                        <li>
-                            <a href="https://demo-store9.mybigcommerce.com/cameras/">Cameras</a>
-                        </li>
+                        <% }) %>
                     </ul>
                 </article>
 
@@ -165,7 +138,7 @@
                 <article class="footer-info-col footer-info-col--small tt-brands" data-section-type="footer-brands">
                     <h5 class="footer-info-heading">Popular Brands</h5>
                     <ul class="footer-info-list">
-                        <li>
+                        <!-- <li>
                             <a href="https://demo-store9.mybigcommerce.com/brands/common-good/">Shoppe Fabs</a>
                         </li>
                         <li>
@@ -186,7 +159,7 @@
                         <li>
                             <a href="https://demo-store9.mybigcommerce.com/walking-dreams/">Walking Dreams</a>
                         </li>
-                        <li><a href="https://demo-store9.mybigcommerce.com/brands/">View All</a></li>
+                        <li><a href="https://demo-store9.mybigcommerce.com/brands/">View All</a></li> -->
                     </ul>
                 </article>
 
@@ -344,6 +317,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/js/uikit-icons.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
 
 </body>
