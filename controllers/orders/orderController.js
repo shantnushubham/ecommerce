@@ -823,11 +823,11 @@ exports.confirmOrder = function (req, res) {
     }
     orderServices.acceptOrder(req.params.orderId, d, function (order) {
         if (order.success == false) {
-            req.flash('error', 'error')
+            req.flash('error', 'error '+order.message)
             res.redirect('/admin/orders-filter')
         }
         else {
-            req.flash('success', 'success')
+            req.flash('success', 'success '+order.message)
             res.redirect('/admin/orders-filter')
         }
     })

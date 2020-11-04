@@ -148,7 +148,7 @@ var orderSchema = new mongoose.Schema({
         type:String,
         default:"no_code"
     },
-    shiprocket_shipent_id:{
+    shiprocket_shipment_id:{
         type:String
     },
     shiprocket_order_id:{

@@ -19,22 +19,23 @@
                 <h1>Authorize Order</h1>
                 <br>
                 <br>
+                <h2>Leaving any of the fields empty before submission will accept/authorize the order but shiprocket request will not be sent.</h2>
                 <form action="/admin/confirm-order/<%=orderId%>" method="POST">
                     <div class="ui form">
                         <div class="field">
-                            <label>Length</label>
+                            <label>Length (minimum value is 5)</label>
                             <input type="text" placeholder="length" name="length">
                         </div>
                         <div class="field">
-                            <label>Breadth</label>
+                            <label>Breadth (minimum value is 5)</label>
                             <input type="text" placeholder="Breadth" name="breadth">
                         </div>
                         <div class="field">
-                            <label>Height</label>
+                            <label>Height (minimum value is 5)</label>
                             <input type="text" placeholder="Height" name="height">
                         </div>
                         <div class="field">
-                            <label>Weight</label>
+                            <label>Weight (minimum value is 5)</label>
                             <input type="text" placeholder="Weight" name="weight">
                         </div>
                         <div class="field">
