@@ -216,15 +216,26 @@ exports.deleteUserById = (req, res) => {
     })
 }
 
+getUpdateProfile=(req,res)=>{
+    res.render('updateProfile')
+}
+
 exports.updateUserData = (req, res) => {
     if (req && req.user && req.body) {
-        const updatedData = req.body
+        const updatedData = {
+            name:req.body.name,
+            phone:req.body.phone
+        }
         User.findOneAndUpdate({ uuid: req.user.uuid }, updatedData, { new: true })
             .then((data) => {
-                return res.send({ success: true, message: 'Data Updated', body: data })
+                req.flash('success','Profile updated')
+                res.redirect('/users/update-profile')
             })
     }
-    else return res.send({ success: false, message: "data insufficient" })
+    else {
+        req.flash('error','Profile not updated')
+        res.redirect('/users/update-profile')
+    }
 }
 
 // exports.addUserAddress = (req, res) => {

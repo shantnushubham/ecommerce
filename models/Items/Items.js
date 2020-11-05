@@ -98,6 +98,10 @@ var itemsSchema = new mongoose.Schema({
     measurementUnit : {
         type: String,
         default: "Units"
+    },
+    isBusiness:{
+        type:Boolean,
+        default:false
     }
 });
 
