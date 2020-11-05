@@ -280,7 +280,7 @@ exports.codPath = function (req, res) {
                                     if (createOrder.success == false) {
                                         console.log('error in creating order');
                                         req.flash('error', 'error in creating order')
-                                        res.redirect('/cartpage')
+                                        res.redirect('/cartPage')
                                     }
                                     else {
                                         orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {

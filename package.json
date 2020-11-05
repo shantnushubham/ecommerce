@@ -48,7 +48,7 @@
     "serve": "node ./bin/www",
     "https": "node ./bin/ww2",
     "server": "nodemon app.js",
-    "start":"node app.js"
+    "start": "node app.js"
   },
   "devDependencies": {
     "https": "^1.0.0",
