@@ -36,6 +36,10 @@ router.get("/offers", (req, res) => {
     res.render("offers")
 })
 
+router.get("/terms-conditions", (req, res) => {
+    res.render("termsAndConditions")
+})
+
 router.post('/checkPincodeValid', UserControl.checkPinCodeValid);
 
 router.get('/recover', forwardAuthenticated, (req, res) => res.render('recover'));
