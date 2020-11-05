@@ -387,8 +387,19 @@ class cart {
                 $project: {
                     "quantity": "$quantity",
                     "iid": "$iid",
-                    "item": { "$arrayElemAt": ["$item", 0] }
-                    , "price": "$item.price"
+                    "item": { "$arrayElemAt": ["$item", 0] },
+                    
+                }
+
+            },
+            {
+                $project:{
+                    "price": "$item.price",
+                    "name":"$item.name",
+                    "sku":"$item.sku",
+                    "quantity": "$quantity",
+                    "iid": "$iid",
+                    "item":"$item"
                 }
             }
         ]).exec(function (err, cartItem) {
@@ -405,10 +416,15 @@ class cart {
                     var item = {}
                     item.quantity = cartEl.quantity
                     item.iid = cartEl.iid
+                    item.name=cartEl.item.name
+                    item.sku=cartEl.sku
+                    item.selling_price=cartEl.price
                     if (cartEl.item.cod == false) allowCOD = false
                     cartlist.push(item)
-                    total = total + parseInt((parseInt(cartEl.price[0]) * (1 - cartEl.item.discount) * cartEl.quantity))
+                    total = total + parseInt((parseInt(cartEl.price) * (1 - cartEl.item.discount) * cartEl.quantity))
                 });
+                console.log("cartitems",cartItem);
+                console.log(cartlist);
                 console.log('total amt=', total);
                 if (total <= 0 || cartlist.length == 0) {
                     callback({ success: false, message: "cant checkout with empty cart" })

@@ -61,6 +61,7 @@ exports.createItem = function (req, res) {
         stock: data.stock,
         isService:data.isService==true?true:false,
         cod:data.cod==true?true:false,
+        measurementUnit:data.measurementUnit
         
 
 

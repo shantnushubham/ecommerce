@@ -70,6 +70,10 @@ var itemsSchema = new mongoose.Schema({
     vendorName: {
         type: String
     },
+    sku:{
+        type:String,
+        default:shortid.generate
+    },
     cod: {
         type: Boolean,
         default: true
@@ -94,6 +98,10 @@ var itemsSchema = new mongoose.Schema({
     measurementUnit : {
         type: String,
         default: "Units"
+    },
+    isBusiness:{
+        type:Boolean,
+        default:false
     }
 });
 

@@ -25,6 +25,9 @@ var orderSchema = new mongoose.Schema({
         {
             iid: { type: String },
             quantity: { type: Number },
+            sku:{type:String},
+            name:{type:String},
+            selling_price:{type:Number}
         }
     ],
 
@@ -90,9 +93,7 @@ var orderSchema = new mongoose.Schema({
     code: {
         type: String
     },
-    shipRocketId: {
-        type: String
-    },
+    
     height: {
         type: Number, default: 5
     },
@@ -146,6 +147,12 @@ var orderSchema = new mongoose.Schema({
     offerCode:{
         type:String,
         default:"no_code"
+    },
+    shiprocket_shipment_id:{
+        type:String
+    },
+    shiprocket_order_id:{
+        type:String
     }
 
 });
