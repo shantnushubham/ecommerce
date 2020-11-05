@@ -40,7 +40,7 @@ exports.register = (req, res) => {
                 req.body.user['email'] = req.body.email;
                 req.body.user['phone'] = req.body.phone;
                 req.body.user['active'] = true;
-
+                
                 req.body.address['email'] = req.body.email;
                 req.body.address['phone'] = req.body.phone;
                 req.body.address['isDefault'] = true;
@@ -77,9 +77,8 @@ exports.register = (req, res) => {
                             sendgrid.send(mailOptions, (error, result) => {
                                 if (error) {
                                     console.log(error)
-                                    return res.status(500).json({ message: error.message });
                                 }
-                                console.log('f')
+
                                 res.redirect('/');
                             });
                         });
@@ -217,15 +216,26 @@ exports.deleteUserById = (req, res) => {
     })
 }
 
+getUpdateProfile=(req,res)=>{
+    res.render('updateProfile')
+}
+
 exports.updateUserData = (req, res) => {
     if (req && req.user && req.body) {
-        const updatedData = req.body
+        const updatedData = {
+            name:req.body.name,
+            phone:req.body.phone
+        }
         User.findOneAndUpdate({ uuid: req.user.uuid }, updatedData, { new: true })
             .then((data) => {
-                return res.send({ success: true, message: 'Data Updated', body: data })
+                req.flash('success','Profile updated')
+                res.redirect('/users/update-profile')
             })
     }
-    else return res.send({ success: false, message: "data insufficient" })
+    else {
+        req.flash('error','Profile not updated')
+        res.redirect('/users/update-profile')
+    }
 }
 
 // exports.addUserAddress = (req, res) => {
@@ -324,8 +334,17 @@ exports.addUserAddress = (req, res) => {
                     res.redirect('/address');
                 }
                 else {
-                    req.flash('success_msg', 'succesfully added address')
-                    res.redirect('/');
+                    User.findOneAndUpdate({ uuid: req.user.uuid }, { active: true }, function (err, updated) {
+                        if (err) {
+                            req.flash('success_msg', 'error in updating user')
+                            res.redirect('/');
+                        }
+                        else {
+                            req.flash('success_msg', 'succesfully added address')
+                            res.redirect('/');
+                        }
+                    })
+
                 }
             }
 

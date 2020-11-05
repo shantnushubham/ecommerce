@@ -2,15 +2,20 @@ var itemMetaModel = require("../models/Items/ItemMetadata")
 var itemmodel = require('../models/Items/Items')
 var cartmodel = require('../models/cart/cart')
 var UserAddress = require('../models/User/DeliveryAddress')
+var userModel = require('../models/User/User')
 var ordermodel = require('../models/Orders/Order')
+var vendorModel = require('../models/Items/vendor')
 var cancelOrderModel = require('../models/Orders/CancelledOrder')
 var codemodel = require('../models/offer/codes')
+var shiprocket = require('../models/Orders/shiprocket')
 var itemServices = require('../openServices/items')
 var offersModel = require('../models/offer/offer')
 var quoteModel = require('../models/Orders/serviceQuote')
 var functions = require('../Middlewares/common/functions')
-
+var axios = require('axios')
 var mongoose = require("mongoose")
+require('dotenv').config()
+const envData = process.env
 class order {
     constructor() {
 
@@ -349,11 +354,154 @@ class order {
             })
     }
 
-    acceptOrder(orderId, data, callback) {
-        ordermodel.findOneAndUpdate({ orderId: orderId }, data, function (err, order) {
-            if (err) callback({ success: false })
-            else callback({ success: true })
+    checkShiprocketCode(callback) {
+        shiprocket.findOne({ name: "code" }, function (err, foundCode) {
+            if (err || functions.isEmpty(foundCode))
+                callback({ success: false })
+            else {
+                var today = new Date()
+                var creation = new Date(foundCode.from)
+                console.log("days to expiry=", (today.getTime() - creation.getTime()) / (1000 * 60 * 60 * 24));
+                if ((today.getTime() - creation.getTime()) / (1000 * 60 * 60 * 24) >= 5) {
+                    var data = JSON.stringify({ "email": envData.ship_email, "password": envData.ship_password });
+
+                    var config = {
+                        method: 'post',
+                        url: 'https://apiv2.shiprocket.in/v1/external/auth/login',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: data
+                    };
+
+                    axios(config)
+                        .then(function (response) {
+                            console.log(JSON.stringify(response.data));
+                            shiprocket.findOneAndUpdate({ name: "code" }, { data: response.data.token, from: new Date() }, function (err, upsr) {
+                                if (err)
+                                    callback({ success: false })
+                                else
+                                    callback({ success: true, code: response.data.token })
+                            })
+
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                            callback({ success: false })
+                        });
+                }
+                else
+                    callback({ success: true, code: foundCode.data })
+
+            }
         })
+    }
+
+    acceptOrder(orderId, data, callback) {
+        ordermodel.findOne({ orderId: orderId, }, (err, foundOrder) => {
+            if (err || functions.isEmpty(foundOrder)) {
+                callback({ success: false, message: "db error" })
+            }
+            else {
+                vendorModel.findOne({ vendorId: data.vendorId }, (err, foundVendor) => {
+                    if (err) {
+                        callback({ success: false, message: "db error" })
+                    }
+                    else {
+                        if (data.length == undefined || data.weight == undefined || data.height == undefined || data.breadth == undefined || data.vendorId == undefined) {
+                            ordermodel.findOneAndUpdate({ orderId: foundOrder.orderId }, data, function (err, updatedOrder) {
+                                if (err)
+                                    callback({ success: false, message: "error in updating order" })
+                                else
+                                    callback({ success: true,message:"shiprocket request not made!!" })
+                            })
+                        }
+                        else {
+                            userModel.findOne({ uuid: foundOrder.uuid }, (err, foundUser) => {
+                                if (err)
+                                    callback({ success: false, message: "db error" })
+                                else {
+                                    var orderitems = []
+                                    for (var i = 0; i < foundOrder.orderedItems.length; i++) {
+                                        orderitems.push({
+                                            selling_price: foundOrder.orderedItems[i].selling_price,
+                                            name: foundOrder.orderedItems[i].name,
+                                            units: foundOrder.orderedItems[i].quantity,
+                                            sku: foundOrder.orderedItems[i].sku,
+                                        })
+                                    }
+
+                                    var shipment = {
+                                        "order_id": foundOrder.orderId,
+                                        "order_date": foundOrder.purchaseTime,
+                                        "pickup_location": foundVendor.pickup_location,
+                                        "billing_customer_name": foundUser.name,
+                                        "billing_last_name": "",
+                                        "billing_address": foundOrder.fullAddress,
+                                        "billing_city": foundOrder.city,
+                                        "billing_pincode": foundOrder.pincode,
+                                        "billing_state": foundOrder.state,
+                                        "billing_country": "India",
+                                        "billing_email": foundUser.email,
+                                        "billing_phone": foundUser.phone,
+                                        "shipping_is_billing": true,
+                                        "order_items": orderitems,
+                                        "payment_method": "Prepaid",
+                                        "sub_total": foundOrder.total,
+                                        "length": data.length, "breadth": data.breadth, "height": data.height, "weight": data.weight
+                                    }
+
+                                    console.log(shipment);
+                                    var d = JSON.stringify(shipment)
+
+
+
+                                    this.checkShiprocketCode((srcode) => {
+                                        if (srcode.success == false)
+                                            callback({ success: false, message: 'could not fetch auth codes for shiprocket' })
+                                        else {
+                                            var config = {
+                                                method: 'post',
+                                                url: 'https://apiv2.shiprocket.in/v1/external/orders/create/adhoc',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                    'Authorization': 'Bearer ' + srcode.code
+                                                },
+                                                data: d
+                                            };
+                                            axios(config)
+                                                .then(function (response) {
+                                                    console.log(JSON.stringify(response.data));
+                                                    if (response.data.status == 1) {
+                                                        data.shiprocket_shipment_id = response.data["shipment_id"]
+                                                        data.shiprocket_order_id = response.data["order_id"]
+                                                        ordermodel.findOneAndUpdate({ orderId: orderId }, data, function (err, updatedOrder) {
+                                                            if (err)
+                                                                callback({ success: false, message: "error in updating order" })
+                                                            else
+                                                                callback({ success: true ,message:"shiprocket request made!"})
+                                                        })
+                                                    }
+                                                })
+                                                .catch(function (error) {
+                                                    console.log(error.data);
+                                                    callback({ success: false, message: "error in placing order.please check logs" })
+
+                                                });
+
+                                        }
+
+                                    })
+
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+        })
+
+
     }
 
     getOrderByShipment(status, callback) {
@@ -376,7 +524,7 @@ class order {
     }
 
     getOrderByUUID(uuid, callback) {
-        ordermodel.find({ uuid: uuid, shipmentStatus:{$ne:'saved'} }, function (err, order) {
+        ordermodel.find({ uuid: uuid, shipmentStatus: { $ne: 'saved' } }, function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
@@ -389,7 +537,7 @@ class order {
         })
     }
 
-    
+
 
     authorizeOrder(orderId, callback) {
         ordermodel.findOneAndUpdate({ orderId: orderId }, { status: "authorized" }, function (err, updatedOrder) {

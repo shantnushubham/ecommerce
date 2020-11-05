@@ -280,7 +280,7 @@ exports.codPath = function (req, res) {
                                     if (createOrder.success == false) {
                                         console.log('error in creating order');
                                         req.flash('error', 'error in creating order')
-                                        res.redirect('/cartpage')
+                                        res.redirect('/cartPage')
                                     }
                                     else {
                                         orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
@@ -816,18 +816,18 @@ exports.confirmOrder = function (req, res) {
         breadth: req.body.breadth,
         height: req.body.height,
         weight: req.body.weight,
-        shipRocketId: req.body.shipRocketId,
         paid: true,
-        status: 'authorized'
+        status: 'authorized',
+        vendorId:req.body.vendorId
 
     }
     orderServices.acceptOrder(req.params.orderId, d, function (order) {
         if (order.success == false) {
-            req.flash('error', 'error')
+            req.flash('error', 'error '+order.message)
             res.redirect('/admin/orders-filter')
         }
         else {
-            req.flash('success', 'success')
+            req.flash('success', 'success '+order.message)
             res.redirect('/admin/orders-filter')
         }
     })

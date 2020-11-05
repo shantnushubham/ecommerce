@@ -86,6 +86,18 @@
 									<td><b>Cart Subtotal</b></td>
 									<td>₹ <%=sum%></td>
 								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td><b>GST</b></td>
+									<td>₹ <%=Math.ceil(0.18 * sum)%></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td><b>Total</b></td>
+									<td>₹ <%=Math.ceil(1.18 * sum)%></td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -101,7 +113,7 @@
 									<div class="uk-form-controls uk-form-controls-text">
 
 										<% address.address.forEach(el => { %>
-										<input class="uk-radio" type="radio" name="address" value="<%=el._id%>">
+										<input class="uk-radio" type="radio" name="address" value="<%=el._id%>" required>
 										<label>
 											<span
 												style="color: #fa7725; text-transform: uppercase; font-size: medium;"><%=el.addressType%></span>

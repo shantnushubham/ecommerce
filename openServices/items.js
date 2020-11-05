@@ -88,7 +88,8 @@ class items {
                                 vendorId: foundItem.vendorId,
                                 vendorName: foundItem.vendorName,
                                 shortDesc: foundItem.shortDesc,
-                                measurementUnit: foundItem.measurementUnit
+                                measurementUnit: foundItem.measurementUnit,
+                                isService:foundItem.isService
 
                             }
 
@@ -176,6 +177,7 @@ class items {
             stock: data.stock,
             isService:data.isService==true?true:false,
             cod:data.cod==true?true:false,
+            measurementUnit:data.measurementUnit
 
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }

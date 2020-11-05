@@ -56,6 +56,11 @@ exports.addItem = function (req, res) {
                 res.redirect('/items')
             }
             else {
+                if(founditem.isBusiness==true&&req.user.isBusiness==false)
+                {
+                    req.flash('Sorry! this item is reserved for business accounts')
+                    res.redirect('/items')
+                }
                 cartservices.addToCart(founditem.iid, req.user.uuid, req.body.quantity, function (addedCart) {
                     if (addedCart.success == false) {
                         console.log(addedCart.message);
