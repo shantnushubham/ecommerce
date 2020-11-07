@@ -85,18 +85,16 @@ exports.changedPassword=function(to,callback)
         callback({success:false,error:err})
     });
 }
-exports.askQuote=function(user,order,callback)
+exports.askQuote=function(email,data,callback)
 {
-    var promiseArr = []
-    order.orderedItems.forEach(element => {
-        promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
-    });
-    Promise.all(promiseArr).then(result => {
+    
+    
         var d = {
-            mail: user.email,
-            name:user.name,
-            order: createdOrder.order,
-            list: result
+            mail: email,
+            name:data.user.name,
+            order: data.order,
+            items:data.items,
+            user:data.user
         }
         const options = {
             method: 'POST',
@@ -121,9 +119,7 @@ exports.askQuote=function(user,order,callback)
             console.log(err)
         });
         
-    }).catch(errors => {
-        console.log('error', 'error in sending')
-       
+    
     })
     
     callback({success:true})

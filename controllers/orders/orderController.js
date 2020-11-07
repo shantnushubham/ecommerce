@@ -414,6 +414,7 @@ exports.saveOrder = function (req, res) {
 
 }
 
+
 exports.createQuotation = function (req, res) {
     cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
         if (cart.success == false) {
@@ -487,7 +488,12 @@ exports.createQuotation = function (req, res) {
                                         else {
                                             req.flash('success', 'Quote Requested!')
                                             res.redirect('/cartpage')
-                                            mailer.askQuote(req.user, createdOrder, function (mailed) {
+                                            var maildata={
+                                                order:createdOrder,
+                                                items:cart.itemArray,
+                                                user:req.user
+                                            }
+                                            mailer.askQuote(req.body.email, createdOrder, function (mailed) {
                                                 console.log(mailed);
                                             })
                                         }
@@ -509,7 +515,12 @@ exports.createQuotation = function (req, res) {
                                 else {
                                     req.flash('success', 'Quote Requested!')
                                     res.redirect('/cartpage')
-                                    mailer.askQuote(req.user, createdOrder, function (mailed) {
+                                    var maildata={
+                                        order:createdOrder,
+                                        items:cart.itemArray,
+                                        user:req.user
+                                    }
+                                    mailer.askQuote(req.body.email, createdOrder, function (mailed) {
                                         console.log(mailed);
                                     })
                                 }
