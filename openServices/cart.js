@@ -412,6 +412,7 @@ class cart {
                 let total = 0
                 let cartlist = []
                 let allowCOD = true
+                let itemArray=[]
                 cartItem.forEach(cartEl => {
                     var item = {}
                     item.quantity = cartEl.quantity
@@ -421,6 +422,7 @@ class cart {
                     item.selling_price=cartEl.price
                     if (cartEl.item.cod == false) allowCOD = false
                     cartlist.push(item)
+                    itemArray.push(cartEl.item)
                     total = total + parseInt((parseInt(cartEl.price) * (1 - cartEl.item.discount) * cartEl.quantity))
                 });
                 console.log("cartitems",cartItem);
@@ -430,7 +432,7 @@ class cart {
                     callback({ success: false, message: "cant checkout with empty cart" })
                 }
                 else
-                    callback({ success: true, cartList: cartlist, total: total, allowCOD: allowCOD })
+                    callback({ success: true, cartList: cartlist,itemArray:itemArray, total: total, allowCOD: allowCOD })
             }
         })
     }
