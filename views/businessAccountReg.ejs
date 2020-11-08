@@ -1,0 +1,189 @@
+<%- include("partials/newHeader.ejs") %>
+
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="INR">
+
+    <div class="home-content">
+        <div class="tt-breadcrumbs-main">
+            <div class="tt-breadcrumbs">
+                <div class="container">
+                    <h1 class="category-name">
+                        <span class="breadcrumb-title ">
+                        </span>
+                        <span class="breadcrumb-title is-active">
+                            <span class="breadcrumb-label">Create Business User</span>
+                        </span>
+                    </h1>
+                    <ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+                        <li class="breadcrumb " itemprop="itemListElement" itemscope
+                            itemtype="http://schema.org/ListItem">
+                            <a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+                            <meta itemprop="position" content="1" />
+                        </li>
+                        <li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+                            itemtype="http://schema.org/ListItem">
+                            <meta itemprop="item">
+                            <span class="breadcrumb-label" itemprop="name">Create Account</span>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tt-create-account page-content--centered">
+            <h1 class="page-heading">Create Account</h1>
+
+            <div class="account tt-account-create">
+                <div class="account-body">
+                    <form action="/users/add/business-account" data-create-account-form method="POST" class="form">
+                        <div class="form-row form-row--half">
+                            <div class="form-field" id="FormField_1"
+                                data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Email Address&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+                                data-type="EmailAddress">
+                                <label class="form-label" for="FormField_1_input">Business Name
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" id="FormField_1_input" data-label="Business Name" name="businessName"
+                                    class="form-input" aria-required="true" data-field-type="EmailAddress" required>
+                            </div>
+
+                            <div class="form-field" id="FormField_2"
+                                data-validation="{&quot;type&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Password&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:8}"
+                                data-type="Password">
+                                <label class="form-label" for="FormField_2_input">Business Phone
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" class="form-input" id="FormField_2_input" data-label="Password"
+                                    name="businessPhone" required>
+                            </div>
+
+                            <div class="form-field" id="FormField_2"
+                                data-validation="{&quot;type&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Password&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:8}"
+                                data-type="Password">
+                                <label class="form-label" for="FormField_2_input">Business Email
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" class="form-input" id="FormField_2_input" data-label="Password"
+                                    name="businessEmail" required>
+                            </div>
+
+                            <div class="form-field" id="FormField_2"
+                                data-validation="{&quot;type&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Password&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:8}"
+                                data-type="Password">
+                                <label class="form-label" for="FormField_2_input">Business Address
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" class="form-input" id="FormField_2_input" data-label="Password"
+                                    name="businessAddress" required>
+                            </div>
+
+                            <div class="form-field" id="FormField_2"
+                                data-validation="{&quot;type&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Password&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:8}"
+                                data-type="Password">
+                                <label class="form-label" for="FormField_2_input">Business City
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" class="form-input" id="FormField_2_input" data-label="Password"
+                                    name="businessCity" required>
+                            </div>
+
+                            <div class="form-field" id="FormField_2"
+                                data-validation="{&quot;type&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Password&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:8}"
+                                data-type="Password">
+                                <label class="form-label" for="FormField_2_input">Business PIN
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" class="form-input" id="FormField_2_input" data-label="Password"
+                                    name="businessPin" required>
+                            </div>
+
+                            <div class="form-field" id="FormField_3"
+                                data-validation="{&quot;type&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Confirm Password&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+                                data-type="ConfirmPassword">
+                                <label class="form-label" for="FormField_3_input">GST Number
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" class="form-input" id="FormField_3_input"
+                                    data-label="Confirm Password" name="gstNumber">
+                            </div>
+
+                            <div class="form-field" id="FormField_4"
+                                data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;First Name&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+                                data-type="FirstName">
+                                <label class="form-label" for="FormField_4_input">PAN Number
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" id="FormField_4_input" data-label="Name" name="panNumber"
+                                    class="form-input" aria-required="true" data-field-type="FirstName" required>
+                            </div>
+
+                            <div class="form-field" id="FormField_3"
+                                data-validation="{&quot;type&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Confirm Password&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+                                data-type="ConfirmPassword">
+                                <label class="form-label" for="FormField_3_input">Signatory Name
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" class="form-input" id="FormField_3_input"
+                                    data-label="Confirm Password" name="authorizedSignatoryName">
+                            </div>
+
+                            <div class="form-field" id="FormField_11"
+                                data-validation="{&quot;type&quot;:&quot;singleselect&quot;,&quot;label&quot;:&quot;Country&quot;,&quot;required&quot;:true,&quot;prefix&quot;:&quot;Choose a Country&quot;}"
+                                data-type="Country">
+                                <label class="form-label" for="FormField_11_select">Business State
+                                    <small>Required</small>
+                                </label>
+                                <select class=" form-select" id="FormField_11_select" data-label="State"
+                                    aria-required="true" name="businessState" data-field-type="Country">
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Chandigarh">Chandigarh</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                    <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                    <option value="Daman and Diu">Daman and Diu</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Lakshadweep">Lakshadweep</option>
+                                    <option value="Puducherry">Puducherry</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Ladakh">Ladakh</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Meghalaya">Meghalaya</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Sikkim">Sikkim</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="Uttarakhand">Uttarakhand</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-actions">
+                            <input type="submit" class="button button--primary" value="Create Account" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/newFooter.ejs") %>
