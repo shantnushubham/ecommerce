@@ -40,7 +40,7 @@ exports.register = (req, res) => {
                 req.body.user['email'] = req.body.email;
                 req.body.user['phone'] = req.body.phone;
                 req.body.user['active'] = true;
-                
+
                 req.body.address['email'] = req.body.email;
                 req.body.address['phone'] = req.body.phone;
                 req.body.address['isDefault'] = true;
@@ -216,24 +216,23 @@ exports.deleteUserById = (req, res) => {
     })
 }
 
-getUpdateProfile=(req,res)=>{
+exports.getUpdateProfile = (req, res) => {
     res.render('updateProfile')
 }
 
 exports.updateUserData = (req, res) => {
     if (req && req.user && req.body) {
         const updatedData = {
-            name:req.body.name,
-            phone:req.body.phone
+            name: req.body.name,
+            phone: req.body.phone
         }
         User.findOneAndUpdate({ uuid: req.user.uuid }, updatedData, { new: true })
             .then((data) => {
-                req.flash('success','Profile updated')
+                req.flash('success', 'Profile updated')
                 res.redirect('/users/update-profile')
             })
-    }
-    else {
-        req.flash('error','Profile not updated')
+    } else {
+        req.flash('error', 'Profile not updated')
         res.redirect('/users/update-profile')
     }
 }
@@ -483,18 +482,24 @@ exports.getBusinessAccountReg = function (req, res) {
             else {
                 req.flash('error', 'request has already been sent')
                 res.redirect('/')
-
             }
         }
     })
 }
 exports.postBusinessAccReg = function (req, res) {
+    console.log(req.body)
     var data = {
         uuid: req.user.uuid,
+        businessPhone: req.body.businessPhone,
+        businessEmail: req.body.businessEmail,
+        businessAddress: req.body.businessAddress,
         businessName: req.body.businessName,
         businessCity: req.body.businessCity,
         businessState: req.body.businessState,
         businessPin: req.body.businessPin,
+        gstNumber: req.body.gstNumber,
+        panNumber: req.body.panNumber,
+        authorizedSignatoryName: req.body.authorizedSignatoryName
 
     }
     businessReg.create(data, function (err, createdB) {

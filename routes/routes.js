@@ -40,6 +40,14 @@ router.get("/terms-conditions", (req, res) => {
     res.render("termsAndConditions")
 })
 
+router.get("/contact-us", (req, res) => {
+    res.render("contactUs")
+})
+
+router.get("/about-us", (req, res) => {
+    res.render("aboutUs");
+})
+
 router.post('/checkPincodeValid', UserControl.checkPinCodeValid);
 
 router.get('/recover', forwardAuthenticated, (req, res) => res.render('recover'));

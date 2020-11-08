@@ -72,14 +72,27 @@ var UserSchema  = new mongoose.Schema({
         type:Boolean,
         default:false
     },
+    premium:{
+        type:Boolean,
+        default:false
+    },
     creditAllowed:{
         type:Boolean,
         default:false
     },
+    credPerc:{
+        type:Number,
+        default:0
+    },
+    credBalance:{
+        type:Number,
+        default:0
+    },
     /**
      * 112-admin
      * 1- base user (no authority)
-     * 2-ops
+     * 2-ops,
+     * 3,4,5
      * 
      */
     level:{

@@ -44,6 +44,15 @@
 
 <body onLoad="myFunction()" class="default">
 
+	<% if (error && error.length > 0) { %>
+	<div class="alert alert-danger" role="alert" style="text-align: center;">
+		<%= error %>
+	</div>
+	<% } else if (success && success.length > 0) { %>
+	<div class="alert alert-success" role="alert" style="text-align: center;">
+		<%= success %>
+	</div>
+	<% } %>
 
 	<div id="ttloader"></div>
 
@@ -92,7 +101,8 @@
 
 				<div class="tt-phone-number">
 					<div class="content">
-						<div class="contact-title"><a href="">Delivery Information</a> | <a href="/terms-conditions">Terms &
+						<div class="contact-title"><a href="">Delivery Information</a> | <a
+								href="/terms-conditions">Terms &
 								Conditions</a></div>
 						<!-- <a href="tel:09277077088">9876543210</a> -->
 					</div>
@@ -129,7 +139,7 @@
 								<% categories.push({name: "Pharmacy", linkTo: ""}) %>
 								<% categories.push({name: "Books", linkTo: ""}) %>
 								<% categories.push({name: "Winter Uniforms", linkTo: ""}) %>
-								
+
 								<% categories.forEach(category => { %>
 								<li class="navPages-item">
 									<a class="navPages-action" href="/items">
@@ -149,7 +159,7 @@
 							<a class="link-action" href="/offers">Offers</a>
 						</div>
 						<div class="navPages-item-page">
-							<a class="link-action" href="/about-as/">About As</a>
+							<a class="link-action" href="/about-us/">About Us</a>
 						</div>
 						<div class="navPages-item-page">
 							<a class="link-action" href="/contact-us/">Contact
@@ -158,27 +168,7 @@
 						<div class="navPages-item-page">
 							<a class="link-action" href="/affiliate/">Blogs</a>
 						</div>
-						<div class="navPages-item-page">
-							<a class="link-action" href="/blog/">Our Blogs</a>
-						</div>
-						<div class="navPages-item-page">
-							<a class="link-action" href="/gift-certificates/"> Gift
-								Certificates</a>
-						</div>
-						<div class="navPages-item-page">
-							<a class="link-action"
-								href="/shipping-returns/">Shipping &amp;
-								Returns</a>
-						</div>
-						<div class="navPages-item-page">
-							<a class="link-action"
-								href="/delivery-information/">Delivery
-								Information</a>
-						</div>
-						<div class="navPages-item-page">
-							<a class="link-action" href="/terms-conditions/">Terms
-								&amp; Conditions</a>
-						</div>
+						
 					</div>
 
 					<nav class="navUser">
@@ -190,12 +180,7 @@
 									<span class="wishlist-text">Compare</span>
 								</a>
 							</li>
-							<li class="navUser-item navUser-item--wishlist">
-								<a data-wishlist class="tt-wishlist" href="/wishlist.php" title="Wish Lists">
-									<span class="material-icons">favorite_border</span>
-									<span class="compare-text"> Wishlist</span>
-								</a>
-							</li>
+							
 							<li class="tt-user-info">
 								<div class="account-link-title" title="My Account">
 									<span class="material-icons">perm_identity</span>

@@ -36,7 +36,7 @@ exports.getCheckout = function (req, res) {
 exports.postCheckout = function (req, res) {
     // console.log('enter');
     // console.log(req.body);
-    cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
+    cartServices.getListingForOrder(req.user.uuid,req.user ,function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
@@ -121,13 +121,17 @@ exports.postCheckout = function (req, res) {
 }
 
 exports.creditPath = function (req, res) {
-    console.log("credit=",req.body);
-    if (req.user.isBusiness == false || req.user.creditAllowed == false) {
-        req.flash('error', 'credit not allowed')
+    console.log("credit=", req.body);
+
+    if ((req.user.isBusiness == true && req.user.premium == false) ||
+        (req.user.isBusiness == false && req.user.creditAllowed == false) ||
+        (req.user.credPerc == 0 || req.user.credBalance == 0)) {
+
+        req.flash('error', 'credit not allowed. For Further details please contact customer service.')
         res.redirect('/cartpage')
     }
     else {
-        cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
+        cartServices.getListingForOrder(req.user.uuid, req.user,function (cart) {//get total and cart items
             if (cart.success == false) {
                 console.log('error in getting cart list');
                 req.flash('error', 'error in getting cart list')
@@ -138,16 +142,17 @@ exports.creditPath = function (req, res) {
                     var cod = true
                     var credA = false;
                     var credPerc = 0;
-                    if (req.user.isBusiness == true && req.user.creditAllowed == true && req.body.perc != undefined && req.body.perc > 0) {
-                        credA = true
-                        credPerc = req.body.perc
 
-
+                    if (((req.user.isBusiness == true && req.user.premium == true) ||
+                        (req.user.isBusiness == false && req.user.creditAllowed == true)) &&
+                        (req.user.credPerc > 0 && req.user.credBalance >= cart.total)) {
                         if (!err && foundThres.length >= 1 && cart.allowCOD == true) {
                             if (cart.total < foundThres[0].from) {
                                 cod = false
                             }
                         }
+                        credA = true
+                        credPerc = req.user.credPerc
 
                         orderServices.findAddressByid(req.body.address, function (address) {//get address of user
                             if (address.success == false) {
@@ -225,11 +230,13 @@ exports.creditPath = function (req, res) {
                                 }
                             }
                         })
+
                     }
                     else {
-                        req.flash('error', 'credit not allowed.Please make sure credit value is greater than 0 and your account is a business account')
+                        req.flash('error', 'credit not allowed. For Further details please contact customer service.')
                         res.redirect('/cartpage')
                     }
+
 
                 })
 
@@ -240,7 +247,7 @@ exports.creditPath = function (req, res) {
 
 exports.codPath = function (req, res) {
     // console.log(req.body);
-    cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
+    cartServices.getListingForOrder(req.user.uuid, req.user, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
@@ -308,7 +315,7 @@ exports.codPath = function (req, res) {
 //------------------------------------------------------------------------------------------------------------
 
 exports.saveOrder = function (req, res) {
-    cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
+    cartServices.getListingForOrder(req.user.uuid,req.user, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
@@ -319,9 +326,11 @@ exports.saveOrder = function (req, res) {
                 var cod = true
                 var credA = false;
                 var credPerc = 0;
-                if (req.user.isBusiness == true && req.user.codAllowed == true && req.body.perc != undefined && req.body.perc > 0) {
+                if(((req.user.isBusiness == true && req.user.premium == true) ||
+                (req.user.isBusiness == false && req.user.creditAllowed == true)) &&
+                (req.user.credPerc > 0 && req.user.credBalance >= cart.total)) {
                     credA = true
-                    credPerc = req.body.perc
+                    credPerc = req.user.credPerc
                 }
                 if (!err && foundThres.length >= 1 && cart.allowCOD == true) {
                     if (cart.total < foundThres[0].from) {
@@ -414,8 +423,9 @@ exports.saveOrder = function (req, res) {
 
 }
 
+
 exports.createQuotation = function (req, res) {
-    cartServices.getListingForOrder(req.user.uuid, function (cart) {//get total and cart items
+    cartServices.getListingForOrder(req.user.uuid,req.user, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
@@ -426,9 +436,11 @@ exports.createQuotation = function (req, res) {
                 var cod = true
                 var credA = false;
                 var credPerc = 0;
-                if (req.user.isBusiness == true && req.user.codAllowed == true && req.body.perc != undefined && req.body.perc > 0) {
+                if (((req.user.isBusiness == true && req.user.premium == true) ||
+                (req.user.isBusiness == false && req.user.creditAllowed == true)) &&
+                (req.user.credPerc > 0 && req.user.credBalance >= cart.total)) {
                     credA = true
-                    credPerc = req.body.perc
+                    credPerc = req.user.credPerc
                 }
                 if (!err && foundThres.length >= 1 && cart.allowCOD == true) {
                     if (cart.total < foundThres[0].from) {
@@ -487,7 +499,12 @@ exports.createQuotation = function (req, res) {
                                         else {
                                             req.flash('success', 'Quote Requested!')
                                             res.redirect('/cartpage')
-                                            mailer.askQuote(req.user, createdOrder, function (mailed) {
+                                            var maildata = {
+                                                order: createdOrder,
+                                                items: cart.itemArray,
+                                                user: req.user
+                                            }
+                                            mailer.askQuote(req.body.email, createdOrder, function (mailed) {
                                                 console.log(mailed);
                                             })
                                         }
@@ -509,7 +526,12 @@ exports.createQuotation = function (req, res) {
                                 else {
                                     req.flash('success', 'Quote Requested!')
                                     res.redirect('/cartpage')
-                                    mailer.askQuote(req.user, createdOrder, function (mailed) {
+                                    var maildata = {
+                                        order: createdOrder,
+                                        items: cart.itemArray,
+                                        user: req.user
+                                    }
+                                    mailer.askQuote(req.body.email, createdOrder, function (mailed) {
                                         console.log(mailed);
                                     })
                                 }
@@ -818,16 +840,16 @@ exports.confirmOrder = function (req, res) {
         weight: req.body.weight,
         paid: true,
         status: 'authorized',
-        vendorId:req.body.vendorId
+        vendorId: req.body.vendorId
 
     }
     orderServices.acceptOrder(req.params.orderId, d, function (order) {
         if (order.success == false) {
-            req.flash('error', 'error '+order.message)
+            req.flash('error', 'error ' + order.message)
             res.redirect('/admin/orders-filter')
         }
         else {
-            req.flash('success', 'success '+order.message)
+            req.flash('success', 'success ' + order.message)
             res.redirect('/admin/orders-filter')
         }
     })
@@ -862,6 +884,10 @@ exports.getOrderByShipStatus = function (req, res) {
             res.render('adminOrders', { orders: foundOrder.order })
         }
     })
+}
+
+exports.showOrderSection = (req, res) => {
+    res.render("adminOrderSection")
 }
 
 exports.getAllOrders = function (req, res) {
@@ -943,6 +969,11 @@ exports.setShipmentStatus = function (req, res) {
     })
 }
 //------------------------------------------------------------------------------------------------------------
+
+exports.showOfferSection = function(req, res) {
+    res.render('adminOfferSection')
+}
+
 exports.getCreateOffer = function (req, res) {
     res.render('adminCreateOffer')
 }

@@ -7,9 +7,16 @@ var orderServices = require('../../openServices/order')
 var mongoose = require("mongoose")
 var csv = require('csv-express')
 
+exports.showAdminPage = (req, res) => {
+    res.render("adminPage");
+}
+
+exports.showItemsSection = (req, res) => {
+    res.render("adminItemSection");
+}
 
 exports.getAllItems = function (req, res) {
-    itemservices.getAllItems(function (itemlist) {
+    itemservices.getAllItems(true, function (itemlist) {
         // console.log({ itemlist: itemlist.foundItems });
         res.render('itemsAdmin', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag })
     })
@@ -59,10 +66,11 @@ exports.createItem = function (req, res) {
         content: data.content,
         color: data.color,
         stock: data.stock,
-        isService:data.isService==true?true:false,
-        cod:data.cod==true?true:false,
-        measurementUnit:data.measurementUnit
-        
+        isService: data.isService == true ? true : false,
+        cod: data.cod == true ? true : false,
+        measurementUnit: data.measurementUnit,
+        isBusiness: data.category.toUpperCase() === "chemicals".toLocaleUpperCase(),
+        tax: data.gstPercent
 
 
 
@@ -95,8 +103,9 @@ exports.updateItem = function (req, res) {
         content: data.content,
         color: data.color,
         stock: data.stock,
-        isService:data.isService==true?true:false,
-        cod:data.cod==true?true:false,
+        isService: data.isService == true ? true : false,
+        cod: data.cod == true ? true : false,
+        tax: data.gstPercent
 
     }, function (createdItem) {
         if (createdItem.success == false) req.flash('error', 'error in update')
@@ -145,35 +154,33 @@ exports.downloadSingleInvoice = function (req, res) {
 }
 
 exports.downloadInvoiceByRange = function (req, res) {
-    orderServices.getOrdersByDateRange(req.body.from,req.body.to,function(foundOrder){
-        if(foundOrder.success==false)
-        res.redirect('/admin/orders-filter')
+    orderServices.getOrdersByDateRange(req.body.from, req.body.to, function (foundOrder) {
+        if (foundOrder.success == false)
+            res.redirect('/admin/orders-filter')
         else
-        res.csv(foundOrder.data)
+            res.csv(foundOrder.data)
     })
 }
 
 exports.downloadUserList = function (req, res) {
-    userModel.find({},function(err,foundUsers){
-        if(err)
-        {
-            req.flash('error','error in downloading')
+    userModel.find({}, function (err, foundUsers) {
+        if (err) {
+            req.flash('error', 'error in downloading')
             res.redirect('/admn')
         }
         else
-        res.csv(foundUsers)
+            res.csv(foundUsers)
     })
 }
 
 exports.downloadBizAccList = function (req, res) {
-    userModel.find({isBusiness:true},function(err,foundUsers){
-        if(err)
-        {
-            req.flash('error','error in downloading')
+    userModel.find({ isBusiness: true }, function (err, foundUsers) {
+        if (err) {
+            req.flash('error', 'error in downloading')
             res.redirect('/admn')
         }
         else
-        res.csv(foundUsers)
+            res.csv(foundUsers)
     })
 }
 

@@ -7,16 +7,16 @@
             <li class="breadcrumb-item">
                 <a href="#">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Update Item</li>
+            <li class="breadcrumb-item active">Update Item/Service</li>
         </ol>
         <div class="box_general padding_bottom">
             <div class="header_box version_2">
-                <h2><i class="fa fa-file"></i>Update Item</h2>
+                <h2><i class="fa fa-file"></i>Update Item/Service</h2>
             </div>
 
             <div class="container">
                 <br>
-                <h1>Update Item</h1>
+                <h1>Update Item/Service</h1>
                 <br>
                 <br>
                 <form action="/admin/update-item/<%=iid%>" method="POST">
@@ -28,6 +28,10 @@
                         <div class="field">
                             <label>Price</label>
                             <input type="text" placeholder="Price" name="price" value="<%=item.price%>">
+                        </div>
+                        <div class="field">
+                            <label>GST Percentage</label>
+                            <input type="text" placeholder="GST Percent" name="gstPercent">
                         </div>
                         <div class="field">
                             <label>Weight</label>
@@ -57,7 +61,30 @@
                         </div>
                         <div class="field">
                             <label>Vendor Id</label>
-                            <input type="text" placeholder="vendor Id" name="vendorId" value="<%=item.vendorId%>">
+                            <input type="text" placeholder="Vendor Id" name="vendorId" value="<%=item.vendorId%>">
+                        </div>
+                        <div class="field">
+                            <label>Stock</label>
+                            <input type="number" placeholder="Stock Count" name="stock" value="<%=item.stock%>">
+                        </div>
+                        <div class="inline fields">
+                            <label for="fruit">Is this a Service?</label>
+                            <div class="field">
+                                <input type="radio" name="isService" <% if (item.isService) { %> checked="" <% } %>
+                                    value="true" tabindex="0" class="hidden">
+                                <label>Yes</label>
+
+                            </div>
+                            <div class="field">
+                                <input type="radio" name="isService" <% if (!item.isService) { %> checked="" <% } %>
+                                    value="false" tabindex="0" class="hidden">
+                                <label>No</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Measurement unit (valid only for services)</label>
+                            <input type="number" placeholder="Measurement Unit" name="measurementUnit"
+                                value="<%=item.measurementUnit%>">
                         </div>
                         <div class="field">
                             <label>Short Description</label>

@@ -28,12 +28,12 @@ router.get('/logout', ensureAuthenticated, UserControl.logout);
 
 
 router.post('/addUserAddress', ensureAuthenticated, UserControl.addUserAddress)
-router.get('/update-profile', ensureAuthenticated, UserControl.updateUserData)
+router.get('/update-profile', ensureAuthenticated, UserControl.getUpdateProfile)
 router.post('/update-profile', ensureAuthenticated, UserControl.updateUserData)
 router.put('/makeDefaultAddress', ensureAuthenticated, UserControl.makeAdressToDefaultAddress)
 router.put('/updateAddress', ensureAuthenticated, UserControl.updateUserAddress)
 router.get('/add/business-account', ensureAuthenticated, UserControl.getBusinessAccountReg)
-router.get('/add/business-account', ensureAuthenticated, UserControl.postBusinessAccReg)
+router.post('/add/business-account', ensureAuthenticated, UserControl.postBusinessAccReg)
 router.get('/business-accounts', middleware.isAdmin, UserControl.getAllBizReq)
 router.get('/accept/business-account/:bid', middleware.isAdmin, UserControl.acceptBizReq)
 router.get('/reject/business-account/:bid', middleware.isAdmin, UserControl.revokeBizAcc)

@@ -8,7 +8,7 @@ var async = require('async')
 
 //get items from cart
 exports.getAllItems = function (req, res) {
-    
+
     cartmodel.aggregate([
         { $match: { uuid: req.user.uuid } },
         { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
@@ -56,23 +56,24 @@ exports.addItem = function (req, res) {
                 res.redirect('/items')
             }
             else {
-                if(founditem.isBusiness==true&&req.user.isBusiness==false)
-                {
+                if (founditem.isBusiness == true && req.user.isBusiness == false) {
                     req.flash('Sorry! this item is reserved for business accounts')
                     res.redirect('/items')
                 }
-                cartservices.addToCart(founditem.iid, req.user.uuid, req.body.quantity, function (addedCart) {
-                    if (addedCart.success == false) {
-                        console.log(addedCart.message);
-                        req.flash('error', addedCart.message)
-                        res.redirect('/items')
-                    }
-                    else {
-                        console.log('success');
-                        req.flash('success', 'added to cart')
-                        res.redirect('/cartPage')
-                    }
-                })
+                else {
+                    cartservices.addToCart(founditem.iid, req.user.uuid, req.body.quantity, function (addedCart) {
+                        if (addedCart.success == false) {
+                            console.log(addedCart.message);
+                            req.flash('error', addedCart.message)
+                            res.redirect('/items')
+                        }
+                        else {
+                            console.log('success');
+                            req.flash('success', 'added to cart')
+                            res.redirect('/cartPage')
+                        }
+                    })
+                }
             }
         }
     })
@@ -92,9 +93,9 @@ exports.getUpdateCart = function (req, res) {
             res.render('cartpage', { cart: cartlisting })
         }
         else {
-            var promiseArr=[]
+            var promiseArr = []
             cartitem.items.forEach(element => {
-               promiseArr.push( cartservices.getItemForList(element.iid,element.quantity,req.user.uuid))
+                promiseArr.push(cartservices.getItemForList(element.iid, element.quantity, req.user.uuid))
             });
             Promise.all(promiseArr).then((respo) => {
                 res.render('updateCart', { cartlisting: respo })
@@ -107,7 +108,7 @@ exports.getUpdateCart = function (req, res) {
 
     // cartlisting = cartservices.verifyCart(cartlisting, req.user.uuid)
     console.log(cartlisting);
-    
+
 }
 
 exports.updateCart = function (req, res) {
