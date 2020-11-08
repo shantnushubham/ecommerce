@@ -38,7 +38,7 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                
 
                 var payload = {
-                    key:"7rnFly",
+                    key:"RhPPuiIm",
                     txnid:uniq(20),
                     amount: parseInt(totAmt * 1.18),
                     productinfo:'Auth Trx for order with order ID ' + foundOrder.order.orderId,
@@ -56,14 +56,14 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                     // allow_repeated_payments: false
                 }
 
-                const hashString = '7rnFly' //store in in different file
+                const hashString = 'RhPPuiIm' //store in in different file
                 + '|' + payload.txnid
                 + '|' + payload.amount 
                 + '|' + payload.productinfo 
                 + '|' + payload.firstname 
                 + '|' + payload.email 
                 + '|' + '||||||||||'
-                + 'pjVQAWpA' //store in in different file
+                + 'AXU18HEr7j' //store in in different file
                const sha = new jssha('SHA-512', "TEXT");
                sha.update(hashString);
                //Getting hashed value from sha module
@@ -78,6 +78,7 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                         res.send(body);
                         } else if (response.statusCode >= 300 && 
                         response.statusCode <= 400) {
+                            console.log(response);
                         res.redirect(response.headers.location.toString());
                         }
                 })
@@ -90,13 +91,30 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
 
 
-
+/**
+ * {"isConsentPayment":"0","mihpayid":"9084064091","mode":"CC","status":"success","unmappedstatus":"captured",
+ * "key":"RhPPuiIm","txnid":"1mke5p57y16b1p64nznl","amount":"143.00","addedon":"2020-11-08 15:29:30",
+ * "productinfo":"Auth Trx for order with order ID f01RGusnQ","firstname":"prakhar",
+ * "lastname":"","address1":"","address2":"","city":"","state":"","country":"","zipcode":"",
+ * "email":"prakharshriv@gmail.com","phone":"9431756171","udf1":"",
+ * "udf2":"","udf3":"","udf4":"","udf5":"","udf6":"","udf7":"","udf8":"","udf9":"","udf10":"",
+ * "hash":"391984b1c837417368baaf07efd18db1d32c83bfa7e17d44e9b7c003c204df4277f6cbd4240efb186407eff2739baffc0010f1f6f36030dbe50050f912b83e4b","
+ * field1":"062302384746","field2":"355531","field3":"222445837167721",
+ * "field4":"Ym5wNEtWZkVsaUpKYXlzMlBvTzU=","field5":"05","field6":"","field7":"AUTHPOSITIVE","field8":"","field9":"",
+ * "giftCardIssued":"true","PG_TYPE":"HDFCPG",
+ * "encryptedPaymentId":"979658513DC85CBBAA5B8AA88B9A2BF2",
+ * "bank_ref_num":"222445837167721","bankcode":"VISA","error":"E000","error_Message":"No Error",
+ * "name_on_card":"Test","cardnum":"401200XXXXXX1112",
+ * "cardhash":"This field is no longer supported in postback params.",
+ * "amount_split":"{\"PAYU\":\"143.00\"}",
+ * "payuMoneyId":"250618877","discount":"0.00","net_amount_debit":"143"}
+ */
 
 })
 router.post('/payment/success', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
      //Based on the response Implement UI as per you want
-     res.send(req.body);
+     res.send(req.body)
     })
 router.post('/payment/failure', (req, res) => {
         //Payumoney will send Success Transaction data to req body. 

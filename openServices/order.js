@@ -168,6 +168,18 @@ class order {
         })
     }
 
+    addTransactionId(orderId ,callback) {
+        ordermodel.findOneAndUpdate({ instaPaymentRequestId: reqId }, { '$set': { instaPaymentId: paymentId, paid: true, status: 'authorized', transaction_id: paymentId } }, function (err, updatedOrder) {
+            if (err) {
+                console.log(err);
+                callback({ success: false })
+            }
+            else {
+                callback({ success: true, order: updatedOrder })
+            }
+        })
+    }
+
     getUserAddress(uuid, callback) {
         UserAddress.find({ uuid: uuid }).exec(function (err, result) {
             if (err) {

@@ -120,7 +120,7 @@ exports.askQuote=function(email,data,callback)
         });
         
     
-    })
+    
     
     callback({success:true})
     
