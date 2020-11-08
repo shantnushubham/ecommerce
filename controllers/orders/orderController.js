@@ -954,6 +954,11 @@ exports.setShipmentStatus = function (req, res) {
     })
 }
 //------------------------------------------------------------------------------------------------------------
+
+exports.showOrderSection = function(req, res) {
+    res.render('adminOfferSection')
+}
+
 exports.getCreateOffer = function (req, res) {
     res.render('adminCreateOffer')
 }

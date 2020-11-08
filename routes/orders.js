@@ -215,7 +215,7 @@ router.get('/confirm-cancel/:cancellationId', functions.isAdmin, orderController
 router.get('/confirm-cancel/:cancellationId', functions.isAdmin, orderController.postConfirmCancellation)
 // router.get('/cancellations/:cancellationId', functions.isAdmin, orderController.getCancellationByIdAdmin)
 
-
+router.get('/admin/offer-section', functions.isAdmin, orderController.showOrderSection)
 router.get('/admin/offers', functions.isAdmin, orderController.getAllOffers)
 router.get('/admin/offers/create', functions.isAdmin, orderController.getCreateOffer)
 router.post('/admin/offers/create', functions.isAdmin, orderController.postCreateOffer)

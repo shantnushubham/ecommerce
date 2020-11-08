@@ -44,6 +44,15 @@
 
 <body onLoad="myFunction()" class="default">
 
+	<% if (error && error.length > 0) { %>
+	<div class="alert alert-danger" role="alert" style="text-align: center;">
+		<%= error %>
+	</div>
+	<% } else if (success && success.length > 0) { %>
+	<div class="alert alert-success" role="alert" style="text-align: center;">
+		<%= success %>
+	</div>
+	<% } %>
 
 	<div id="ttloader"></div>
 
@@ -92,7 +101,8 @@
 
 				<div class="tt-phone-number">
 					<div class="content">
-						<div class="contact-title"><a href="">Delivery Information</a> | <a href="/terms-conditions">Terms &
+						<div class="contact-title"><a href="">Delivery Information</a> | <a
+								href="/terms-conditions">Terms &
 								Conditions</a></div>
 						<!-- <a href="tel:09277077088">9876543210</a> -->
 					</div>
@@ -129,7 +139,7 @@
 								<% categories.push({name: "Pharmacy", linkTo: ""}) %>
 								<% categories.push({name: "Books", linkTo: ""}) %>
 								<% categories.push({name: "Winter Uniforms", linkTo: ""}) %>
-								
+
 								<% categories.forEach(category => { %>
 								<li class="navPages-item">
 									<a class="navPages-action" href="/items">
@@ -166,13 +176,11 @@
 								Certificates</a>
 						</div>
 						<div class="navPages-item-page">
-							<a class="link-action"
-								href="/shipping-returns/">Shipping &amp;
+							<a class="link-action" href="/shipping-returns/">Shipping &amp;
 								Returns</a>
 						</div>
 						<div class="navPages-item-page">
-							<a class="link-action"
-								href="/delivery-information/">Delivery
+							<a class="link-action" href="/delivery-information/">Delivery
 								Information</a>
 						</div>
 						<div class="navPages-item-page">
