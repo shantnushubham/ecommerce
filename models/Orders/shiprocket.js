@@ -5,7 +5,7 @@ var ship = new mongoose.Schema({
     data:{
         type:String,
         required:true,
-        default:0
+        default:""
     },
     from:{
         type:Date,

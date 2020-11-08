@@ -8,8 +8,12 @@ class items {
     constructor() {
 
     }
-    getAllItems(callback) {
-        itemModel.find({ active: true }, function (err, foundItems) {
+    getAllItems(isBusiness,callback) {
+
+        var filter={ active: true}
+        if(isBusiness==false)
+        filter["isBusiness"]=false
+        itemModel.find(filter, function (err, foundItems) {
             if (err) {
                 console.log(err)
                 callback({ success: false, err: err })
@@ -177,7 +181,8 @@ class items {
             stock: data.stock,
             isService:data.isService==true?true:false,
             cod:data.cod==true?true:false,
-            measurementUnit:data.measurementUnit
+            measurementUnit:data.measurementUnit,
+            tax:data.tax
 
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
@@ -227,6 +232,7 @@ class items {
             tag: data.tag,
             shortDesc: data.shortDesc,
             groupingTag: data.groupingTag,
+            tax:data.tax
 
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }

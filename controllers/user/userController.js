@@ -216,7 +216,7 @@ exports.deleteUserById = (req, res) => {
     })
 }
 
-getUpdateProfile=(req,res)=>{
+exports.getUpdateProfile=(req,res)=>{
     res.render('updateProfile')
 }
 
