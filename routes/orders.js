@@ -38,13 +38,8 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
 
                 var payload = {
-<<<<<<< HEAD
                     key:"RhPPuiIm",
                     txnid:uniq(20),
-=======
-                    key: "7rnFly",
-                    txnid: uniq(20),
->>>>>>> newUI
                     amount: parseInt(totAmt * 1.18),
                     productinfo: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
                     firstname: req.user.name,
@@ -61,7 +56,6 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                     // allow_repeated_payments: false
                 }
 
-<<<<<<< HEAD
                 const hashString = 'RhPPuiIm' //store in in different file
                 + '|' + payload.txnid
                 + '|' + payload.amount 
@@ -73,19 +67,6 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                const sha = new jssha('SHA-512', "TEXT");
                sha.update(hashString);
                //Getting hashed value from sha module
-=======
-                const hashString = '7rnFly' //store in in different file
-                    + '|' + payload.txnid
-                    + '|' + payload.amount
-                    + '|' + payload.productinfo
-                    + '|' + payload.firstname
-                    + '|' + payload.email
-                    + '|' + '||||||||||'
-                    + 'pjVQAWpA' //store in in different file
-                const sha = new jssha('SHA-512', "TEXT");
-                sha.update(hashString);
-                //Getting hashed value from sha module
->>>>>>> newUI
                 const hash = sha.getHash("HEX");
                 payload.hash = hash
                 request.post('https://sandboxsecure.payu.in/_payment', { form: payload, headers: headers }, function (error, response, body) {
