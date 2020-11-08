@@ -36,52 +36,60 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
                 var headers = { 'X-Api-Key': envData.X_Api_Key, 'X-Auth-Token': envData.X_Auth_Token };
 
+                var tx = uniq(20)
+                orderServices.addTransactionId(foundOrder.order.orderId, tx, function (updatedOtx) {
+                    if (updatedOtx.success == false) {
 
-                var payload = {
-                    key: "RhPPuiIm",
-                    txnid: uniq(20),
-                    amount: parseInt(totAmt * 1.18),
-                    productinfo: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
-                    firstname: req.user.name,
-                    purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
-                    phone: req.user.phone,
-                    buyer_name: req.user.name,
-                    surl: "http://localhost:3000/payment/success",
-                    furl: "http://localhost:3000/payment/failure",
-                    service_provider: "payu_paisa",
-                    // send_email: true,
-                    // webhook: '',
-                    // send_sms: true,
-                    email: req.user.email,
-                    // allow_repeated_payments: false
-                }
+                    }
+                    else {
+                        var payload = {
+                            key: "RhPPuiIm",
+                            txnid: tx,
+                            amount: parseInt(totAmt * 1.18),
+                            productinfo: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
+                            firstname: req.user.name,
+                            purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
+                            phone: req.user.phone,
+                            buyer_name: req.user.name,
+                            surl: "http://localhost:3000/payment/success",
+                            furl: "http://localhost:3000/payment/failure",
+                            service_provider: "payu_paisa",
+                            // send_email: true,
+                            // webhook: '',
+                            // send_sms: true,
+                            email: req.user.email,
+                            // allow_repeated_payments: false
+                        }
 
-                const hashString = 'RhPPuiIm' //store in in different file
-                    + '|' + payload.txnid
-                    + '|' + payload.amount
-                    + '|' + payload.productinfo
-                    + '|' + payload.firstname
-                    + '|' + payload.email
-                    + '|' + '||||||||||'
-                    + 'AXU18HEr7j' //store in in different file
-                const sha = new jssha('SHA-512', "TEXT");
-                sha.update(hashString);
-                //Getting hashed value from sha module
-                const hash = sha.getHash("HEX");
-                payload.hash = hash
-                request.post('https://sandboxsecure.payu.in/_payment', { form: payload, headers: headers }, function (error, response, body) {
-                    // console.log(response);
-                    console.log(error);
-                    console.log(response.statusCode);
-                    console.log(body);
-                    if (response.statusCode === 200) {
-                        res.send(body);
-                    } else if (response.statusCode >= 300 &&
-                        response.statusCode <= 400) {
-                        console.log(response);
-                        res.redirect(response.headers.location.toString());
+                        const hashString = 'RhPPuiIm' //store in in different file
+                            + '|' + payload.txnid
+                            + '|' + payload.amount
+                            + '|' + payload.productinfo
+                            + '|' + payload.firstname
+                            + '|' + payload.email
+                            + '|' + '||||||||||'
+                            + 'AXU18HEr7j' //store in in different file
+                        const sha = new jssha('SHA-512', "TEXT");
+                        sha.update(hashString);
+                        //Getting hashed value from sha module
+                        const hash = sha.getHash("HEX");
+                        payload.hash = hash
+                        request.post('https://sandboxsecure.payu.in/_payment', { form: payload, headers: headers }, function (error, response, body) {
+                            // console.log(response);
+                            console.log(error);
+                            console.log(response.statusCode);
+                            console.log(body);
+                            if (response.statusCode === 200) {
+                                res.send(body);
+                            } else if (response.statusCode >= 300 &&
+                                response.statusCode <= 400) {
+
+                                res.redirect(response.headers.location.toString());
+                            }
+                        })
                     }
                 })
+
 
             }
         }
@@ -114,12 +122,23 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 router.post('/payment/success', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
     //Based on the response Implement UI as per you want
-    res.send(req.body)
+    orderServices.updatePaymentByTransactionId(req.body.txnid,req.body.status,function(updatedOtx){
+        orderServices.updateStockList(foundOrder.order.orderedItems, function (stocks) {
+            console.log("stock update status:", stocks.success);
+        })
+        console.log('redirect to success page');
+        res.render('successPage', { order: foundOrder.order,failure:false,failureMessage:null })
+    })
+   
 })
 router.post('/payment/failure', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
     // Based on the response Implement UI as per you want
-    res.send(req.body);
+    orderServices.updateStockList(foundOrder.order.orderedItems, function (stocks) {
+        console.log("stock update status:", stocks.success);
+    })
+    console.log('redirect to success page');
+    res.render('successPage', { order: foundOrder.order,failure:true,failureMessage:req.body.error_Message })
 })
 
 router.get("/redirect", ensureAuthenticated, function (req, res) {

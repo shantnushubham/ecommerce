@@ -379,7 +379,7 @@ class cart {
         })
     }
 
-    getListingForOrder(uuid, callback) {
+    getListingForOrder(uuid,user, callback) {
         cartmodel.aggregate([
             { $match: { uuid: uuid } },
             { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
@@ -388,18 +388,19 @@ class cart {
                     "quantity": "$quantity",
                     "iid": "$iid",
                     "item": { "$arrayElemAt": ["$item", 0] },
-                    
+
                 }
 
             },
             {
-                $project:{
+                $project: {
                     "price": "$item.price",
-                    "name":"$item.name",
-                    "sku":"$item.sku",
+                    "name": "$item.name",
+                    "sku": "$item.sku",
                     "quantity": "$quantity",
+                    "tax": "$item.tax",
                     "iid": "$iid",
-                    "item":"$item"
+                    "item": "$item"
                 }
             }
         ]).exec(function (err, cartItem) {
@@ -412,27 +413,31 @@ class cart {
                 let total = 0
                 let cartlist = []
                 let allowCOD = true
-                let itemArray=[]
+                let itemArray = []
+                var tax = 0;
                 cartItem.forEach(cartEl => {
                     var item = {}
                     item.quantity = cartEl.quantity
                     item.iid = cartEl.iid
-                    item.name=cartEl.item.name
-                    item.sku=cartEl.sku
-                    item.selling_price=cartEl.price
+                    item.name = cartEl.item.name
+                    item.sku = cartEl.sku
+                    item.selling_price = cartEl.price
+
                     if (cartEl.item.cod == false) allowCOD = false
                     cartlist.push(item)
                     itemArray.push(cartEl.item)
-                    total = total + parseInt((parseInt(cartEl.price) * (1 - cartEl.item.discount) * cartEl.quantity))
+                    var temptax=user.state.toLowerCase()==="jharkand".toLowerCase()?parseInt((parseInt(cartEl.price) * cartEl.quantity * (cartEl.tax/200) ))*2:parseInt((parseInt(cartEl.price) * cartEl.quantity * (cartEl.tax/100)))
+                    tax +=temptax
+                    total = total +(parseInt(cartEl.price) * cartEl.quantity)+temptax
                 });
-                console.log("cartitems",cartItem);
+                console.log("cartitems", cartItem);
                 console.log(cartlist);
                 console.log('total amt=', total);
                 if (total <= 0 || cartlist.length == 0) {
                     callback({ success: false, message: "cant checkout with empty cart" })
                 }
                 else
-                    callback({ success: true, cartList: cartlist,itemArray:itemArray, total: total, allowCOD: allowCOD })
+                    callback({ success: true, cartList: cartlist, itemArray: itemArray, total: total, allowCOD: allowCOD,tax:tax })
             }
         })
     }
@@ -468,7 +473,7 @@ class cart {
                     callback({ success: false, message: "cant checkout with empty cart" })
                 }
                 else
-                    callback({ success: true, cartList: cartItem, total: total ,codAllowed:allowCOD})
+                    callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD })
             }
         })
 

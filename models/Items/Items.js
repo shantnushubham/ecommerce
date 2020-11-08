@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const shortid = require("shortid");
 var mongooseHistory = require('mongoose-history');
-const { unix } = require("moment");
+
 // var textSearch = require('mongoose-text-search');
  
 var itemsSchema = new mongoose.Schema({
@@ -102,6 +102,10 @@ var itemsSchema = new mongoose.Schema({
     isBusiness:{
         type:Boolean,
         default:false
+    },
+    tax:{
+        type:Number,
+        default:18
     }
 });
 

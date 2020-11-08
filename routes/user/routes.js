@@ -28,7 +28,7 @@ router.get('/logout', ensureAuthenticated, UserControl.logout);
 
 
 router.post('/addUserAddress', ensureAuthenticated, UserControl.addUserAddress)
-router.get('/update-profile', ensureAuthenticated, UserControl.updateUserData)
+router.get('/update-profile', ensureAuthenticated, UserControl.getUpdateProfile)
 router.post('/update-profile', ensureAuthenticated, UserControl.updateUserData)
 router.put('/makeDefaultAddress', ensureAuthenticated, UserControl.makeAdressToDefaultAddress)
 router.put('/updateAddress', ensureAuthenticated, UserControl.updateUserAddress)

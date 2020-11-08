@@ -64,8 +64,9 @@ exports.createItem = function (req, res) {
         stock: data.stock,
         isService:data.isService==true?true:false,
         cod:data.cod==true?true:false,
-        measurementUnit:data.measurementUnit
-        
+        measurementUnit:data.measurementUnit,
+        isBusiness:data.category.toUpperCase()==="chemicals".toLocaleUpperCase(),
+        tax:data.gstPercent
 
 
 
@@ -100,6 +101,7 @@ exports.updateItem = function (req, res) {
         stock: data.stock,
         isService:data.isService==true?true:false,
         cod:data.cod==true?true:false,
+        tax:data.gstPercent
 
     }, function (createdItem) {
         if (createdItem.success == false) req.flash('error', 'error in update')
