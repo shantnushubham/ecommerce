@@ -122,7 +122,6 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 router.post('/payment/success', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
     //Based on the response Implement UI as per you want
-<<<<<<< HEAD
     orderServices.updatePaymentByTransactionId(req.body.txnid,req.body.status,function(updatedOtx){
         orderServices.updateStockList(foundOrder.order.orderedItems, function (stocks) {
             console.log("stock update status:", stocks.success);
@@ -131,9 +130,6 @@ router.post('/payment/success', (req, res) => {
         res.render('successPage', { order: foundOrder.order,failure:false,failureMessage:null })
     })
    
-=======
-    res.send(req.body)
->>>>>>> 64e35b8198af810fa2325a79a1c6b1099d2047c4
 })
 router.post('/payment/failure', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
