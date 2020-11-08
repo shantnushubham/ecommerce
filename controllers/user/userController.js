@@ -216,7 +216,7 @@ exports.deleteUserById = (req, res) => {
     })
 }
 
-exports.getUpdateProfile=(req,res)=>{
+exports.getUpdateProfile = (req, res) => {
     res.render('updateProfile')
 }
 
@@ -231,8 +231,7 @@ exports.updateUserData = (req, res) => {
                 req.flash('success', 'Profile updated')
                 res.redirect('/users/update-profile')
             })
-    }
-    else {
+    } else {
         req.flash('error', 'Profile not updated')
         res.redirect('/users/update-profile')
     }
