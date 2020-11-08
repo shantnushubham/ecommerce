@@ -875,6 +875,10 @@ exports.getOrderByShipStatus = function (req, res) {
     })
 }
 
+exports.showOrderSection = (req, res) => {
+    res.render("adminOrderSection")
+}
+
 exports.getAllOrders = function (req, res) {
     orderServices.getAllOrders(function (foundOrder) {
         if (foundOrder.success == false) {
@@ -955,7 +959,7 @@ exports.setShipmentStatus = function (req, res) {
 }
 //------------------------------------------------------------------------------------------------------------
 
-exports.showOrderSection = function(req, res) {
+exports.showOfferSection = function(req, res) {
     res.render('adminOfferSection')
 }
 
