@@ -7,6 +7,9 @@ var orderServices = require('../../openServices/order')
 var mongoose = require("mongoose")
 var csv = require('csv-express')
 
+exports.showItemsSection = (req, res) => {
+    res.render("adminItemSection");
+}
 
 exports.getAllItems = function (req, res) {
     itemservices.getAllItems(function (itemlist) {
