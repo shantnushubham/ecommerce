@@ -1,107 +1,80 @@
-<%- include('partials/header', {title: "Welcome to 112Cart", desc: "Best Shopping Website"}); -%>
+<%- include("partials/newHeader.ejs") %>
 
-<!-- Start Page Title Area -->
-<div class="page-title-area item-bg-2">
-	<div class="container">
-		<div class="page-title-content">
-			<h2>Cart</h2>
-			<ul>
-				<li>
-					<a href="/">
-						Home
-						<i class="fa fa-chevron-right"></i>
-					</a>
-				</li>
-				<li>Cart</li>
-			</ul>
-		</div>
-	</div>
-</div>
-<!-- End Page Title Area -->
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="EUR">
 
-<!-- Start Cart Area -->
-<section class="cart-area ptb-100">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 col-md-12">
-				<form>
-					<div class="cart-table table-responsive">
-						<% if (list.length > 0) { %>
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th scope="col">Product</th>
-									<th scope="col">Name</th>
-									<th scope="col">Unit Price</th>
-									<th scope="col">Quantity</th>
-								</tr>
-							</thead>
-
-							<tbody>
-								<% let x = 0; %>
-								<% for (let i = 0; i < list.length; i++) { %>
-								<tr>
-									<td class="product-thumbnail">
-										<a href="#">
-											<img src="<%=list.item.image[0]%>" alt="item">
-										</a>
-									</td>
-
-									<td class="product-name">
-										<a href="#"><%= list[i].item.name %></a>
-									</td>
-									<% x = x + parseInt(list[i].quantity) * parseInt(list[i].item.price) %>
-
-									<td class="product-price">
-										<span class="unit-amount">Rs. <%= list[i].item.price %></span>
-									</td>
-
-									<td class="product-subtotal">
-										<span class="subtotal-amount"><%=list[i].quantity%></span>
-									</td>
-								</tr>
-								<% } %>
-							</tbody>
-						</table>
-						<% } else { %>
-						<h4 style="text-align: center;">You don't have any lists.</h4>
-						<% } %>
-					</div>
-
-					<div class="cart-buttons">
-						<div class="row align-items-center">
-							<div class="col-lg-7 col-sm-7 col-md-7">
-								<div class="continue-shopping-box">
-									<a href="#" class="default-btn">
-										Continue Shopping
-										<i class="flaticon-right-arrow-forward"></i>
-									</a>
-								</div>
-							</div>
-
-							<div class="col-lg-5 col-sm-5 col-md-5 text-right">
-								<a href="/user/list-update/<%=lid%>" class=" default-btn">
-									Update Cart
-									<i class="flaticon-right-arrow-forward"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-				</form>
-
-				<div class="cart-totals">
-					<h3>Cart Totals</h3>
-
-
-					<a href="/checkout" class="default-btn">
-						Proceed to Checkout
-						<i class="flaticon-right-arrow-forward"></i>
-					</a>
+	<div class="home-content">
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label">Your List Items</span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope>
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope>
+							<meta itemprop=" item" content="/cart.php">
+							<span class="breadcrumb-label" itemprop="name">Your List Items</span>
+							<meta itemprop="position" content="2" />
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
-	</div>
-</section>
-<!-- End Cart Area -->
 
-<%- include('partials/footer') %>
+		<div style="margin-left: 13%; margin-right: 13%;">
+			<div class="uk-child-width-1-1@m" uk-grid>
+				<% if (list.length > 0) { %>
+				<div class="uk-overflow-auto">
+					<table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+						<thead>
+							<style>
+								th.uk-table-small {
+									text-align: center;
+									color: #2a3746;
+									font-weight: bold;
+								}
+							</style>
+							<tr>
+								<th class="uk-table-small">Product</th>
+								<th class="uk-table-small">Name</th>
+								<th class="uk-table-small">Quantity</th>
+								<th class="uk-table-small">Unit Price</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% let x = 0; %>
+							<% for (let i = 0; i < list.length; i++) { %>
+							<tr>
+								<td class="uk-table-link">
+									<img src="<%=list.item.image[0]%>" alt="item" width="40px">
+								</td>
+								<td class="uk-table-link"> <%= list[i].item.name %>
+								</td>
+								<% x = x + parseInt(list[i].quantity) * parseInt(list[i].item.price) %>
+								<td class="uk-table-link"> <%=list[i].quantity%>
+								</td>
+								<td class="uk-table-link">
+									₹ <%= list[i].item.price %>
+								</td>
+							</tr>
+							<% } %>
+						</tbody>
+					</table>
+				</div>
+				<% } else { %>
+				<h4 style="text-align: center;">You don't have any lists.</h4>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%- include("partials/newFooter.ejs") %>

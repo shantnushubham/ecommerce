@@ -32,6 +32,18 @@ router.get('/covid19', (req, res) => {
     res.render('covid19')
 })
 
+router.get("/offers", (req, res) => {
+    res.render("offers")
+})
+
+router.get("/terms-conditions", (req, res) => {
+    res.render("termsAndConditions")
+})
+
+router.get("/contact-us", (req, res) => {
+    res.render("contactUs")
+})
+
 router.post('/checkPincodeValid', UserControl.checkPinCodeValid);
 
 router.get('/recover', forwardAuthenticated, (req, res) => res.render('recover'));

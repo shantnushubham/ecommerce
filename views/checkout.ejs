@@ -1,71 +1,157 @@
-<%- include('partials/header', {title: "Welcome to 112Cart", desc: "Best Shopping Website"}); -%>
+<%- include("partials/newHeader.ejs") %>
 
-<!-- Start Page Title Area -->
-<div class="page-title-area item-bg-3">
-	<div class="container">
-		<div class="page-title-content">
-			<h2>Checkout </h2>
-			<ul>
-				<li>
-					<a href="/">
-						Home
-						<i class="fa fa-chevron-right"></i>
-					</a>
-				</li>
-				<li>Checkout</li>
-			</ul>
+<style>
+	.default-btn {
+		font-weight: light;
+		font-size: medium;
+		background-color: #ffaa3d;
+		border-radius: 50px;
+		padding: 7px 14px 7px 14px;
+		color: white;
+	}
+</style>
+
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="EUR">
+
+	<div class="home-content">
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label">Checkout</span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/items" class="breadcrumb-label" itemprop="item"><span
+									itemprop="name">Cart</span></a>
+							<meta itemprop="position" content="2" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<meta itemprop="item" content="/laundry-detergent/">
+							<span class="breadcrumb-label" itemprop="name">Checkout</span>
+							<meta itemprop="position" content="3" />
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
-	</div>
-</div>
-<!-- End Page Title Area -->
 
-<!-- Start Checkout Area -->
-<section class="checkout-area ptb-100">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-6 col-md-12">
-				<div class="order-details">
-					<div class="order-table table-responsive">
-						<div class="payment-box">
+		<div style="margin-left: 15%; margin-right: 15%;">
+			<div class="uk-child-width-1-2@m" uk-grid>
+				<div style="text-align: left !important;">
+					<div class="uk-overflow-auto">
+						<table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+							<thead>
+								<tr>
+									<th class="uk-table-shrink">Image</th>
+									<th class="uk-table-expand">Name</th>
+									<th class="uk-width-small">Quantity</th>
+									<th class="uk-table-small">Total</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% var sum = 0 %>
+								<% cart.forEach(cartItem => { %>
+								<tr>
+									<td><img class="uk-preserve-width uk-border-circle"
+											src="<%=cartItem.item.image[0]%>" width="40" alt=""></td>
+									<td class="uk-table-link">
+										<a class="uk-link-reset" href=""><%=cartItem.item.name%></a>
+									</td>
+									<td class="uk-table-link">
+										<a class="uk-link-reset" href=""><%=cartItem.quantity%></a>
+									</td>
+									<td class="uk-text-nowrap">₹
+										<%=parseInt(cartItem.quantity) * parseInt(cartItem.price[0])%></td>
+									<% sum = sum + parseInt(cartItem.quantity) * parseInt(cartItem.price[0]) %>
+								</tr>
+								<% }) %>
+								<tr>
+									<td></td>
+									<td></td>
+									<td><b>Cart Subtotal</b></td>
+									<td>₹ <%=sum%></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td><b>GST</b></td>
+									<td>₹ <%=Math.ceil(0.18 * sum)%></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td><b>Total</b></td>
+									<td>₹ <%=Math.ceil(1.18 * sum)%></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div>
+					<div class="uk-card uk-card-default" style="text-align: left !important;">
+						<div class="uk-card-body">
 							<form method="POST" action="/checkout">
-								<div class="payment-method">
-									<h3 class="title" style="font-family: 'PT Sans', sans-serif;">Addresses</h3>
-									<% address.address.forEach(el => { %>
-									<p>
-										<input type="radio" id="<%=el._id%>" name="address" value="<%=el._id%>">
-										<label for="<%=el._id%>"><span
-												style="color: #fa7725; text-transform: uppercase; font-size: medium;"><%=el.addressType%></span><br>
+								<div class="uk-margin">
+									<div class="uk-form-label">
+										<h6>Select your Address:</h6>
+									</div>
+									<div class="uk-form-controls uk-form-controls-text">
+
+										<% address.address.forEach(el => { %>
+										<input class="uk-radio" type="radio" name="address" value="<%=el._id%>" required>
+										<label>
+											<span
+												style="color: #fa7725; text-transform: uppercase; font-size: medium;"><%=el.addressType%></span>
+											<br>
 											<%=(el.fullAddress + ", " + el.landmark  + ", " + el.locality + ", " + 
-												el.city + ", " + el.state +".")%><br>
+											el.city + ", " + el.state +".")%><br>
 											PIN: <%=(el.pincode) %><br>
 											Phone Number: <span
-												style="color: #fa7725; text-transform: uppercase;"><%=el.phone%></span></label>
-									</p>
-									<% }) %>
+												style="color: #fa7725; text-transform: uppercase;"><%=el.phone%></span></label><br>
+										<% }) %>
+
+									</div>
 								</div>
+
 								<% if (currentUser.isBusiness && currentUser.creditAllowed) { %>
-								<div class="payment-method">
-									<div class="uk-child-width-expand@s uk-text-center" uk-grid>
-										<p>
-											<input type="radio" id="5P" value=5 name="perc">
-											<label for="5P" value=5>5%</label>
-										</p>
-										<p>
-											<input type="radio" id="10P" value=10 name="perc">
-											<label for="10P" value=10>10%</label>
-										</p>
-										<p>
-											<input type="radio" id="20P" value=20 name="perc">
-											<label for="20P" value=20>20%</label>
-										</p>
-									</div>
+								<div class="uk-form-label">
+									<h6>Credit Percentage:</h6>
 								</div>
-								<%}%>
-								<div class="col-lg-6 col-md-6">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Offer Code" name="offer">
-									</div>
+								<div class="uk-child-width-expand@s uk-text-center" uk-grid>
+									<p>
+										<input type="radio" id="5P" value=5 name="perc">
+										<label for="5P" value=5>5%</label>
+									</p>
+									<p>
+										<input type="radio" id="10P" value=10 name="perc">
+										<label for="10P" value=10>10%</label>
+									</p>
+									<p>
+										<input type="radio" id="20P" value=20 name="perc">
+										<label for="20P" value=20>20%</label>
+									</p>
 								</div>
+								<% } %>
+
+								<div class="uk-margin">
+									<input class="uk-input uk-form-width-medium" type="text" placeholder="Offer Code">
+								</div>
+
 								<div class="uk-grid-column-small uk-grid-row-small uk-child-width-1-4@s uk-text-center"
 									uk-grid>
 									<div>
@@ -92,102 +178,15 @@
 									</div>
 									<!-- Prakhar writes formaction-->
 								</div>
+
+
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<div class="col-lg-6 col-md-12">
-				<div class="order-details">
-					<h3 class="title" style="font-family: 'PT Sans', sans-serif;">Your Order</h3>
-
-					<div class="order-table table-responsive">
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th scope="col">Product Name</th>
-									<th scope="col">Quantity</th>
-									<th scope="col">Total</th>
-								</tr>
-							</thead>
-
-							<tbody>
-								<% var sum = 0 %>
-								<% for (let i = 0; i < cart.length; i++) { %>
-								<tr>
-									<td class="product-name">
-										<a href="#"><%= cart[i].item.name %></a>
-									</td>
-									<td class="product-quantity">
-										<span class="subtotal-amount"><%= cart[i].quantity%></span>
-									</td>
-									<td class="product-total">
-										<span class="subtotal-amount">Rs.
-											<%= parseInt(cart[i].quantity) * parseInt(cart[i].price[0])%></span>
-									</td>
-									<% sum = sum + parseInt(cart[i].quantity) * parseInt(cart[i].price[0]) %>
-								</tr>
-								<% } %>
-
-								<tr>
-									<td class="order-subtotal">
-										<span>Cart Subtotal</span>
-									</td>
-									<td></td>
-									<td class="order-subtotal-price">
-										<span class="order-subtotal-amount">Rs. <%=sum%></span>
-									</td>
-								</tr>
-
-								<tr>
-									<td class="order-shipping">
-										<span>GST (18%)</span>
-									</td>
-									<td></td>
-									<td class="shipping-price">
-										<span>Rs. <%=Math.ceil(sum * (18/100))%></span>
-									</td>
-								</tr>
-
-								<tr>
-									<td class="total-price">
-										<span>Order Total</span>
-									</td>
-									<td></td>
-									<td class="product-subtotal">
-										<span class="subtotal-amount">Rs. <%=Math.ceil(sum * (118/100))%></span>
-									</td>
-								</tr>
-							</tbody>
-
-						</table>
-					</div>
-					<!-- <div class="payment-box">
-								<div class="payment-method">
-									<p>
-										<input type="radio" id="direct-bank-transfer" name="radio-group" checked>
-										<label for="direct-bank-transfer">Direct Bank Transfer</label>
-
-										Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
-									</p>
-									<p>
-										<input type="radio" id="paypal" name="radio-group">
-										<label for="paypal">PayPal</label>
-									</p>
-									<p>
-										<input type="radio" id="cash-on-delivery" name="radio-group">
-										<label for="cash-on-delivery">Cash on Delivery</label>
-									</p>
-								</div>
-
-								<button class="default-btn">Place Order</button>
-							</div> -->
-				</div>
-			</div>
 		</div>
 	</div>
-</section>
-<!-- End Checkout Area -->
+</div>
 
-<%- include('partials/footer'); -%>
+<%- include("partials/newFooter.ejs") %>
