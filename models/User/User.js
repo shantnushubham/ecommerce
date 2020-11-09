@@ -98,6 +98,11 @@ var UserSchema  = new mongoose.Schema({
     level:{
         type:Number,
         default:1
+    },
+    state:{
+        type:String,
+        required:true,
+        default:"jharkand"
     }
 });
 

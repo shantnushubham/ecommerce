@@ -5,14 +5,16 @@ var bizModel = require('../../models/User/businessAcc')
 var itemservices = require('../../openServices/items')
 var orderServices = require('../../openServices/order')
 var mongoose = require("mongoose")
-var csv = require('csv-express')
+// var csv = require('csv-express')
+var csv = require('jsonexport')
+var Parser=require('json2csv').Parser
 
 exports.showItemsSection = (req, res) => {
     res.render("adminItemSection");
 }
 
 exports.getAllItems = function (req, res) {
-    itemservices.getAllItems(function (itemlist) {
+    itemservices.getAllItems(true, function (itemlist) {
         // console.log({ itemlist: itemlist.foundItems });
         res.render('itemsAdmin', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag })
     })
@@ -62,11 +64,11 @@ exports.createItem = function (req, res) {
         content: data.content,
         color: data.color,
         stock: data.stock,
-        isService:data.isService==true?true:false,
-        cod:data.cod==true?true:false,
-        measurementUnit:data.measurementUnit,
-        isBusiness:data.category.toUpperCase()==="chemicals".toLocaleUpperCase(),
-        tax:data.gstPercent
+        isService: data.isService == true ? true : false,
+        cod: data.cod == true ? true : false,
+        measurementUnit: data.measurementUnit,
+        isBusiness: data.category.toUpperCase() === "chemicals".toLocaleUpperCase(),
+        tax: data.gstPercent
 
 
 
@@ -99,9 +101,9 @@ exports.updateItem = function (req, res) {
         content: data.content,
         color: data.color,
         stock: data.stock,
-        isService:data.isService==true?true:false,
-        cod:data.cod==true?true:false,
-        tax:data.gstPercent
+        isService: data.isService == true ? true : false,
+        cod: data.cod == true ? true : false,
+        tax: data.gstPercent
 
     }, function (createdItem) {
         if (createdItem.success == false) req.flash('error', 'error in update')
@@ -150,35 +152,232 @@ exports.downloadSingleInvoice = function (req, res) {
 }
 
 exports.downloadInvoiceByRange = function (req, res) {
-    orderServices.getOrdersByDateRange(req.body.from,req.body.to,function(foundOrder){
-        if(foundOrder.success==false)
-        res.redirect('/admin/orders-filter')
+    orderServices.getOrdersByDateRange(req.body.from, req.body.to, function (foundOrder) {
+        if (foundOrder.success == false)
+            res.redirect('/admin/orders-filter')
         else
-        res.csv(foundOrder.data)
+            {
+                const fields = [
+                    {
+                        label: 'Order ID',
+                        value: 'orderId'
+                    },
+                    {
+                        label: 'uuid',
+                        value: 'uuid'
+                    },
+                     {
+                        label: 'total',
+                        value: 'total'
+                    },
+                    {
+                        label: 'tax',
+                        value: 'tax'
+                    },
+                    {
+                        label: 'address',
+                        value: 'fullAddress'
+                    },
+                    {
+                        label: 'city',
+                        value: 'city'
+                        
+                    },
+                    {
+                        label: 'state',
+                        value: 'state'
+                    },
+                    {
+                        label: 'pincode',
+                        value: 'pincode'
+                    },
+                    
+                    {
+                        label: 'date',
+                        value: 'purchaseTime'
+                    },
+                    {
+                        label: 'country',
+                        value: 'country'
+                    },
+                    {
+                        label: 'status',
+                        value: 'status'
+                    },
+                    {
+                        label: 'payment Type',
+                        value: 'paymentType'
+                    },
+                    {
+                        label: 'stransaction_id',
+                        value: 'transaction_id'
+                    },
+                    {
+                        label: 'vendorId',
+                        value: 'vendorId'
+                    },
+                    {
+                        label: 'vendorName',
+                        value: 'vendorName'
+                    },
+                    {
+                        label: 'vendorId',
+                        value: 'vendorId'
+                    },
+                    {
+                        label: 'shippingConfirmed',
+                        value: 'shippingConfirmed'
+                    },
+                    {
+                        label: 'shipmentStatus',
+                        value: 'shipmentStatus'
+                    },
+                    {
+                        label: 'offerUsed',
+                        value: 'offerUsed'
+                    },
+                    
+    
+                ];
+                const json2csv = new Parser({fields});
+                const csv = json2csv.parse(foundOrder.data);
+                res.header('Content-Type', 'text/csv');
+                res.attachment("orders.csv");
+                return res.send(csv);
+            }
     })
 }
 
 exports.downloadUserList = function (req, res) {
-    userModel.find({},function(err,foundUsers){
-        if(err)
-        {
-            req.flash('error','error in downloading')
-            res.redirect('/admn')
+    userModel.find({}, function (err, foundUsers) {
+        console.log(foundUsers);
+        if (err) {
+            req.flash('error', 'error in downloading')
+            res.redirect('/admin')
         }
-        else
-        res.csv(foundUsers)
+        else {
+            const fields = [
+                {
+                    label: 'Name',
+                    value: 'name'
+                },
+                {
+                    label: 'uuid',
+                    value: 'uuid'
+                },
+                 {
+                    label: 'Admin',
+                    value: 'isAdmin'
+                },
+                {
+                    label: 'active',
+                    value: 'active'
+                },
+                {
+                    label: 'phone',
+                    value: 'phone'
+                },
+                {
+                    label: 'email',
+                    value: 'email'
+                    
+                },
+                {
+                    label: 'businessAccount',
+                    value: 'isBusiness'
+                },
+                {
+                    label: 'premium',
+                    value: 'premium'
+                },
+                
+                {
+                    label: 'credit Percent',
+                    value: 'credPerc'
+                },
+                {
+                    label: 'balance',
+                    value: 'credBalance'
+                },
+                {
+                    label: 'state',
+                    value: 'state'
+                }
+
+            ];
+            const json2csv = new Parser({fields});
+            const csv = json2csv.parse(foundUsers);
+            res.header('Content-Type', 'text/csv');
+            res.attachment("users.csv");
+            return res.send(csv);
+
+        }
     })
 }
 
 exports.downloadBizAccList = function (req, res) {
-    userModel.find({isBusiness:true},function(err,foundUsers){
-        if(err)
-        {
-            req.flash('error','error in downloading')
+    userModel.find({ isBusiness: true }, function (err, foundUsers) {
+        if (err) {
+            req.flash('error', 'error in downloading')
             res.redirect('/admn')
         }
         else
-        res.csv(foundUsers)
+            {
+                const fields = [
+                    {
+                        label: 'Name',
+                        value: 'name'
+                    },
+                    {
+                        label: 'uuid',
+                        value: 'uuid'
+                    },
+                     {
+                        label: 'Admin',
+                        value: 'isAdmin'
+                    },
+                    {
+                        label: 'active',
+                        value: 'active'
+                    },
+                    {
+                        label: 'phone',
+                        value: 'phone'
+                    },
+                    {
+                        label: 'email',
+                        value: 'email'
+                        
+                    },
+                    {
+                        label: 'businessAccount',
+                        value: 'isBusiness'
+                    },
+                    {
+                        label: 'premium',
+                        value: 'premium'
+                    },
+                    
+                    {
+                        label: 'credit Percent',
+                        value: 'credPerc'
+                    },
+                    {
+                        label: 'balance',
+                        value: 'credBalance'
+                    },
+                    {
+                        label: 'state',
+                        value: 'state'
+                    }
+    
+                ];
+                const json2csv = new Parser({fields});
+                const csv = json2csv.parse(foundUsers);
+                res.header('Content-Type', 'text/csv');
+                res.attachment("businessAccount.csv");
+                return res.send(csv);
+            }
     })
 }
 

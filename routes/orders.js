@@ -134,9 +134,7 @@ router.post('/payment/success', (req, res) => {
 router.post('/payment/failure', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
     // Based on the response Implement UI as per you want
-    orderServices.updateStockList(foundOrder.order.orderedItems, function (stocks) {
-        console.log("stock update status:", stocks.success);
-    })
+   
     console.log('redirect to success page');
     res.render('successPage', { order: foundOrder.order,failure:true,failureMessage:req.body.error_Message })
 })
@@ -218,6 +216,7 @@ router.get("/saved-orders/:orderId", ensureAuthenticated, orderController.checkS
 
 router.get("/admin/orders-section", functions.isAdmin, orderController.showOrderSection)
 router.get('/admin/orders-filter', functions.isAdmin, orderController.getAllOrders)
+router.get('/admin/orders-filter-paymentStatus/:payment', functions.isAdmin, orderController.getOrderByPST)
 router.get('/admin/orders-filter-payment/:payment', functions.isAdmin, orderController.getOrderByPayment)
 router.get('/admin/orders-filter-shipment/:shipment', functions.isAdmin, orderController.getOrderByShipStatus)
 router.get('/admin/orders/:orderId', functions.isAdmin, orderController.adminCheckOrder)

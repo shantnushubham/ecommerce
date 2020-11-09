@@ -108,16 +108,7 @@ class order {
             callback({ success: false })
         ordermodel.aggregate([
             { $match: { purchaseTime: { $gte: from, $lte: to } } },
-            {
-                $project: {
-                    uuid: 1,
-                    total: 1,
-                    purchaseTime: 1,
-                    shipmentStatus: 1,
-                    status: 1,
-
-                }
-            }
+            
         ]).exec((err, foundOrder) => {
             if (err) callback({ success: false })
             else callback({ success: true, data: foundOrder })
@@ -532,7 +523,14 @@ class order {
 
     getOrderByShipment(status, callback) {
         ordermodel.find({ shipmentStatus: status }, function (err, order) {
-            if (err || functions.isEmpty(order)) callback({ success: false })
+            if (err) callback({ success: false })
+            else callback({ success: true, order: order })
+        })
+    }
+
+    getOrderByPST(status, callback) {
+        ordermodel.find({ status: status }, function (err, order) {
+            if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
     }
@@ -543,7 +541,7 @@ class order {
         })
     }
     getOrderByPayment(status, callback) {
-        ordermodel.find({ status: status }, function (err, order) {
+        ordermodel.find({ paymentType: status }, function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
