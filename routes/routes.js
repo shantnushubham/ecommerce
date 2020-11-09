@@ -32,6 +32,10 @@ router.get('/covid19', (req, res) => {
     res.render('covid19')
 })
 
+router.get("/bio-bubble", (req, res) => {
+    res.render("bioBubble")
+})
+
 router.get("/offers", (req, res) => {
     res.render("offers")
 })
