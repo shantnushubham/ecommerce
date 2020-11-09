@@ -6,6 +6,7 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../Middlewares/us
 const functions = require('../Middlewares/common/functions')
 var app = express();
 
+app.get("/admin", functions.isAdmin, adminController.showAdminPage)
 app.get("/admin/item-section", functions.isAdmin, adminController.showItemsSection)
 app.get('/admin/items', functions.isAdmin, adminController.getAllItems)
 app.get('/admin/items/:iid', functions.isAdmin, adminController.getItem)
@@ -33,6 +34,7 @@ app.post('/admin/createDeal', functions.isAdmin, orderController.postDealCode)
 
 app.get('/admin/discountCodes', orderController.getDiscountCodeList)
 
+app.get("/admin/user-section", functions.isAdmin, UserController.showUserSection)
 app.get('/admin/getUsers/:uuid', functions.isAdmin, UserController.getUserById)
 app.get('/admin/getUsers', functions.isAdmin, UserController.getAllUsers)
 app.get('/business/allowCredit/:uuid',functions.isAdmin,UserController.allowCredit)

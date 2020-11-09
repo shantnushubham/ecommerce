@@ -9,6 +9,10 @@ var mongoose = require("mongoose")
 var csv = require('jsonexport')
 var Parser=require('json2csv').Parser
 
+exports.showAdminPage = (req, res) => {
+    res.render("adminPage");
+}
+
 exports.showItemsSection = (req, res) => {
     res.render("adminItemSection");
 }
