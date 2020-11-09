@@ -34,8 +34,14 @@ app.post('/admin/createDeal', functions.isAdmin, orderController.postDealCode)
 
 app.get('/admin/discountCodes', orderController.getDiscountCodeList)
 
+app.get("/admin/user-section", functions.isAdmin, UserController.showUserSection)
 app.get('/admin/getUsers/:uuid', functions.isAdmin, UserController.getUserById)
 app.get('/admin/getUsers', functions.isAdmin, UserController.getAllUsers)
 app.get('/business/allowCredit/:uuid',functions.isAdmin,UserController.allowCredit)
+
+app.get('/downloads/bizAccounts',functions.isAdmin,adminController.downloadBizAccList)
+app.get('/downloads/invoice',functions.isAdmin,adminController.downloadInvoiceByRange)
+app.get('/downloads/users',adminController.downloadUserList)
+
 
 module.exports = app

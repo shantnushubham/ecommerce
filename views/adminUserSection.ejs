@@ -7,11 +7,11 @@
             <li class="breadcrumb-item">
                 <a href="#">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Super Admin Section</li>
+            <li class="breadcrumb-item active">User Section</li>
         </ol>
         <div class="card mb-3">
             <div class="card-header">
-                <i class="fa fa-table"></i>Super Admin Section</div>
+                <i class="fa fa-table"></i>User Section</div>
             <div class="container margin_60_35">
                 <div class="row">
                     <div class="col-xl-4 col-lg-6 col-md-6">
@@ -19,12 +19,12 @@
                             <figure class="block-reveal">
                                 <div class="block-horizzontal"></div>
                                 <a href="#0" class="wish_bt"></a>
-                                <a href="/admin/createDeal"><img src="/img2/addUser.jpg" class="img-fluid" alt=""></a>
+                                <a href="/admin/getUsers"><img src="/img2/addUser.jpg" class="img-fluid" alt=""></a>
                             </figure>
                             <div class="wrapper">
                                 <small>Admin Exclusive</small>
-                                <a href="/admin/createDeal">
-                                    <h3>Users Section</h3>
+                                <a href="/admin/getUsers">
+                                    <h3>All Users</h3>
                                 </a>
                                 <p>Navigate and view all types of users</p>
                             </div>
@@ -41,7 +41,7 @@
                             <div class="wrapper">
                                 <small>Admin Exclusive</small>
                                 <a href="/admin/orders-section">
-                                    <h3>Orders Section</h3>
+                                    <h3>Individual Users</h3>
                                 </a>
                                 <p>Navigate and view all types of orders and toggle actions.</p>
                             </div>
@@ -53,14 +53,14 @@
                             <figure class="block-reveal">
                                 <div class="block-horizzontal"></div>
                                 <a href="#0" class="wish_bt"></a>
-                                <a href="/admin/discountCodes"><img src="/img2/unregistered.jpg" class="img-fluid"
+                                <a href="/users/business-accounts"><img src="/img2/unregistered.jpg" class="img-fluid"
                                         alt=""></a>
 
                             </figure>
                             <div class="wrapper">
                                 <small>Admin Exclusive</small>
-                                <a href="/admin/discountCodes">
-                                    <h3>Accounts and Invoice</h3>
+                                <a href="/users/business-accounts">
+                                    <h3>Business Users</h3>
                                 </a>
                                 <p>Generate Invoice and Download Data</p>
                             </div>
@@ -79,7 +79,7 @@
                             <div class="wrapper">
                                 <small>Admin Exclusive</small>
                                 <a href="/admin/item-section">
-                                    <h3>Item/Service Section</h3>
+                                    <h3>Users that applied for Business User</h3>
                                 </a>
                                 <p>View and navigate through items and convenience fees</p>
                             </div>
@@ -98,7 +98,7 @@
                             <div class="wrapper">
                                 <small>Admin Exclusive</small>
                                 <a href="/admin/offer-section">
-                                    <h3>Offers Section</h3>
+                                    <h3>Premium Business Users</h3>
                                 </a>
                                 <p>View and navigate through offers and discounts</p>
                             </div>
@@ -111,4 +111,4 @@
     </div>
 </div>
 
-<%- include("partials/adminFooter.ejs") %>
+<%- include("partials/adminFooter") %>

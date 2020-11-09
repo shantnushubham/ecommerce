@@ -45,7 +45,7 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                         var payload = {
                             key: "RhPPuiIm",
                             txnid: tx,
-                            amount: parseInt(totAmt * 1.18),
+                            amount: parseInt(totAmt),
                             productinfo: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
                             firstname: req.user.name,
                             purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
@@ -123,22 +123,23 @@ router.post('/payment/success', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
     //Based on the response Implement UI as per you want
     orderServices.updatePaymentByTransactionId(req.body.txnid,req.body.status,function(updatedOtx){
-        orderServices.updateStockList(foundOrder.order.orderedItems, function (stocks) {
+        orderServices.updateStockList(updatedOtx.order.orderedItems, function (stocks) {
             console.log("stock update status:", stocks.success);
         })
         console.log('redirect to success page');
-        res.render('successPage', { order: foundOrder.order,failure:false,failureMessage:null })
+        res.render('successPage', { order: updatedOtx.order,failure:false,failureMessage:null })
     })
    
 })
 router.post('/payment/failure', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
     // Based on the response Implement UI as per you want
-    orderServices.updateStockList(foundOrder.order.orderedItems, function (stocks) {
-        console.log("stock update status:", stocks.success);
+    orderServices.updatePaymentByTransactionId(req.body.txnid,req.body.status,function(updatedOtx){
+        
+        console.log('redirect to success page');
+    res.render('successPage', { order: updatedOtx.order,failure:true,failureMessage:req.body.error_Message })
     })
-    console.log('redirect to success page');
-    res.render('successPage', { order: foundOrder.order,failure:true,failureMessage:req.body.error_Message })
+    
 })
 
 router.get("/redirect", ensureAuthenticated, function (req, res) {
@@ -218,6 +219,7 @@ router.get("/saved-orders/:orderId", ensureAuthenticated, orderController.checkS
 
 router.get("/admin/orders-section", functions.isAdmin, orderController.showOrderSection)
 router.get('/admin/orders-filter', functions.isAdmin, orderController.getAllOrders)
+router.get('/admin/orders-filter-paymentStatus/:payment', functions.isAdmin, orderController.getOrderByPST)
 router.get('/admin/orders-filter-payment/:payment', functions.isAdmin, orderController.getOrderByPayment)
 router.get('/admin/orders-filter-shipment/:shipment', functions.isAdmin, orderController.getOrderByShipStatus)
 router.get('/admin/orders/:orderId', functions.isAdmin, orderController.adminCheckOrder)
@@ -248,6 +250,9 @@ router.get('/service/:iid', orderController.getCreateServiceQuote)
 router.post('/service/:iid', orderController.createServiceQuote)
 router.get('/admin/service/:quoteId', functions.isAdmin, orderController.getServiceQuoteById)
 router.get('/admin/complete-service', functions.isAdmin, orderController.serviceQuoteStatus)
+router.get('/admin/get/allOrderQuotes',functions.isAdmin,orderController.adminAllQuotes)
+router.get('/admin/get/allOrderQuotes',functions.isAdmin,orderController.adminAllSaved)
+
 
 
 
