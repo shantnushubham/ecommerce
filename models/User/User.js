@@ -103,6 +103,10 @@ var UserSchema  = new mongoose.Schema({
         type:String,
         required:true,
         default:"jharkand"
+    },
+    daysToRemind:{
+        type:Number,
+        default:0
     }
 });
 

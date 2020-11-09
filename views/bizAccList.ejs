@@ -7,20 +7,11 @@
             <li class="breadcrumb-item">
                 <a href="#">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Cancellation Requests </li>
+            <li class="breadcrumb-item active">Add Premium User </li>
         </ol>
         <div class="card mb-3">
             <div class="card-header">
-                <i class="fa fa-table"></i> Cancellation Requests</div>
-            <div class="row" style="margin: 2px">
-                <div class="col-sm-6" style="text-align: center;">
-                    <a class="ui primary button" href="/admin/cancels-filter/cancelled">Cancelled</a>
-                </div>
-                <div class="col-sm-6" style="text-align: center;">
-                    <a class="ui primary button" href="/admin/cancels-filter/cancellation-processing">Cancellation
-                        Processing</a>
-                </div>
-            </div>
+                <i class="fa fa-table"></i> Add Premium User</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -32,8 +23,11 @@
                                 <th>Authorized Signatory Name</th>
                                 <th>Phone Number</th>
                                 <th>Address</th>
-                                <th>Credit</th>
-                                
+                                <th>Credit Given</th>
+                                <th>Credit Terms</th>
+                                <th>Credit Used</th>
+                                <th>Credit Days</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,11 +39,14 @@
                                 <td><%=el.authorizedSignatoryName%></td>
                                 <td><%=el.businessPhone%></td>
                                 <td><%=el.businessAddress%></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td>
                                     <a href="/users/premium-account/<%=el.uuid%>"><button
-                                            class="ui small green button">Accept</button></a>
+                                            class="ui small green button">Set Credit</button></a>
                                 </td>
-                                
                             </tr>
                             <% }) %>
                         </tbody>

@@ -68,20 +68,9 @@ exports.register = (req, res) => {
                         }
                         passport.authenticate("local")(req, res, function () {
                             console.log(user)
-                            const mailOptions = {
-                                to: user.email,
-                                from: 'support@inversion.co.in',
-                                subject: "successfully registered",
-                                text: `Hi ${user.name} \n 
-                        You have been successfully registered.`
-                            };
-                            sendgrid.send(mailOptions, (error, result) => {
-                                if (error) {
-                                    console.log(error)
-                                }
-
-                                res.redirect('/');
-                            });
+                            mailer.Register(user.email,user.name,user.uuid,function(mailed){
+                                console.log(mailed);
+                            })
                         });
                     });
                 })

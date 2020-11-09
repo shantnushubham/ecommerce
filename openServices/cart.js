@@ -498,7 +498,8 @@ class cart {
                         price: foundItem.price,
                         image: foundItem.image,
                         uuid: uuid,
-                        item: foundItem
+                        item: foundItem,
+                        tax:foundItem.tax
                     }
                     resolve(itemdata)
                 }

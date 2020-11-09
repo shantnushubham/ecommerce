@@ -11,6 +11,7 @@ require('dotenv').config()
 const envData = process.env
 const jssha = require('jssha')
 const uniq = require('generate-unique-id')
+const mailer=require('../controllers/common/Mailer')
 
 router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
@@ -126,6 +127,30 @@ router.post('/payment/success', (req, res) => {
         orderServices.updateStockList(updatedOtx.order.orderedItems, function (stocks) {
             console.log("stock update status:", stocks.success);
         })
+        var promiseArr = []
+        if(req.user)
+        {
+            updatedOtx.order.orderedItems.forEach(element => {
+                promiseArr.push(cartServices.getItemForList(element.iid, element.quantity, req.user.uuid))
+            });
+            Promise.all(promiseArr).then((respo) => {
+                var data={
+                    user:req.user,
+                    items:respo,
+                    order:updatedOtx.order
+                }
+                mailer.sendPerforma(req.user.email,data,function(mailed){
+                    console.log(mailed);
+                })
+                mailer.orderReceived(req.user.email,data,function(mailed){
+                    console.log(mailed);
+                })
+            }).catch(err => {
+                console.log(err);
+                
+            })
+        }
+            
         console.log('redirect to success page');
         res.render('successPage', { order: updatedOtx.order,failure:false,failureMessage:null })
     })
@@ -251,10 +276,9 @@ router.post('/service/:iid', orderController.createServiceQuote)
 router.get('/admin/service/:quoteId', functions.isAdmin, orderController.getServiceQuoteById)
 router.get('/admin/complete-service', functions.isAdmin, orderController.serviceQuoteStatus)
 router.get('/admin/get/allOrderQuotes',functions.isAdmin,orderController.adminAllQuotes)
-router.get('/admin/get/allOrderQuotes',functions.isAdmin,orderController.adminAllSaved)
+router.get('/admin/get/allOrderSaved',functions.isAdmin,orderController.adminAllSaved)
 
-
-
+router.get('/admin/senInvoice/:orderId',functions.isAdmin,orderController.sendInvoice)
 
 
 

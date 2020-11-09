@@ -10,6 +10,7 @@ const envData = process.env
 const url = require('url')
 const itemServices = require("../../openServices/items")
 const order = require('../../openServices/order')
+const userModel=require('../../models/User/User')
 
 exports.getCheckout = function (req, res) {
 
@@ -509,7 +510,7 @@ exports.createQuotation = function (req, res) {
                                                 items: cart.itemArray,
                                                 user: req.user
                                             }
-                                            mailer.askQuote(req.body.email, createdOrder, function (mailed) {
+                                            mailer.askQuote(req.body.email, maildata, function (mailed) {
                                                 console.log(mailed);
                                             })
                                         }
@@ -536,7 +537,7 @@ exports.createQuotation = function (req, res) {
                                         items: cart.itemArray,
                                         user: req.user
                                     }
-                                    mailer.askQuote(req.body.email, createdOrder, function (mailed) {
+                                    mailer.askQuote(req.body.email, maildata, function (mailed) {
                                         console.log(mailed);
                                     })
                                 }
@@ -865,7 +866,7 @@ exports.getAllowCred = function (req, res) {
 }
 
 exports.allowCred = function (req, res) {
-    orderServices.allowCredit(req.params.orderId, req.body.percent, function (order) {
+    orderServices.allowCredit(req.params.orderId, req.body.credPerc,req.body.days, function (order) {
         if (order.success == false) {
             req.flash('error', 'error')
             res.redirect('/admin/orders-filter')
@@ -887,7 +888,7 @@ exports.getOrderByShipStatus = function (req, res) {
             res.redirect('/admin/orders-filter')
         }
         else {
-            res.render('adminOrders', { orders: foundOrder.order })
+            res.render('adminOrders', { orders: foundOrder.order, filterType: "" })
         }
     })
 }
@@ -900,7 +901,7 @@ exports.getOrderByPST = function (req, res) {
             res.redirect('/admin/orders-filter')
         }
         else {
-            res.render('adminOrders', { orders: foundOrder.order })
+            res.render('adminOrders', { orders: foundOrder.order, filterType: "" })
         }
     })
 }
@@ -916,7 +917,7 @@ exports.getAllOrders = function (req, res) {
             res.redirect('/admin/orders-filter')
         }
         else {
-            res.render('adminOrders', { orders: foundOrder.order })
+            res.render('adminOrders', { orders: foundOrder.order, filterType: "" })
         }
     })
 }
@@ -938,7 +939,7 @@ exports.getOrderByPayment = function (req, res) {
         }
         else {
             console.log(foundOrder);
-            res.render('adminOrders', { orders: foundOrder.order })
+            res.render('adminOrders', { orders: foundOrder.order, filterType: req.params.payment })
         }
     })
 }
@@ -1165,4 +1166,41 @@ exports.adminAllSaved=(req,res)=>{
         res.redirect('/admin')
     });
     
+}
+
+exports.sendInvoice=function(req,res)
+{
+    orderServices.checkOrderDetails(req.params.orderId, function (foundOrder) {
+        if (foundOrder.success == false || foundOrder.found == false) {
+            req.flash('error', 'error in getting order details')
+            res.redirect('/')
+        }
+        else {
+
+
+            var promiseArr = []
+            foundOrder.order.orderedItems.forEach(element => {
+                promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
+            });
+            Promise.all(promiseArr).then(result => {
+                userModel.findOne({uuid:foundOrder.order.uuid},function(err,foundUser){
+                    if(!err)
+                    var data={
+                        user:foundUser,
+                        items:respo,
+                        order:updatedOtx.order
+                    }
+                    mailer.sendInvoice(foundUser.email,data,function(mailed){
+                        console.log(mailed);
+                    })
+                })
+            }).catch(errors => {
+                
+            })
+
+
+
+        }
+
+    })
 }
