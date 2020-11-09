@@ -13,7 +13,7 @@ const order = require('../../openServices/order')
 
 exports.getCheckout = function (req, res) {
 
-    cartServices.getListingForCheckout(req.user.uuid, function (cart) {
+    cartServices.getListingForCheckout(req.user.uuid,req.user, function (cart) {
         if (cart.success == false) {
             req.flash('error', 'empty cart!')
             res.redirect('/cartpage')
@@ -26,7 +26,7 @@ exports.getCheckout = function (req, res) {
                     res.redirect('/cartpage')
                 }
                 else {
-                    res.render('checkout', { total: cart.total, cart: cart.cartList, address: address, codAllowed: cart.codAllowed })
+                    res.render('checkout', { total: cart.total, cart: cart.cartList, address: address, codAllowed: cart.codAllowed,tax:cart.tax })
                 }
             })
         }
@@ -63,7 +63,8 @@ exports.postCheckout = function (req, res) {
                         pincode: userAdd.pincode,
                         total: finalAmt,
                         orderedItems: cart.cartList,
-                        uuid: req.user.uuid
+                        uuid: req.user.uuid,
+                        tax:cart.tax
                     }
                     if (req.body.offer && req.body.offer.length > 1) {
 
@@ -176,7 +177,8 @@ exports.creditPath = function (req, res) {
                                     codAllowed: cod,
                                     shipmentStatus: 'processing',
                                     creditAllowed: credA,
-                                    creditPercent: credPerc
+                                    creditPercent: credPerc,
+                                    tax:cart.tax
                                 }
                                 if (req.body.offer && req.body.offer.length > 1) {
 
@@ -277,11 +279,12 @@ exports.codPath = function (req, res) {
                                     state: userAdd.state,
                                     country: userAdd.country,
                                     pincode: userAdd.pincode,
-                                    total: finalAmt * 1.18,
+                                    total: finalAmt,
                                     orderedItems: cart.cartList,
                                     uuid: req.user.uuid,
                                     paymentType: 'COD',
-                                    codAllowed: true
+                                    codAllowed: true,
+                                    tax:cart.tax
                                 }
                                 orderServices.createOrder(order, function (createOrder) {
                                     if (createOrder.success == false) {
@@ -360,7 +363,8 @@ exports.saveOrder = function (req, res) {
                             codAllowed: cod,
                             shipmentStatus: 'saved',
                             creditAllowed: credA,
-                            creditPercent: credPerc
+                            creditPercent: credPerc,
+                            tax:cart.tax
                         }
                         if (req.body.offer && req.body.offer.length > 1) {
 
@@ -471,7 +475,8 @@ exports.createQuotation = function (req, res) {
                             shipmentStatus: 'saved',
                             creditAllowed: credA,
                             creditPercent: credPerc,
-                            quoteAsked: true
+                            quoteAsked: true,
+                            tax:cart.tax
                         }
                         if (req.body.offer && req.body.offer.length > 1) {
 

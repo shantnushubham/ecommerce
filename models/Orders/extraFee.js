@@ -10,6 +10,10 @@ var fee = new mongoose.Schema({
     
     name:{
         type:String
+    },
+    active:{
+        type:Boolean,
+        default:false
     }
 
 })
