@@ -123,20 +123,23 @@ router.post('/payment/success', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
     //Based on the response Implement UI as per you want
     orderServices.updatePaymentByTransactionId(req.body.txnid,req.body.status,function(updatedOtx){
-        orderServices.updateStockList(foundOrder.order.orderedItems, function (stocks) {
+        orderServices.updateStockList(updatedOtx.order.orderedItems, function (stocks) {
             console.log("stock update status:", stocks.success);
         })
         console.log('redirect to success page');
-        res.render('successPage', { order: foundOrder.order,failure:false,failureMessage:null })
+        res.render('successPage', { order: updatedOtx.order,failure:false,failureMessage:null })
     })
    
 })
 router.post('/payment/failure', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
     // Based on the response Implement UI as per you want
-   
-    console.log('redirect to success page');
-    res.render('successPage', { order: foundOrder.order,failure:true,failureMessage:req.body.error_Message })
+    orderServices.updatePaymentByTransactionId(req.body.txnid,req.body.status,function(updatedOtx){
+        
+        console.log('redirect to success page');
+    res.render('successPage', { order: updatedOtx.order,failure:true,failureMessage:req.body.error_Message })
+    })
+    
 })
 
 router.get("/redirect", ensureAuthenticated, function (req, res) {
@@ -247,6 +250,9 @@ router.get('/service/:iid', orderController.getCreateServiceQuote)
 router.post('/service/:iid', orderController.createServiceQuote)
 router.get('/admin/service/:quoteId', functions.isAdmin, orderController.getServiceQuoteById)
 router.get('/admin/complete-service', functions.isAdmin, orderController.serviceQuoteStatus)
+router.get('/admin/get/allOrderQuotes',functions.isAdmin,orderController.adminAllQuotes)
+router.get('/admin/get/allOrderQuotes',functions.isAdmin,orderController.adminAllSaved)
+
 
 
 

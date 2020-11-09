@@ -1144,3 +1144,25 @@ exports.getAllSavedOrders = function (req, res) {
         }
     })
 }
+
+exports.adminAllQuotes=(req,res)=>{
+    
+        orderServices.getAllOrderQuotes().then((result) => {
+            res.render('orderQuotes', { quotes: result })
+        }).catch((err) => {
+            req.flash('error', 'error')
+            res.redirect('/admin')
+        });
+        
+}
+
+exports.adminAllSaved=(req,res)=>{
+    
+    orderServices.getAllOrderSaved.then((result) => {
+        res.render('orderQuotes', { quotes: result })
+    }).catch((err) => {
+        req.flash('error', 'error')
+        res.redirect('/admin')
+    });
+    
+}

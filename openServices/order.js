@@ -174,12 +174,21 @@ class order {
     updatePaymentByTransactionId(transaction_id,status,callback)
     {
         var st=status==="success"?"authorized":"initiated"
-        ordermodel.findOneAndUpdate({ transaction_id:transaction_id}, { '$set': {status:st} }, function (err, updatedOrder) {
+        ordermodel.findOneAndUpdate({ transaction_id:transaction_id}, { '$set': {status:st} }, (err, updatedOrder)=> {
             if (err) {
                 console.log(err);
                 callback({ success: false })
             }
             else {
+                if(updatedOrder.paymentType==="credit")
+                {
+                    userModel.findOneAndUpdate({uuid:updatedOrder.uuid},{$inc:{credBalance:-updatedOrder.total}},function(err,updatedUser){
+                        if(err)
+                        console.log(err);
+                        
+                    })
+                }
+                
                 callback({ success: true, order: updatedOrder })
             }
         })
@@ -740,6 +749,27 @@ class order {
         })
 
     }
+    getAllOrderQuotes(){
+        return new Promise((resolve, reject) => {
+            ordermodel.find({quoteAsked:true}, function (err, quote) {
+                if (err)
+                    reject(err)
+                else
+                    resolve(quote)
+            })
+        })
+    }
+
+    getAllOrderSaved(){
+        return new Promise((resolve, reject) => {
+            ordermodel.find({shipmentStatus:"saved"}, function (err, quote) {
+                if (err)
+                    reject(err)
+                else
+                    resolve(quote)
+            })
+        })
+    }
     getQuoteById(quoteId) {
         return new Promise((resolve, reject) => {
             quoteModel.aggregate([
@@ -772,6 +802,15 @@ class order {
                     resolve(found)
                 }
             })
+        })
+    }
+
+    getOrderQuoteById(orderId,callback){
+        ordermodel.findOne({orderId:orderId},function(err,foundItem){
+            if(err)
+            callback({success:false})
+            else
+            callback({success:true,order:foundItem})
         })
     }
 
