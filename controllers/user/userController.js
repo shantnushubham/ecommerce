@@ -522,7 +522,45 @@ exports.getAllBizReq = function (req, res) {
 }
 
 exports.acceptedBusinessAccounts = function (req, res) {
-    businessReg.find({isBusiness:true}, function (err, foundB) {
+    User.find({isBusiness:true}, function (err, foundB) {
+        if (err) {
+            console.log(err)
+            req.flash('error', 'error could not find in db')
+            res.redirect('/admin')
+        } else
+            res.render('adminBizReq', { list: foundB })
+
+    })
+}
+
+exports.getAdminPA=function(req,res){
+    res.render('premiumAccount',{uuid:req.params.uuid})
+}
+
+exports.postAdminPA=function(req,res){
+    var credPerc=req.body.credPerc,credBalance=req.body.credBalance
+    if(credPerc==0||credBalance==0)
+    res.redirect('/users/business-accounts/accepted')
+    else
+    {
+    User.findOneAndUpdate({uuid:req.params.uuid},{credPerc:credPerc,credBalance:credBalance,premium:true,isBusiness:true},function(err,updatedUser){
+        if(err)
+        {
+            req.flash('error','error in db')
+            res.redirect('/users/business-accounts/accepted')
+        }
+        else
+        {
+            req.flash('success','success')
+            res.redirect('/users/business-accounts/accepted')
+        }
+    })
+
+    }
+}
+
+exports.getAllPA=function(req,res){
+    User.find({isBusiness:true,premium:true}, function (err, foundB) {
         if (err) {
             console.log(err)
             req.flash('error', 'error could not find in db')

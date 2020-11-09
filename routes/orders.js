@@ -45,7 +45,7 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                         var payload = {
                             key: "RhPPuiIm",
                             txnid: tx,
-                            amount: parseInt(totAmt * 1.18),
+                            amount: parseInt(totAmt),
                             productinfo: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
                             firstname: req.user.name,
                             purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
