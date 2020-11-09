@@ -888,7 +888,7 @@ exports.getOrderByShipStatus = function (req, res) {
             res.redirect('/admin/orders-filter')
         }
         else {
-            res.render('adminOrders', { orders: foundOrder.order })
+            res.render('adminOrders', { orders: foundOrder.order, filterType: "" })
         }
     })
 }
@@ -901,7 +901,7 @@ exports.getOrderByPST = function (req, res) {
             res.redirect('/admin/orders-filter')
         }
         else {
-            res.render('adminOrders', { orders: foundOrder.order })
+            res.render('adminOrders', { orders: foundOrder.order, filterType: "" })
         }
     })
 }
@@ -917,7 +917,7 @@ exports.getAllOrders = function (req, res) {
             res.redirect('/admin/orders-filter')
         }
         else {
-            res.render('adminOrders', { orders: foundOrder.order })
+            res.render('adminOrders', { orders: foundOrder.order, filterType: "" })
         }
     })
 }
@@ -939,7 +939,7 @@ exports.getOrderByPayment = function (req, res) {
         }
         else {
             console.log(foundOrder);
-            res.render('adminOrders', { orders: foundOrder.order })
+            res.render('adminOrders', { orders: foundOrder.order, filterType: req.params.payment })
         }
     })
 }

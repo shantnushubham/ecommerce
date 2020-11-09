@@ -60,7 +60,9 @@
 									<th class="uk-table-shrink">Image</th>
 									<th class="uk-table-expand">Name</th>
 									<th class="uk-width-small">Quantity</th>
-									<th class="uk-table-small">Total</th>
+									<th class="uk-width-small">Amount</th>
+									<th class="uk-width-small">GST</th>
+									<th class="uk-width-small">Total</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -75,12 +77,21 @@
 									<td class="uk-table-link">
 										<a class="uk-link-reset" href=""><%=cartItem.quantity%></a>
 									</td>
+									<td class="uk-table-link">
+										<a class="uk-link-reset" href=""><%=parseInt(cartItem.quantity) * parseInt(cartItem.price[0])%></a>
+									</td>
+									<td class="uk-table-link">
+										<a class="uk-link-reset" href=""><%= parseInt(cartItem.price[0] * cartItem.quantity * cartItem.tax/100)%> (<%=cartItem.tax%>%)</a>
+									</td>
 									<td class="uk-text-nowrap">₹
-										<%=parseInt(cartItem.quantity) * parseInt(cartItem.price[0])%></td>
+										<%=(parseInt(cartItem.quantity) * parseInt(cartItem.price[0])) + parseInt(cartItem.price[0] * cartItem.quantity * cartItem.tax/100)%></td>
 									<% sum = sum + parseInt(cartItem.quantity) * parseInt(cartItem.price[0]) %>
+									<td></td>
 								</tr>
 								<% }) %>
 								<tr>
+									<td></td>
+									<td></td>
 									<td></td>
 									<td></td>
 									<td><b>Cart Subtotal</b></td>
@@ -89,14 +100,18 @@
 								<tr>
 									<td></td>
 									<td></td>
-									<td><b>GST</b></td>
-									<td>₹ <%=Math.ceil(0.18 * sum)%></td>
+									<td></td>
+									<td></td>
+									<td><b>GST </b></td>
+									<td>₹ <%=tax%></td>
 								</tr>
 								<tr>
 									<td></td>
 									<td></td>
+									<td></td>
+									<td></td>
 									<td><b>Total</b></td>
-									<td>₹ <%=Math.ceil(1.18 * sum)%></td>
+									<td>₹ <%=sum + tax%></td>
 								</tr>
 							</tbody>
 						</table>

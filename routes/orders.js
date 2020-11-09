@@ -276,7 +276,7 @@ router.post('/service/:iid', orderController.createServiceQuote)
 router.get('/admin/service/:quoteId', functions.isAdmin, orderController.getServiceQuoteById)
 router.get('/admin/complete-service', functions.isAdmin, orderController.serviceQuoteStatus)
 router.get('/admin/get/allOrderQuotes',functions.isAdmin,orderController.adminAllQuotes)
-router.get('/admin/get/allOrderQuotes',functions.isAdmin,orderController.adminAllSaved)
+router.get('/admin/get/allOrderSaved',functions.isAdmin,orderController.adminAllSaved)
 
 router.get('/admin/senInvoice/:orderId',functions.isAdmin,orderController.sendInvoice)
 
