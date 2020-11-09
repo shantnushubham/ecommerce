@@ -185,6 +185,10 @@ exports.resetPassword = (req, res) => {
     }
 };
 
+exports.showUserSection = (req, res) => {
+    res.render("adminUserSection");
+}
+
 exports.getUserById = (req, res) => {
     User.findOne({ uuid: req.params.uuid }, function (err, foundUser) {
         if (err) {
