@@ -880,7 +880,21 @@ exports.allowCred = function (req, res) {
 //------------------------------------------------------------------------------------------------------------
 
 exports.getOrderByShipStatus = function (req, res) {
+    console.log(req.params.shipment);
     orderServices.getOrderByShipment(req.params.shipment, function (foundOrder) {
+        if (foundOrder.success == false) {
+            req.flash('error', 'error')
+            res.redirect('/admin/orders-filter')
+        }
+        else {
+            res.render('adminOrders', { orders: foundOrder.order })
+        }
+    })
+}
+
+exports.getOrderByPST = function (req, res) {
+    console.log(req.params.payment);
+    orderServices.getOrderByPST(req.params.payment, function (foundOrder) {
         if (foundOrder.success == false) {
             req.flash('error', 'error')
             res.redirect('/admin/orders-filter')
@@ -908,12 +922,22 @@ exports.getAllOrders = function (req, res) {
 }
 
 exports.getOrderByPayment = function (req, res) {
-    orderServices.getOrderByPayment(req.params.payment, function (foundOrder) {
+    console.log(req.params.payment);
+    var st="online"
+    var p=req.params.payment.toUpperCase()
+    if(p==="online".toUpperCase())
+    st="online"
+    else if(p==="cod".toUpperCase())
+    st="COD"
+    else if(p==="credit".toUpperCase())
+    st="credit"
+    orderServices.getOrderByPayment(st, function (foundOrder) {
         if (foundOrder.success == false) {
             req.flash('error', 'error')
             res.redirect('/admin/orders-filter')
         }
         else {
+            console.log(foundOrder);
             res.render('adminOrders', { orders: foundOrder.order })
         }
     })
@@ -1119,4 +1143,26 @@ exports.getAllSavedOrders = function (req, res) {
             res.render("savedOListUser", { allOrders: allOrders.order })
         }
     })
+}
+
+exports.adminAllQuotes=(req,res)=>{
+    
+        orderServices.getAllOrderQuotes().then((result) => {
+            res.render('orderQuotes', { quotes: result })
+        }).catch((err) => {
+            req.flash('error', 'error')
+            res.redirect('/admin')
+        });
+        
+}
+
+exports.adminAllSaved=(req,res)=>{
+    
+    orderServices.getAllOrderSaved.then((result) => {
+        res.render('orderQuotes', { quotes: result })
+    }).catch((err) => {
+        req.flash('error', 'error')
+        res.redirect('/admin')
+    });
+    
 }

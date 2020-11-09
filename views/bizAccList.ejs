@@ -32,9 +32,8 @@
                                 <th>Authorized Signatory Name</th>
                                 <th>Phone Number</th>
                                 <th>Address</th>
-                                <th>Status</th>
-                                <th>Accept</th>
-                                <th>Reject</th>
+                                <th>Credit</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -46,15 +45,11 @@
                                 <td><%=el.authorizedSignatoryName%></td>
                                 <td><%=el.businessPhone%></td>
                                 <td><%=el.businessAddress%></td>
-                                <td><%=el.isAccepted==true?"Accepted":"Pending"%></td>
                                 <td>
-                                    <a href="/users/accept/business-account/<%=el.bid%>"><button
+                                    <a href="/users/premium-account/<%=el.uuid%>"><button
                                             class="ui small green button">Accept</button></a>
                                 </td>
-                                <td>
-                                    <a href="/users/reject/business-account/<%=el.bid%>"><button
-                                            class="ui small red button">Reject</button></a>
-                                </td>
+                                
                             </tr>
                             <% }) %>
                         </tbody>

@@ -44,6 +44,7 @@ exports.register = (req, res) => {
                 req.body.address['email'] = req.body.email;
                 req.body.address['phone'] = req.body.phone;
                 req.body.address['isDefault'] = true;
+                req.body.user["state"]=req.body.address["state"]
                 if (discode.success == false)
                     req.body.user['code'] = 'invalid'
                 else
@@ -531,45 +532,57 @@ exports.getAllBizReq = function (req, res) {
 }
 
 exports.acceptedBusinessAccounts = function (req, res) {
-    User.find({isBusiness:true}, function (err, foundB) {
-        if (err) {
-            console.log(err)
-            req.flash('error', 'error could not find in db')
-            res.redirect('/admin')
-        } else
-            res.render('adminBizReq', { list: foundB })
+    businessReg.aggregate([
+        { $match: { isAccepted: true } },
+        { $lookup: { from: 'User', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
+        {
+            $project: {
+                "uuid":"$uuid",
+                "businessName":"$businessName",
+                "gstNumber":"$gstNumber",
+                "panNumber":"$panNumber",
+                "authorizedSignatoryName":"$authorizedSignatoryName",
+                "businessPhone":"$businessPhone",
+                "businessAddress":"$businessAddress",
+                "user": { "$arrayElemAt": ["$user", 0] }
+            }
+        }]).exec(function (err, foundB) {
+            console.log(foundB);
+            if (err) {
+                console.log(err)
+                req.flash('error', 'error could not find in db')
+                res.redirect('/admin')
+            } else
+                res.render('bizAccList', { list: foundB })
 
-    })
+        })
 }
 
-exports.getAdminPA=function(req,res){
-    res.render('premiumAccount',{uuid:req.params.uuid})
+exports.getAdminPA = function (req, res) {
+    res.render('premiumAccount', { uuid: req.params.uuid })
 }
 
-exports.postAdminPA=function(req,res){
-    var credPerc=req.body.credPerc,credBalance=req.body.credBalance
-    if(credPerc==0||credBalance==0)
-    res.redirect('/users/business-accounts/accepted')
-    else
-    {
-    User.findOneAndUpdate({uuid:req.params.uuid},{credPerc:credPerc,credBalance:credBalance,premium:true,isBusiness:true},function(err,updatedUser){
-        if(err)
-        {
-            req.flash('error','error in db')
-            res.redirect('/users/business-accounts/accepted')
-        }
-        else
-        {
-            req.flash('success','success')
-            res.redirect('/users/business-accounts/accepted')
-        }
-    })
+exports.postAdminPA = function (req, res) {
+    var credPerc = req.body.credPerc, credBalance = req.body.credBalance
+    if (credPerc == 0 || credBalance == 0)
+        res.redirect('/users/business-accounts/accepted')
+    else {
+        User.findOneAndUpdate({ uuid: req.params.uuid }, { credPerc: credPerc, credBalance: credBalance, premium: true, isBusiness: true }, function (err, updatedUser) {
+            if (err) {
+                req.flash('error', 'error in db')
+                res.redirect('/users/business-accounts/accepted')
+            }
+            else {
+                req.flash('success', 'success')
+                res.redirect('/users/business-accounts/accepted')
+            }
+        })
 
     }
 }
 
-exports.getAllPA=function(req,res){
-    User.find({isBusiness:true,premium:true}, function (err, foundB) {
+exports.getAllPA = function (req, res) {
+    User.find({ isBusiness: true, premium: true }, function (err, foundB) {
         if (err) {
             console.log(err)
             req.flash('error', 'error could not find in db')
@@ -584,17 +597,17 @@ exports.acceptBizReq = function (req, res) {
     businessReg.findOneAndUpdate({ bid: req.params.bid }, { isAccepted: true }, function (err, updatedB) {
         if (err) {
             req.flash('error', 'request could not be processed')
-            res.redirect('/admin')
+            res.redirect('/users/business-account')
         }
         else {
-            user.findOneAndUpdate({ uuid: updatedB.uuid }, { isBusiness: true }, function (err, updatedU) {
+            User.findOneAndUpdate({ uuid: updatedB.uuid }, { isBusiness: true }, function (err, updatedU) {
                 if (err) {
                     req.flash('error', 'request could not be processed.user not updated')
-                    res.redirect('/admin')
+                    res.redirect('/users/business-account')
                 }
                 else {
                     req.flash('success', 'success')
-                    res.redirect('/admin')
+                    res.redirect('/users/business-account')
                 }
             })
         }
@@ -604,17 +617,17 @@ exports.revokeBizAcc = function (req, res) {
     businessReg.findOneAndUpdate({ bid: req.params.bid }, { isAccepted: false }, function (err, updatedB) {
         if (err) {
             req.flash('error', 'request could not be processed')
-            res.redirect('/admin')
+            res.redirect('/users/business-account')
         }
         else {
-            user.findOneAndUpdate({ uuid: updatedB.uuid }, { isBusiness: false }, function (err, updatedU) {
+            User.findOneAndUpdate({ uuid: updatedB.uuid }, { isBusiness: false }, function (err, updatedU) {
                 if (err) {
                     req.flash('error', 'request could not be processed.user not updated')
-                    res.redirect('/admin')
+                    res.redirect('/users/business-account')
                 }
                 else {
                     req.flash('success', 'success')
-                    res.redirect('/admin')
+                    res.redirect('/users/business-account')
                 }
             })
         }

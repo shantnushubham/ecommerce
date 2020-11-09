@@ -108,16 +108,7 @@ class order {
             callback({ success: false })
         ordermodel.aggregate([
             { $match: { purchaseTime: { $gte: from, $lte: to } } },
-            {
-                $project: {
-                    uuid: 1,
-                    total: 1,
-                    purchaseTime: 1,
-                    shipmentStatus: 1,
-                    status: 1,
-
-                }
-            }
+            
         ]).exec((err, foundOrder) => {
             if (err) callback({ success: false })
             else callback({ success: true, data: foundOrder })
@@ -183,12 +174,21 @@ class order {
     updatePaymentByTransactionId(transaction_id,status,callback)
     {
         var st=status==="success"?"authorized":"initiated"
-        ordermodel.findOneAndUpdate({ transaction_id:transaction_id}, { '$set': {status:st} }, function (err, updatedOrder) {
+        ordermodel.findOneAndUpdate({ transaction_id:transaction_id}, { '$set': {status:st} }, (err, updatedOrder)=> {
             if (err) {
                 console.log(err);
                 callback({ success: false })
             }
             else {
+                if(updatedOrder.paymentType==="credit")
+                {
+                    userModel.findOneAndUpdate({uuid:updatedOrder.uuid},{$inc:{credBalance:-updatedOrder.total}},function(err,updatedUser){
+                        if(err)
+                        console.log(err);
+                        
+                    })
+                }
+                
                 callback({ success: true, order: updatedOrder })
             }
         })
@@ -532,7 +532,14 @@ class order {
 
     getOrderByShipment(status, callback) {
         ordermodel.find({ shipmentStatus: status }, function (err, order) {
-            if (err || functions.isEmpty(order)) callback({ success: false })
+            if (err) callback({ success: false })
+            else callback({ success: true, order: order })
+        })
+    }
+
+    getOrderByPST(status, callback) {
+        ordermodel.find({ status: status }, function (err, order) {
+            if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
     }
@@ -543,7 +550,7 @@ class order {
         })
     }
     getOrderByPayment(status, callback) {
-        ordermodel.find({ status: status }, function (err, order) {
+        ordermodel.find({ paymentType: status }, function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
@@ -742,6 +749,27 @@ class order {
         })
 
     }
+    getAllOrderQuotes(){
+        return new Promise((resolve, reject) => {
+            ordermodel.find({quoteAsked:true}, function (err, quote) {
+                if (err)
+                    reject(err)
+                else
+                    resolve(quote)
+            })
+        })
+    }
+
+    getAllOrderSaved(){
+        return new Promise((resolve, reject) => {
+            ordermodel.find({shipmentStatus:"saved"}, function (err, quote) {
+                if (err)
+                    reject(err)
+                else
+                    resolve(quote)
+            })
+        })
+    }
     getQuoteById(quoteId) {
         return new Promise((resolve, reject) => {
             quoteModel.aggregate([
@@ -774,6 +802,15 @@ class order {
                     resolve(found)
                 }
             })
+        })
+    }
+
+    getOrderQuoteById(orderId,callback){
+        ordermodel.findOne({orderId:orderId},function(err,foundItem){
+            if(err)
+            callback({success:false})
+            else
+            callback({success:true,order:foundItem})
         })
     }
 
