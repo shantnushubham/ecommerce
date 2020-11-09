@@ -158,6 +158,10 @@ var orderSchema = new mongoose.Schema({
     },
     shiprocket_order_id:{
         type:String
+    },
+    daysToRemind:{
+        type:Number,
+        default:0
     }
 
 });

@@ -866,7 +866,7 @@ exports.getAllowCred = function (req, res) {
 }
 
 exports.allowCred = function (req, res) {
-    orderServices.allowCredit(req.params.orderId, req.body.percent, function (order) {
+    orderServices.allowCredit(req.params.orderId, req.body.credPerc,req.body.days, function (order) {
         if (order.success == false) {
             req.flash('error', 'error')
             res.redirect('/admin/orders-filter')
