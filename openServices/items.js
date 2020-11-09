@@ -13,6 +13,7 @@ class items {
         var filter={ active: true}
         if(isBusiness==false)
         filter["isBusiness"]=false
+        
         itemModel.find(filter, function (err, foundItems) {
             if (err) {
                 console.log(err)

@@ -520,6 +520,19 @@ exports.getAllBizReq = function (req, res) {
 
     })
 }
+
+exports.acceptedBusinessAccounts = function (req, res) {
+    businessReg.find({isBusiness:true}, function (err, foundB) {
+        if (err) {
+            console.log(err)
+            req.flash('error', 'error could not find in db')
+            res.redirect('/admin')
+        } else
+            res.render('adminBizReq', { list: foundB })
+
+    })
+}
+
 exports.acceptBizReq = function (req, res) {
     businessReg.findOneAndUpdate({ bid: req.params.bid }, { isAccepted: true }, function (err, updatedB) {
         if (err) {
