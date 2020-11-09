@@ -27,11 +27,13 @@ exports.Register = function (to, name, uuid, callback) {
 
     };
     axios(options).then((result) => {
-
+        callback({success:true})
         console.log(result)
     }).catch((err) => {
+        callback({success:false})
         console.log(err)
     });
+    
 };
 
 exports.forgotPassword = function (to, token, callback) {
@@ -87,6 +89,111 @@ exports.changedPassword = function (to, callback) {
 exports.askQuote = function (email, data, callback) {
 
 
+    var d = {
+        mail: email,
+        name: data.user.name,
+        order: data.order,
+        items: data.items,
+        user: data.user
+    }
+    const options = {
+        method: 'POST',
+        url: 'https://api.sendinblue.com/v3/smtp/email',
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            'api-key': envData.sendinblue
+        },
+        data: {
+            sender: { name: 'inversion', email: 'support@112cart.com' },
+            to: [{ email: d.mail, }],
+            params: d,
+            tags: ['Quotation'],
+            templateId: 1
+        },
+
+    };
+    axios(options).then((mailed) => {
+        console.log("request completed")
+    }).catch((err) => {
+        console.log(err)
+    });
+
+    callback({ success: true })
+}
+
+exports.orderReceived=function(email,data,callback)
+{
+    var d = {
+        mail: email,
+        name: data.user.name,
+        order: data.order,
+        items: data.items,
+        user: data.user
+    }
+    const options = {
+        method: 'POST',
+        url: 'https://api.sendinblue.com/v3/smtp/email',
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            'api-key': envData.sendinblue
+        },
+        data: {
+            sender: { name: 'inversion', email: 'support@112cart.com' },
+            to: [{ email: d.mail, }],
+            params: d,
+            tags: ['Quotation'],
+            templateId: 1
+        },
+
+    };
+    axios(options).then((mailed) => {
+        console.log("request completed")
+    }).catch((err) => {
+        console.log(err)
+    });
+
+    callback({ success: true })
+}
+
+exports.sendPerforma=function(email,data,callback)
+{
+    var d = {
+        mail: email,
+        name: data.user.name,
+        order: data.order,
+        items: data.items,
+        user: data.user
+    }
+    const options = {
+        method: 'POST',
+        url: 'https://api.sendinblue.com/v3/smtp/email',
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            'api-key': envData.sendinblue
+        },
+        data: {
+            sender: { name: 'inversion', email: 'support@112cart.com' },
+            to: [{ email: d.mail, }],
+            params: d,
+            tags: ['Quotation'],
+            templateId: 1
+        },
+
+    };
+    axios(options).then((mailed) => {
+        console.log("request completed")
+    }).catch((err) => {
+        console.log(err)
+    });
+
+    callback({ success: true })
+}
+
+exports.sendInvoice=function(email,data,callback)
+{
     var d = {
         mail: email,
         name: data.user.name,
