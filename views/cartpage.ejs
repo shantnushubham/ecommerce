@@ -1,5 +1,7 @@
 <%- include("partials/newHeader.ejs") %>
 
+<% var isJH = currentUser != "" && currentUser.state.toLowerCase() === "jharkhand" %>
+
 <div data-content-region="header_bottom"></div>
 <div class="body" data-currency-code="EUR">
 
@@ -17,8 +19,7 @@
 					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
 						<li class="breadcrumb " itemprop="itemListElement" itemscope
 							itemtype="http://schema.org/ListItem">
-							<a href="/" class="breadcrumb-label"
-								itemprop="item"><span itemprop="name">Home</span></a>
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
 							<meta itemprop="position" content="1" />
 						</li>
 						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
@@ -50,11 +51,13 @@
 								<th class="cart-header-item" colspan="2">Item</th>
 								<th class="cart-header-item">Price</th>
 								<th class="cart-header-item cart-header-quantity">Quantity</th>
+								<th class="cart-header-item cart-header-quantity">Tax</th>
 								<th class="cart-header-item">Total</th>
 							</tr>
 						</thead>
 						<tbody class="cart-list">
 							<% var totalWithoutTax = 0 %>
+							<% var totalTax = 0 %>
 							<% cartlisting.forEach((cartItem, index) => { %>
 							<tr class="cart-item" data-item-row>
 								<td class="cart-item-block cart-item-figure">
@@ -78,18 +81,28 @@
 										for="qty-b893fdb7-4892-4ac7-af0d-3f90c1a8bae5">Quantity:</label>
 									<div class="form-increment" data-quantity-change>
 										<input class="form-input form-input--incrementTotal" id="qty[]" name="quantity"
-											type="number" value=1 data-quantity-min="0" data-quantity-max="0" min="1"
-											pattern="[0-9]*" aria-live="polite" id="productQuant<%=index%>">
+											type="number" value=<%=cartItem.quantity%> data-quantity-min="0"
+											data-quantity-max="0" min="1" pattern="[0-9]*" aria-live="polite"
+											id="productQuant<%=index%>" readonly>
 									</div>
 
 								</td>
 								<% totalWithoutTax = totalWithoutTax + parseInt(cartItem.quantity) * parseInt(cartItem.item.price) %>
 
+								<td class="cart-item-block cart-item-info tt-full-price">
+									<span class="cart-item-label">Tax</span>
+									<% if (currentUser != "" && currentUser.state.toLowerCase() === "jharkhand") { %>
+									<span class="cart-item-value ">₹
+										<%=Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price))))%>
+										<% totalTax = totalTax + Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)))) %>
+										(<%=cartItem.item.tax%>%) </span>
+									<% } %>
+								</td>
+
 								<td class="cart-item-block cart-item-info">
 									<span class="cart-item-label">Total</span>
 									<strong class="cart-item-value ">₹
 										<%=parseInt(cartItem.quantity) * parseInt(cartItem.item.price)%></strong>
-
 								</td>
 							</tr>
 							<% }) %>
@@ -107,21 +120,39 @@
 								<span>₹ <%=totalWithoutTax%> </span>
 							</div>
 						</li>
+						<% if (isJH) { %>
 						<li class="cart-total">
 							<div class="cart-total-label">
-								<strong>GST (18%) </strong>
+								<strong>SGST </strong>
 							</div>
 							<div class="cart-total-value">
-								<span>₹ <%=Math.ceil((0.18)*totalWithoutTax)%></span>
+								<span>₹ <%=totalTax/2%></span>
 							</div>
-
 						</li>
+						<li class="cart-total">
+							<div class="cart-total-label">
+								<strong>CGST</strong>
+							</div>
+							<div class="cart-total-value">
+								<span>₹ <%=totalTax/2%></span>
+							</div>
+						</li>
+						<% } else { %>
+							<li class="cart-total">
+								<div class="cart-total-label">
+									<strong>IGST </strong>
+								</div>
+								<div class="cart-total-value">
+									<span>₹ <%=totalTax%></span>
+								</div>
+							</li>
+						<% } %>
 						<li class="cart-total">
 							<div class="cart-total-label">
 								<strong>Grand total:</strong>
 							</div>
 							<div class="cart-total-value cart-total-grandTotal">
-								<span>₹ <%=Math.ceil((1.18)*totalWithoutTax)%></span>
+								<span>₹ <%=(totalWithoutTax + totalTax)%></span>
 							</div>
 						</li>
 					</ul>

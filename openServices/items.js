@@ -92,7 +92,8 @@ class items {
                                 vendorName: foundItem.vendorName,
                                 shortDesc: foundItem.shortDesc,
                                 measurementUnit: foundItem.measurementUnit,
-                                isService: foundItem.isService
+                                isService: foundItem.isService,
+                                tax: foundItem.tax
 
                             }
 
