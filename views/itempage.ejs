@@ -140,7 +140,7 @@
 								<span class="price-now-label" style="display: none;">
 								</span>
 								<span data-product-price-with-tax class="price price--withTax">₹ <%=item.price%> +
-									GST</span>
+									GST (<%=item.tax%>% = <%=Math.ceil(item.price * item.tax/100)%>) = ₹ <%=Math.ceil(item.price + (item.price * item.tax/100))%></span>
 								<meta itemprop="availability" itemtype="http://schema.org/ItemAvailability"
 									content="http://schema.org/InStock">
 								<meta itemprop="itemCondition" itemtype="http://schema.org/OfferItemCondition"
