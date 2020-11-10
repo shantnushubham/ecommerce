@@ -5,10 +5,8 @@ var mongoose = require("mongoose")
 
 
 exports.getAllItems = function (req, res) {
-    var isBusiness=false
-    if(req.user&&req.user.isBusiness)
-    isBusiness=true
-    itemservices.getAllItems(isBusiness,function (itemlist) {
+    
+    itemservices.getAllItems(function (itemlist) {
         if (itemlist.success == false) {
             req.flash('error', 'error in getting items')
             res.redirect('/')

@@ -92,6 +92,10 @@
                                 value="<%=item.shortDesc%>">
                         </div>
                         <div class="field">
+                            <label>SKUs</label>
+                            <input type="text" placeholder="SKUs" name="sku" value="<%=item.sku%>">
+                        </div>
+                        <div class="field">
                             <label>Image Link (For multiple images, separate links using "||")</label>
                             <% var image = ""; 
                             for (var x = 0; x < item.image.length - 1; x++) { image = image + item.image[x] + "||" } if (item.image.length > 0) {image = image + item.image[item.image.length - 1] } %>
