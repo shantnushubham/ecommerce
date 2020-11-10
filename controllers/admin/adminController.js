@@ -7,7 +7,7 @@ var orderServices = require('../../openServices/order')
 var mongoose = require("mongoose")
 // var csv = require('csv-express')
 var csv = require('jsonexport')
-var Parser=require('json2csv').Parser
+var Parser = require('json2csv').Parser
 
 exports.showAdminPage = (req, res) => {
     res.render("adminPage");
@@ -155,100 +155,103 @@ exports.downloadSingleInvoice = function (req, res) {
     })
 }
 
+exports.getCSVDownloadPage = (req, res) => {
+    res.render("csvDownload");
+}
+
 exports.downloadInvoiceByRange = function (req, res) {
     orderServices.getOrdersByDateRange(req.body.from, req.body.to, function (foundOrder) {
         if (foundOrder.success == false)
             res.redirect('/admin/orders-filter')
-        else
-            {
-                const fields = [
-                    {
-                        label: 'Order ID',
-                        value: 'orderId'
-                    },
-                    {
-                        label: 'uuid',
-                        value: 'uuid'
-                    },
-                     {
-                        label: 'total',
-                        value: 'total'
-                    },
-                    {
-                        label: 'tax',
-                        value: 'tax'
-                    },
-                    {
-                        label: 'address',
-                        value: 'fullAddress'
-                    },
-                    {
-                        label: 'city',
-                        value: 'city'
-                        
-                    },
-                    {
-                        label: 'state',
-                        value: 'state'
-                    },
-                    {
-                        label: 'pincode',
-                        value: 'pincode'
-                    },
-                    
-                    {
-                        label: 'date',
-                        value: 'purchaseTime'
-                    },
-                    {
-                        label: 'country',
-                        value: 'country'
-                    },
-                    {
-                        label: 'status',
-                        value: 'status'
-                    },
-                    {
-                        label: 'payment Type',
-                        value: 'paymentType'
-                    },
-                    {
-                        label: 'stransaction_id',
-                        value: 'transaction_id'
-                    },
-                    {
-                        label: 'vendorId',
-                        value: 'vendorId'
-                    },
-                    {
-                        label: 'vendorName',
-                        value: 'vendorName'
-                    },
-                    {
-                        label: 'vendorId',
-                        value: 'vendorId'
-                    },
-                    {
-                        label: 'shippingConfirmed',
-                        value: 'shippingConfirmed'
-                    },
-                    {
-                        label: 'shipmentStatus',
-                        value: 'shipmentStatus'
-                    },
-                    {
-                        label: 'offerUsed',
-                        value: 'offerUsed'
-                    },
-                    
-    
-                ];
-                const json2csv = new Parser({fields});
-                const csv = json2csv.parse(foundOrder.data);
-                res.header('Content-Type', 'text/csv');
-                res.attachment("orders.csv");
-                return res.send(csv);
-            }
+        else {
+            const fields = [
+                {
+                    label: 'Order ID',
+                    value: 'orderId'
+                },
+                {
+                    label: 'uuid',
+                    value: 'uuid'
+                },
+                {
+                    label: 'total',
+                    value: 'total'
+                },
+                {
+                    label: 'tax',
+                    value: 'tax'
+                },
+                {
+                    label: 'address',
+                    value: 'fullAddress'
+                },
+                {
+                    label: 'city',
+                    value: 'city'
+
+                },
+                {
+                    label: 'state',
+                    value: 'state'
+                },
+                {
+                    label: 'pincode',
+                    value: 'pincode'
+                },
+
+                {
+                    label: 'date',
+                    value: 'purchaseTime'
+                },
+                {
+                    label: 'country',
+                    value: 'country'
+                },
+                {
+                    label: 'status',
+                    value: 'status'
+                },
+                {
+                    label: 'payment Type',
+                    value: 'paymentType'
+                },
+                {
+                    label: 'stransaction_id',
+                    value: 'transaction_id'
+                },
+                {
+                    label: 'vendorId',
+                    value: 'vendorId'
+                },
+                {
+                    label: 'vendorName',
+                    value: 'vendorName'
+                },
+                {
+                    label: 'vendorId',
+                    value: 'vendorId'
+                },
+                {
+                    label: 'shippingConfirmed',
+                    value: 'shippingConfirmed'
+                },
+                {
+                    label: 'shipmentStatus',
+                    value: 'shipmentStatus'
+                },
+                {
+                    label: 'offerUsed',
+                    value: 'offerUsed'
+                },
+
+
+            ];
+            const json2csv = new Parser({ fields });
+            const csv = json2csv.parse(foundOrder.data);
+            res.header('Content-Type', 'text/csv');
+            res.attachment("orders.csv");
+            return res.send(csv);
+        }
     })
 }
 
@@ -269,7 +272,7 @@ exports.downloadUserList = function (req, res) {
                     label: 'uuid',
                     value: 'uuid'
                 },
-                 {
+                {
                     label: 'Admin',
                     value: 'isAdmin'
                 },
@@ -284,7 +287,7 @@ exports.downloadUserList = function (req, res) {
                 {
                     label: 'email',
                     value: 'email'
-                    
+
                 },
                 {
                     label: 'businessAccount',
@@ -294,7 +297,7 @@ exports.downloadUserList = function (req, res) {
                     label: 'premium',
                     value: 'premium'
                 },
-                
+
                 {
                     label: 'credit Percent',
                     value: 'credPerc'
@@ -309,7 +312,7 @@ exports.downloadUserList = function (req, res) {
                 }
 
             ];
-            const json2csv = new Parser({fields});
+            const json2csv = new Parser({ fields });
             const csv = json2csv.parse(foundUsers);
             res.header('Content-Type', 'text/csv');
             res.attachment("users.csv");
@@ -325,63 +328,62 @@ exports.downloadBizAccList = function (req, res) {
             req.flash('error', 'error in downloading')
             res.redirect('/admn')
         }
-        else
-            {
-                const fields = [
-                    {
-                        label: 'Name',
-                        value: 'name'
-                    },
-                    {
-                        label: 'uuid',
-                        value: 'uuid'
-                    },
-                     {
-                        label: 'Admin',
-                        value: 'isAdmin'
-                    },
-                    {
-                        label: 'active',
-                        value: 'active'
-                    },
-                    {
-                        label: 'phone',
-                        value: 'phone'
-                    },
-                    {
-                        label: 'email',
-                        value: 'email'
-                        
-                    },
-                    {
-                        label: 'businessAccount',
-                        value: 'isBusiness'
-                    },
-                    {
-                        label: 'premium',
-                        value: 'premium'
-                    },
-                    
-                    {
-                        label: 'credit Percent',
-                        value: 'credPerc'
-                    },
-                    {
-                        label: 'balance',
-                        value: 'credBalance'
-                    },
-                    {
-                        label: 'state',
-                        value: 'state'
-                    }
-    
-                ];
-                const json2csv = new Parser({fields});
-                const csv = json2csv.parse(foundUsers);
-                res.header('Content-Type', 'text/csv');
-                res.attachment("businessAccount.csv");
-                return res.send(csv);
-            }
+        else {
+            const fields = [
+                {
+                    label: 'Name',
+                    value: 'name'
+                },
+                {
+                    label: 'uuid',
+                    value: 'uuid'
+                },
+                {
+                    label: 'Admin',
+                    value: 'isAdmin'
+                },
+                {
+                    label: 'active',
+                    value: 'active'
+                },
+                {
+                    label: 'phone',
+                    value: 'phone'
+                },
+                {
+                    label: 'email',
+                    value: 'email'
+
+                },
+                {
+                    label: 'businessAccount',
+                    value: 'isBusiness'
+                },
+                {
+                    label: 'premium',
+                    value: 'premium'
+                },
+
+                {
+                    label: 'credit Percent',
+                    value: 'credPerc'
+                },
+                {
+                    label: 'balance',
+                    value: 'credBalance'
+                },
+                {
+                    label: 'state',
+                    value: 'state'
+                }
+
+            ];
+            const json2csv = new Parser({ fields });
+            const csv = json2csv.parse(foundUsers);
+            res.header('Content-Type', 'text/csv');
+            res.attachment("businessAccount.csv");
+            return res.send(csv);
+        }
     })
 }
 
