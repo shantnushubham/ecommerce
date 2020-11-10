@@ -155,8 +155,12 @@ exports.downloadSingleInvoice = function (req, res) {
     })
 }
 
-exports.getCSVDownloadPage = (req, res) => {
-    res.render("csvDownload");
+exports.getCSVDownloadPagePayment = (req, res) => {
+    res.render("csvDownload", {filterType: "payment"});
+}
+
+exports.getCSVDownloadPageShipment = (req, res) => {
+    res.render("csvDownloadShip", { filterType: "shipment"});
 }
 
 exports.downloadInvoiceByRangePayment = function (req, res) {
