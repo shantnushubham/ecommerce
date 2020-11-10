@@ -370,7 +370,21 @@ exports.downloadInvoiceByRangeShipment = function (req, res) {
 }
 
 exports.downloadUserList = function (req, res) {
-    userModel.find({}, function (err, foundUsers) {
+   var filter={
+
+   }
+   if(req.params.type=="individual")
+   {
+       filter.isBusiness=false
+       filter.premium=false
+   }
+   if(req.params.type==="business")
+   filter.isBusiness=true
+   if(req.params.type==="premium")
+   {filter.isBusiness=true
+    filter.premium=true
+}
+    userModel.find(filter, function (err, foundUsers) {
         console.log(foundUsers);
         if (err) {
             req.flash('error', 'error in downloading')
