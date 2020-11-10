@@ -162,6 +162,10 @@ var orderSchema = new mongoose.Schema({
     daysToRemind:{
         type:Number,
         default:0
+    },
+    invoiceSent:{
+        type:Boolean,
+        default:false
     }
 
 });

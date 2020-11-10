@@ -203,6 +203,18 @@ exports.getAllUsers = function (req, res) {
     })
 }
 
+exports.getAllIndividual=function(req,res)
+{
+    User.find({isBusiness:false,isPremium:false}, function (err, foundUser) {
+        if (err) {
+            req.flash('error', 'could not fetch')
+            res.redirect('/admin/userNotFound')
+        }
+        else {
+            res.render('userPeek', { user: foundUser })
+        }
+    })
+}
 exports.deleteUserById = (req, res) => {
     User.findOneAndRemove({ uuid: req.user.uuid }, err => {
         if (err) return res.status(400).send({ error: err })

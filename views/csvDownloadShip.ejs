@@ -19,7 +19,7 @@
                 <h1>Download Invoice</h1>
                 <br>
                 <br>
-                <form action="/downloads/invoice/payment" method="POST">
+                <form action="/downloads/invoice/shipment" method="POST">
                     <div class="ui form">
                         <div class="field">
                             <label>Start Date</label>
@@ -30,8 +30,8 @@
                             <input type="date" placeholder="End Date" name="to" value="" required>
                         </div>
                         <div class="field">
-                            <label>Payment Status</label>
-                            <input type="text" placeholder="Payment Status(initialised/authorized)" name="payment" value="">
+                            <label>Shipment Status</label>
+                            <input type="text" placeholder="shipment status" name="shipment" value="">
                         </div>
                     </div>
                     <button class="ui button" type="submit">Submit</button>

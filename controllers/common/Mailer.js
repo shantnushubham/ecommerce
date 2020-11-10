@@ -50,7 +50,7 @@ exports.forgotPassword = function (to, token, callback) {
             to: [{ email: to, }],
             params: { token: token },
             tags: ['password reset'],
-            templateId: 1
+            templateId: 7
         },
 
     };
@@ -109,7 +109,7 @@ exports.askQuote = function (email, data, callback) {
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
-            templateId: 1
+            templateId: 5
         },
 
     };
@@ -144,7 +144,7 @@ exports.orderReceived=function(email,data,callback)
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
-            templateId: 1
+            templateId: 6
         },
 
     };
@@ -179,7 +179,7 @@ exports.sendPerforma=function(email,data,callback)
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
-            templateId: 1
+            templateId: 2
         },
 
     };
@@ -214,7 +214,7 @@ exports.sendInvoice=function(email,data,callback)
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
-            templateId: 1
+            templateId: 2
         },
 
     };

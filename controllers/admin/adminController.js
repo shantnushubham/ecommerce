@@ -159,100 +159,214 @@ exports.getCSVDownloadPage = (req, res) => {
     res.render("csvDownload");
 }
 
-exports.downloadInvoiceByRange = function (req, res) {
-    orderServices.getOrdersByDateRange(req.body.from, req.body.to, function (foundOrder) {
-        if (foundOrder.success == false)
-            res.redirect('/admin/orders-filter')
-        else {
-            const fields = [
-                {
-                    label: 'Order ID',
-                    value: 'orderId'
-                },
-                {
-                    label: 'uuid',
-                    value: 'uuid'
-                },
-                {
-                    label: 'total',
-                    value: 'total'
-                },
-                {
-                    label: 'tax',
-                    value: 'tax'
-                },
-                {
-                    label: 'address',
-                    value: 'fullAddress'
-                },
-                {
-                    label: 'city',
-                    value: 'city'
+exports.downloadInvoiceByRangePayment = function (req, res) {
+    if(req.body){
+        orderServices.getOrdersByDateRangePayment(req.body.from, req.body.to,req.body.payment, function (foundOrder) {
+            console.log(foundOrder);
+            if (foundOrder.success == false)
+                {return res.redirect('/admin/orders-filter')}
+            if(foundOrder.success) {
+                const fields = [
+                    {
+                        label: 'Order ID',
+                        value: 'orderId'
+                    },
+                    {
+                        label: 'uuid',
+                        value: 'uuid'
+                    },
+                    {
+                        label: 'total',
+                        value: 'total'
+                    },
+                    {
+                        label: 'tax',
+                        value: 'tax'
+                    },
+                    {
+                        label: 'address',
+                        value: 'fullAddress'
+                    },
+                    {
+                        label: 'city',
+                        value: 'city'
+    
+                    },
+                    {
+                        label: 'state',
+                        value: 'state'
+                    },
+                    {
+                        label: 'pincode',
+                        value: 'pincode'
+                    },
+    
+                    {
+                        label: 'date',
+                        value: 'purchaseTime'
+                    },
+                    {
+                        label: 'country',
+                        value: 'country'
+                    },
+                    {
+                        label: 'status',
+                        value: 'status'
+                    },
+                    {
+                        label: 'payment Type',
+                        value: 'paymentType'
+                    },
+                    {
+                        label: 'transaction_id',
+                        value: 'transaction_id'
+                    },
+                    {
+                        label: 'vendorId',
+                        value: 'vendorId'
+                    },
+                    {
+                        label: 'vendorName',
+                        value: 'vendorName'
+                    },
+                    {
+                        label: 'vendorId',
+                        value: 'vendorId'
+                    },
+                    {
+                        label: 'shippingConfirmed',
+                        value: 'shippingConfirmed'
+                    },
+                    {
+                        label: 'shipmentStatus',
+                        value: 'shipmentStatus'
+                    },
+                    {
+                        label: 'offerUsed',
+                        value: 'offerUsed'
+                    },
+    
+    
+                ];
+                const json2csv = new Parser({ fields });
+                const csv = json2csv.parse(foundOrder.data);
+                // console.log(csv);
+                res.header('Content-Type', 'text/csv');
+                res.attachment("orders.csv");
+                return res.send(csv)
+            }
+        })
+    
+    }
+    else
+    res.redirect('/downloads/invoice')
 
-                },
-                {
-                    label: 'state',
-                    value: 'state'
-                },
-                {
-                    label: 'pincode',
-                    value: 'pincode'
-                },
+}
+exports.getCSVDownloadPageShipment = (req, res) => {
+    res.render("csvDownloadShip");
+}
+exports.downloadInvoiceByRangeShipment = function (req, res) {
+    if(req.body){
+        orderServices.getOrdersByDateRangeShipment(req.body.from, req.body.to,req.body.shipment, function (foundOrder) {
+            console.log(foundOrder);
+            if (foundOrder.success == false)
+                {return res.redirect('/admin/orders-filter')}
+            if(foundOrder.success) {
+                const fields = [
+                    {
+                        label: 'Order ID',
+                        value: 'orderId'
+                    },
+                    {
+                        label: 'uuid',
+                        value: 'uuid'
+                    },
+                    {
+                        label: 'total',
+                        value: 'total'
+                    },
+                    {
+                        label: 'tax',
+                        value: 'tax'
+                    },
+                    {
+                        label: 'address',
+                        value: 'fullAddress'
+                    },
+                    {
+                        label: 'city',
+                        value: 'city'
+    
+                    },
+                    {
+                        label: 'state',
+                        value: 'state'
+                    },
+                    {
+                        label: 'pincode',
+                        value: 'pincode'
+                    },
+    
+                    {
+                        label: 'date',
+                        value: 'purchaseTime'
+                    },
+                    {
+                        label: 'country',
+                        value: 'country'
+                    },
+                    {
+                        label: 'status',
+                        value: 'status'
+                    },
+                    {
+                        label: 'payment Type',
+                        value: 'paymentType'
+                    },
+                    {
+                        label: 'transaction_id',
+                        value: 'transaction_id'
+                    },
+                    {
+                        label: 'vendorId',
+                        value: 'vendorId'
+                    },
+                    {
+                        label: 'vendorName',
+                        value: 'vendorName'
+                    },
+                    {
+                        label: 'vendorId',
+                        value: 'vendorId'
+                    },
+                    {
+                        label: 'shippingConfirmed',
+                        value: 'shippingConfirmed'
+                    },
+                    {
+                        label: 'shipmentStatus',
+                        value: 'shipmentStatus'
+                    },
+                    {
+                        label: 'offerUsed',
+                        value: 'offerUsed'
+                    },
+    
+    
+                ];
+                const json2csv = new Parser({ fields });
+                const csv = json2csv.parse(foundOrder.data);
+                // console.log(csv);
+                res.header('Content-Type', 'text/csv');
+                res.attachment("orders.csv");
+                return res.send(csv)
+            }
+        })
+    
+    }
+    else
+    res.redirect('/downloads/invoice')
 
-                {
-                    label: 'date',
-                    value: 'purchaseTime'
-                },
-                {
-                    label: 'country',
-                    value: 'country'
-                },
-                {
-                    label: 'status',
-                    value: 'status'
-                },
-                {
-                    label: 'payment Type',
-                    value: 'paymentType'
-                },
-                {
-                    label: 'stransaction_id',
-                    value: 'transaction_id'
-                },
-                {
-                    label: 'vendorId',
-                    value: 'vendorId'
-                },
-                {
-                    label: 'vendorName',
-                    value: 'vendorName'
-                },
-                {
-                    label: 'vendorId',
-                    value: 'vendorId'
-                },
-                {
-                    label: 'shippingConfirmed',
-                    value: 'shippingConfirmed'
-                },
-                {
-                    label: 'shipmentStatus',
-                    value: 'shipmentStatus'
-                },
-                {
-                    label: 'offerUsed',
-                    value: 'offerUsed'
-                },
-
-
-            ];
-            const json2csv = new Parser({ fields });
-            const csv = json2csv.parse(foundOrder.data);
-            res.header('Content-Type', 'text/csv');
-            res.attachment("orders.csv");
-            return res.send(csv);
-        }
-    })
 }
 
 exports.downloadUserList = function (req, res) {
