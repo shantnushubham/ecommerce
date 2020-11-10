@@ -37,10 +37,16 @@ app.get('/admin/discountCodes', orderController.getDiscountCodeList)
 app.get("/admin/user-section", functions.isAdmin, UserController.showUserSection)
 app.get('/admin/getUsers/:uuid', functions.isAdmin, UserController.getUserById)
 app.get('/admin/getUsers', functions.isAdmin, UserController.getAllUsers)
+app.get('/admin/getIndividuals', functions.isAdmin, UserController.getAllIndividual)
+
 app.get('/business/allowCredit/:uuid',functions.isAdmin,UserController.allowCredit)
+// List of individual users needed
 
 app.get('/downloads/bizAccounts',functions.isAdmin,adminController.downloadBizAccList)
-app.get('/downloads/invoice',functions.isAdmin,adminController.downloadInvoiceByRange)
+app.get("/downloads/invoice/payment", functions.isAdmin, adminController.getCSVDownloadPagePayment)
+app.post('/downloads/invoice/payment',functions.isAdmin,adminController.downloadInvoiceByRangePayment)
+app.get("/downloads/invoice/shipment", functions.isAdmin, adminController.getCSVDownloadPageShipment)
+app.post('/downloads/invoice/shipment',functions.isAdmin,adminController.downloadInvoiceByRangePayment)
 app.get('/downloads/users',adminController.downloadUserList)
 
 

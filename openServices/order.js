@@ -103,17 +103,44 @@ class order {
 
         })
     }
-    getOrdersByDateRange(from, to, callback) {
-        if (!(from instanceof Date) || !(to instanceof Date))
+    getOrdersByDateRangePayment(from, to,payment, callback) {
+        var t=new Date(to)
+        var f=new Date(from)
+        console.log(!(f instanceof Date) || !(t instanceof Date));
+        if (!(f instanceof Date) || !(t instanceof Date))
             callback({ success: false })
-        ordermodel.aggregate([
-            { $match: { purchaseTime: { $gte: from, $lte: to } } },
-            
-        ]).exec((err, foundOrder) => {
-            if (err) callback({ success: false })
-            else callback({ success: true, data: foundOrder })
+        else {
+            ordermodel.aggregate([
+                { $match: { purchaseTime: { $gte: f, $lte: t },status:payment,invoiceSent:true } },
 
-        })
+            ]).exec((err, foundOrder) => {
+                console.log(err);
+                if (err) callback({ success: false })
+                else callback({ success: true, data: foundOrder })
+
+            })
+        }
+
+    }
+
+    getOrdersByDateRangeShipment(from, to,shipment, callback) {
+        var t=new Date(to)
+        var f=new Date(from)
+        console.log(!(f instanceof Date) || !(t instanceof Date));
+        if (!(f instanceof Date) || !(t instanceof Date))
+            callback({ success: false })
+        else {
+            ordermodel.aggregate([
+                { $match: { purchaseTime: { $gte: f, $lte: t },shipmentStatus:shipment,invoiceSent:true } },
+
+            ]).exec((err, foundOrder) => {
+                console.log(err);
+                if (err) callback({ success: false })
+                else callback({ success: true, data: foundOrder })
+
+            })
+        }
+
     }
 
     getUserOrder(uuid, callback) {
@@ -159,8 +186,8 @@ class order {
         })
     }
 
-    addTransactionId(orderId ,transactionId,callback) {
-        ordermodel.findOneAndUpdate({ orderId:orderId }, { '$set': {transaction_id:transactionId} }, function (err, updatedOrder) {
+    addTransactionId(orderId, transactionId, callback) {
+        ordermodel.findOneAndUpdate({ orderId: orderId }, { '$set': { transaction_id: transactionId } }, function (err, updatedOrder) {
             if (err) {
                 console.log(err);
                 callback({ success: false })
@@ -171,24 +198,22 @@ class order {
         })
     }
 
-    updatePaymentByTransactionId(transaction_id,status,callback)
-    {
-        var st=status==="success"?"authorized":"initiated"
-        ordermodel.findOneAndUpdate({ transaction_id:transaction_id}, { '$set': {status:st} }, (err, updatedOrder)=> {
+    updatePaymentByTransactionId(transaction_id, status, callback) {
+        var st = status === "success" ? "authorized" : "initiated"
+        ordermodel.findOneAndUpdate({ transaction_id: transaction_id }, { '$set': { status: st } }, (err, updatedOrder) => {
             if (err) {
                 console.log(err);
                 callback({ success: false })
             }
             else {
-                if(updatedOrder.paymentType==="credit")
-                {
-                    userModel.findOneAndUpdate({uuid:updatedOrder.uuid},{$inc:{credBalance:-updatedOrder.total}},function(err,updatedUser){
-                        if(err)
-                        console.log(err);
-                        
+                if (updatedOrder.paymentType === "credit") {
+                    userModel.findOneAndUpdate({ uuid: updatedOrder.uuid }, { $inc: { credBalance: -updatedOrder.total } }, function (err, updatedUser) {
+                        if (err)
+                            console.log(err);
+
                     })
                 }
-                
+
                 callback({ success: true, order: updatedOrder })
             }
         })
@@ -424,6 +449,7 @@ class order {
     }
 
     acceptOrder(orderId, data, callback) {
+        console.log(data);
         ordermodel.findOne({ orderId: orderId, }, (err, foundOrder) => {
             if (err || functions.isEmpty(foundOrder)) {
                 callback({ success: false, message: "db error" })
@@ -434,12 +460,13 @@ class order {
                         callback({ success: false, message: "db error" })
                     }
                     else {
-                        if (data.length == undefined || data.weight == undefined || data.height == undefined || data.breadth == undefined || data.vendorId == undefined) {
+                        if (data.length == '' || data.weight == '' || data.height == '' || data.breadth == '' || data.vendorId == '') {
                             ordermodel.findOneAndUpdate({ orderId: foundOrder.orderId }, data, function (err, updatedOrder) {
+                                console.log("order update error=", err);
                                 if (err)
                                     callback({ success: false, message: "error in updating order" })
                                 else
-                                    callback({ success: true,message:"shiprocket request not made!!" })
+                                    callback({ success: true, message: "shiprocket request not made!!" })
                             })
                         }
                         else {
@@ -505,12 +532,12 @@ class order {
                                                             if (err)
                                                                 callback({ success: false, message: "error in updating order" })
                                                             else
-                                                                callback({ success: true ,message:"shiprocket request made!"})
+                                                                callback({ success: true, message: "shiprocket request made!" })
                                                         })
                                                     }
                                                 })
                                                 .catch(function (error) {
-                                                    console.log(error.data);
+                                                    console.log(error);
                                                     callback({ success: false, message: "error in placing order.please check logs" })
 
                                                 });
@@ -595,9 +622,9 @@ class order {
         })
     }
 
-    allowCredit(orderId, percent,days, callback) {
+    allowCredit(orderId, percent, days, callback) {
         ordermodel.findOneAndUpdate({ orderId: orderId, },
-            { creditAllowed: true, creditPercent: percent, paymentType: 'credit', shipmentStatus: 'processing',daysToRemind:days },
+            { creditAllowed: true, creditPercent: percent, paymentType: 'credit', shipmentStatus: 'processing', daysToRemind: days },
             function (err, updatedOrder) {
                 if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
                 else
@@ -749,9 +776,9 @@ class order {
         })
 
     }
-    getAllOrderQuotes(){
+    getAllOrderQuotes() {
         return new Promise((resolve, reject) => {
-            ordermodel.find({quoteAsked:true}, function (err, quote) {
+            ordermodel.find({ quoteAsked: true }, function (err, quote) {
                 if (err)
                     reject(err)
                 else
@@ -760,9 +787,9 @@ class order {
         })
     }
 
-    getAllOrderSaved(){
+    getAllOrderSaved() {
         return new Promise((resolve, reject) => {
-            ordermodel.find({shipmentStatus:"saved"}, function (err, quote) {
+            ordermodel.find({ shipmentStatus: "saved" }, function (err, quote) {
                 if (err)
                     reject(err)
                 else
@@ -805,12 +832,22 @@ class order {
         })
     }
 
-    getOrderQuoteById(orderId,callback){
-        ordermodel.findOne({orderId:orderId},function(err,foundItem){
-            if(err)
-            callback({success:false})
+    getOrderQuoteById(orderId, callback) {
+        ordermodel.findOne({ orderId: orderId }, function (err, foundItem) {
+            if (err)
+                callback({ success: false })
             else
-            callback({success:true,order:foundItem})
+                callback({ success: true, order: foundItem })
+        })
+    }
+
+    confirmInvoice(orderId,callback)
+    {
+        ordermodel.findOneAndUpdate({ orderId: orderId }, { invoiceSent: true }, function (err, order) {
+            if (err)
+                callback({ success: false })
+            else
+                callback({ success: true, order })
         })
     }
 
