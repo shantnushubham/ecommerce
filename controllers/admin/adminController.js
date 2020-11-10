@@ -106,8 +106,11 @@ exports.updateItem = function (req, res) {
         color: data.color,
         stock: data.stock,
         isService: data.isService == true ? true : false,
+        isBusiness: data.isBusiness == true ? true : false,
         cod: data.cod == true ? true : false,
-        tax: data.gstPercent
+        tax: data.gstPercent,
+        sku: data.sku,
+        measurementUnit: data.measurementUnit
 
     }, function (createdItem) {
         if (createdItem.success == false) req.flash('error', 'error in update')
