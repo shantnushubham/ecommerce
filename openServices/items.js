@@ -180,7 +180,8 @@ class items {
             cod: data.cod == true ? true : false,
             measurementUnit: data.measurementUnit,
             tax: data.tax,
-            sku : data.sku
+            sku: data.sku,
+            isBusiness: data.isBusiness,
 
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }

@@ -71,7 +71,7 @@ exports.createItem = function (req, res) {
         isService: data.isService == true ? true : false,
         cod: data.cod == true ? true : false,
         measurementUnit: data.measurementUnit,
-        isBusiness: data.category.toUpperCase() === "chemicals".toLocaleUpperCase(),
+        isBusiness: data.isBusiness,
         tax: data.gstPercent
 
 
