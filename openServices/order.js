@@ -424,6 +424,7 @@ class order {
     }
 
     acceptOrder(orderId, data, callback) {
+        console.log(data);
         ordermodel.findOne({ orderId: orderId, }, (err, foundOrder) => {
             if (err || functions.isEmpty(foundOrder)) {
                 callback({ success: false, message: "db error" })
@@ -434,8 +435,9 @@ class order {
                         callback({ success: false, message: "db error" })
                     }
                     else {
-                        if (data.length == undefined || data.weight == undefined || data.height == undefined || data.breadth == undefined || data.vendorId == undefined) {
+                        if (data.length == '' || data.weight == '' || data.height == '' || data.breadth == '' || data.vendorId == '') {
                             ordermodel.findOneAndUpdate({ orderId: foundOrder.orderId }, data, function (err, updatedOrder) {
+                                console.log("order update error=",err);
                                 if (err)
                                     callback({ success: false, message: "error in updating order" })
                                 else
@@ -510,7 +512,7 @@ class order {
                                                     }
                                                 })
                                                 .catch(function (error) {
-                                                    console.log(error.data);
+                                                    console.log(error);
                                                     callback({ success: false, message: "error in placing order.please check logs" })
 
                                                 });
