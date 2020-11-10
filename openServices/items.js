@@ -8,12 +8,9 @@ class items {
     constructor() {
 
     }
-    getAllItems(isBusiness, callback) {
+    getAllItems( callback) {
 
-        var filter = { active: true }
-        if (isBusiness == false)
-            filter["isBusiness"] = false
-        itemModel.find(filter, function (err, foundItems) {
+        itemModel.find({}, function (err, foundItems) {
             if (err) {
                 console.log(err)
                 callback({ success: false, err: err })

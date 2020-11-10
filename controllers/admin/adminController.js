@@ -18,7 +18,7 @@ exports.showItemsSection = (req, res) => {
 }
 
 exports.getAllItems = function (req, res) {
-    itemservices.getAllItems(true, function (itemlist) {
+    itemservices.getAllItems( function (itemlist) {
         // console.log({ itemlist: itemlist.foundItems });
         res.render('itemsAdmin', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag })
     })
