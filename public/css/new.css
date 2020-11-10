@@ -5405,7 +5405,7 @@ h6 {
     -ms-transition: all 0.4s ease-in-out;
 }
 .card .card-title > a {
-    /* white-space: nowrap; */
+    white-space: nowrap;
 }
 @media (max-width: 991px) {
     .card {
