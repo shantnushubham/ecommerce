@@ -10,11 +10,11 @@ const envData = process.env
 const url = require('url')
 const itemServices = require("../../openServices/items")
 const order = require('../../openServices/order')
-const userModel=require('../../models/User/User')
+const userModel = require('../../models/User/User')
 
 exports.getCheckout = function (req, res) {
 
-    cartServices.getListingForCheckout(req.user.uuid,req.user, function (cart) {
+    cartServices.getListingForCheckout(req.user.uuid, req.user, function (cart) {
         if (cart.success == false) {
             req.flash('error', 'empty cart!')
             res.redirect('/cartpage')
@@ -27,7 +27,7 @@ exports.getCheckout = function (req, res) {
                     res.redirect('/cartpage')
                 }
                 else {
-                    res.render('checkout', { total: cart.total, cart: cart.cartList, address: address, codAllowed: cart.codAllowed,tax:cart.tax })
+                    res.render('checkout', { total: cart.total, cart: cart.cartList, address: address, codAllowed: cart.codAllowed, tax: cart.tax })
                 }
             })
         }
@@ -37,7 +37,7 @@ exports.getCheckout = function (req, res) {
 exports.postCheckout = function (req, res) {
     // console.log('enter');
     // console.log(req.body);
-    cartServices.getListingForOrder(req.user.uuid,req.user ,function (cart) {//get total and cart items
+    cartServices.getListingForOrder(req.user.uuid, req.user, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
@@ -65,7 +65,7 @@ exports.postCheckout = function (req, res) {
                         total: finalAmt,
                         orderedItems: cart.cartList,
                         uuid: req.user.uuid,
-                        tax:cart.tax
+                        tax: cart.tax
                     }
                     if (req.body.offer && req.body.offer.length > 1) {
 
@@ -133,7 +133,7 @@ exports.creditPath = function (req, res) {
         res.redirect('/cartpage')
     }
     else {
-        cartServices.getListingForOrder(req.user.uuid, req.user,function (cart) {//get total and cart items
+        cartServices.getListingForOrder(req.user.uuid, req.user, function (cart) {//get total and cart items
             if (cart.success == false) {
                 console.log('error in getting cart list');
                 req.flash('error', 'error in getting cart list')
@@ -179,7 +179,7 @@ exports.creditPath = function (req, res) {
                                     shipmentStatus: 'processing',
                                     creditAllowed: credA,
                                     creditPercent: credPerc,
-                                    tax:cart.tax
+                                    tax: cart.tax
                                 }
                                 if (req.body.offer && req.body.offer.length > 1) {
 
@@ -285,7 +285,7 @@ exports.codPath = function (req, res) {
                                     uuid: req.user.uuid,
                                     paymentType: 'COD',
                                     codAllowed: true,
-                                    tax:cart.tax
+                                    tax: cart.tax
                                 }
                                 orderServices.createOrder(order, function (createOrder) {
                                     if (createOrder.success == false) {
@@ -319,7 +319,7 @@ exports.codPath = function (req, res) {
 //------------------------------------------------------------------------------------------------------------
 
 exports.saveOrder = function (req, res) {
-    cartServices.getListingForOrder(req.user.uuid,req.user, function (cart) {//get total and cart items
+    cartServices.getListingForOrder(req.user.uuid, req.user, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
@@ -330,9 +330,9 @@ exports.saveOrder = function (req, res) {
                 var cod = true
                 var credA = false;
                 var credPerc = 0;
-                if(((req.user.isBusiness == true && req.user.premium == true) ||
-                (req.user.isBusiness == false && req.user.creditAllowed == true)) &&
-                (req.user.credPerc > 0 && req.user.credBalance >= cart.total)) {
+                if (((req.user.isBusiness == true && req.user.premium == true) ||
+                    (req.user.isBusiness == false && req.user.creditAllowed == true)) &&
+                    (req.user.credPerc > 0 && req.user.credBalance >= cart.total)) {
                     credA = true
                     credPerc = req.user.credPerc
                 }
@@ -365,7 +365,7 @@ exports.saveOrder = function (req, res) {
                             shipmentStatus: 'saved',
                             creditAllowed: credA,
                             creditPercent: credPerc,
-                            tax:cart.tax
+                            tax: cart.tax
                         }
                         if (req.body.offer && req.body.offer.length > 1) {
 
@@ -430,7 +430,7 @@ exports.saveOrder = function (req, res) {
 
 
 exports.createQuotation = function (req, res) {
-    cartServices.getListingForOrder(req.user.uuid,req.user, function (cart) {//get total and cart items
+    cartServices.getListingForOrder(req.user.uuid, req.user, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
@@ -442,8 +442,8 @@ exports.createQuotation = function (req, res) {
                 var credA = false;
                 var credPerc = 0;
                 if (((req.user.isBusiness == true && req.user.premium == true) ||
-                (req.user.isBusiness == false && req.user.creditAllowed == true)) &&
-                (req.user.credPerc > 0 && req.user.credBalance >= cart.total)) {
+                    (req.user.isBusiness == false && req.user.creditAllowed == true)) &&
+                    (req.user.credPerc > 0 && req.user.credBalance >= cart.total)) {
                     credA = true
                     credPerc = req.user.credPerc
                 }
@@ -477,7 +477,7 @@ exports.createQuotation = function (req, res) {
                             creditAllowed: credA,
                             creditPercent: credPerc,
                             quoteAsked: true,
-                            tax:cart.tax
+                            tax: cart.tax
                         }
                         if (req.body.offer && req.body.offer.length > 1) {
 
@@ -866,7 +866,7 @@ exports.getAllowCred = function (req, res) {
 }
 
 exports.allowCred = function (req, res) {
-    orderServices.allowCredit(req.params.orderId, req.body.credPerc,req.body.days, function (order) {
+    orderServices.allowCredit(req.params.orderId, req.body.credPerc, req.body.days, function (order) {
         if (order.success == false) {
             req.flash('error', 'error')
             res.redirect('/admin/orders-filter')
@@ -924,14 +924,14 @@ exports.getAllOrders = function (req, res) {
 
 exports.getOrderByPayment = function (req, res) {
     console.log(req.params.payment);
-    var st="online"
-    var p=req.params.payment.toUpperCase()
-    if(p==="online".toUpperCase())
-    st="online"
-    else if(p==="cod".toUpperCase())
-    st="COD"
-    else if(p==="credit".toUpperCase())
-    st="credit"
+    var st = "online"
+    var p = req.params.payment.toUpperCase()
+    if (p === "online".toUpperCase())
+        st = "online"
+    else if (p === "cod".toUpperCase())
+        st = "COD"
+    else if (p === "credit".toUpperCase())
+        st = "credit"
     orderServices.getOrderByPayment(st, function (foundOrder) {
         if (foundOrder.success == false) {
             req.flash('error', 'error')
@@ -1000,7 +1000,7 @@ exports.setShipmentStatus = function (req, res) {
 }
 //------------------------------------------------------------------------------------------------------------
 
-exports.showOfferSection = function(req, res) {
+exports.showOfferSection = function (req, res) {
     res.render('adminOfferSection')
 }
 
@@ -1146,56 +1146,76 @@ exports.getAllSavedOrders = function (req, res) {
     })
 }
 
-exports.adminAllQuotes=(req,res)=>{
-    
-        orderServices.getAllOrderQuotes().then((result) => {
-            res.render('orderQuotes', { quotes: result })
-        }).catch((err) => {
-            req.flash('error', 'error')
-            res.redirect('/admin')
-        });
-        
+exports.adminAllQuotes = (req, res) => {
+
+    orderServices.getAllOrderQuotes().then((result) => {
+        res.render('orderQuotes', { quotes: result })
+    }).catch((err) => {
+        req.flash('error', 'error')
+        res.redirect('/admin')
+    });
+
 }
 
-exports.adminAllSaved=(req,res)=>{
-    
+exports.adminAllSaved = (req, res) => {
+
     orderServices.getAllOrderSaved.then((result) => {
         res.render('orderQuotes', { quotes: result })
     }).catch((err) => {
         req.flash('error', 'error')
         res.redirect('/admin')
     });
-    
+
 }
 
-exports.sendInvoice=function(req,res)
-{
+exports.sendInvoice = function (req, res) {
     orderServices.checkOrderDetails(req.params.orderId, function (foundOrder) {
         if (foundOrder.success == false || foundOrder.found == false) {
             req.flash('error', 'error in getting order details')
-            res.redirect('/')
+            res.redirect('/admin/orders-filter')
+
         }
         else {
-
 
             var promiseArr = []
             foundOrder.order.orderedItems.forEach(element => {
                 promiseArr.push(orderServices.getItemForOrderList(element.iid, element.quantity))
             });
             Promise.all(promiseArr).then(result => {
-                userModel.findOne({uuid:foundOrder.order.uuid},function(err,foundUser){
-                    if(!err)
-                    var data={
-                        user:foundUser,
-                        items:respo,
-                        order:updatedOtx.order
+                userModel.findOne({ uuid: foundOrder.order.uuid }, function (err, foundUser) {
+                    if (!err) {
+                        var data = {
+                            user: foundUser,
+                            items: result,
+                            order: foundOrder.order
+                        }
+                        mailer.sendInvoice(foundUser.email, data, function (mailed) {
+                            console.log(mailed);
+                            if (mailed.success == false) {
+                                req.flash('error', 'error in sending mail')
+                                res.redirect('/admin/orders-filter')
+
+                            }
+                            else {
+                                req.flash('success', 'success')
+                                res.redirect('/admin/orders-filter')
+                            }
+                        })
                     }
-                    mailer.sendInvoice(foundUser.email,data,function(mailed){
-                        console.log(mailed);
-                    })
+                    else {
+                        req.flash('error', 'error in sending mail')
+
+                        res.redirect('/admin/orders-filter')
+
+                    }
+
                 })
             }).catch(errors => {
-                
+                console.log(error);
+                req.flash('error', 'error in sending mail')
+
+                res.redirect('/admin/orders-filter')
+
             })
 
 

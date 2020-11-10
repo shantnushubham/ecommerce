@@ -19,9 +19,9 @@ exports.Register = function (to, name, uuid, callback) {
         },
         data: {
             sender: { name: 'inversion', email: 'support@112cart.com' },
-            to: [{ email: 'prakharshriv@gmail.com', name: 'Prakhar Shrivastava' }],
-            params: { newKey: 'New Value' },
-            tags: ['abc'],
+            to: [{ email: to, name: 'Prakhar Shrivastava' }],
+            params: { name:name,uuid:uuid  },
+            tags: ['signup'],
             templateId: 1
         },
 
