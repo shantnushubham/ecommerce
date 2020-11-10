@@ -11,6 +11,8 @@
 	}
 </style>
 
+<% var isJH = currentUser != "" && currentUser.state.toLowerCase() === "jharkhand" %>
+
 <div data-content-region="header_bottom"></div>
 <div class="body" data-currency-code="EUR">
 
@@ -78,13 +80,17 @@
 										<a class="uk-link-reset" href=""><%=cartItem.quantity%></a>
 									</td>
 									<td class="uk-table-link">
-										<a class="uk-link-reset" href=""><%=parseInt(cartItem.quantity) * parseInt(cartItem.price[0])%></a>
+										<a class="uk-link-reset"
+											href=""><%=parseInt(cartItem.quantity) * parseInt(cartItem.price[0])%></a>
 									</td>
 									<td class="uk-table-link">
-										<a class="uk-link-reset" href=""><%= parseInt(cartItem.price[0] * cartItem.quantity * cartItem.tax/100)%> (<%=cartItem.tax%>%)</a>
+										<a class="uk-link-reset"
+											href=""><%= parseInt(cartItem.price[0] * cartItem.quantity * cartItem.tax/100)%>
+											(<%=cartItem.tax%>%)</a>
 									</td>
 									<td class="uk-text-nowrap">₹
-										<%=(parseInt(cartItem.quantity) * parseInt(cartItem.price[0])) + parseInt(cartItem.price[0] * cartItem.quantity * cartItem.tax/100)%></td>
+										<%=(parseInt(cartItem.quantity) * parseInt(cartItem.price[0])) + parseInt(cartItem.price[0] * cartItem.quantity * cartItem.tax/100)%>
+									</td>
 									<% sum = sum + parseInt(cartItem.quantity) * parseInt(cartItem.price[0]) %>
 									<td></td>
 								</tr>
@@ -97,14 +103,33 @@
 									<td><b>Cart Subtotal</b></td>
 									<td>₹ <%=sum%></td>
 								</tr>
+								<% if (isJH) { %>
 								<tr>
 									<td></td>
 									<td></td>
 									<td></td>
 									<td></td>
-									<td><b>GST </b></td>
+									<td><b>SGST </b></td>
+									<td>₹ <%=tax/2%></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><b>CGST </b></td>
+									<td>₹ <%=tax/2%></td>
+								</tr>
+								<% } else { %>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><b>IGST </b></td>
 									<td>₹ <%=tax%></td>
 								</tr>
+								<% } %>
 								<tr>
 									<td></td>
 									<td></td>
@@ -128,7 +153,8 @@
 									<div class="uk-form-controls uk-form-controls-text">
 
 										<% address.address.forEach(el => { %>
-										<input class="uk-radio" type="radio" name="address" value="<%=el._id%>" required>
+										<input class="uk-radio" type="radio" name="address" value="<%=el._id%>"
+											required>
 										<label>
 											<span
 												style="color: #fa7725; text-transform: uppercase; font-size: medium;"><%=el.addressType%></span>
