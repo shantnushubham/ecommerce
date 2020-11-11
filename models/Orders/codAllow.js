@@ -7,6 +7,10 @@ var codAllow = new mongoose.Schema({
         required:true,
         default:0
     },
+    name:{
+        type:String,
+        default:"codallow"
+    }
     
 
 })
