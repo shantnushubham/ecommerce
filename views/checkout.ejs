@@ -69,7 +69,11 @@
 							</thead>
 							<tbody>
 								<% var sum = 0 %>
+								<% var taxSum = 0 %>
+
 								<% cart.forEach(cartItem => { %>
+								
+
 								<tr>
 									<td><img class="uk-preserve-width uk-border-circle"
 											src="<%=cartItem.item.image[0]%>" width="40" alt=""></td>
@@ -85,11 +89,12 @@
 									</td>
 									<td class="uk-table-link">
 										<a class="uk-link-reset"
-											href=""><%= parseInt(cartItem.price[0] * cartItem.quantity * cartItem.tax/100)%>
-											(<%=cartItem.tax%>%)</a>
+											href=""><%= parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
+											<span class="uk-text-small uk-text-success">(<%=parseInt(cartItem.tax[0])%>%)</span></a>
+											<%taxSum+= parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
 									</td>
 									<td class="uk-text-nowrap">₹
-										<%=(parseInt(cartItem.quantity) * parseInt(cartItem.price[0])) + parseInt(cartItem.price[0] * cartItem.quantity * cartItem.tax/100)%>
+										<%=(parseInt(cartItem.quantity) * parseInt(cartItem.price[0])) + parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
 									</td>
 									<% sum = sum + parseInt(cartItem.quantity) * parseInt(cartItem.price[0]) %>
 									<td></td>
@@ -99,7 +104,7 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									<td></td>
+									
 									<td><b>Cart Subtotal</b></td>
 									<td>₹ <%=sum%></td>
 								</tr>
@@ -108,41 +113,42 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									<td></td>
+									
 									<td><b>SGST </b></td>
-									<td>₹ <%=tax/2%></td>
+									<td>₹ <%=taxSum/2%></td>
 								</tr>
 								<tr>
 									<td></td>
 									<td></td>
 									<td></td>
-									<td></td>
+									
 									<td><b>CGST </b></td>
-									<td>₹ <%=tax/2%></td>
+									<td>₹ <%=taxSum/2%></td>
 								</tr>
 								<% } else { %>
 								<tr>
 									<td></td>
 									<td></td>
 									<td></td>
-									<td></td>
+									
 									<td><b>IGST </b></td>
-									<td>₹ <%=tax%></td>
+									<td>₹ <%=taxSum%></td>
 								</tr>
 								<% } %>
 								<tr>
 									<td></td>
 									<td></td>
 									<td></td>
-									<td></td>
+									
 									<td><b>Total</b></td>
-									<td>₹ <%=sum + tax%></td>
+									<td>₹ <%=total%></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
 				<div>
+
 					<div class="uk-card uk-card-default" style="text-align: left !important;">
 						<div class="uk-card-body">
 							<form method="POST" action="/checkout">
@@ -169,7 +175,9 @@
 									</div>
 								</div>
 
-								<% if (currentUser.isBusiness && currentUser.creditAllowed) { %>
+								<!-- <% if (((currentUser.isBusiness == true && currentUser.premium == true) ||
+								(currentUser.isBusiness == false && currentUser.creditAllowed == true)) &&
+								(currentUser.credPerc > 0 && currentUser.credBalance >= total)) { %>
 								<div class="uk-form-label">
 									<h6>Credit Percentage:</h6>
 								</div>
@@ -187,7 +195,7 @@
 										<label for="20P" value=20>20%</label>
 									</p>
 								</div>
-								<% } %>
+								<% } %> -->
 
 								<div class="uk-margin">
 									<input class="uk-input uk-form-width-medium" type="text" placeholder="Offer Code">
@@ -204,10 +212,11 @@
 											COD</button>
 									</div>
 									<% } %>
-									<% if (currentUser.isBusiness && currentUser.creditAllowed) { %>
+									<% if (((currentUser.isBusiness == true && currentUser.premium == true) ||
+									(currentUser.isBusiness == false && currentUser.creditAllowed == true)) &&
+									(currentUser.credPerc > 0 && currentUser.credBalance >= total)) {  %>
 									<div>
-										<button class="default-btn" type="submit" formaction="/order-credit">Place Order
-											as Credit</button>
+										<button class="default-btn" type="submit" formaction="/order-credit">Credit Payment</button>
 									</div>
 									<% } %>
 									<div>
