@@ -10,7 +10,7 @@ class items {
     }
     getAllItems(callback) {
 
-        itemModel.find({}, function (err, foundItems) {
+        itemModel.find({ active: true }, function (err, foundItems) {
             if (err) {
                 console.log(err)
                 callback({ success: false, err: err })
@@ -90,7 +90,8 @@ class items {
                                 shortDesc: foundItem.shortDesc,
                                 measurementUnit: foundItem.measurementUnit,
                                 isService: foundItem.isService,
-                                tax: foundItem.tax
+                                tax: foundItem.tax,
+                                sku: foundItem.sku,
 
                             }
 
@@ -233,6 +234,7 @@ class items {
             groupingTag: data.groupingTag,
             tax: data.tax,
             sku: data.sku,
+            stock: data.stock,
             measurementUnit: data.measurementUnit,
             isBusiness: data.isBusiness == true ? true : false
 

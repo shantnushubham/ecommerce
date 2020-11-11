@@ -103,15 +103,15 @@ class order {
 
         })
     }
-    getOrdersByDateRangePayment(from, to,payment, callback) {
-        var t=new Date(to)
-        var f=new Date(from)
+    getOrdersByDateRangePayment(from, to, payment, callback) {
+        var t = new Date(to)
+        var f = new Date(from)
         console.log(!(f instanceof Date) || !(t instanceof Date));
         if (!(f instanceof Date) || !(t instanceof Date))
             callback({ success: false })
         else {
             ordermodel.aggregate([
-                { $match: { purchaseTime: { $gte: f, $lte: t },status:payment,invoiceSent:true } },
+                { $match: { purchaseTime: { $gte: f, $lte: t }, status: payment, invoiceSent: true } },
 
             ]).exec((err, foundOrder) => {
                 console.log(err);
@@ -123,15 +123,15 @@ class order {
 
     }
 
-    getOrdersByDateRangeShipment(from, to,shipment, callback) {
-        var t=new Date(to)
-        var f=new Date(from)
+    getOrdersByDateRangeShipment(from, to, shipment, callback) {
+        var t = new Date(to)
+        var f = new Date(from)
         console.log(!(f instanceof Date) || !(t instanceof Date));
         if (!(f instanceof Date) || !(t instanceof Date))
             callback({ success: false })
         else {
             ordermodel.aggregate([
-                { $match: { purchaseTime: { $gte: f, $lte: t },shipmentStatus:shipment,invoiceSent:true } },
+                { $match: { purchaseTime: { $gte: f, $lte: t }, shipmentStatus: shipment, invoiceSent: true } },
 
             ]).exec((err, foundOrder) => {
                 console.log(err);
@@ -841,8 +841,7 @@ class order {
         })
     }
 
-    confirmInvoice(orderId,callback)
-    {
+    confirmInvoice(orderId, callback) {
         ordermodel.findOneAndUpdate({ orderId: orderId }, { invoiceSent: true }, function (err, order) {
             if (err)
                 callback({ success: false })
@@ -850,6 +849,17 @@ class order {
                 callback({ success: true, order })
         })
     }
+
+    getGeneratedInvoices(callback) {
+        ordermodel.find({ invoiceSent: true }, function (err, foundInvoiceList) {
+            if (err) {
+                callback({ success: false })
+            } else {
+                callback({ success: true, invoices: foundInvoiceList})
+            }
+        })
+    }
+        
 
 }
 

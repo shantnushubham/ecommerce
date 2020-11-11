@@ -199,8 +199,12 @@ exports.sendInvoice=function(email,data,callback)
         name: data.user.name,
         order: data.order,
         items: data.items,
-        user: data.user
+        user: data.user,
+        sgst: data.order.state.toLowerCase() === "jharkhand" ? data.order.tax/2 : 0,
+        cgst: data.order.state.toLowerCase() === "jharkhand" ? data.order.tax/2 : 0,
+        igst: data.order.state.toLowerCase() != "jharkhand" ? data.order.tax : 0,
     }
+    console.log(d)
     const options = {
         method: 'POST',
         url: 'https://api.sendinblue.com/v3/smtp/email',

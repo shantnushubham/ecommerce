@@ -5,7 +5,7 @@ var mongoose = require("mongoose")
 
 
 exports.getAllItems = function (req, res) {
-    
+
     itemservices.getAllItems(function (itemlist) {
         if (itemlist.success == false) {
             req.flash('error', 'error in getting items')
@@ -58,8 +58,8 @@ exports.filterItems = function (req, res) {
     })
 }
 
-exports.search=function(req,res){
-    itemservices.searchBar(req.body.test,function(itemlist){
+exports.search = function (req, res) {
+    itemservices.searchBar(req.body.test, function (itemlist) {
         if (itemlist.success == false) {
             req.flash('error', 'error in getting items')
             res.redirect('/items')

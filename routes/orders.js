@@ -12,6 +12,7 @@ const envData = process.env
 const jssha = require('jssha')
 const uniq = require('generate-unique-id')
 const mailer = require('../controllers/common/Mailer')
+const { route } = require('./admin')
 
 router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
@@ -277,8 +278,8 @@ router.get('/admin/complete-service', functions.isAdmin, orderController.service
 router.get('/admin/get/allOrderQuotes', functions.isAdmin, orderController.adminAllQuotes)
 router.get('/admin/get/allOrderSaved', functions.isAdmin, orderController.adminAllSaved)
 
-router.get('/admin/senInvoice/:orderId', functions.isAdmin, orderController.sendInvoice)
-
+router.get('/admin/sendInvoice/:orderId', functions.isAdmin, orderController.sendInvoice)
+router.get('/admin/generated-invoice', functions.isAdmin, orderController.getGeneratedInvoiceList)
 router.get('/fee/update',functions.isAdmin,orderController.getUpdateFee)
 router.get('/codAllow/update',functions.isAdmin,orderController.getUpdateCODAllow)
 
