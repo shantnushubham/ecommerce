@@ -35,9 +35,10 @@ exports.getCheckout = function (req, res) {
                             extra = 0
                         else {
                             extra = foundFee.charge
+                        }
                             res.render('checkout', { total: cart.total, cart: cart.cartList, address: address, codAllowed: cart.codAllowed, tax: cart.tax, fee: extra })
 
-                        }
+                        
                     })
                 }
             })

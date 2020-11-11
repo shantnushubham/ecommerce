@@ -464,7 +464,7 @@ class cart {
                 callback({ success: false })
             }
             else {
-                console.log(cartItem);
+                // console.log(cartItem);
                 let total = 0
                 let allowCOD = true
                 var tax = 0
@@ -475,6 +475,7 @@ class cart {
                     total = total + (parseInt(cartEl.price[0]) * cartEl.quantity) + temptax
                     // total = total + parseInt((parseInt(cartEl.price[0]) * cartEl.quantity))
                 });
+                console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD,tax:tax });
                 if (total <= 0) {
                     callback({ success: false, message: "cant checkout with empty cart" })
                 }
