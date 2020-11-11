@@ -216,9 +216,17 @@
 
 				<main class="page-content" id="product-listing-container">
 					<style>
+						#forPhone {
+							display: none;
+						}
+
 						@media (max-width: 600px) {
 							.productGrid .product {
 								display: none
+							}
+
+							#forPhone {
+								display: block;
 							}
 						}
 					</style>
@@ -299,7 +307,7 @@
 					</ul>
 					<div data-content-region="category_below_content"></div>
 				</main>
-				<div class="uk-child-width-1-2 uk-text-center" uk-grid="masonry: true">
+				<div class="uk-child-width-1-2 uk-text-center" uk-grid="masonry: true" id="forPhone">
 					<% itemlist.forEach(el => { %>
 					<div>
 						<!-- <div class="uk-card uk-card-default uk-card-body">

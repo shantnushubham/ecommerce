@@ -325,10 +325,11 @@
 							</div>
 							<div class="form-action">
 								<button class="button button--primary" type="submit">Add to Cart</button>
+								<% if (item.isService) { %>
 								<a href="/service/<%=item.iid%>"><button class="button button--primary">
 										Get Quote</button>
 								</a>
-
+								<% } %>
 							</div>
 						</form>
 
