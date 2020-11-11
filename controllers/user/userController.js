@@ -589,7 +589,7 @@ exports.getAllPA = function (req, res) {
             req.flash('error', 'error could not find in db')
             res.redirect('/admin')
         } else
-            res.render('adminBizReq', { list: foundB })
+            res.render('adminPremiumBiz', { list: foundB })
 
     })
 }

@@ -42,6 +42,7 @@ app.get('/admin/getIndividuals', functions.isAdmin, UserController.getAllIndivid
 app.get('/business/allowCredit/:uuid',functions.isAdmin,UserController.allowCredit)
 // List of individual users needed
 
+app.get("/admin/account-invoice", functions.isAdmin, adminController.showAccountAndInvoice)
 app.get('/downloads/bizAccounts',functions.isAdmin,adminController.downloadBizAccList)
 app.get("/downloads/invoice/payment", functions.isAdmin, adminController.getCSVDownloadPagePayment)
 app.post('/downloads/invoice/payment',functions.isAdmin,adminController.downloadInvoiceByRangePayment)

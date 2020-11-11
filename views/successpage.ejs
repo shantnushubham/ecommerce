@@ -56,8 +56,9 @@
                     <div class="uk-card-body">
                         <div class="uk-margin">
                             <div class="uk-form-label">
-                                <h1 style="text-align: center; margin-bottom: 0;"><span
-                                        uk-icon="icon: check; ratio: 2.5" style="color: green;"></span> OrderID:
+                                <h1 style="text-align: center; margin-bottom: 0;">
+                                    <span uk-icon="icon: check; ratio: 2.5" style="color: green;">
+                                    </span> OrderID:
                                     <%=order.orderId%></h1>
                                 <h1 style="text-align: center; color: #fa7725 !important;">Total: <%=order.total%>
                                 </h1>
@@ -81,10 +82,17 @@
                                     Received</span>
                                 <% } %>
                             </div>
+                            <!-- <div class="uk-form-label">
+                                <h1 style="text-align: center; margin-bottom: 0;">
+                                    <span uk-icon="icon: check; close: 2.5" style="color: red;">
+                                    </span> OrderID:
+                                    <%=order.orderId%></h1>
+                                <h1 style="text-align: center; color: #fa7725 !important;">Your order has failed.
+                                </h1>
+                                <h6>Add Failure Message</h6>
+                                <h5>Shipping Address:</h5>
+                            </div> -->
                         </div>
-
-
-                        <!-- Prakhar writes formaction-->
                     </div>
                 </div>
             </div>

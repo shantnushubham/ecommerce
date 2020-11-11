@@ -457,6 +457,10 @@ exports.downloadUserList = function (req, res) {
     })
 }
 
+exports.showAccountAndInvoice = (req, res) => {
+    res.render("adminAccountInvoice")
+}
+
 exports.downloadBizAccList = function (req, res) {
     userModel.find({ isBusiness: true }, function (err, foundUsers) {
         if (err) {

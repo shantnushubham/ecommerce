@@ -981,7 +981,7 @@ exports.getOrderByShipStatus = function (req, res) {
             res.redirect('/admin/orders-filter')
         }
         else {
-            res.render('adminOrders', { orders: foundOrder.order, filterType: "" })
+            res.render('adminOrders', { orders: foundOrder.order, filterType: req.params.shipment })
         }
     })
 }
@@ -1320,6 +1320,17 @@ exports.sendInvoice = function (req, res) {
     })
 }
 
+exports.getGeneratedInvoiceList = (req, res) => {
+    orderServices.getGeneratedInvoices(function (invoiceList) {
+        if (invoiceList.success == false) {
+            req.flash('error', "Cannot fetch the list of generated invoices")
+            res.redirect("/admin/account-invoice")
+        } else {
+            res.render("adminGenInvoices", { invoiceList: invoiceList.invoices })
+        }
+    })
+}
+
 exports.getUpdateCODAllow = function (req, res) {
     codaAllow.find({}, function (err, foundC) {
         if (err || foundC.length == 0) {
@@ -1343,20 +1354,20 @@ exports.getUpdateFee = function (req, res) {
     })
 }
 exports.postUpdateCODAllow = function (req, res) {
-    codaAllow.findOneAndUpdate({name:req.body.name,from:req.body.from},function(err,updatedC){
-        if(err)
-        req.flash('error','error')
+    codaAllow.findOneAndUpdate({ name: req.body.name, from: req.body.from }, function (err, updatedC) {
+        if (err)
+            req.flash('error', 'error')
         else
-        req.flash('success','success')
+            req.flash('success', 'success')
         res.redirect('/admin')
     })
 }
 exports.postUpdateFee = function (req, res) {
-    fee.findOneAndUpdate({name: "convenience"},{active:req.body.active,charge:req.body.charge},function(err,updatedF){
-        if(err)
-        req.flash('error','error')
+    fee.findOneAndUpdate({ name: "convenience" }, { active: req.body.active, charge: req.body.charge }, function (err, updatedF) {
+        if (err)
+            req.flash('error', 'error')
         else
-        req.flash('success','success')
+            req.flash('success', 'success')
         res.redirect('/admin')
     })
 }
