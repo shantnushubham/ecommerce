@@ -84,18 +84,19 @@
 										<a class="uk-link-reset" href=""><%=cartItem.quantity%></a>
 									</td>
 									<td class="uk-table-link">
-										<a class="uk-link-reset"
-											href="">₹ <%=parseInt(cartItem.quantity) * parseInt(cartItem.price[0])%></a>
+										<a class="uk-link-reset" href="">₹
+											<%=parseInt(cartItem.quantity) * parseInt(cartItem.price[0])%></a>
 									</td>
 									<td class="uk-table-link">
-										<a class="uk-link-reset"
-											href="">₹ <%= parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
+										<a class="uk-link-reset" href="">₹
+											<%= parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
 											<span
 												class="uk-text-small uk-text-success">(<%=parseInt(cartItem.tax[0])%>%)</span></a>
 										<%taxSum+= parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
 									</td>
 									<td class="uk-text-nowrap">
-										₹ <%=(parseInt(cartItem.quantity) * parseInt(cartItem.price[0])) + parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
+										₹
+										<%=(parseInt(cartItem.quantity) * parseInt(cartItem.price[0])) + parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
 									</td>
 									<% sum = sum + parseInt(cartItem.quantity) * parseInt(cartItem.price[0]) %>
 									<td></td>
@@ -196,8 +197,9 @@
 								</div>
 								<% } %>
 
-								<div class="uk-margin">
-									<input class="uk-input uk-form-width-medium" type="text" placeholder="Offer Code">
+								<div class="uk-margin" style="text-align: center;">
+									<input class="uk-input uk-form-width-medium" type="text" name="offer"
+										placeholder="Offer Code">
 								</div>
 
 								<div class="uk-grid-column-small uk-grid-row-small uk-child-width-1-4@s uk-text-center"
@@ -221,10 +223,14 @@
 										<button class="default-btn" type="submit" formaction="/save-order">Save
 											Order</button>
 									</div>
-									<div>
-										<button class="default-btn" type="submit" formaction="">Create Quote</button>
-									</div>
-									<!-- Prakhar writes formaction-->
+
+								</div>
+								<div style="text-align: center; margin: 15px">
+									<input class="uk-input uk-form-width-medium" type="text" name="email"
+										placeholder="Email">
+								</div>
+								<div style="text-align: center; margin: 15px">
+									<button class="default-btn" type="submit" formaction="/">Create Quote</button>
 								</div>
 
 
