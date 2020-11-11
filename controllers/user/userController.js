@@ -44,7 +44,7 @@ exports.register = (req, res) => {
                 req.body.address['email'] = req.body.email;
                 req.body.address['phone'] = req.body.phone;
                 req.body.address['isDefault'] = true;
-                req.body.user["state"]=req.body.address["state"]
+                req.body.user["state"] = req.body.address["state"]
                 if (discode.success == false)
                     req.body.user['code'] = 'invalid'
                 else
@@ -68,7 +68,7 @@ exports.register = (req, res) => {
                         }
                         passport.authenticate("local")(req, res, function () {
                             console.log(user)
-                            mailer.Register(user.email,user.name,user.uuid,function(mailed){
+                            mailer.Register(user.email, user.name, user.uuid, function (mailed) {
                                 console.log(mailed);
                             })
                         });
@@ -203,9 +203,8 @@ exports.getAllUsers = function (req, res) {
     })
 }
 
-exports.getAllIndividual=function(req,res)
-{
-    User.find({isBusiness:false,isPremium:false}, function (err, foundUser) {
+exports.getAllIndividual = function (req, res) {
+    User.find({ isBusiness: false, isPremium: false }, function (err, foundUser) {
         if (err) {
             req.flash('error', 'could not fetch')
             res.redirect('/admin/userNotFound')
@@ -339,7 +338,7 @@ exports.addUserAddress = (req, res) => {
                     res.redirect('/address');
                 }
                 else {
-                    User.findOneAndUpdate({ uuid: req.user.uuid }, { active: true }, function (err, updated) {
+                    User.findOneAndUpdate({ uuid: req.user.uuid }, { active: true, state: result.state }, function (err, updated) {
                         if (err) {
                             req.flash('success_msg', 'error in updating user')
                             res.redirect('/');
@@ -538,13 +537,13 @@ exports.acceptedBusinessAccounts = function (req, res) {
         { $lookup: { from: 'User', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
         {
             $project: {
-                "uuid":"$uuid",
-                "businessName":"$businessName",
-                "gstNumber":"$gstNumber",
-                "panNumber":"$panNumber",
-                "authorizedSignatoryName":"$authorizedSignatoryName",
-                "businessPhone":"$businessPhone",
-                "businessAddress":"$businessAddress",
+                "uuid": "$uuid",
+                "businessName": "$businessName",
+                "gstNumber": "$gstNumber",
+                "panNumber": "$panNumber",
+                "authorizedSignatoryName": "$authorizedSignatoryName",
+                "businessPhone": "$businessPhone",
+                "businessAddress": "$businessAddress",
                 "user": { "$arrayElemAt": ["$user", 0] }
             }
         }]).exec(function (err, foundB) {
@@ -583,13 +582,28 @@ exports.postAdminPA = function (req, res) {
 }
 
 exports.getAllPA = function (req, res) {
-    User.find({ isBusiness: true, premium: true }, function (err, foundB) {
+    User.aggregate([
+        { $match: { isBusiness: true, premium: true }},
+    { $lookup: { from: 'businessAcc', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
+    {$project:{
+        "credBalance":"$credBalance",
+        "credPerc":"$credPerc",
+        "name":"$name",
+        "premium":"$premium",
+        "isBalance":"$isBalance",
+        "business": { "$arrayElemAt": ["$user", 0] }
+
+    }}
+    ]).exec(function (err, foundB) {
         if (err) {
             console.log(err)
             req.flash('error', 'error could not find in db')
             res.redirect('/admin')
-        } else
+        } else {
+
             res.render('adminBizReq', { list: foundB })
+
+        }
 
     })
 }
