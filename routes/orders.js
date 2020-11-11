@@ -279,6 +279,12 @@ router.get('/admin/get/allOrderSaved', functions.isAdmin, orderController.adminA
 
 router.get('/admin/senInvoice/:orderId', functions.isAdmin, orderController.sendInvoice)
 
+router.get('/fee/update',functions.isAdmin,orderController.getUpdateFee)
+router.get('/codAllow/update',functions.isAdmin,orderController.getUpdateCODAllow)
+
+router.post('/fee/update',functions.isAdmin,orderController.getUpdateFee)
+router.post('/codAllow/update',functions.isAdmin,orderController.getUpdateCODAllow)
+
 
 
 

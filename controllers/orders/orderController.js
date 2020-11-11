@@ -11,6 +11,8 @@ const url = require('url')
 const itemServices = require("../../openServices/items")
 const order = require('../../openServices/order')
 const userModel = require('../../models/User/User')
+const fee = require('../../models/Orders/extraFee')
+const functions = require('../../Middlewares/common/functions')
 
 exports.getCheckout = function (req, res) {
 
@@ -27,7 +29,16 @@ exports.getCheckout = function (req, res) {
                     res.redirect('/cartpage')
                 }
                 else {
-                    res.render('checkout', { total: cart.total, cart: cart.cartList, address: address, codAllowed: cart.codAllowed, tax: cart.tax })
+                    fee.findOne({ name: "convenience", active: true }, function (err, foundFee) {
+                        var extra = 0
+                        if (err || functions.isEmpty(foundFee))
+                            extra = 0
+                        else {
+                            extra = foundFee.charge
+                            res.render('checkout', { total: cart.total, cart: cart.cartList, address: address, codAllowed: cart.codAllowed, tax: cart.tax, fee: extra })
+
+                        }
+                    })
                 }
             })
         }
@@ -51,70 +62,80 @@ exports.postCheckout = function (req, res) {
                     res.redirect('/cartpage')
                 }
                 else {
-                    // console.log('cartobj=',cart);
-                    console.log('address=');
-                    // console.log(address.address);
-                    var userAdd = address.address
-                    var finalAmt = cart.total
-                    var order = {
-                        fullAddress: userAdd.fullAddress,
-                        city: userAdd.city,
-                        state: userAdd.state,
-                        country: userAdd.country,
-                        pincode: userAdd.pincode,
-                        total: finalAmt,
-                        orderedItems: cart.cartList,
-                        uuid: req.user.uuid,
-                        tax: cart.tax
-                    }
-                    if (req.body.offer && req.body.offer.length > 1) {
+                    fee.findOne({ name: "convenience", active: true }, function (err, foundFee) {
+                        var extra = 0
+                        if (err || functions.isEmpty(foundFee))
+                            extra = 0
+                        else {
+                            extra = foundFee.charge
+                        }
+                        console.log('address=');
 
-                        orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
-                            if (foundOffer.success == false) {
-                                req.flash('error', foundOffer.message)
-                                res.redirect('/cartpage')
-                            }
-                            else {
+                        var userAdd = address.address
+                        var finalAmt = cart.total
+                        var order = {
+                            fullAddress: userAdd.fullAddress,
+                            city: userAdd.city,
+                            state: userAdd.state,
+                            country: userAdd.country,
+                            pincode: userAdd.pincode,
+                            total: finalAmt,
+                            orderedItems: cart.cartList,
+                            uuid: req.user.uuid,
+                            tax: cart.tax
+                        }
+                        if (req.body.offer && req.body.offer.length > 1) {
 
-
-                                order["offerUsed"] = true
-                                order["offerCode"] = req.body.offer
-
-
-
-                                order["total"] = foundOffer.total
-
-                                orderServices.createOrder(order, function (createOrder) {
-                                    if (createOrder.success == false) {
-                                        console.log('error in creating order');
-                                        req.flash('error', 'error in creating order')
-                                        res.redirect('/cartpage')
-                                    }
-                                    else {
-                                        console.log('success');
-                                        res.redirect('/order/' + createOrder.order.orderId + '/payment')
-                                    }
-                                })
-                            }
-                        })
+                            orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
+                                if (foundOffer.success == false) {
+                                    req.flash('error', foundOffer.message)
+                                    res.redirect('/cartpage')
+                                }
+                                else {
 
 
-                    }
-                    else {
+                                    order["offerUsed"] = true
+                                    order["offerCode"] = req.body.offer
 
-                        console.log("order Details=", order);
-                        orderServices.createOrder(order, function (createOrder) {
-                            if (createOrder.success == false) {
-                                console.log('error in creating order');
-                                req.flash('error', 'error in creating order')
-                                res.redirect('/cartpage')
-                            }
-                            else {
-                                console.log('success');
-                                res.redirect('/order/' + createOrder.order.orderId + '/payment')
-                            }
-                        })
-                    }
+
+
+                                    order["total"] = foundOffer.total + extra
+
+                                    orderServices.createOrder(order, function (createOrder) {
+                                        if (createOrder.success == false) {
+                                            console.log('error in creating order');
+                                            req.flash('error', 'error in creating order')
+                                            res.redirect('/cartpage')
+                                        }
+                                        else {
+                                            console.log('success');
+                                            res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                        }
+                                    })
+                                }
+                            })
+
+
+                        }
+                        else {
+                            order["total"] = order["total"] + extra
+                            // console.log("order Details=", order);
+                            orderServices.createOrder(order, function (createOrder) {
+                                if (createOrder.success == false) {
+                                    console.log('error in creating order');
+                                    req.flash('error', 'error in creating order')
+                                    res.redirect('/cartpage')
+                                }
+                                else {
+                                    console.log('success');
+                                    res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                }
+                            })
+                        }
+
+
+                    })
+
                 }
             })
         }
@@ -163,74 +184,83 @@ exports.creditPath = function (req, res) {
                                 res.redirect('/cartpage')
                             }
                             else {
-                                var userAdd = address.address
-                                var finalAmt = cart.total
-                                var order = {
-                                    fullAddress: userAdd.fullAddress,
-                                    city: userAdd.city,
-                                    state: userAdd.state,
-                                    country: userAdd.country,
-                                    pincode: userAdd.pincode,
-                                    total: finalAmt,
-                                    orderedItems: cart.cartList,
-                                    uuid: req.user.uuid,
-                                    paymentType: 'credit',
-                                    codAllowed: cod,
-                                    shipmentStatus: 'processing',
-                                    creditAllowed: credA,
-                                    creditPercent: credPerc,
-                                    tax: cart.tax
-                                }
-                                if (req.body.offer && req.body.offer.length > 1) {
+                                fee.findOne({ name: "convenience", active: true }, function (err, foundFee) {
+                                    var extra = 0
+                                    if (err || functions.isEmpty(foundFee))
+                                        extra = 0
+                                    else {
+                                        extra = foundFee.charge
+                                    }
 
-                                    orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
-                                        if (foundOffer.success == false) {
-                                            req.flash('error', foundOffer.message)
-                                            res.redirect('/cartpage')
-                                        }
-                                        else {
+                                    var userAdd = address.address
+                                    var finalAmt = cart.total
+                                    var order = {
+                                        fullAddress: userAdd.fullAddress,
+                                        city: userAdd.city,
+                                        state: userAdd.state,
+                                        country: userAdd.country,
+                                        pincode: userAdd.pincode,
+                                        total: finalAmt,
+                                        orderedItems: cart.cartList,
+                                        uuid: req.user.uuid,
+                                        paymentType: 'credit',
+                                        codAllowed: cod,
+                                        shipmentStatus: 'processing',
+                                        creditAllowed: credA,
+                                        creditPercent: credPerc,
+                                        tax: cart.tax
+                                    }
+                                    if (req.body.offer && req.body.offer.length > 1) {
 
-
-                                            order["offerUsed"] = true
-                                            order["offerCode"] = req.body.offer
-
-
-
-                                            order["total"] = foundOffer.total
-
-                                            orderServices.createOrder(order, function (createOrder) {
-                                                if (createOrder.success == false) {
-                                                    console.log('error in creating order');
-                                                    req.flash('error', 'error in creating order')
-                                                    res.redirect('/cartpage')
-                                                }
-                                                else {
-                                                    // console.log('success');
-                                                    req.session.mode = 'credit'
-                                                    res.redirect('/order/' + createOrder.order.orderId + '/payment')
-                                                }
-                                            })
-                                        }
-                                    })
+                                        orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
+                                            if (foundOffer.success == false) {
+                                                req.flash('error', foundOffer.message)
+                                                res.redirect('/cartpage')
+                                            }
+                                            else {
 
 
-                                }
-                                else {
+                                                order["offerUsed"] = true
+                                                order["offerCode"] = req.body.offer
 
 
-                                    orderServices.createOrder(order, function (createOrder) {
-                                        if (createOrder.success == false) {
-                                            console.log('error in creating order');
-                                            req.flash('error', 'error in creating order')
-                                            res.redirect('/cartpage')
-                                        }
-                                        else {
-                                            req.session.mode = 'credit'
-                                            res.redirect('/order/' + createOrder.order.orderId + '/payment')
-                                        }
-                                    })
 
-                                }
+                                                order["total"] = foundOffer.total + extra
+
+                                                orderServices.createOrder(order, function (createOrder) {
+                                                    if (createOrder.success == false) {
+                                                        console.log('error in creating order');
+                                                        req.flash('error', 'error in creating order')
+                                                        res.redirect('/cartpage')
+                                                    }
+                                                    else {
+                                                        // console.log('success');
+                                                        req.session.mode = 'credit'
+                                                        res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                                    }
+                                                })
+                                            }
+                                        })
+
+
+                                    }
+                                    else {
+
+                                        order["total"] = order["total"] + extra
+                                        orderServices.createOrder(order, function (createOrder) {
+                                            if (createOrder.success == false) {
+                                                console.log('error in creating order');
+                                                req.flash('error', 'error in creating order')
+                                                res.redirect('/cartpage')
+                                            }
+                                            else {
+                                                req.session.mode = 'credit'
+                                                res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                            }
+                                        })
+
+                                    }
+                                })
                             }
                         })
 
@@ -272,37 +302,85 @@ exports.codPath = function (req, res) {
                                 res.redirect('/cartpage')
                             }
                             else {
-                                var userAdd = address.address
-                                var finalAmt = cart.total
-                                var order = {
-                                    fullAddress: userAdd.fullAddress,
-                                    city: userAdd.city,
-                                    state: userAdd.state,
-                                    country: userAdd.country,
-                                    pincode: userAdd.pincode,
-                                    total: finalAmt,
-                                    orderedItems: cart.cartList,
-                                    uuid: req.user.uuid,
-                                    paymentType: 'COD',
-                                    codAllowed: true,
-                                    tax: cart.tax
-                                }
-                                orderServices.createOrder(order, function (createOrder) {
-                                    if (createOrder.success == false) {
-                                        console.log('error in creating order');
-                                        req.flash('error', 'error in creating order')
-                                        res.redirect('/cartPage')
+                                fee.findOne({ name: "convenience", active: true }, function (err, foundFee) {
+                                    var extra = 0
+                                    if (err || functions.isEmpty(foundFee))
+                                        extra = 0
+                                    else {
+                                        extra = foundFee.charge
+                                    }
+                                    var userAdd = address.address
+                                    var finalAmt = cart.total
+                                    var order = {
+                                        fullAddress: userAdd.fullAddress,
+                                        city: userAdd.city,
+                                        state: userAdd.state,
+                                        country: userAdd.country,
+                                        pincode: userAdd.pincode,
+                                        total: finalAmt,
+                                        orderedItems: cart.cartList,
+                                        uuid: req.user.uuid,
+                                        paymentType: 'COD',
+                                        codAllowed: true,
+                                        tax: cart.tax
+                                    }
+                                    if (req.body.offer && req.body.offer.length > 1) {
+
+                                        orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
+                                            if (foundOffer.success == false) {
+                                                req.flash('error', foundOffer.message)
+                                                res.redirect('/cartpage')
+                                            }
+                                            else {
+
+
+                                                order["offerUsed"] = true
+                                                order["offerCode"] = req.body.offer
+
+
+
+                                                order["total"] = foundOffer.total + extra
+
+                                                orderServices.createOrder(order, function (createOrder) {
+                                                    if (createOrder.success == false) {
+                                                        console.log('error in creating order');
+                                                        req.flash('error', 'error in creating order')
+                                                        res.redirect('/cartPage')
+                                                    }
+                                                    else {
+                                                        orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
+                                                            console.log("stock update status:", stocks.success);
+                                                        })
+                                                        res.render('successPage', { order: createOrder.order })
+                                                    }
+                                                })
+                                            }
+                                        })
+
+
                                     }
                                     else {
-                                        orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
-                                            console.log("stock update status:", stocks.success);
+
+                                        order["total"] = order["total"] + extra
+                                        orderServices.createOrder(order, function (createOrder) {
+                                            if (createOrder.success == false) {
+                                                console.log('error in creating order');
+                                                req.flash('error', 'error in creating order')
+                                                res.redirect('/cartPage')
+                                            }
+                                            else {
+                                                orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
+                                                    console.log("stock update status:", stocks.success);
+                                                })
+                                                res.render('successPage', { order: createOrder.order })
+                                            }
                                         })
-                                        res.render('successPage', { order: createOrder.order })
                                     }
                                 })
-
                             }
+
                         })
+
                     }
                 }
                 else {
@@ -349,72 +427,80 @@ exports.saveOrder = function (req, res) {
                         res.redirect('/cartpage')
                     }
                     else {
-                        var userAdd = address.address
-                        var finalAmt = cart.total
-                        var order = {
-                            fullAddress: userAdd.fullAddress,
-                            city: userAdd.city,
-                            state: userAdd.state,
-                            country: userAdd.country,
-                            pincode: userAdd.pincode,
-                            total: finalAmt,
-                            orderedItems: cart.cartList,
-                            uuid: req.user.uuid,
-                            paymentType: 'online',
-                            codAllowed: cod,
-                            shipmentStatus: 'saved',
-                            creditAllowed: credA,
-                            creditPercent: credPerc,
-                            tax: cart.tax
-                        }
-                        if (req.body.offer && req.body.offer.length > 1) {
+                        fee.findOne({ name: "convenience", active: true }, function (err, foundFee) {
+                            var extra = 0
+                            if (err || functions.isEmpty(foundFee))
+                                extra = 0
+                            else {
+                                extra = foundFee.charge
+                            }
+                            var userAdd = address.address
+                            var finalAmt = cart.total
+                            var order = {
+                                fullAddress: userAdd.fullAddress,
+                                city: userAdd.city,
+                                state: userAdd.state,
+                                country: userAdd.country,
+                                pincode: userAdd.pincode,
+                                total: finalAmt,
+                                orderedItems: cart.cartList,
+                                uuid: req.user.uuid,
+                                paymentType: 'online',
+                                codAllowed: cod,
+                                shipmentStatus: 'saved',
+                                creditAllowed: credA,
+                                creditPercent: credPerc,
+                                tax: cart.tax
+                            }
+                            if (req.body.offer && req.body.offer.length > 1) {
 
-                            orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
-                                if (foundOffer.success == false) {
-                                    console.log(foundOffer.message);
-                                    req.flash('error', foundOffer.message)
-                                    res.redirect('/cartpage')
-                                }
-                                else {
-
-
-                                    order["offerUsed"] = true
-                                    order["offerCode"] = req.body.offer
-
-
-
-                                    order["total"] = foundOffer.total
-
-                                    orderServices.createOrder(order, function (createOrder) {
-                                        if (createOrder.success == false) {
-                                            console.log('error in creating order');
-                                            req.flash('error', 'error in creating order')
-                                            res.redirect('/cartpage')
-                                        }
-                                        else {
-                                            res.redirect('/saved-orders')
-                                        }
-                                    })
-                                }
-                            })
+                                orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
+                                    if (foundOffer.success == false) {
+                                        console.log(foundOffer.message);
+                                        req.flash('error', foundOffer.message)
+                                        res.redirect('/cartpage')
+                                    }
+                                    else {
 
 
-                        }
-                        else {
+                                        order["offerUsed"] = true
+                                        order["offerCode"] = req.body.offer
 
 
-                            orderServices.createOrder(order, function (createOrder) {
-                                if (createOrder.success == false) {
-                                    console.log('error in creating order');
-                                    req.flash('error', 'error in creating order')
-                                    res.redirect('/cartpage')
-                                }
-                                else {
-                                    res.redirect('/saved-orders')
-                                }
-                            })
-                        }
 
+                                        order["total"] = foundOffer.total + extra
+
+                                        orderServices.createOrder(order, function (createOrder) {
+                                            if (createOrder.success == false) {
+                                                console.log('error in creating order');
+                                                req.flash('error', 'error in creating order')
+                                                res.redirect('/cartpage')
+                                            }
+                                            else {
+                                                res.redirect('/saved-orders')
+                                            }
+                                        })
+                                    }
+                                })
+
+
+                            }
+                            else {
+                                order["total"] = order["total"] + extra
+
+
+                                orderServices.createOrder(order, function (createOrder) {
+                                    if (createOrder.success == false) {
+                                        console.log('error in creating order');
+                                        req.flash('error', 'error in creating order')
+                                        res.redirect('/cartpage')
+                                    }
+                                    else {
+                                        res.redirect('/saved-orders')
+                                    }
+                                })
+                            }
+                        })
                     }
                 })
 
@@ -460,90 +546,97 @@ exports.createQuotation = function (req, res) {
                         res.redirect('/cartpage')
                     }
                     else {
-                        var userAdd = address.address
-                        var finalAmt = cart.total
-                        var order = {
-                            fullAddress: userAdd.fullAddress,
-                            city: userAdd.city,
-                            state: userAdd.state,
-                            country: userAdd.country,
-                            pincode: userAdd.pincode,
-                            total: finalAmt,
-                            orderedItems: cart.cartList,
-                            uuid: req.user.uuid,
-                            paymentType: 'online',
-                            codAllowed: cod,
-                            shipmentStatus: 'saved',
-                            creditAllowed: credA,
-                            creditPercent: credPerc,
-                            quoteAsked: true,
-                            tax: cart.tax
-                        }
-                        if (req.body.offer && req.body.offer.length > 1) {
+                        fee.findOne({ name: "convenience", active: true }, function (err, foundFee) {
+                            var extra = 0
+                            if (err || functions.isEmpty(foundFee))
+                                extra = 0
+                            else {
+                                extra = foundFee.charge
+                            }
+                            var userAdd = address.address
+                            var finalAmt = cart.total
+                            var order = {
+                                fullAddress: userAdd.fullAddress,
+                                city: userAdd.city,
+                                state: userAdd.state,
+                                country: userAdd.country,
+                                pincode: userAdd.pincode,
+                                total: finalAmt,
+                                orderedItems: cart.cartList,
+                                uuid: req.user.uuid,
+                                paymentType: 'online',
+                                codAllowed: cod,
+                                shipmentStatus: 'saved',
+                                creditAllowed: credA,
+                                creditPercent: credPerc,
+                                quoteAsked: true,
+                                tax: cart.tax
+                            }
+                            if (req.body.offer && req.body.offer.length > 1) {
 
-                            orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
-                                if (foundOffer.success == false) {
-                                    req.flash('error', foundOffer.message)
-                                    res.redirect('/cartpage')
-                                }
-                                else {
-
-
-                                    order["offerUsed"] = true
-                                    order["offerCode"] = req.body.offer
-
-
-
-                                    order["total"] = foundOffer.total
-
-                                    orderServices.createOrder(order, function (createdOrder) {
-                                        if (createdOrder.success == false) {
-                                            console.log('error in creating order');
-                                            req.flash('error', 'error in creating order')
-                                            res.redirect('/cartpage')
-                                        }
-                                        else {
-                                            req.flash('success', 'Quote Requested!')
-                                            res.redirect('/cartpage')
-                                            var maildata = {
-                                                order: createdOrder,
-                                                items: cart.itemArray,
-                                                user: req.user
-                                            }
-                                            mailer.askQuote(req.body.email, maildata, function (mailed) {
-                                                console.log(mailed);
-                                            })
-                                        }
-                                    })
-                                }
-                            })
-
-
-                        }
-                        else {
-
-
-                            orderServices.createOrder(order, function (createOrder) {
-                                if (createOrder.success == false) {
-                                    console.log('error in creating order');
-                                    req.flash('error', 'error in creating order')
-                                    res.redirect('/cartpage')
-                                }
-                                else {
-                                    req.flash('success', 'Quote Requested!')
-                                    res.redirect('/cartpage')
-                                    var maildata = {
-                                        order: createdOrder,
-                                        items: cart.itemArray,
-                                        user: req.user
+                                orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
+                                    if (foundOffer.success == false) {
+                                        req.flash('error', foundOffer.message)
+                                        res.redirect('/cartpage')
                                     }
-                                    mailer.askQuote(req.body.email, maildata, function (mailed) {
-                                        console.log(mailed);
-                                    })
-                                }
-                            })
-                        }
+                                    else {
 
+
+                                        order["offerUsed"] = true
+                                        order["offerCode"] = req.body.offer
+
+
+
+                                        order["total"] = foundOffer.total + extra
+
+                                        orderServices.createOrder(order, function (createdOrder) {
+                                            if (createdOrder.success == false) {
+                                                console.log('error in creating order');
+                                                req.flash('error', 'error in creating order')
+                                                res.redirect('/cartpage')
+                                            }
+                                            else {
+                                                req.flash('success', 'Quote Requested!')
+                                                res.redirect('/cartpage')
+                                                var maildata = {
+                                                    order: createdOrder,
+                                                    items: cart.itemArray,
+                                                    user: req.user
+                                                }
+                                                mailer.askQuote(req.body.email, maildata, function (mailed) {
+                                                    console.log(mailed);
+                                                })
+                                            }
+                                        })
+                                    }
+                                })
+
+
+                            }
+                            else {
+                                order["total"] = order["total"] + extra
+
+                                orderServices.createOrder(order, function (createOrder) {
+                                    if (createOrder.success == false) {
+                                        console.log('error in creating order');
+                                        req.flash('error', 'error in creating order')
+                                        res.redirect('/cartpage')
+                                    }
+                                    else {
+                                        req.flash('success', 'Quote Requested!')
+                                        res.redirect('/cartpage')
+                                        var maildata = {
+                                            order: createdOrder,
+                                            items: cart.itemArray,
+                                            user: req.user
+                                        }
+                                        mailer.askQuote(req.body.email, maildata, function (mailed) {
+                                            console.log(mailed);
+                                        })
+                                    }
+                                })
+                            }
+                        })
                     }
                 })
 
@@ -1194,7 +1287,7 @@ exports.sendInvoice = function (req, res) {
                             if (mailed.success == false) {
                                 req.flash('error', 'error in sending mail')
                                 res.redirect('/admin/orders-filter')
-                                orderServices.confirmInvoice(foundOrder.order.orderId,function(updated){
+                                orderServices.confirmInvoice(foundOrder.order.orderId, function (updated) {
                                     console.log(updated);
                                 })
                             }
@@ -1224,5 +1317,46 @@ exports.sendInvoice = function (req, res) {
 
         }
 
+    })
+}
+
+exports.getUpdateCODAllow = function (req, res) {
+    codaAllow.find({}, function (err, foundC) {
+        if (err || foundC.length == 0) {
+            req.flash('error', 'error in db or cod document absent.please check database')
+            res.redirect('/admin')
+        }
+        else
+            res.render('updateCODA', { cod: foundC[0] })
+    })
+
+}
+exports.getUpdateFee = function (req, res) {
+    fee.findOne({ name: "convenience" }, function (err, foundF) {
+        if (err) {
+            req.flash('error', 'error in db or Fee document absent. Please check database')
+            res.redirect('/admin')
+        }
+        else
+            res.render('updateFee', { fee: foundF })
+
+    })
+}
+exports.postUpdateCODAllow = function (req, res) {
+    codaAllow.findOneAndUpdate({name:req.body.name,from:req.body.from},function(err,updatedC){
+        if(err)
+        req.flash('error','error')
+        else
+        req.flash('success','success')
+        res.redirect('/admin')
+    })
+}
+exports.postUpdateFee = function (req, res) {
+    fee.findOneAndUpdate({name: "convenience"},{active:req.body.active,charge:req.body.charge},function(err,updatedF){
+        if(err)
+        req.flash('error','error')
+        else
+        req.flash('success','success')
+        res.redirect('/admin')
     })
 }
