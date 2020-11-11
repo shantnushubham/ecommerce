@@ -53,7 +53,7 @@
 		</div>
 
 		<div style="margin-left: 15%; margin-right: 15%;">
-			<div class="uk-child-width-1-2@m" uk-grid>
+			<div class="uk-child-width-1-1@m" uk-grid>
 				<div style="text-align: left !important;">
 					<div class="uk-overflow-auto">
 						<table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
@@ -72,7 +72,7 @@
 								<% var taxSum = 0 %>
 
 								<% cart.forEach(cartItem => { %>
-								
+
 
 								<tr>
 									<td><img class="uk-preserve-width uk-border-circle"
@@ -85,16 +85,17 @@
 									</td>
 									<td class="uk-table-link">
 										<a class="uk-link-reset"
-											href=""><%=parseInt(cartItem.quantity) * parseInt(cartItem.price[0])%></a>
+											href="">₹ <%=parseInt(cartItem.quantity) * parseInt(cartItem.price[0])%></a>
 									</td>
 									<td class="uk-table-link">
 										<a class="uk-link-reset"
-											href=""><%= parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
-											<span class="uk-text-small uk-text-success">(<%=parseInt(cartItem.tax[0])%>%)</span></a>
-											<%taxSum+= parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
+											href="">₹ <%= parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
+											<span
+												class="uk-text-small uk-text-success">(<%=parseInt(cartItem.tax[0])%>%)</span></a>
+										<%taxSum+= parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
 									</td>
-									<td class="uk-text-nowrap">₹
-										<%=(parseInt(cartItem.quantity) * parseInt(cartItem.price[0])) + parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
+									<td class="uk-text-nowrap">
+										₹ <%=(parseInt(cartItem.quantity) * parseInt(cartItem.price[0])) + parseInt(cartItem.price[0] * cartItem.quantity * parseInt(cartItem.tax[0])/100)%>
 									</td>
 									<% sum = sum + parseInt(cartItem.quantity) * parseInt(cartItem.price[0]) %>
 									<td></td>
@@ -104,7 +105,7 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									
+									<td></td>
 									<td><b>Cart Subtotal</b></td>
 									<td>₹ <%=sum%></td>
 								</tr>
@@ -113,7 +114,7 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									
+									<td></td>
 									<td><b>SGST </b></td>
 									<td>₹ <%=taxSum/2%></td>
 								</tr>
@@ -121,7 +122,7 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									
+									<td></td>
 									<td><b>CGST </b></td>
 									<td>₹ <%=taxSum/2%></td>
 								</tr>
@@ -130,7 +131,7 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									
+									<td></td>
 									<td><b>IGST </b></td>
 									<td>₹ <%=taxSum%></td>
 								</tr>
@@ -139,7 +140,7 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									
+									<td></td>
 									<td><b>Total</b></td>
 									<td>₹ <%=total%></td>
 								</tr>
@@ -175,9 +176,7 @@
 									</div>
 								</div>
 
-								<!-- <% if (((currentUser.isBusiness == true && currentUser.premium == true) ||
-								(currentUser.isBusiness == false && currentUser.creditAllowed == true)) &&
-								(currentUser.credPerc > 0 && currentUser.credBalance >= total)) { %>
+								<% if (((currentUser.isBusiness == true && currentUser.premium == true) ||(currentUser.isBusiness == false && currentUser.creditAllowed == true)) &&								(currentUser.credPerc > 0 && currentUser.credBalance >= total)) { %>
 								<div class="uk-form-label">
 									<h6>Credit Percentage:</h6>
 								</div>
@@ -195,7 +194,7 @@
 										<label for="20P" value=20>20%</label>
 									</p>
 								</div>
-								<% } %> -->
+								<% } %>
 
 								<div class="uk-margin">
 									<input class="uk-input uk-form-width-medium" type="text" placeholder="Offer Code">
@@ -212,11 +211,10 @@
 											COD</button>
 									</div>
 									<% } %>
-									<% if (((currentUser.isBusiness == true && currentUser.premium == true) ||
-									(currentUser.isBusiness == false && currentUser.creditAllowed == true)) &&
-									(currentUser.credPerc > 0 && currentUser.credBalance >= total)) {  %>
+									<% if (((currentUser.isBusiness == true && currentUser.premium == true) || (currentUser.isBusiness == false && currentUser.creditAllowed == true)) && (currentUser.credPerc > 0 && currentUser.credBalance >= total)) {  %>
 									<div>
-										<button class="default-btn" type="submit" formaction="/order-credit">Credit Payment</button>
+										<button class="default-btn" type="submit" formaction="/order-credit">Credit
+											Payment</button>
 									</div>
 									<% } %>
 									<div>
