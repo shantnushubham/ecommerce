@@ -83,13 +83,29 @@
                         </div>
                         <div class="field">
                             <label>Measurement unit (valid only for services)</label>
-                            <input type="number" placeholder="Measurement Unit" name="measurementUnit"
+                            <input type="text" placeholder="Measurement Unit" name="measurementUnit"
                                 value="<%=item.measurementUnit%>">
                         </div>
                         <div class="field">
                             <label>Short Description</label>
                             <input type="text" placeholder="Short Description" name="shortDesc"
                                 value="<%=item.shortDesc%>">
+                        </div>
+                        <div class="field">
+                            <label>SKUs</label>
+                            <input type="text" placeholder="SKUs" name="sku" value="<%=item.sku%>">
+                        </div>
+                        <div class="inline fields">
+                            <label for="fruit">Only for Business Accounts? (If your category is "Chemicals" please choose "Yes")</label>
+                            <div class="field">
+                                <input type="radio" name="isBusiness" value="true" tabindex="0" class="hidden" <% if (item.isBusiness) { %> checked="" <% } %>>
+                                <label>Yes</label>
+
+                            </div>
+                            <div class="field">
+                                <input type="radio" name="isBusiness" value="false" tabindex="0" class="hidden" <% if (!item.isService) { %> checked="" <% } %>>
+                                <label>No</label>
+                            </div>
                         </div>
                         <div class="field">
                             <label>Image Link (For multiple images, separate links using "||")</label>

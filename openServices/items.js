@@ -8,7 +8,7 @@ class items {
     constructor() {
 
     }
-    getAllItems( callback) {
+    getAllItems(callback) {
 
         itemModel.find({}, function (err, foundItems) {
             if (err) {
@@ -89,7 +89,8 @@ class items {
                                 vendorName: foundItem.vendorName,
                                 shortDesc: foundItem.shortDesc,
                                 measurementUnit: foundItem.measurementUnit,
-                                isService: foundItem.isService
+                                isService: foundItem.isService,
+                                tax: foundItem.tax
 
                             }
 
@@ -178,7 +179,9 @@ class items {
             isService: data.isService == true ? true : false,
             cod: data.cod == true ? true : false,
             measurementUnit: data.measurementUnit,
-            tax: data.tax
+            tax: data.tax,
+            sku: data.sku,
+            isBusiness: data.isBusiness,
 
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
@@ -228,7 +231,10 @@ class items {
             tag: data.tag,
             shortDesc: data.shortDesc,
             groupingTag: data.groupingTag,
-            tax: data.tax
+            tax: data.tax,
+            sku: data.sku,
+            measurementUnit: data.measurementUnit,
+            isBusiness: data.isBusiness == true ? true : false
 
         }
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
