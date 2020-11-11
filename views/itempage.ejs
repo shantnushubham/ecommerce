@@ -19,8 +19,7 @@
 					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
 						<li class="breadcrumb " itemprop="itemListElement" itemscope
 							itemtype="http://schema.org/ListItem">
-							<a href="/" class="breadcrumb-label"
-								itemprop="item"><span itemprop="name">Home</span></a>
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
 							<meta itemprop="position" content="1" />
 						</li>
 						<li class="breadcrumb " itemprop="itemListElement" itemscope
@@ -140,7 +139,8 @@
 								<span class="price-now-label" style="display: none;">
 								</span>
 								<span data-product-price-with-tax class="price price--withTax">₹ <%=item.price%> +
-									GST (<%=item.tax%>% = <%=Math.ceil(item.price * item.tax/100)%>) = ₹ <%=Math.ceil(item.price + (item.price * item.tax/100))%></span>
+									GST (<%=item.tax%>% = <%=Math.ceil(item.price * item.tax/100)%>) = ₹
+									<%=Math.ceil(item.price + (item.price * item.tax/100))%></span>
 								<meta itemprop="availability" itemtype="http://schema.org/ItemAvailability"
 									content="http://schema.org/InStock">
 								<meta itemprop="itemCondition" itemtype="http://schema.org/OfferItemCondition"
@@ -169,7 +169,7 @@
 							</div>
 						</div>
 						<div data-content-region="product_below_price"></div>
-						<div class="productView-rating">
+						<div class="productView-rating" style="visibility: hidden;">
 							<span class="icon icon--ratingEmpty">
 								<span class="material-icons">star_border</span>
 							</span>
@@ -189,8 +189,7 @@
 								No reviews yet
 							</span>
 							<span class="productView-reviewLink">
-								<a href="/laundry-detergent/"
-									data-reveal-id="modal-review-form">
+								<a href="/laundry-detergent/" data-reveal-id="modal-review-form">
 									<span class="material-icons">edit</span>
 									Write a Review
 								</a>
@@ -337,7 +336,8 @@
 					<div class="addthis_toolbox addthis_32x32_style" addthis:url="" addthis:title="">
 						<ul class="socialLinks">
 							<li class="socialLinks-item socialLinks-item--facebook">
-								<a class="addthis_button_facebook icon icon--facebook">
+								<a class="addthis_button_facebook icon icon--facebook"
+									href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">
 									<svg>
 										<use xlink:href="#icon-facebook" />
 									</svg>
@@ -365,7 +365,8 @@
 								</a>
 							</li>
 							<li class="socialLinks-item socialLinks-item--linkedin">
-								<a class="addthis_button_linkedin icon icon--linkedin">
+								<a class="addthis_button_linkedin icon icon--linkedin"
+									href="https://www.linkedin.com/sharing/share-offsite/?url=112cart.com/items/<%=item.id%>">
 									<svg>
 										<use xlink:href="#icon-linkedin" />
 									</svg>
@@ -478,55 +479,54 @@
 								}'>
 
 							<% group.forEach(el => { %>
-								<div class="productCarousel-slide">
-									<article class="card ">
-										<figure class="card-figure">
-	
-											<a href="/items/<%=el.iid%>">
-												<div class="card-img-container">
-													<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
-														data-sizes="auto" srcset="<%=el.image[0]%>"
-														data-srcset="<%=el.image[0]%>" class="lazyload card-image" />
-												</div>
-											</a>
-										</figure>
-	
-										<div class="card-body">
-											<h4 class="card-title">
-												<a href="<%=el.iid%>"><%=el.name%></a>
-											</h4>
-											<div class="card-text tt-price" data-test-info-type="price">
-												<div class="price-section price-section--withTax rrp-price--withTax"
-													style="display: none;">
-													MSRP:
-													<span data-product-rrp-with-tax class="price price--rrp">
-													</span>
-												</div>
-												<div class="price-section price-section--withTax">
-													<span class="price-label" style="display: none;">
-													</span>
-													<span class="price-now-label">
-													</span>
-													<span data-product-price-with-tax class="price price--withTax">₹
-														<%=el.price%></span>
-												</div>
-												<div class="price-section price-section--withTax non-sale-price--withTax">
-													<span data-product-non-sale-price-with-tax
-														class="price price--non-sale">
-														₹ <%=(1.20)*el.price%>
-													</span>
-												</div>
+							<div class="productCarousel-slide">
+								<article class="card ">
+									<figure class="card-figure">
+
+										<a href="/items/<%=el.iid%>">
+											<div class="card-img-container">
+												<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+													data-sizes="auto" srcset="<%=el.image[0]%>"
+													data-srcset="<%=el.image[0]%>" class="lazyload card-image" />
 											</div>
-	
-											<div class="tt-cart-btn">
-												<a href="/canvas-laundry-cart/"
-													data-event-type="product-click"
-													class="button button--small card-figcaption-button"
-													title="Choose Options" data-product-id="103">Go to item</a>
+										</a>
+									</figure>
+
+									<div class="card-body">
+										<h4 class="card-title">
+											<a href="<%=el.iid%>"><%=el.name%></a>
+										</h4>
+										<div class="card-text tt-price" data-test-info-type="price">
+											<div class="price-section price-section--withTax rrp-price--withTax"
+												style="display: none;">
+												MSRP:
+												<span data-product-rrp-with-tax class="price price--rrp">
+												</span>
+											</div>
+											<div class="price-section price-section--withTax">
+												<span class="price-label" style="display: none;">
+												</span>
+												<span class="price-now-label">
+												</span>
+												<span data-product-price-with-tax class="price price--withTax">₹
+													<%=el.price%></span>
+											</div>
+											<div class="price-section price-section--withTax non-sale-price--withTax">
+												<span data-product-non-sale-price-with-tax
+													class="price price--non-sale">
+													₹ <%=(1.20)*el.price%>
+												</span>
 											</div>
 										</div>
-									</article>
-								</div>
+
+										<div class="tt-cart-btn">
+											<a href="/canvas-laundry-cart/" data-event-type="product-click"
+												class="button button--small card-figcaption-button"
+												title="Choose Options" data-product-id="103">Go to item</a>
+										</div>
+									</div>
+								</article>
+							</div>
 							<% }) %>
 						</section>
 
@@ -635,8 +635,7 @@
 										</div>
 
 										<div class="tt-cart-btn">
-											<a href="/canvas-laundry-cart/"
-												data-event-type="product-click"
+											<a href="/canvas-laundry-cart/" data-event-type="product-click"
 												class="button button--small card-figcaption-button"
 												title="Choose Options" data-product-id="103">Go to item</a>
 										</div>

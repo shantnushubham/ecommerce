@@ -14,7 +14,7 @@
 						<span class="breadcrumb-title ">
 						</span>
 						<span class="breadcrumb-title is-active">
-							<span class="breadcrumb-label">Laptop</span>
+							<span class="breadcrumb-label">All Items</span>
 						</span>
 					</h1>
 					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
@@ -26,7 +26,7 @@
 						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
 							itemtype="http://schema.org/ListItem">
 							<meta itemprop="item" content="/laptop/">
-							<span class="breadcrumb-label" itemprop="name">Laptop</span>
+							<span class="breadcrumb-label" itemprop="name">All Items</span>
 							<meta itemprop="position" content="2" />
 						</li>
 					</ul>
@@ -49,7 +49,7 @@
 							<a href="#facetedSearch-navList" role="button" class="facetedSearch-toggle toggleLink"
 								data-collapsible>
 								<span class="facetedSearch-toggle-text">
-									Browse by Brand, Color &amp; more
+									Browse by Categories, Sub-Categories &amp; more
 
 								</span>
 
@@ -215,6 +215,13 @@
 				</aside>
 
 				<main class="page-content" id="product-listing-container">
+					<style>
+						@media (max-width: 600px) {
+							.productGrid .product {
+								display: none
+							}
+						}
+					</style>
 
 					<ul class="productGrid">
 						<% itemlist.forEach(el => { %>
@@ -290,9 +297,62 @@
 						<% } %>
 						<% }) %>
 					</ul>
-
 					<div data-content-region="category_below_content"></div>
 				</main>
+				<div class="uk-child-width-1-2 uk-text-center" uk-grid="masonry: true">
+					<% itemlist.forEach(el => { %>
+					<div>
+						<!-- <div class="uk-card uk-card-default uk-card-body">
+							<div> -->
+						<div class="uk-card uk-card-default">
+							<div class="uk-card-media-top">
+								<a href="/items/<%= el.iid %>">
+									<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+										data-sizes="auto" />
+								</a>
+							</div>
+							<div class="uk-card-body" style="padding: 0;">
+								<div class="card-body">
+									<h4 class="card-title">
+										<a href="/items/<%= el.iid %>"><%=el.name%></a>
+									</h4>
+									<div class="card-text tt-price" data-test-info-type="price">
+										<div class="price-section price-section--withTax rrp-price--withTax"
+											style="display: none;">
+											MRP:
+											<span data-product-rrp-with-tax class="price price--rrp">
+											</span>
+										</div>
+
+										<div class="price-section price-section--withTax">
+											<span class="price-label" style="display: none;">
+
+											</span>
+											<span class="price-now-label">
+											</span>
+											<span data-product-price-with-tax
+												class="price price--withTax">₹<%=el.price%></span>
+										</div>
+										<div class="price-section price-section--withTax non-sale-price--withTax">
+											<span data-product-non-sale-price-with-tax class="price price--non-sale">
+												₹<%=(1.20) * el.price%>
+											</span>
+										</div>
+										<a href="/items/<%= el.iid %>" data-event-type="product-click"
+											title="Add to Cart" class="button button--small card-figcaption-button">
+											<span class="material-icons">add</span>
+											Buy Now
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<% }) %>
+				</div>
+
 			</div>
 		</div>
 
