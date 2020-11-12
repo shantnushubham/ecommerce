@@ -135,7 +135,8 @@
 									<a class="navPages-action" href="/">Home</a>
 								</li>
 								<% var categories = new Array() %>
-								<% categories.push({name: "Sanitation", linkTo: ""}) %>
+								<% categories.push({name: "All Items", linkTo: "/items"}) %>
+								<% categories.push({name: "Sanitation", linkTo: "/items/category/sanitation"}) %>
 								<% categories.push({name: "Cleaning & Hygiene Solutions", linkTo: ""}) %>
 								<% categories.push({name: "Lab Solutions", linkTo: ""}) %>
 								<% categories.push({name: "Pathology & Histopathology", linkTo: ""}) %>
@@ -149,12 +150,36 @@
 
 								<% categories.forEach(category => { %>
 								<li class="navPages-item">
-									<a class="navPages-action" href="/items">
+									<a class="navPages-action" href="<%=category.linkTo%>">
 										<span class="material-icons tt-left-arrow">arrow_forward</span>
 										<%= category.name%>
 									</a>
 								</li>
 								<% }) %>
+								<li class="navPages-item">
+									<a class="navPages-action" href="/offers">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										Offers
+									</a>
+								</li>
+								<li class="navPages-item">
+									<a class="navPages-action" href="/about-us">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										About Us
+									</a>
+								</li>
+								<li class="navPages-item">
+									<a class="navPages-action" href="/contact-us">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										Contact Us
+									</a>
+								</li>
+								<li class="navPages-item">
+									<a class="navPages-action" href="/blogs">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										Blogs
+									</a>
+								</li>
 							</ul>
 
 							<!--Search button was here now at header html page-->
