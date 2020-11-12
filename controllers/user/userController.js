@@ -374,14 +374,15 @@ exports.addUserAddress = (req, res) => {
 
 exports.updateUserAddress = (req, res) => {
     if (req.body.address) {
-        const updatedData = req.body;
-        UserAddress.findOneAndUpdate({ _id: req.user.id }, updatedData, function (err, updatedA) {
+        const updatedData = req.body.address;
+        UserAddress.findOneAndUpdate({ _id: req.params.id }, updatedData, function (err, updatedA) {
             if (err) {
                 console.log(err)
                 req.flash('success', 'error in updating address')
                 res.redirect('/');
             }
             else {
+                console.log(updatedA);
                 req.flash('success', 'succesfully added address')
                 res.redirect('/');
             }
