@@ -152,7 +152,7 @@ router.post('/payment/success', (req, res) => {
         }
 
         console.log('redirect to success page');
-        res.render('successPage', { order: updatedOtx.order, failure: false, failureMessage: null })
+        res.render('successpage', { order: updatedOtx.order, failure: false, failureMessage: null })
     })
 
 })
@@ -162,7 +162,7 @@ router.post('/payment/failure', (req, res) => {
     orderServices.updatePaymentByTransactionId(req.body.txnid, req.body.status, function (updatedOtx) {
 
         console.log('redirect to success page');
-        res.render('successPage', { order: updatedOtx.order, failure: true, failureMessage: req.body.error_Message })
+        res.render('successpage', { order: updatedOtx.order, failure: true, failureMessage: req.body.error_Message })
     })
 
 })
@@ -201,7 +201,7 @@ router.get("/redirect", ensureAuthenticated, function (req, res) {
                             console.log("stock update status:", stocks.success);
                         })
                         console.log('redirect to success page');
-                        res.render('successPage', { order: foundOrder.order })
+                        res.render('successpage', { order: foundOrder.order })
                     }
                 });
             }
