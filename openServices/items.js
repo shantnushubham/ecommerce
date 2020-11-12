@@ -92,6 +92,7 @@ class items {
                                 isService: foundItem.isService,
                                 tax: foundItem.tax,
                                 sku: foundItem.sku,
+                                stock:foundItem.stock
 
                             }
 

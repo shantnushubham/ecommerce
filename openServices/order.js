@@ -207,9 +207,15 @@ class order {
             }
             else {
                 if (updatedOrder.paymentType === "credit") {
-                    userModel.findOneAndUpdate({ uuid: updatedOrder.uuid }, { $inc: { credBalance: -updatedOrder.total } }, function (err, updatedUser) {
+                    userModel.findOne({ uuid: updatedOrder.uuid }, function (err, foundUser) {
                         if (err)
                             console.log(err);
+                        else
+                        {
+                            userModel.findOneAndUpdate({uuid:updatedOrder.uuid},{credBalance:foundUser.credBalance-updatedOrder.total },function(err,updatedOrder){
+                                console.log(err);
+                            })
+                        }
 
                     })
                 }

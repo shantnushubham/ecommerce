@@ -26,11 +26,14 @@ router.post('/login', passport.authenticate("local", {
 router.get('/logout', ensureAuthenticated, UserControl.logout);
 
 
-
+router.get('/add/new/address',ensureAuthenticated,function(req,res){
+    res.render('address')
+})
 router.post('/addUserAddress', ensureAuthenticated, UserControl.addUserAddress)
 router.get('/update-profile', ensureAuthenticated, UserControl.getUpdateProfile)
 router.post('/update-profile', ensureAuthenticated, UserControl.updateUserData)
 router.put('/makeDefaultAddress', ensureAuthenticated, UserControl.makeAdressToDefaultAddress)
+router.put('/update-address', ensureAuthenticated, UserControl.updateUserAddress)
 router.put('/updateAddress', ensureAuthenticated, UserControl.updateUserAddress)
 router.get('/add/business-account', ensureAuthenticated, UserControl.getBusinessAccountReg)
 router.post('/add/business-account', ensureAuthenticated, UserControl.postBusinessAccReg)
