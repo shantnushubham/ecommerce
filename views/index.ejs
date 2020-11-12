@@ -28,6 +28,7 @@
 	}'>
 
 			<% var bannerArray = new Array() %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner1new.jpg", linkTo: ""}) %>
 			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner6.jpeg", linkTo: ""}) %>
 			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner1.jpeg", linkTo: ""}) %>
 			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner2.jpeg", linkTo: ""}) %>
@@ -71,8 +72,7 @@
 						<div class="content">
 							<div class="image">
 								<a class="subcat-img" href="<%=category.linkTo%>">
-									<img class="lazyload" data-sizes="auto" alt=""
-										src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/img/loading.svg"
+									<img class="lazyload" data-sizes="auto" alt="" src="/img/loading.svg"
 										data-src="<%=category.imageSrc%>">
 								</a>
 							</div>
@@ -443,7 +443,7 @@
 			</div>
 		</div>
 		<div class="topbanner">
-			<div class="banners container"  data-banner-location="top">
+			<div class="banners container" data-banner-location="top">
 				<div class="banner">
 					<div id='1475563518'>
 						<div class="ttcmsbanner">
@@ -783,15 +783,5 @@
 		</div>
 	</div>
 </div>
-<!-- 
-        <div class="banners" data-banner-location="bottom">
-            <div class="banner">
-                <div id='104941989'><div id="ttcmsbottombanner">
-<div class="ttcmsbottombanner-img1 ttbanner"><a href="#"> <img class="__mce_add_custom__" title="bottom-banner-01.jpg" src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/product_images/uploaded_images/bottom-banner-01.jpg" alt="bottom-banner-01.jpg" width="825" height="250" /> </a></div>
-<div class="ttcmsbottombanner-img2 ttbanner"><a href="#"> <img class="__mce_add_custom__" title="bottom-banner-02.jpg" src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/product_images/uploaded_images/bottom-banner-02.jpg" alt="bottom-banner-02.jpg" width="825" height="250" /> </a></div>
-</div></div>
-            </div>
-        </div>
 
- -->
 <%- include("partials/newFooter") %>

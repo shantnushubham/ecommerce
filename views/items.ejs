@@ -142,7 +142,7 @@
 													data-has-more-results="false">
 													<% subCategory.forEach(element => { %>
 													<li class="navList-item">
-														<input type="checkbox" name="category"
+														<input type="checkbox" name="subCategory"
 															value="<%=element%>">&nbsp;
 														<%=changeCase(element).toUpperCase()%>
 
@@ -185,7 +185,7 @@
 													data-has-more-results="false">
 													<% tag.forEach(element => { %>
 													<li class="navList-item">
-														<input type="checkbox" name="category"
+														<input type="checkbox" name="tag"
 															value="<%=element%>">&nbsp;
 														<%=changeCase(element).toUpperCase()%>
 														<span class="navList-action-close" aria-hidden="true">
@@ -216,17 +216,14 @@
 
 				<main class="page-content" id="product-listing-container">
 					<style>
-						#forPhone {
-							display: none;
+						@media (min-width: 600px) {
+							#forPhone {
+								display: none;
+							}
 						}
-
 						@media (max-width: 600px) {
 							.productGrid .product {
 								display: none
-							}
-
-							#forPhone {
-								display: block;
 							}
 						}
 					</style>
@@ -383,11 +380,5 @@
 		</div>
 	</div>
 </div>
-<!-- 
-        <div class="banners" data-banner-location="bottom">
-            <div class="banner">
-                <div id='1252724102'><p><img class="__mce_add_custom__" title="left-banner-1.jpg" src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/product_images/uploaded_images/left-banner-1.jpg" alt="left-banner-1.jpg" width="290" height="390" /></p></div>
-            </div>
-        </div>
 
 <%- include("partials/newFooter.ejs") %>
