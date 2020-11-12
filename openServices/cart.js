@@ -193,17 +193,42 @@ class cart {
     addToCart(iid, uuid, quantity, callback) {
         itemmodel.findOne({ iid: iid, active: true }, function (err, founditem) {
             if (err) {
+                console.log(err);
                 callback({ success: false, message: 'could not find any item by that name' })
 
             }
             else {
                 if (functions.isEmpty(founditem)) {
+                    console.log({ success: false, message: 'could not find any item by that name' });
                     callback({ success: false, message: 'could not find any item by that name' })
 
                 }
                 else {//item is not a service
-                    cartmodel.find({uuid:uuid}, function (err, foundS) {
-                        if (err) { callback({ success: false, message: 'db error' }) }
+                    cartmodel.aggregate([
+                        { $match: { uuid: uuid } },
+                        { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
+                        {
+                            $project: {
+                                "quantity": "$quantity",
+                                "iid": "$iid",
+                                "item": { "$arrayElemAt": ["$item", 0] },
+
+                            }
+
+                        },
+                        {
+                            $project: {
+                                "isService": "$item.isService",
+                                "quantity": "$quantity",
+                                "iid": "$iid",
+                                "item": "$item"
+                            }
+                        }
+                    ]).exec(function (err, foundS) {
+                        if (err) {
+                            console.log(err);
+                            callback({ success: false, message: 'db error' })
+                        }
                         else {
                             var containsService = false, containsProduct = false
                             if (foundS.length > 0 && foundS[0].isService) {
@@ -224,6 +249,7 @@ class cart {
                             else {
                                 cartmodel.findOne({ iid: iid, uuid: uuid }, function (err, foundItem) {
                                     if (err) {
+                                        console.log(err);
                                         callback({ success: false, found: false })
 
                                     }
@@ -441,14 +467,16 @@ class cart {
                     callback({ success: false, message: "cant checkout with empty cart" })
                 }
                 else
-                    callback({ success: true, cartList: cartlist, 
+                    callback({
+                        success: true, cartList: cartlist,
                         itemArray: itemArray, total: total,
-                         allowCOD: allowCOD, tax: tax })
+                        allowCOD: allowCOD, tax: tax
+                    })
             }
         })
     }
 
-    getListingForCheckout(uuid,user, callback) {
+    getListingForCheckout(uuid, user, callback) {
 
         cartmodel.aggregate([
             { $match: { uuid: uuid } },
@@ -479,12 +507,12 @@ class cart {
                     total = total + (parseInt(cartEl.price[0]) * cartEl.quantity) + temptax
                     // total = total + parseInt((parseInt(cartEl.price[0]) * cartEl.quantity))
                 });
-                console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD,tax:tax });
+                console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax });
                 if (total <= 0) {
                     callback({ success: false, message: "cant checkout with empty cart" })
                 }
                 else
-                    callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD,tax:tax })
+                    callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax })
             }
         })
 
@@ -504,7 +532,7 @@ class cart {
                         image: foundItem.image,
                         uuid: uuid,
                         item: foundItem,
-                        tax:foundItem.tax
+                        tax: foundItem.tax
                     }
                     resolve(itemdata)
                 }

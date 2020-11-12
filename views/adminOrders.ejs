@@ -67,6 +67,7 @@
                                 <% } %>
                                 <th>Mark as Complete</th>
                                 <% } %>
+                                <th>Ready to ship?</th>
                             </tr>
                         </thead>
 
@@ -98,10 +99,14 @@
                                 <td><a class="ui small green button" href="/admin/sendInvoice/<%=element.orderId%>">Send
                                         Invoice</a></td>
                                 <% } %>
-                                <td><a class="ui small green button" href="/admin/shipmentStatus/<%=element.orderId%>/completed">
-                                    Complete
-                                </a></td>
+                                <td><a class="ui small green button"
+                                        href="/admin/shipmentStatus/<%=element.orderId%>/completed">
+                                        Complete
+                                    </a></td>
                                 <% } %>
+                                <td><a class="ui small green button" href="/admin/confirm-order/<%=element.orderId%>">
+                                        Ship
+                                    </a></td>
                             </tr>
                             <% }); %>
                         </tbody>
