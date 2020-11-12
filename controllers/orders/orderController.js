@@ -36,9 +36,9 @@ exports.getCheckout = function (req, res) {
                         else {
                             extra = foundFee.charge
                         }
-                            res.render('checkout', { total: cart.total, cart: cart.cartList, address: address, codAllowed: cart.codAllowed, tax: cart.tax, fee: extra })
+                        res.render('checkout', { total: cart.total, cart: cart.cartList, address: address, codAllowed: cart.codAllowed, tax: cart.tax, fee: extra })
 
-                        
+
                     })
                 }
             })
@@ -1183,8 +1183,9 @@ exports.getServiceQuoteById = function (req, res) {
     });
 }
 exports.createServiceQuote = function (req, res) {
+    console.log("Req Body is", req.body)
     var data = {
-        email: req.body.mail,
+        email: req.body.email,
         phone: req.body.phone,
         name: req.body.name,
         iid: req.params.iid,
@@ -1192,6 +1193,7 @@ exports.createServiceQuote = function (req, res) {
         measurementUnit: req.body.unit,
 
     }
+    console.log(data)
     if (req.user) {
         data["uuid"] = req.user.uuid
     }
@@ -1199,24 +1201,23 @@ exports.createServiceQuote = function (req, res) {
         if (created.success == false) {
             req.flash('error', 'error in creating quote ')
 
-        }
-        else {
-            itemServices.getItemById(req.params.iid,function(foundItem){
-                var data={
-                    user:req.user,
-                    email:req.user.email,
-                    name:req.user.name,
-                    item:foundItem.item,
+        } else {
+            itemServices.getItemById(req.params.iid, function (foundItem) {
+                var data = {
+                    user: req.user,
+                    email: req.user.email,
+                    name: req.user.name,
+                    item: foundItem.totalDetails,
 
                 }
-                mailer.serviceQuote(req.user.email,data,function(mailed){
-    console.log(mailed);
+                mailer.serviceQuote(req.user.email, data, function (mailed) {
+                    console.log(mailed);
                 })
                 req.flash('success', 'Quote Requested')
             })
-            
+
         }
-        res.redirect('/items/' + req.params.iid)
+        res.redirect('/')
 
     })
 
