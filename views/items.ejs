@@ -243,12 +243,12 @@
 										</div>
 									</a>
 									<% } else { %>
-										<a href="/items/<%= el.iid %>">
-											<div class="card-img-container">
-												<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
-													data-sizes="auto" class="lazyload card-image" />
-											</div>
-										</a>
+									<a href="/items/<%= el.iid %>">
+										<div class="card-img-container">
+											<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+												data-sizes="auto" class="lazyload card-image" />
+										</div>
+									</a>
 									<% } %>
 									<figcaption class="card-figcaption">
 										<div class="card-figcaption-body">
@@ -272,7 +272,7 @@
 								<div class="card-body">
 									<h4 class="card-title">
 										<% if (el.iid === "-HDsE_c5p") { %>
-										<a href="bio-bubble"><%=el.name%></a>
+										<a href="/bio-bubble"><%=el.name%></a>
 										<% } else { %>
 										<a href="/items/<%= el.iid %>"><%=el.name%></a>
 										<% } %>
@@ -332,15 +332,26 @@
 							<div> -->
 						<div class="uk-card uk-card-default">
 							<div class="uk-card-media-top">
+								<% if (el.iid == "-HDsE_c5p") { %>
+								<a href="/bio-bubble">
+									<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+										data-sizes="auto" />
+								</a>
+								<% } else { %>
 								<a href="/items/<%= el.iid %>">
 									<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
 										data-sizes="auto" />
 								</a>
+								<% } %>
 							</div>
 							<div class="uk-card-body" style="padding: 0;">
 								<div class="card-body">
 									<h4 class="card-title">
+										<% if (el.iid == "-HDsE_c5p") { %>
+										<a href="/bio-bubble"><%=el.name%></a>
+										<% } else { %>
 										<a href="/items/<%= el.iid %>"><%=el.name%></a>
+										<% } %>
 									</h4>
 									<div class="card-text tt-price" data-test-info-type="price">
 										<div class="price-section price-section--withTax rrp-price--withTax"
@@ -364,11 +375,6 @@
 												₹<%=(1.20) * el.price%>
 											</span>
 										</div>
-										<a href="/items/<%= el.iid %>" data-event-type="product-click"
-											title="Add to Cart" class="button button--small card-figcaption-button">
-											<span class="material-icons">add</span>
-											Buy Now
-										</a>
 									</div>
 								</div>
 							</div>
