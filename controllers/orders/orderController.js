@@ -1302,11 +1302,12 @@ exports.sendInvoice = function (req, res) {
                             if (mailed.success == false) {
                                 req.flash('error', 'error in sending mail')
                                 res.redirect('/admin/orders-filter')
+                                
+                            }
+                            else {
                                 orderServices.confirmInvoice(foundOrder.order.orderId, function (updated) {
                                     console.log(updated);
                                 })
-                            }
-                            else {
                                 req.flash('success', 'success')
                                 res.redirect('/admin/orders-filter')
                             }
