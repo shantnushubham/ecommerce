@@ -559,8 +559,10 @@ exports.getAllBizReq = function (req, res) {
             console.log(err)
             req.flash('error', 'error could not find in db')
             res.redirect('/admin')
-        } else
+        } else {
+            console.log(foundB)
             res.render('adminBizReq', { list: foundB })
+        }
 
     })
 }
@@ -622,6 +624,7 @@ exports.getAllPA = function (req, res) {
         {
             $project: {
                 "credBalance": "$credBalance",
+                "uuid": "$uuid",
                 "credPerc": "$credPerc",
                 "name": "$name",
                 "premium": "$premium",
@@ -636,11 +639,9 @@ exports.getAllPA = function (req, res) {
             req.flash('error', 'error could not find in db')
             res.redirect('/admin')
         } else {
-
-            res.render('adminBizReq', { list: foundB })
-
+            console.log(foundB)
+            res.render('adminAllPremium', { list: foundB })
         }
-
     })
 }
 
