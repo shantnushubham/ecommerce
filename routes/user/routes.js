@@ -33,8 +33,11 @@ router.post('/addUserAddress', ensureAuthenticated, UserControl.addUserAddress)
 router.get('/update-profile', ensureAuthenticated, UserControl.getUpdateProfile)
 router.post('/update-profile', ensureAuthenticated, UserControl.updateUserData)
 router.put('/makeDefaultAddress', ensureAuthenticated, UserControl.makeAdressToDefaultAddress)
-router.put('/update-address', ensureAuthenticated, UserControl.updateUserAddress)
-router.put('/updateAddress', ensureAuthenticated, UserControl.updateUserAddress)
+
+router.get('/update-address/:id',ensureAuthenticated,UserControl.getAddressByID)
+router.post('/update-address', ensureAuthenticated, UserControl.updateUserAddress)
+
+router.post('/updateAddress', ensureAuthenticated, UserControl.updateUserAddress)//no
 router.get('/add/business-account', ensureAuthenticated, UserControl.getBusinessAccountReg)
 router.post('/add/business-account', ensureAuthenticated, UserControl.postBusinessAccReg)
 router.get('/business-accounts', middleware.isAdmin, UserControl.getAllBizReq)
