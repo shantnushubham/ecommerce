@@ -181,11 +181,12 @@ class items {
             isService: data.isService == true ? true : false,
             cod: data.cod == true ? true : false,
             measurementUnit: data.measurementUnit,
-            tax: data.tax,
+            tax: data.tax==''?18:data.tax,
             sku: data.sku,
-            isBusiness: data.isBusiness,
+            isBusiness: data.isBusiness==''?false:true,
 
         }
+        console.log('itemdata=',item_data);
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
 
         vendorModel.findOne({ vendorId: data.vendorId }, function (err, foundV) {
@@ -201,6 +202,7 @@ class items {
                         callback({ success: false, err: "trouble creating item" })
                     }
                     else {
+                        console.log("created",newItem);
                         item_metaData.iid = newItem.iid
                         itemMetaModel.create(item_metaData, function (err, newMeta) {
                             if (err) {
