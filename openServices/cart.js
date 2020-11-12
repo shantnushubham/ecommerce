@@ -202,7 +202,7 @@ class cart {
 
                 }
                 else {//item is not a service
-                    cartmodel.find({}, function (err, foundS) {
+                    cartmodel.find({uuid:uuid}, function (err, foundS) {
                         if (err) { callback({ success: false, message: 'db error' }) }
                         else {
                             var containsService = false, containsProduct = false
@@ -214,6 +214,10 @@ class cart {
                                 containsProduct = true
 
                             }
+                            // console.log("containsService",containsService);
+                            // console.log("containsProduct",containsProduct);
+
+                            // console.log("should be added?",(founditem.isService == false && containsService == true) || (founditem.isService == true && containsProduct == true));
                             if ((founditem.isService == false && containsService == true) || (founditem.isService == true && containsProduct == true)) {
                                 callback({ success: false, message: 'cannot add a product with a service to cart' })
                             }

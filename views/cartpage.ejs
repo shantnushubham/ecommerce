@@ -92,7 +92,7 @@
 									<span class="cart-item-label">Tax</span>
 									<% if (currentUser != "" && currentUser.state.toLowerCase() === "jharkhand") { %>
 									<span class="cart-item-value ">₹
-										<%=Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price))))%>
+										<%=Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) * parseInt(cartItem.quantity)))%>
 										<% totalTax = totalTax + Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) *  parseInt(cartItem.quantity))) %>
 										(<%=cartItem.item.tax%>%) </span>
 									<% } %>

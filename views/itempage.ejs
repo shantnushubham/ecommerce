@@ -244,7 +244,13 @@
 						</form>
 
 					</div>
-					<div class="addthis_toolbox addthis_32x32_style" addthis:url="" addthis:title="">
+					<div>
+						<% if (!item.cod) { %>
+						<h2 style="text-align: left; color: red;">Cash on Delivery Not Allowed</h2>
+						<% } %>
+					</div>
+
+					<div class="addthis_toolbox addthis_32x32_style" addthis:url="" addthis:title="" hidden>
 						<ul class="socialLinks">
 							<li class="socialLinks-item socialLinks-item--facebook">
 								<a class="addthis_button_facebook icon icon--facebook"

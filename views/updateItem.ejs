@@ -23,11 +23,11 @@
                     <div class="ui form">
                         <div class="field">
                             <label>Name</label>
-                            <input type="text" placeholder="Name" name="name" value="<%=item.name%>">
+                            <input type="text" placeholder="Name" name="name" value="<%=item.name%>" required>
                         </div>
                         <div class="field">
                             <label>Price</label>
-                            <input type="text" placeholder="Price" name="price" value="<%=item.price%>">
+                            <input type="text" placeholder="Price" name="price" value="<%=item.price%>" required>
                         </div>
                         <div class="field">
                             <label>GST Percentage</label>
@@ -43,7 +43,8 @@
                         </div>
                         <div class="field">
                             <label>Category</label>
-                            <input type="text" placeholder="Category" name="category" value="<%=item.category%>">
+                            <input type="text" placeholder="Category" name="category" value="<%=item.category%>"
+                                required>
                         </div>
                         <div class="field">
                             <label>Sub-Category</label>
@@ -61,23 +62,38 @@
                         </div>
                         <div class="field">
                             <label>Vendor Id</label>
-                            <input type="text" placeholder="Vendor Id" name="vendorId" value="<%=item.vendorId%>">
+                            <input type="text" placeholder="Vendor Id" name="vendorId" value="<%=item.vendorId%>"
+                                required>
                         </div>
                         <div class="field">
                             <label>Stock</label>
-                            <input type="number" placeholder="Stock Count" name="stock" value="<%=item.stock%>">
+                            <input type="number" placeholder="Stock Count" min="0" name="stock" value="<%=item.stock%>"
+                                required>
                         </div>
                         <div class="inline fields">
                             <label for="fruit">Is this a Service?</label>
                             <div class="field">
                                 <input type="radio" name="isService" <% if (item.isService) { %> checked="" <% } %>
-                                    value="true" tabindex="0" class="hidden">
+                                    value="true" tabindex="0" class="hidden" required>
                                 <label>Yes</label>
 
                             </div>
                             <div class="field">
                                 <input type="radio" name="isService" <% if (!item.isService) { %> checked="" <% } %>
                                     value="false" tabindex="0" class="hidden">
+                                <label>No</label>
+                            </div>
+                        </div>
+                        <div class="inline fields">
+                            <label for="fruit">Is COD Allowed?</label>
+                            <div class="field">
+                                <input type="radio" name="cod" <% if (!item.cod) { %> checked="" <% } %> value="true"
+                                    tabindex="0" class="hidden" required>
+                                <label>Yes</label>
+                            </div>
+                            <div class="field">
+                                <input type="radio" name="cod" <% if (!item.cod) { %> checked="" <% } %> value="false"
+                                    tabindex="0" class="hidden">
                                 <label>No</label>
                             </div>
                         </div>
@@ -89,21 +105,24 @@
                         <div class="field">
                             <label>Short Description</label>
                             <input type="text" placeholder="Short Description" name="shortDesc"
-                                value="<%=item.shortDesc%>">
+                                value="<%=item.shortDesc%>" required>
                         </div>
                         <div class="field">
                             <label>SKUs</label>
                             <input type="text" placeholder="SKUs" name="sku" value="<%=item.sku%>">
                         </div>
                         <div class="inline fields">
-                            <label for="fruit">Only for Business Accounts? (If your category is "Chemicals" please choose "Yes")</label>
+                            <label for="fruit">Only for Business Accounts? (If your category is "Chemicals" please
+                                choose "Yes")</label>
                             <div class="field">
-                                <input type="radio" name="isBusiness" value="true" tabindex="0" class="hidden" <% if (item.isBusiness) { %> checked="" <% } %>>
+                                <input type="radio" name="isBusiness" value="true" tabindex="0" class="hidden"
+                                    <% if (item.isBusiness) { %> checked="" <% } %> required>
                                 <label>Yes</label>
 
                             </div>
                             <div class="field">
-                                <input type="radio" name="isBusiness" value="false" tabindex="0" class="hidden" <% if (!item.isService) { %> checked="" <% } %>>
+                                <input type="radio" name="isBusiness" value="false" tabindex="0" class="hidden"
+                                    <% if (!item.isService) { %> checked="" <% } %>>
                                 <label>No</label>
                             </div>
                         </div>
@@ -127,7 +146,7 @@
                                 Example: <code>&lt;li&gt;</code> Item 1 <code>&lt;/li&gt;</code><code>&lt;li&gt;</code>
                                 Item 2 <code>&lt;/li&gt;</code><code>&lt;li&gt;</code> Item 3 <code>&lt;/li&gt;</code>
                             </p>
-                            <textarea spellcheck="true" placeholder="content"
+                            <textarea spellcheck="true" placeholder="content" required
                                 name="content"><%=item.content%></textarea>
                         </div>
                     </div>

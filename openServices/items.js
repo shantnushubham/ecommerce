@@ -92,7 +92,8 @@ class items {
                                 isService: foundItem.isService,
                                 tax: foundItem.tax,
                                 sku: foundItem.sku,
-                                stock:foundItem.stock
+                                stock:foundItem.stock,
+                                cod:foundItem.cod
 
                             }
 
@@ -178,14 +179,15 @@ class items {
             tag: data.tag,
             groupingTag: data.groupingTag,
             stock: data.stock,
-            isService: data.isService == true ? true : false,
+            isService: data.isService == "true" ? true : false,
             cod: data.cod == true ? true : false,
             measurementUnit: data.measurementUnit,
-            tax: data.tax,
+            tax: data.tax==''?18:data.tax,
             sku: data.sku,
-            isBusiness: data.isBusiness,
+            isBusiness: data.isBusiness==''?false:true,
 
         }
+        console.log('itemdata=',item_data);
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
 
         vendorModel.findOne({ vendorId: data.vendorId }, function (err, foundV) {
@@ -201,6 +203,7 @@ class items {
                         callback({ success: false, err: "trouble creating item" })
                     }
                     else {
+                        console.log("created",newItem);
                         item_metaData.iid = newItem.iid
                         itemMetaModel.create(item_metaData, function (err, newMeta) {
                             if (err) {
@@ -233,13 +236,15 @@ class items {
             tag: data.tag,
             shortDesc: data.shortDesc,
             groupingTag: data.groupingTag,
-            tax: data.tax,
+            tax: data.tax==''?18:data.tax,
             sku: data.sku,
             stock: data.stock,
             measurementUnit: data.measurementUnit,
-            isBusiness: data.isBusiness == true ? true : false
+            isBusiness: data.isBusiness == "true" ? true : false,
+            cod: data.cod == true ? true : false,
 
         }
+        console.log(item_data);
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
         vendorModel.findOne({ vendorId: data.vendorId }, function (err, foundV) {
             if (err || functions.isEmpty(foundV)) {
@@ -250,6 +255,7 @@ class items {
                 item_data["vendorName"] = foundV.vendorName
 
                 itemModel.findOneAndUpdate({ iid: iid }, item_data, function (err, updatedItem) {
+                    console.log(updatedItem);
                     if (err) callback({ success: false, err: err })
                     else {
                         itemMetaModel.findOneAndUpdate({ iid: iid }, item_metaData, function (err, updatedMeta) {

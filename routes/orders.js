@@ -53,8 +53,8 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                             purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
                             phone: req.user.phone,
                             buyer_name: req.user.name,
-                            surl: "http://localhost:3000/payment/success",
-                            furl: "http://localhost:3000/payment/failure",
+                            surl: envData.surl,
+                            furl: envData.furl,
                             service_provider: "payu_paisa",
                             // send_email: true,
                             // webhook: '',
@@ -274,7 +274,7 @@ router.get('/admin/service', functions.isAdmin, orderController.getAllServiceQuo
 router.get('/service/:iid', orderController.getCreateServiceQuote)
 router.post('/service/:iid', orderController.createServiceQuote)
 router.get('/admin/service/:quoteId', functions.isAdmin, orderController.getServiceQuoteById)
-router.get('/admin/complete-service', functions.isAdmin, orderController.serviceQuoteStatus)
+router.get('/admin/complete-service/:quoteId', functions.isAdmin, orderController.serviceQuoteStatus)
 router.get('/admin/get/allOrderQuotes', functions.isAdmin, orderController.adminAllQuotes)
 router.get('/admin/get/allOrderSaved', functions.isAdmin, orderController.adminAllSaved)
 

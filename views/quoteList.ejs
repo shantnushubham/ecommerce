@@ -12,45 +12,37 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-table"></i> Quotes Data Table</div>
-            
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Order ID</th>
+                                <th>Quote ID</th>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Phone No.</th>
+                                <th>Item ID</th>
+                                <th>Units</th>
+                                <th>Quote Date</th>
                                 <th>User ID</th>
-                                <th>Payment Type</th>
-                                <th>Payment Status</th>
-                                <th>Order Date</th>
-                                <th>Shipment Status</th>
-                                <th>Total</th>
-                                <th>Accept Order</th>
-                                <th>Authorize Payment</th>
-                                <th>Allow Credit</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             <% quotes.forEach(element => { %>
                             <tr>
-                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.orderId%></a></td>
-                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.uuid %></a></td>
-                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.paymentType.toUpperCase()%>
-                                    </a></td>
-                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.status.toUpperCase() %>
-                                    </a></td>
-                                <td><a
-                                        href="/admin/orders/<%=element.orderId%>"><%=element.purchaseTime.toLocaleDateString()%></a>
-                                </td>
-                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.shipmentStatus.toUpperCase() %>
-                                    </a></td>
-                                <td><a href="/admin/orders/<%=element.orderId%>">Rs. <%= element.total %></a></td>
+                                <td><%=element.quoteId%></td>
+                                <td><%=element.email%></td>
+                                <td><%=element.name%></td>
+                                <td><%=element.phone%></td>
+                                <td><%=element.iid%></td>
+                                <td><%=element.units%></td>
+                                <td><%=element.dateCreated.toLocaleDateString()%></td>
+                                <td><%=element.uuid%></td>
                                 <td><a class="ui small green button"
-                                        href="/admin/confirm-order/<%=element.orderId%>">Accept</a></td>
-                                <td><a class="ui small green button"
-                                        href="/admin/authorize/<%=element.orderId%>">Authorize</a></td>
-                                <td><a class="ui small green button" href="/allow-credit/<%=element.orderId%>">Allow</a>
+                                        href="/admin/complete-service/<%=element.quoteId%>">Mark as Complete</a>
                                 </td>
                             </tr>
                             <% }); %>
