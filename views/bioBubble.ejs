@@ -36,17 +36,19 @@
                     <h1 style="color: #ffaa3d; font-size: 35px; font-weight: bold;">@ ₹ 5 per sq. ft only</h1>
                     <h6 style="margin-top: 0px;">For less than 1000 sq. ft minimum cost is ₹ 5,000</h6>
 
-                    <label class="uk-form-label" for="form-horizontal-text"><b>Quantity (sq. ft)</b></label>
-                    <div class="uk-margin">
-                        <div uk-form-custom="target: true">
-                            <div class="uk-form-controls">
-                                <input class="uk-input uk-form-width-small" id="form-horizontal-text" type="number"
-                                    placeholder="Enter Quantity" value="1000" min="1000">
+                    <form method="POST" action="/add/-HDsE_c5p">
+                        <label class="uk-form-label" for="form-horizontal-text"><b>Quantity (sq. ft)</b></label>
+                        <div class="uk-margin">
+                            <div uk-form-custom="target: true">
+                                <div class="uk-form-controls">
+                                    <input class="uk-input uk-form-width-small" id="form-horizontal-text" type="number"
+                                        placeholder="Enter Quantity" value="1000" name="quantity" min="1000">
+                                </div>
                             </div>
+                            <button class="button button--primary" style="margin: 0;">Add to Cart</button>
+                            <a href="/service/-HDsE_c5p"><button class="button button--primary" style="margin: 0;">Get Quote</button></a>
                         </div>
-                        <button class="button button--primary" style="margin: 0;">Submit</button>
-                        <button class="button button--primary" style="margin: 0;">Get Quote</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

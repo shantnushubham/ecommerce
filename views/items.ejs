@@ -137,7 +137,7 @@
 												</div>
 											</div>
 
-											<div id="facetedSearch-content--Color" class="accordion-content  is-open ">
+											<div id="facetedSearch-content--Color" class="accordion-content">
 												<ul id="facetedSearch-navList--Color" data-facet="Color" class="navList"
 													data-has-more-results="false">
 													<% subCategory.forEach(element => { %>
@@ -162,7 +162,7 @@
 
 										<% if (!(tag.length == 1 && tag[0] == '')) { %>
 										<div class="accordion-block">
-											<div class="accordion-navigation toggleLink  is-open " role="button"
+											<div class="accordion-navigation toggleLink" role="button"
 												data-collapsible="#facetedSearch-content--Color">
 												<h5 class="accordion-title">
 													Tags
@@ -185,8 +185,7 @@
 													data-has-more-results="false">
 													<% tag.forEach(element => { %>
 													<li class="navList-item">
-														<input type="checkbox" name="tag"
-															value="<%=element%>">&nbsp;
+														<input type="checkbox" name="tag" value="<%=element%>">&nbsp;
 														<%=changeCase(element).toUpperCase()%>
 														<span class="navList-action-close" aria-hidden="true">
 															<svg class="icon">
@@ -221,6 +220,7 @@
 								display: none;
 							}
 						}
+
 						@media (max-width: 600px) {
 							.productGrid .product {
 								display: none
@@ -235,12 +235,21 @@
 							<article class="card ">
 								<figure class="card-figure">
 									<div class="sale-flag-side"> </div>
-									<a href="/items/<%= el.iid %>">
+									<% if (el.iid === "-HDsE_c5p") { %>
+									<a href="/bio-bubble">
 										<div class="card-img-container">
 											<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
 												data-sizes="auto" class="lazyload card-image" />
 										</div>
 									</a>
+									<% } else { %>
+										<a href="/items/<%= el.iid %>">
+											<div class="card-img-container">
+												<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+													data-sizes="auto" class="lazyload card-image" />
+											</div>
+										</a>
+									<% } %>
 									<figcaption class="card-figcaption">
 										<div class="card-figcaption-body">
 											<a href="/wishlist.php?action=add&amp;product_id=111"
@@ -262,7 +271,11 @@
 
 								<div class="card-body">
 									<h4 class="card-title">
+										<% if (el.iid === "-HDsE_c5p") { %>
+										<a href="bio-bubble"><%=el.name%></a>
+										<% } else { %>
 										<a href="/items/<%= el.iid %>"><%=el.name%></a>
+										<% } %>
 									</h4>
 									<div class="card-text tt-price" data-test-info-type="price">
 
@@ -290,11 +303,19 @@
 									</div>
 
 									<div class="tt-cart-btn">
+										<% if (el.iid === "-HDsE_c5p") { %>
+										<a href="/bio-bubble" data-event-type="product-click" title="Add to Cart"
+											class="button button--small card-figcaption-button">
+											<span class="material-icons">add</span>
+											Go To Page
+										</a>
+										<% } else { %>
 										<a href="/items/<%= el.iid %>" data-event-type="product-click"
 											title="Add to Cart" class="button button--small card-figcaption-button">
 											<span class="material-icons">add</span>
 											Buy Now
 										</a>
+										<% } %>
 									</div>
 								</div>
 							</article>
