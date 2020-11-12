@@ -627,7 +627,7 @@ exports.createQuotation = function (req, res) {
                                         req.flash('success', 'Quote Requested!')
                                         res.redirect('/cartpage')
                                         var maildata = {
-                                            order: createdOrder,
+                                            order: createOrder,
                                             items: cart.itemArray,
                                             user: req.user
                                         }
@@ -1081,7 +1081,7 @@ exports.authorizeOrder = function (req, res) {
     orderServices.authorizeOrder(req.params.orderId, function (updated) {
         if (updated.success == false)
             req.flash('error', 'error')
-        res.redirect('/admin/items')
+        res.redirect('/admin/orders-filter-paymentStatus/authorized')
     })
 }
 
@@ -1302,11 +1302,12 @@ exports.sendInvoice = function (req, res) {
                             if (mailed.success == false) {
                                 req.flash('error', 'error in sending mail')
                                 res.redirect('/admin/orders-filter')
+
+                            }
+                            else {
                                 orderServices.confirmInvoice(foundOrder.order.orderId, function (updated) {
                                     console.log(updated);
                                 })
-                            }
-                            else {
                                 req.flash('success', 'success')
                                 res.redirect('/admin/orders-filter')
                             }
