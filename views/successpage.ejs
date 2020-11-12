@@ -70,6 +70,7 @@
                                 <h5>Shipping Address:</h5>
                             </div>
                             <div>
+                                <% if (!failure) { %>
                                 <label>
                                     <br>
                                     <%=(order.fullAddress + ", " + order.landmark  + ", " + order.locality + ", " + 
@@ -87,7 +88,7 @@
                                     Received</span>
                                 <% } %>
                             </div>
-                            <%if(failure){%>
+                            <% } else { %>
                             <div class="uk-form-label">
                                 <h1 style="text-align: center; margin-bottom: 0;">
                                     <span uk-icon="icon: check; close: 2.5" style="color: red;">

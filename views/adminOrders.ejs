@@ -56,18 +56,17 @@
                                 <th>Order Date</th>
                                 <th>Shipment Status</th>
                                 <th>Total</th>
-                                <% if (filterType.toLowerCase() != "online") { %>
                                 <th>Accept Order</th>
                                 <th>Authorize Payment</th>
+                                <% if (filterType.toLowerCase() != "online") { %>
                                 <% if (filterType.toLowerCase() === "cod" || filterType.toLowerCase() === "saved") {%>
                                 <th>Allow Credit</th>
                                 <% } %>
-                                <% if (filterType.toLowerCase() === "completed") { %>
+                                <% if (filterType.toLowerCase() === "approved" || filterType.toLowerCase() === "completed") { %>
                                 <th>Send Invoice</th>
                                 <% } %>
                                 <th>Mark as Complete</th>
                                 <% } %>
-                                <th>Ready to ship?</th>
                             </tr>
                         </thead>
 
@@ -86,16 +85,20 @@
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.shipmentStatus.toUpperCase() %>
                                     </a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>">Rs. <%= element.total %></a></td>
-                                <% if (filterType.toLowerCase() != "online") { %>
+                                <% if (element.status.toLowerCase() == "authorized") { %>
                                 <td><a class="ui small green button"
                                         href="/admin/confirm-order/<%=element.orderId%>">Accept</a></td>
+                                <% } else { %>
+                                <td></td>
+                                <% } %>
                                 <td><a class="ui small green button"
                                         href="/admin/authorize/<%=element.orderId%>">Authorize</a></td>
+                                <% if (filterType.toLowerCase() != "online") { %>
                                 <% if (filterType.toLowerCase() === "cod" || filterType.toLowerCase() === "saved") {%>
                                 <td><a class="ui small green button" href="/allow-credit/<%=element.orderId%>">Allow</a>
                                 </td>
                                 <% } %>
-                                <% if (filterType.toLowerCase() === "completed") { %>
+                                <% if (filterType.toLowerCase() === "approved" || filterType.toLowerCase() === "completed") { %>
                                 <td><a class="ui small green button" href="/admin/sendInvoice/<%=element.orderId%>">Send
                                         Invoice</a></td>
                                 <% } %>
@@ -104,9 +107,6 @@
                                         Complete
                                     </a></td>
                                 <% } %>
-                                <td><a class="ui small green button" href="/admin/confirm-order/<%=element.orderId%>">
-                                        Ship
-                                    </a></td>
                             </tr>
                             <% }); %>
                         </tbody>
