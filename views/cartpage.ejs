@@ -80,8 +80,8 @@
 									<label class="form-label cart-item-label"
 										for="qty-b893fdb7-4892-4ac7-af0d-3f90c1a8bae5">Quantity:</label>
 									<div class="form-increment" data-quantity-change>
-										<input name="quantity" style="border-color: transparent;"
-											type="number" value=<%=cartItem.quantity%> data-quantity-min="0"
+										<input name="quantity" style="border-color: transparent;" type="number"
+											value=<%=cartItem.quantity%> data-quantity-min="0"
 											id="productQuant<%=index%>" readonly>
 									</div>
 
@@ -90,12 +90,10 @@
 
 								<td class="cart-item-block cart-item-info tt-full-price">
 									<span class="cart-item-label">Tax</span>
-									<% if (currentUser != "" && currentUser.state.toLowerCase() === "jharkhand") { %>
 									<span class="cart-item-value ">₹
 										<%=Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) * parseInt(cartItem.quantity)))%>
-										<% totalTax = totalTax + Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) *  parseInt(cartItem.quantity))) %>
+										<% totalTax = totalTax + Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) * parseInt(cartItem.quantity))) %>
 										(<%=cartItem.item.tax%>%) </span>
-									<% } %>
 								</td>
 
 								<td class="cart-item-block cart-item-info">
