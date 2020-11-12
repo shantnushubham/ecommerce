@@ -44,7 +44,7 @@
 
 					<input type="hidden" name="page_id" id="page_id" value="4">
 					<div class="form-row form-row--half">
-	
+
 						<div class="form-field">
 							<label class="form-label" for="contact_phone">Full Address
 								<small>Required</small>
@@ -655,10 +655,18 @@
 							</select>
 						</div>
 					</div>
+					<div class="form-field" hidden>
+						<label class="form-label" for="contact_phone">Email
+							<small>Required</small>
+						</label>
+						<input class="form-input" type="text" id="contact_phone" name="address[email]" value="<%=currentUser.email%>"
+							required readonly>
+					</div>
+					<div class="form-actions">
+						<button class="button button--primary" type="submit">Submit</button>
+					</div>
 				</form>
-				<div class="form-actions">
-					<input class="button button--primary" type="submit" value="Submit Address">
-				</div>
+				
 			</div>
 
 		</main>

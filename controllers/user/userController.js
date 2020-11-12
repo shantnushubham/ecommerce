@@ -231,10 +231,10 @@ exports.getUpdateProfile = (req, res) => {
         }
         else {
             console.log(result)
-            res.render('updateProfile',{address:result,uuid:req.user.uuid})
+            res.render('updateProfile', { address: result, uuid: req.user.uuid })
         }
     })
-    
+
 }
 
 
@@ -343,6 +343,7 @@ exports.addUserAddress = (req, res) => {
         req.body.address['uuid'] = req.user.uuid
         UserAddress.create(req.body.address, function (err, result) {
             if (err) {
+                console.log(err)
                 req.flash('error', 'Unable to add address');
                 res.redirect('/address');
             }
@@ -372,20 +373,21 @@ exports.addUserAddress = (req, res) => {
 }
 
 exports.updateUserAddress = (req, res) => {
-    if (req.body) {
-        const updatedData = req.body;
-        UserAddress.findOneAndUpdate({uuid:req.user.uuid},updatedData,function(err,updatedA){
+    if (req.body.address) {
+        const updatedData = req.body.address;
+        UserAddress.findOneAndUpdate({ _id: req.params.id }, updatedData, function (err, updatedA) {
             if (err) {
+                console.log(err)
                 req.flash('success', 'error in updating address')
                 res.redirect('/');
-            }
-            else {
+            } else {
+                console.log(updatedA);
                 req.flash('success', 'succesfully added address')
                 res.redirect('/');
             }
         })
     }
-    
+
 }
 
 exports.getUserAddress = (req, res) => {
@@ -511,6 +513,18 @@ exports.getBusinessAccountReg = function (req, res) {
         }
     })
 }
+
+exports.getAddressByID = function (req, res) {
+    UserAddress.findOne({ _id: req.params.id }, function (err, found) {
+        if (err) {
+            req.flash('error', 'error in db')
+            res.redirect('/')
+        }
+        else {
+            res.render('updateAddress', { address: found })
+        }
+    })
+}
 exports.postBusinessAccReg = function (req, res) {
     console.log(req.body)
     var data = {
@@ -603,17 +617,19 @@ exports.postAdminPA = function (req, res) {
 
 exports.getAllPA = function (req, res) {
     User.aggregate([
-        { $match: { isBusiness: true, premium: true }},
-    { $lookup: { from: 'businessAcc', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
-    {$project:{
-        "credBalance":"$credBalance",
-        "credPerc":"$credPerc",
-        "name":"$name",
-        "premium":"$premium",
-        "isBalance":"$isBalance",
-        "business": { "$arrayElemAt": ["$user", 0] }
+        { $match: { isBusiness: true, premium: true } },
+        { $lookup: { from: 'businessAcc', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
+        {
+            $project: {
+                "credBalance": "$credBalance",
+                "credPerc": "$credPerc",
+                "name": "$name",
+                "premium": "$premium",
+                "isBalance": "$isBalance",
+                "business": { "$arrayElemAt": ["$user", 0] }
 
-    }}
+            }
+        }
     ]).exec(function (err, foundB) {
         if (err) {
             console.log(err)
