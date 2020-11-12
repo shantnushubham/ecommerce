@@ -512,6 +512,21 @@ exports.getBusinessAccountReg = function (req, res) {
         }
     })
 }
+
+exports.getAddressByID=function(req,res)
+{
+    UserAddress.findOne({_id:req.params.id},function(err,found){
+        if(err)
+        {
+            req.flash('error','error in db')
+            res.redirect('/')
+        }
+        else
+        {
+            res.render('updateAddress',{address:found})
+        }
+    })
+}
 exports.postBusinessAccReg = function (req, res) {
     console.log(req.body)
     var data = {
