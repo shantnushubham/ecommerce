@@ -43,7 +43,7 @@
                         </div>
                         <div class="field">
                             <label>Category</label>
-                            <input type="text" placeholder="Category" name="category">
+                            <input type="text" placeholder="Category" name="category" required>
                         </div>
                         <div class="field">
                             <label>Sub-Category</label>
@@ -59,16 +59,16 @@
                         </div>
                         <div class="field">
                             <label>Vendor Id</label>
-                            <input type="text" placeholder="Vendor Id" name="vendorId">
+                            <input type="text" placeholder="Vendor Id" name="vendorId" required>
                         </div>
                         <div class="field">
                             <label>Stock</label>
-                            <input type="number" placeholder="Stock Count" name="stock">
+                            <input type="number" placeholder="Stock Count" name="stock" required>
                         </div>
                         <div class="inline fields">
                             <label for="fruit">Is this a Service?</label>
                             <div class="field">
-                                <input type="radio" name="isService" value="true" tabindex="0" class="hidden">
+                                <input type="radio" name="isService" value="true" tabindex="0" class="hidden" required>
                                 <label>Yes</label>
 
                             </div>
@@ -77,14 +77,26 @@
                                 <label>No</label>
                             </div>
                         </div>
+                        <div class="inline fields">
+                            <label for="fruit">Is COD Allowed?</label>
+                            <div class="field">
+                                <input type="radio" name="cod" value="true" tabindex="0" class="hidden" required>
+                                <label>Yes</label>
+                            </div>
+                            <div class="field">
+                                <input type="radio" name="cod" value="false" tabindex="0" class="hidden">
+                                <label>No</label>
+                            </div>
+                        </div>
                         <div class="field">
                             <label>Measurement unit (valid only for services)</label>
                             <input type="text" placeholder="Measurement Unit" name="measurementUnit">
                         </div>
                         <div class="inline fields">
-                            <label for="fruit">Only for Business Accounts? (If your category is "Chemicals" please choose "Yes")</label>
+                            <label for="fruit">Only for Business Accounts? (If your category is "Chemicals" please
+                                choose "Yes")</label>
                             <div class="field">
-                                <input type="radio" name="isBusiness" value="true" tabindex="0" class="hidden">
+                                <input type="radio" name="isBusiness" value="true" tabindex="0" class="hidden" required>
                                 <label>Yes</label>
 
                             </div>
