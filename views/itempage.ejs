@@ -194,96 +194,6 @@
 									Write a Review
 								</a>
 							</span>
-							<div id="modal-review-form" class="modal" data-reveal>
-
-								<div class="modal-header">
-									<h2 class="modal-header-title">Write a Review</h2>
-									<a href="#" class="modal-close" aria-label="Close" role="button">
-										<span aria-hidden="true">&#215;</span>
-									</a>
-								</div>
-								<div class="modal-body">
-									<div class="writeReview-productDetails">
-										<div class="writeReview-productImage-container">
-											<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/570x684/products/98/401/05__76952.1589167485.jpg?c=1"
-												alt="Aliquam quat voluptatem" title="Aliquam quat voluptatem"
-												data-sizes="auto"
-												srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/98/401/05__76952.1589167485.jpg?c=1"
-												data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/98/401/05__76952.1589167485.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/98/401/05__76952.1589167485.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/98/401/05__76952.1589167485.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/98/401/05__76952.1589167485.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/98/401/05__76952.1589167485.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/98/401/05__76952.1589167485.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/98/401/05__76952.1589167485.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/98/401/05__76952.1589167485.jpg?c=1 2560w"
-												class="lazyload" />
-										</div>
-										<h6 class="product-brand">Wintage Spoon</h6>
-										<h5 class="product-title">Aliquam quat voluptatem</h5>
-									</div>
-									<form class="form writeReview-form" action="/postreview.php" method="post">
-										<fieldset class="form-fieldset">
-											<div class="form-field">
-												<label class="form-label" for="rating-rate">Rating
-													<small>Required</small>
-												</label>
-												<!-- Stars -->
-												<!-- TODO: Review Stars need to be componentised, both for display and input -->
-												<select id="rating-rate" class="form-select" name="revrating">
-													<option value="">Select Rating</option>
-													<option value="1">1 star (worst)</option>
-													<option value="2">2 stars</option>
-													<option value="3">3 stars (average)</option>
-													<option value="4">4 stars</option>
-													<option value="5">5 stars (best)</option>
-												</select>
-											</div>
-
-											<!-- Name -->
-											<div class="form-field" id="revfromname" data-validation="">
-												<label class="form-label" for="revfromname_input">Name
-
-												</label>
-												<input type="text" id="revfromname_input" data-label="Name"
-													name="revfromname" class="form-input" aria-required="">
-											</div>
-
-											<!-- Email -->
-											<div class="form-field" id="email" data-validation="">
-												<label class="form-label" for="email_input">Email
-													<small>Required</small>
-												</label>
-												<input type="text" id="email_input" data-label="Email" name="email"
-													class="form-input" aria-required="false">
-											</div>
-
-											<!-- Review Subject -->
-											<div class="form-field" id="revtitle" data-validation="">
-												<label class="form-label" for="revtitle_input">Review Subject
-													<small>Required</small>
-												</label>
-												<input type="text" id="revtitle_input" data-label="Review Subject"
-													name="revtitle" class="form-input" aria-required="true">
-											</div>
-
-											<!-- Comments -->
-											<div class="form-field" id="revtext" data-validation="">
-												<label class="form-label" for="revtext_input">Comments
-													<small>Required</small>
-												</label>
-												<textarea name="revtext" id="revtext_input" data-label="Comments"
-													rows="" aria-required="true" class="form-input"></textarea>
-											</div>
-
-											<div class="g-recaptcha"
-												data-sitekey="6LccmasUAAAAAIRhScC9asOrH_rQblw06weNOzDI"></div><br />
-
-											<div class="form-field">
-												<input type="submit" class="button button--primary"
-													value="Submit Review">
-											</div>
-											<input type="hidden" name="product_id" value="98">
-											<input type="hidden" name="action" value="post_review">
-											<input type="hidden" name="throttleToken"
-												value="d337baff-db18-45e0-9110-e63c54424aec">
-										</fieldset>
-									</form>
-								</div>
-							</div>
 						</div>
 
 						<dl class="productView-info">
@@ -406,17 +316,19 @@
 
 			<div class="tt-product-tab">
 				<ul class="tabs" data-tab role="tablist">
-					<li class="tab is-active" role="presentational">
-						<a class="tab-title" href="#tab-related" role="tab" tabindex="0" aria-selected="true"
+					<% if (group.length > 0 && item.groupingTag != "") { %>
+					<li class="tab" role="presentational">
+						<a class="tab-title" href="#tab-related" role="tab" tabindex="0" aria-selected="false"
 							controls="tab-related">Related Products</a>
 					</li>
-					<li class="tab" role="presentational">
-						<a class="tab-title" href="#tab-similar" role="tab" tabindex="0" aria-selected="false"
+					<% } %>
+					<li class="tab is-active" role="presentational">
+						<a class="tab-title" href="#tab-similar" role="tab" tabindex="0" aria-selected="true"
 							controls="tab-similar">Similar Products</a>
 					</li>
 				</ul>
-
 				<div class="tabs-contents">
+					<% if (group.length > 0  && item.groupingTag != "") { %>
 					<div role="tabpanel" aria-hidden="false" class="tab-content has-jsContent is-active"
 						id="tab-related">
 						<section class="productCarousel row" data-list-name="" data-slick='{
@@ -532,6 +444,7 @@
 						</section>
 
 					</div>
+					<% } %>
 
 					<div role="tabpanel" aria-hidden="true" class="tab-content has-jsContent" id="tab-similar">
 						<section class="productCarousel row" data-list-name="Customers Also Viewed" data-slick='{
