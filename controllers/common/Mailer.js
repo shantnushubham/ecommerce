@@ -28,10 +28,11 @@ exports.Register = function (to, name, uuid, callback) {
     };
     axios(options).then((result) => {
         callback({success:true})
-        console.log(result)
+        // console.log(result)
     }).catch((err) => {
+        console.log("sendinblue error",err)
         callback({success:false})
-        console.log(err)
+        
     });
     
 };

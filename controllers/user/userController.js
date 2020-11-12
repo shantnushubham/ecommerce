@@ -30,7 +30,7 @@ exports.register = (req, res) => {
     }
 
     if (errors.length > 0) {
-        req.flash('error_msg', errors[0].msg);
+        req.flash('error', errors[0].msg);
         res.redirect('/users/register');
     } else {
         orderServices.createVoucherCode(5, 5, true, 0.15, function (discode) {
@@ -55,7 +55,7 @@ exports.register = (req, res) => {
                 User.register(new User(u), req.body.password, function (err, user) {
                     if (err) {
                         console.log(err);
-                        req.flash('error_msg', 'Email already exist');
+                        req.flash('error', 'Email already exist');
                         res.redirect('/users/register');
                     }
                     req.body.address['uuid'] = user.uuid;
@@ -63,7 +63,7 @@ exports.register = (req, res) => {
                     newAddress.save((err, addressRes) => {
                         if (err) {
                             console.log(err);
-                            req.flash('error_msg', 'unable to save address');
+                            req.flash('error', 'unable to save address');
                             res.redirect('/users/register');
                         }
                         passport.authenticate("local")(req, res, function () {
@@ -71,6 +71,7 @@ exports.register = (req, res) => {
                             mailer.Register(user.email, user.name, user.uuid, function (mailed) {
                                 console.log(mailed);
                             })
+                            res.redirect('/')
                         });
                     });
                 })
@@ -335,29 +336,29 @@ exports.addUserAddress = (req, res) => {
 
     if (errors.length > 0) {
         // console.log(errors)
-        req.flash('error_msg', errors[0].msg);
+        req.flash('error', errors[0].msg);
         res.redirect('/address');
     }
     else {
         req.body.address['uuid'] = req.user.uuid
         UserAddress.create(req.body.address, function (err, result) {
             if (err) {
-                req.flash('error_msg', 'Unable to add address');
+                req.flash('error', 'Unable to add address');
                 res.redirect('/address');
             }
             else {
                 if (!result) {
-                    req.flash('error_msg', 'Unable to add address');
+                    req.flash('error', 'Unable to add address');
                     res.redirect('/address');
                 }
                 else {
                     User.findOneAndUpdate({ uuid: req.user.uuid }, { active: true, state: result.state }, function (err, updated) {
                         if (err) {
-                            req.flash('success_msg', 'error in updating user')
+                            req.flash('success', 'error in updating user')
                             res.redirect('/');
                         }
                         else {
-                            req.flash('success_msg', 'succesfully added address')
+                            req.flash('success', 'succesfully added address')
                             res.redirect('/');
                         }
                     })
