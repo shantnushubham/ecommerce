@@ -69,7 +69,7 @@ exports.createItem = function (req, res) {
         color: data.color,
         stock: data.stock,
         isService: data.isService === "true" ? true : false,
-        cod: data.cod == true ? true : false,
+        cod: data.cod == "true" ? true : false,
         measurementUnit: data.measurementUnit,
         isBusiness: data.isBusiness,
         tax: data.gstPercent
@@ -107,7 +107,7 @@ exports.updateItem = function (req, res) {
         stock: data.stock,
         isService: data.isService === "true" ? true : false,
         isBusiness: data.isBusiness === "true" ? true : false,
-        cod: data.cod == true ? true : false,
+        cod: data.cod == "true" ? true : false,
         tax: data.gstPercent,
         sku: data.sku,
         measurementUnit: data.measurementUnit

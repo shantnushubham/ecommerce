@@ -92,7 +92,8 @@ class items {
                                 isService: foundItem.isService,
                                 tax: foundItem.tax,
                                 sku: foundItem.sku,
-                                stock:foundItem.stock
+                                stock:foundItem.stock,
+                                cod:foundItem.cod
 
                             }
 
@@ -239,7 +240,8 @@ class items {
             sku: data.sku,
             stock: data.stock,
             measurementUnit: data.measurementUnit,
-            isBusiness: data.isBusiness == "true" ? true : false
+            isBusiness: data.isBusiness == "true" ? true : false,
+            cod: data.cod == true ? true : false,
 
         }
         console.log(item_data);
