@@ -343,6 +343,7 @@ exports.addUserAddress = (req, res) => {
         req.body.address['uuid'] = req.user.uuid
         UserAddress.create(req.body.address, function (err, result) {
             if (err) {
+                console.log(err)
                 req.flash('error', 'Unable to add address');
                 res.redirect('/address');
             }
