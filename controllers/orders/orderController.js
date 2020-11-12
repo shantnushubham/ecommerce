@@ -352,7 +352,7 @@ exports.codPath = function (req, res) {
                                                         orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
                                                             console.log("stock update status:", stocks.success);
                                                         })
-                                                        res.render('successPage', { order: createOrder.order })
+                                                        res.render('successpage', { order: createOrder.order })
                                                     }
                                                 })
                                             }
@@ -373,7 +373,7 @@ exports.codPath = function (req, res) {
                                                 orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
                                                     console.log("stock update status:", stocks.success);
                                                 })
-                                                res.render('successPage', { order: createOrder.order })
+                                                res.render('successpage', { order: createOrder.order })
                                             }
                                         })
                                     }
@@ -676,7 +676,7 @@ exports.savedToCod = function (req, res) {
                                 orderServices.updateStockList(updatedOrder.order.orderedItems, function (stocks) {
                                     console.log("stock update status:", stocks.success);
                                 })
-                                res.render('successPage', { order: updatedOrder.order })
+                                res.render('successpage', { order: updatedOrder.order })
                             }
                         })
                     }
