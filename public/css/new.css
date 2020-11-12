@@ -16720,7 +16720,7 @@ body.brands .card:hover .card-body {
 }
 .productGrid:after,
 .productGrid:before {
-    content: " ";
+    /* content: " "; */
     display: table;
 }
 .productGrid:after {
@@ -16734,7 +16734,7 @@ body.brands .card:hover .card-body {
     display: inline-block;
     font-size: 13px;
     vertical-align: top;
-    float: left;
+    /* float: left; */
 }
 @media (min-width: 551px) {
     .productGrid .product {

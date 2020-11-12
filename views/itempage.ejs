@@ -19,8 +19,7 @@
 					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
 						<li class="breadcrumb " itemprop="itemListElement" itemscope
 							itemtype="http://schema.org/ListItem">
-							<a href="/" class="breadcrumb-label"
-								itemprop="item"><span itemprop="name">Home</span></a>
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
 							<meta itemprop="position" content="1" />
 						</li>
 						<li class="breadcrumb " itemprop="itemListElement" itemscope
@@ -140,7 +139,8 @@
 								<span class="price-now-label" style="display: none;">
 								</span>
 								<span data-product-price-with-tax class="price price--withTax">₹ <%=item.price%> +
-									GST (<%=item.tax%>% = <%=Math.ceil(item.price * item.tax/100)%>) = ₹ <%=Math.ceil(item.price + (item.price * item.tax/100))%></span>
+									GST (<%=item.tax%>% = <%=Math.ceil(item.price * item.tax/100)%>) = ₹
+									<%=Math.ceil(item.price + (item.price * item.tax/100))%></span>
 								<meta itemprop="availability" itemtype="http://schema.org/ItemAvailability"
 									content="http://schema.org/InStock">
 								<meta itemprop="itemCondition" itemtype="http://schema.org/OfferItemCondition"
@@ -169,7 +169,7 @@
 							</div>
 						</div>
 						<div data-content-region="product_below_price"></div>
-						<div class="productView-rating">
+						<div class="productView-rating" style="visibility: hidden;">
 							<span class="icon icon--ratingEmpty">
 								<span class="material-icons">star_border</span>
 							</span>
@@ -189,102 +189,11 @@
 								No reviews yet
 							</span>
 							<span class="productView-reviewLink">
-								<a href="/laundry-detergent/"
-									data-reveal-id="modal-review-form">
+								<a href="/laundry-detergent/" data-reveal-id="modal-review-form">
 									<span class="material-icons">edit</span>
 									Write a Review
 								</a>
 							</span>
-							<div id="modal-review-form" class="modal" data-reveal>
-
-								<div class="modal-header">
-									<h2 class="modal-header-title">Write a Review</h2>
-									<a href="#" class="modal-close" aria-label="Close" role="button">
-										<span aria-hidden="true">&#215;</span>
-									</a>
-								</div>
-								<div class="modal-body">
-									<div class="writeReview-productDetails">
-										<div class="writeReview-productImage-container">
-											<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/570x684/products/98/401/05__76952.1589167485.jpg?c=1"
-												alt="Aliquam quat voluptatem" title="Aliquam quat voluptatem"
-												data-sizes="auto"
-												srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/98/401/05__76952.1589167485.jpg?c=1"
-												data-srcset="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/80w/products/98/401/05__76952.1589167485.jpg?c=1 80w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/160w/products/98/401/05__76952.1589167485.jpg?c=1 160w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/320w/products/98/401/05__76952.1589167485.jpg?c=1 320w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/640w/products/98/401/05__76952.1589167485.jpg?c=1 640w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/960w/products/98/401/05__76952.1589167485.jpg?c=1 960w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1280w/products/98/401/05__76952.1589167485.jpg?c=1 1280w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/98/401/05__76952.1589167485.jpg?c=1 1920w, https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/2560w/products/98/401/05__76952.1589167485.jpg?c=1 2560w"
-												class="lazyload" />
-										</div>
-										<h6 class="product-brand">Wintage Spoon</h6>
-										<h5 class="product-title">Aliquam quat voluptatem</h5>
-									</div>
-									<form class="form writeReview-form" action="/postreview.php" method="post">
-										<fieldset class="form-fieldset">
-											<div class="form-field">
-												<label class="form-label" for="rating-rate">Rating
-													<small>Required</small>
-												</label>
-												<!-- Stars -->
-												<!-- TODO: Review Stars need to be componentised, both for display and input -->
-												<select id="rating-rate" class="form-select" name="revrating">
-													<option value="">Select Rating</option>
-													<option value="1">1 star (worst)</option>
-													<option value="2">2 stars</option>
-													<option value="3">3 stars (average)</option>
-													<option value="4">4 stars</option>
-													<option value="5">5 stars (best)</option>
-												</select>
-											</div>
-
-											<!-- Name -->
-											<div class="form-field" id="revfromname" data-validation="">
-												<label class="form-label" for="revfromname_input">Name
-
-												</label>
-												<input type="text" id="revfromname_input" data-label="Name"
-													name="revfromname" class="form-input" aria-required="">
-											</div>
-
-											<!-- Email -->
-											<div class="form-field" id="email" data-validation="">
-												<label class="form-label" for="email_input">Email
-													<small>Required</small>
-												</label>
-												<input type="text" id="email_input" data-label="Email" name="email"
-													class="form-input" aria-required="false">
-											</div>
-
-											<!-- Review Subject -->
-											<div class="form-field" id="revtitle" data-validation="">
-												<label class="form-label" for="revtitle_input">Review Subject
-													<small>Required</small>
-												</label>
-												<input type="text" id="revtitle_input" data-label="Review Subject"
-													name="revtitle" class="form-input" aria-required="true">
-											</div>
-
-											<!-- Comments -->
-											<div class="form-field" id="revtext" data-validation="">
-												<label class="form-label" for="revtext_input">Comments
-													<small>Required</small>
-												</label>
-												<textarea name="revtext" id="revtext_input" data-label="Comments"
-													rows="" aria-required="true" class="form-input"></textarea>
-											</div>
-
-											<div class="g-recaptcha"
-												data-sitekey="6LccmasUAAAAAIRhScC9asOrH_rQblw06weNOzDI"></div><br />
-
-											<div class="form-field">
-												<input type="submit" class="button button--primary"
-													value="Submit Review">
-											</div>
-											<input type="hidden" name="product_id" value="98">
-											<input type="hidden" name="action" value="post_review">
-											<input type="hidden" name="throttleToken"
-												value="d337baff-db18-45e0-9110-e63c54424aec">
-										</fieldset>
-									</form>
-								</div>
-							</div>
 						</div>
 
 						<dl class="productView-info">
@@ -326,10 +235,11 @@
 							</div>
 							<div class="form-action">
 								<button class="button button--primary" type="submit">Add to Cart</button>
+								<% if (item.isService) { %>
 								<a href="/service/<%=item.iid%>"><button class="button button--primary">
 										Get Quote</button>
 								</a>
-
+								<% } %>
 							</div>
 						</form>
 
@@ -337,7 +247,8 @@
 					<div class="addthis_toolbox addthis_32x32_style" addthis:url="" addthis:title="">
 						<ul class="socialLinks">
 							<li class="socialLinks-item socialLinks-item--facebook">
-								<a class="addthis_button_facebook icon icon--facebook">
+								<a class="addthis_button_facebook icon icon--facebook"
+									href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">
 									<svg>
 										<use xlink:href="#icon-facebook" />
 									</svg>
@@ -365,7 +276,8 @@
 								</a>
 							</li>
 							<li class="socialLinks-item socialLinks-item--linkedin">
-								<a class="addthis_button_linkedin icon icon--linkedin">
+								<a class="addthis_button_linkedin icon icon--linkedin"
+									href="https://www.linkedin.com/sharing/share-offsite/?url=112cart.com/items/<%=item.id%>">
 									<svg>
 										<use xlink:href="#icon-linkedin" />
 									</svg>
@@ -404,17 +316,19 @@
 
 			<div class="tt-product-tab">
 				<ul class="tabs" data-tab role="tablist">
-					<li class="tab is-active" role="presentational">
-						<a class="tab-title" href="#tab-related" role="tab" tabindex="0" aria-selected="true"
+					<% if (group.length > 0 && item.groupingTag != "") { %>
+					<li class="tab" role="presentational">
+						<a class="tab-title" href="#tab-related" role="tab" tabindex="0" aria-selected="false"
 							controls="tab-related">Related Products</a>
 					</li>
-					<li class="tab" role="presentational">
-						<a class="tab-title" href="#tab-similar" role="tab" tabindex="0" aria-selected="false"
+					<% } %>
+					<li class="tab is-active" role="presentational">
+						<a class="tab-title" href="#tab-similar" role="tab" tabindex="0" aria-selected="true"
 							controls="tab-similar">Similar Products</a>
 					</li>
 				</ul>
-
 				<div class="tabs-contents">
+					<% if (group.length > 0  && item.groupingTag != "") { %>
 					<div role="tabpanel" aria-hidden="false" class="tab-content has-jsContent is-active"
 						id="tab-related">
 						<section class="productCarousel row" data-list-name="" data-slick='{
@@ -478,59 +392,59 @@
 								}'>
 
 							<% group.forEach(el => { %>
-								<div class="productCarousel-slide">
-									<article class="card ">
-										<figure class="card-figure">
-	
-											<a href="/items/<%=el.iid%>">
-												<div class="card-img-container">
-													<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
-														data-sizes="auto" srcset="<%=el.image[0]%>"
-														data-srcset="<%=el.image[0]%>" class="lazyload card-image" />
-												</div>
-											</a>
-										</figure>
-	
-										<div class="card-body">
-											<h4 class="card-title">
-												<a href="<%=el.iid%>"><%=el.name%></a>
-											</h4>
-											<div class="card-text tt-price" data-test-info-type="price">
-												<div class="price-section price-section--withTax rrp-price--withTax"
-													style="display: none;">
-													MSRP:
-													<span data-product-rrp-with-tax class="price price--rrp">
-													</span>
-												</div>
-												<div class="price-section price-section--withTax">
-													<span class="price-label" style="display: none;">
-													</span>
-													<span class="price-now-label">
-													</span>
-													<span data-product-price-with-tax class="price price--withTax">₹
-														<%=el.price%></span>
-												</div>
-												<div class="price-section price-section--withTax non-sale-price--withTax">
-													<span data-product-non-sale-price-with-tax
-														class="price price--non-sale">
-														₹ <%=(1.20)*el.price%>
-													</span>
-												</div>
+							<div class="productCarousel-slide">
+								<article class="card ">
+									<figure class="card-figure">
+
+										<a href="/items/<%=el.iid%>">
+											<div class="card-img-container">
+												<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+													data-sizes="auto" srcset="<%=el.image[0]%>"
+													data-srcset="<%=el.image[0]%>" class="lazyload card-image" />
 											</div>
-	
-											<div class="tt-cart-btn">
-												<a href="/canvas-laundry-cart/"
-													data-event-type="product-click"
-													class="button button--small card-figcaption-button"
-													title="Choose Options" data-product-id="103">Go to item</a>
+										</a>
+									</figure>
+
+									<div class="card-body">
+										<h4 class="card-title">
+											<a href="<%=el.iid%>"><%=el.name%></a>
+										</h4>
+										<div class="card-text tt-price" data-test-info-type="price">
+											<div class="price-section price-section--withTax rrp-price--withTax"
+												style="display: none;">
+												MSRP:
+												<span data-product-rrp-with-tax class="price price--rrp">
+												</span>
+											</div>
+											<div class="price-section price-section--withTax">
+												<span class="price-label" style="display: none;">
+												</span>
+												<span class="price-now-label">
+												</span>
+												<span data-product-price-with-tax class="price price--withTax">₹
+													<%=el.price%></span>
+											</div>
+											<div class="price-section price-section--withTax non-sale-price--withTax">
+												<span data-product-non-sale-price-with-tax
+													class="price price--non-sale">
+													₹ <%=(1.20)*el.price%>
+												</span>
 											</div>
 										</div>
-									</article>
-								</div>
+
+										<div class="tt-cart-btn">
+											<a href="/canvas-laundry-cart/" data-event-type="product-click"
+												class="button button--small card-figcaption-button"
+												title="Choose Options" data-product-id="103">Go to item</a>
+										</div>
+									</div>
+								</article>
+							</div>
 							<% }) %>
 						</section>
 
 					</div>
+					<% } %>
 
 					<div role="tabpanel" aria-hidden="true" class="tab-content has-jsContent" id="tab-similar">
 						<section class="productCarousel row" data-list-name="Customers Also Viewed" data-slick='{
@@ -635,8 +549,7 @@
 										</div>
 
 										<div class="tt-cart-btn">
-											<a href="/canvas-laundry-cart/"
-												data-event-type="product-click"
+											<a href="/canvas-laundry-cart/" data-event-type="product-click"
 												class="button button--small card-figcaption-button"
 												title="Choose Options" data-product-id="103">Go to item</a>
 										</div>

@@ -33,12 +33,12 @@
 			</div>
 		</div>
 		<div class="page page-content--centered">
-
 			<main class="page-content" data-cart>
 				<h1 class="page-heading tt-cart-view" data-cart-page-title>
 					<% var items = "item" + ((cartCount > 1) ? "s" : '') %>
 					Your Cart ( <%=cartCount%> <%=items%> )
 				</h1>
+				<% if (cartlisting.length > 0 ) { %>
 
 				<div data-cart-status>
 				</div>
@@ -94,7 +94,7 @@
 									<% if (currentUser != "" && currentUser.state.toLowerCase() === "jharkhand") { %>
 									<span class="cart-item-value ">₹
 										<%=Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price))))%>
-										<% totalTax = totalTax + Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)))) %>
+										<% totalTax = totalTax + Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) *  parseInt(cartItem.quantity))) %>
 										(<%=cartItem.item.tax%>%) </span>
 									<% } %>
 								</td>
@@ -138,14 +138,14 @@
 							</div>
 						</li>
 						<% } else { %>
-							<li class="cart-total">
-								<div class="cart-total-label">
-									<strong>IGST </strong>
-								</div>
-								<div class="cart-total-value">
-									<span>₹ <%=totalTax%></span>
-								</div>
-							</li>
+						<li class="cart-total">
+							<div class="cart-total-label">
+								<strong>IGST </strong>
+							</div>
+							<div class="cart-total-value">
+								<span>₹ <%=totalTax%></span>
+							</div>
+						</li>
 						<% } %>
 						<li class="cart-total">
 							<div class="cart-total-label">
@@ -161,7 +161,21 @@
 				<div class="cart-actions">
 					<a class="button button--primary" href="/checkout" title="Click here to proceed to checkout">Check
 						out</a>
+				</div><br>
+				<div class="cart-actions">
+					<a class="button button--primary" href="/clearCart" style="background-color: red;"
+						title="Click here to proceed to checkout">Clear
+						Cart</a>
 				</div>
+				<br>
+				<div class="cart-actions">
+					<a class="button button--primary" href="/updateCart" style="background-color: rgb(126, 230, 126);"
+						title="Click here to proceed to checkout">
+						Update Cart</a>
+				</div>
+				<% } else { %>
+				<h1 style="text-align: center; font-size: larger;"> You don't have any items in your cart.</h1>
+				<% } %>
 
 
 			</main>

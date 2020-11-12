@@ -60,7 +60,12 @@
                                     <span uk-icon="icon: check; ratio: 2.5" style="color: green;">
                                     </span> OrderID:
                                     <%=order.orderId%></h1>
-                                <h1 style="text-align: center; color: #fa7725 !important;">Total: <%=order.total%>
+                                <h1 style="text-align: center; color: #fa7725 !important;">
+                                    <% if (order.paymentType === "credit") {%>
+                                    Total: <%=parseInt((order.total * order.creditPercent)/100)%>
+                                    <% } else { %>
+                                    Total: <%=order.total%>
+                                    <% } %>
                                 </h1>
                                 <h5>Shipping Address:</h5>
                             </div>
