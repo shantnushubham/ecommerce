@@ -1081,7 +1081,7 @@ exports.authorizeOrder = function (req, res) {
     orderServices.authorizeOrder(req.params.orderId, function (updated) {
         if (updated.success == false)
             req.flash('error', 'error')
-        res.redirect('/admin/items')
+        res.redirect('/admin/orders-filter-paymentStatus/authorized')
     })
 }
 
