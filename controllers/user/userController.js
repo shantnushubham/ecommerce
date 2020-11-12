@@ -231,10 +231,10 @@ exports.getUpdateProfile = (req, res) => {
         }
         else {
             console.log(result)
-            res.render('updateProfile',{address:result,uuid:req.user.uuid})
+            res.render('updateProfile', { address: result, uuid: req.user.uuid })
         }
     })
-    
+
 }
 
 
@@ -373,10 +373,11 @@ exports.addUserAddress = (req, res) => {
 }
 
 exports.updateUserAddress = (req, res) => {
-    if (req.body) {
+    if (req.body.address) {
         const updatedData = req.body;
-        UserAddress.findOneAndUpdate({uuid:req.user.uuid},updatedData,function(err,updatedA){
+        UserAddress.findOneAndUpdate({ _id: req.user.id }, updatedData, function (err, updatedA) {
             if (err) {
+                console.log(err)
                 req.flash('success', 'error in updating address')
                 res.redirect('/');
             }
@@ -386,7 +387,7 @@ exports.updateUserAddress = (req, res) => {
             }
         })
     }
-    
+
 }
 
 exports.getUserAddress = (req, res) => {
@@ -513,17 +514,14 @@ exports.getBusinessAccountReg = function (req, res) {
     })
 }
 
-exports.getAddressByID=function(req,res)
-{
-    UserAddress.findOne({_id:req.params.id},function(err,found){
-        if(err)
-        {
-            req.flash('error','error in db')
+exports.getAddressByID = function (req, res) {
+    UserAddress.findOne({ _id: req.params.id }, function (err, found) {
+        if (err) {
+            req.flash('error', 'error in db')
             res.redirect('/')
         }
-        else
-        {
-            res.render('updateAddress',{address:found})
+        else {
+            res.render('updateAddress', { address: found })
         }
     })
 }
@@ -619,17 +617,19 @@ exports.postAdminPA = function (req, res) {
 
 exports.getAllPA = function (req, res) {
     User.aggregate([
-        { $match: { isBusiness: true, premium: true }},
-    { $lookup: { from: 'businessAcc', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
-    {$project:{
-        "credBalance":"$credBalance",
-        "credPerc":"$credPerc",
-        "name":"$name",
-        "premium":"$premium",
-        "isBalance":"$isBalance",
-        "business": { "$arrayElemAt": ["$user", 0] }
+        { $match: { isBusiness: true, premium: true } },
+        { $lookup: { from: 'businessAcc', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
+        {
+            $project: {
+                "credBalance": "$credBalance",
+                "credPerc": "$credPerc",
+                "name": "$name",
+                "premium": "$premium",
+                "isBalance": "$isBalance",
+                "business": { "$arrayElemAt": ["$user", 0] }
 
-    }}
+            }
+        }
     ]).exec(function (err, foundB) {
         if (err) {
             console.log(err)

@@ -35,7 +35,7 @@ router.post('/update-profile', ensureAuthenticated, UserControl.updateUserData)
 router.put('/makeDefaultAddress', ensureAuthenticated, UserControl.makeAdressToDefaultAddress)
 
 router.get('/update-address/:id',ensureAuthenticated,UserControl.getAddressByID)
-router.post('/update-address', ensureAuthenticated, UserControl.updateUserAddress)
+router.post('/update-address/:id', ensureAuthenticated, UserControl.updateUserAddress)
 
 router.post('/updateAddress', ensureAuthenticated, UserControl.updateUserAddress)//no
 router.get('/add/business-account', ensureAuthenticated, UserControl.getBusinessAccountReg)
