@@ -178,7 +178,7 @@ class items {
             tag: data.tag,
             groupingTag: data.groupingTag,
             stock: data.stock,
-            isService: data.isService == true ? true : false,
+            isService: data.isService == "true" ? true : false,
             cod: data.cod == true ? true : false,
             measurementUnit: data.measurementUnit,
             tax: data.tax==''?18:data.tax,
@@ -235,13 +235,14 @@ class items {
             tag: data.tag,
             shortDesc: data.shortDesc,
             groupingTag: data.groupingTag,
-            tax: data.tax,
+            tax: data.tax==''?18:data.tax,
             sku: data.sku,
             stock: data.stock,
             measurementUnit: data.measurementUnit,
-            isBusiness: data.isBusiness == true ? true : false
+            isBusiness: data.isBusiness == "true" ? true : false
 
         }
+        console.log(item_data);
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
         vendorModel.findOne({ vendorId: data.vendorId }, function (err, foundV) {
             if (err || functions.isEmpty(foundV)) {
@@ -252,6 +253,7 @@ class items {
                 item_data["vendorName"] = foundV.vendorName
 
                 itemModel.findOneAndUpdate({ iid: iid }, item_data, function (err, updatedItem) {
+                    console.log(updatedItem);
                     if (err) callback({ success: false, err: err })
                     else {
                         itemMetaModel.findOneAndUpdate({ iid: iid }, item_metaData, function (err, updatedMeta) {
