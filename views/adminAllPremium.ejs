@@ -7,16 +7,18 @@
             <li class="breadcrumb-item">
                 <a href="#">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">All Business User Requests </li>
+            <li class="breadcrumb-item active">All Premium Business Users </li>
         </ol>
         <div class="card mb-3">
             <div class="card-header">
-                <i class="fa fa-table"></i> All Business Users Requests</div>
+                <i class="fa fa-table"></i> All Premium Business Users</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>Credit Balance</th>
+                                <th>Credit Percentage</th>
                                 <th>Business Name</th>
                                 <th>GST Number</th>
                                 <th>PAN</th>
@@ -29,20 +31,17 @@
                         <tbody>
                             <% list.forEach(el => { %>
                             <tr>
-                                <td><%=el.businessName%></td>
-                                <td><%=el.gstNumber%></td>
-                                <td><%=el.panNumber%></td>
-                                <td><%=el.authorizedSignatoryName%></td>
-                                <td><%=el.businessPhone%></td>
-                                <td><%=el.businessAddress%></td>
+                                <td><%=el.credBalance%></td>
+                                <td><%=el.credPerc%></td>
+                                <td><%=el.business.businessName%></td>
+                                <td><%=el.business.gstNumber%></td>
+                                <td><%=el.business.panNumber%></td>
+                                <td><%=el.business.authorizedSignatoryName%></td>
+                                <td><%=el.business.businessPhone%></td>
+                                <td><%=el.business.businessAddress%></td>
                                 <td>
-                                    <% if (!el.isAccepted) { %>
-                                    <a href="/users/accept/business-account/<%=el.bid%>"><button
-                                            class="ui small green button">Accept</button></a>
-                                    <% } else { %>
-                                    <a href="/users/reject/business-account/<%=el.bid%>"><button
-                                            class="ui small red button">Reject</button></a>
-                                    <% } %>
+                                    <a href="/users/premium-account/<%=el.business.uuid%>"><button
+                                            class="ui small green button">Set Credit</button></a>
                                 </td>
                             </tr>
                             <% }) %>
