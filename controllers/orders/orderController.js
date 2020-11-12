@@ -1201,7 +1201,20 @@ exports.createServiceQuote = function (req, res) {
 
         }
         else {
-            req.flash('success', 'Quote Requested')
+            itemServices.getItemById(req.params.iid,function(foundItem){
+                var data={
+                    user:req.user,
+                    email:req.user.email,
+                    name:req.user.name,
+                    item:foundItem.item,
+
+                }
+                mailer.serviceQuote(req.user.email,data,function(mailed){
+    console.log(mailed);
+                })
+                req.flash('success', 'Quote Requested')
+            })
+            
         }
         res.redirect('/items/' + req.params.iid)
 

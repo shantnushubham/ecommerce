@@ -230,3 +230,43 @@ exports.sendInvoice=function(email,data,callback)
 
     callback({ success: true })
 }
+
+
+exports.serviceQuote=function(email,data,callback)
+{
+    var d = {
+        mail: email,
+        name: data.user.name,
+       
+        item: data.item,
+        user: data.user,
+        sgst: data.user.state.toLowerCase() === "jharkhand" ? data.item.tax/2 : 0,
+        cgst: data.user.state.toLowerCase() === "jharkhand" ? data.item.tax/2 : 0,
+        igst: data.user.state.toLowerCase() != "jharkhand" ? data.item.tax : 0,
+    }
+    console.log(d)
+    const options = {
+        method: 'POST',
+        url: 'https://api.sendinblue.com/v3/smtp/email',
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            'api-key': envData.sendinblue
+        },
+        data: {
+            sender: { name: 'inversion', email: 'support@112cart.com' },
+            to: [{ email: d.mail, }],
+            params: d,
+            tags: ['Quotation'],
+            templateId: 2
+        },
+
+    };
+    axios(options).then((mailed) => {
+        console.log("request completed")
+    }).catch((err) => {
+        console.log(err)
+    });
+
+    callback({ success: true })
+}
