@@ -210,9 +210,8 @@ class order {
                     userModel.findOne({ uuid: updatedOrder.uuid }, function (err, foundUser) {
                         if (err)
                             console.log(err);
-                        else
-                        {
-                            userModel.findOneAndUpdate({uuid:updatedOrder.uuid},{credBalance:foundUser.credBalance-updatedOrder.total },function(err,updatedOrder){
+                        else {
+                            userModel.findOneAndUpdate({ uuid: updatedOrder.uuid }, { credBalance: foundUser.credBalance - updatedOrder.total }, function (err, updatedOrder) {
                                 console.log(err);
                             })
                         }
@@ -758,7 +757,7 @@ class order {
     createQuote(data, callback) {
         quoteModel.create(data, function (err, quote) {
             console.log(err)
-            if (err){
+            if (err) {
                 callback({ success: false })
             }
             else
@@ -863,11 +862,11 @@ class order {
             if (err) {
                 callback({ success: false })
             } else {
-                callback({ success: true, invoices: foundInvoiceList})
+                callback({ success: true, invoices: foundInvoiceList })
             }
         })
     }
-        
+
 
 }
 

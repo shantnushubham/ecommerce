@@ -274,7 +274,7 @@ router.get('/admin/service', functions.isAdmin, orderController.getAllServiceQuo
 router.get('/service/:iid', orderController.getCreateServiceQuote)
 router.post('/service/:iid', orderController.createServiceQuote)
 router.get('/admin/service/:quoteId', functions.isAdmin, orderController.getServiceQuoteById)
-router.get('/admin/complete-service', functions.isAdmin, orderController.serviceQuoteStatus)
+router.get('/admin/complete-service/:quoteId', functions.isAdmin, orderController.serviceQuoteStatus)
 router.get('/admin/get/allOrderQuotes', functions.isAdmin, orderController.adminAllQuotes)
 router.get('/admin/get/allOrderSaved', functions.isAdmin, orderController.adminAllSaved)
 
