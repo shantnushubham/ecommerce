@@ -380,8 +380,7 @@ exports.updateUserAddress = (req, res) => {
                 console.log(err)
                 req.flash('success', 'error in updating address')
                 res.redirect('/');
-            }
-            else {
+            } else {
                 console.log(updatedA);
                 req.flash('success', 'succesfully added address')
                 res.redirect('/');
