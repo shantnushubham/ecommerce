@@ -757,8 +757,10 @@ class order {
 
     createQuote(data, callback) {
         quoteModel.create(data, function (err, quote) {
-            if (err)
+            console.log(err)
+            if (err){
                 callback({ success: false })
+            }
             else
                 callback({ success: true, quote })
         })
