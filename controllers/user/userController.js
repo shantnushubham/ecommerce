@@ -222,8 +222,21 @@ exports.deleteUserById = (req, res) => {
 }
 
 exports.getUpdateProfile = (req, res) => {
-    res.render('updateProfile')
+    UserAddress.find({ uuid: req.user.uuid }).exec(function (err, result) {
+        if (err) {
+            console.log(err);
+            req.flash('error', 'error in fetching cart')
+            res.redirect('/address')
+        }
+        else {
+            console.log(result)
+            res.render('updateProfile',{address:result,uuid:req.user.uuid})
+        }
+    })
+    
 }
+
+
 
 exports.updateUserData = (req, res) => {
     if (req && req.user && req.body) {
@@ -358,16 +371,20 @@ exports.addUserAddress = (req, res) => {
 }
 
 exports.updateUserAddress = (req, res) => {
-    if (req && req.query && req.body) {
+    if (req.body) {
         const updatedData = req.body;
-        UserAddress.findByIdAndUpdate({ _id: req.query.id }, updatedData, { new: true })
-            .select('locality email landmark state district pincode contact country')
-            .then((data) => {
-                return res.send({ success: true, message: 'Address Updated', body: data })
+        UserAddress.findOneAndUpdate({uuid:req.user.uuid},updatedData,function(err,updatedA){
+            if (err) {
+                req.flash('success', 'error in updating address')
+                res.redirect('/');
             }
-            )
+            else {
+                req.flash('success', 'succesfully added address')
+                res.redirect('/');
+            }
+        })
     }
-    else return res.send({ success: false, message: "data insufficient" })
+    
 }
 
 exports.getUserAddress = (req, res) => {
@@ -384,6 +401,8 @@ exports.getUserAddress = (req, res) => {
         }
     })
 }
+
+
 
 exports.deleteAddress = (req, res) => {
     console.log(req.user)
