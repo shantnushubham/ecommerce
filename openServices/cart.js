@@ -230,7 +230,6 @@ class cart {
                             callback({ success: false, message: 'db error' })
                         }
                         else {
-                            console.log(foundS);
                             var containsService = false, containsProduct = false
                             if (foundS.length > 0 && foundS[0].isService) {
                                 containsService = true
