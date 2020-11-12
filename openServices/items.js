@@ -350,7 +350,7 @@ class items {
                 if (err || functions.isEmpty(foundItem))
                     reject({ success: false, iid: iid })
                 else {
-                    if (foundItem.isService) { callback({ success: true }) }
+                    if (foundItem.isService) { resolve({ success: true }) }
                     else {
                         var st = parseInt(foundItem.stock) - parseInt(subtract);
                         itemModel.findOneAndUpdate({ iid: iid }, { stock: st }, function (err, updated) {
