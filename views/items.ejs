@@ -242,6 +242,20 @@
 												data-sizes="auto" class="lazyload card-image" />
 										</div>
 									</a>
+									<% } else if (el.iid === "dtz82JLEq") { %>
+									<a href="/complete-disinfection">
+										<div class="card-img-container">
+											<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+												data-sizes="auto" class="lazyload card-image" />
+										</div>
+									</a>
+									<% } else if (el.iid === "26hJIJfwP") { %>
+									<a href="/air-fumigation">
+										<div class="card-img-container">
+											<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+												data-sizes="auto" class="lazyload card-image" />
+										</div>
+									</a>
 									<% } else { %>
 									<a href="/items/<%= el.iid %>">
 										<div class="card-img-container">
@@ -292,6 +306,18 @@
 											<span class="material-icons">add</span>
 											Go To Page
 										</a>
+										<% } else if (el.iid === "dtz82JLEq") { %>
+										<a href="/complete-disinfection" data-event-type="product-click"
+											title="Add to Cart" class="button button--small card-figcaption-button">
+											<span class="material-icons">add</span>
+											Go To Page
+										</a>
+										<% } else if (el.iid === "26hJIJfwP") { %>
+										<a href="/air-fumigation" data-event-type="product-click" title="Add to Cart"
+											class="button button--small card-figcaption-button">
+											<span class="material-icons">add</span>
+											Go To Page
+										</a>
 										<% } else { %>
 										<a href="/items/<%= el.iid %>" data-event-type="product-click"
 											title="Add to Cart" class="button button--small card-figcaption-button">
@@ -317,6 +343,16 @@
 							<div class="uk-card-media-top">
 								<% if (el.iid == "-HDsE_c5p") { %>
 								<a href="/bio-bubble">
+									<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+										data-sizes="auto" />
+								</a>
+								<% } else if (el.iid == "26hJIJfwP") { %>
+								<a href="/air-fumigation">
+									<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+										data-sizes="auto" />
+								</a>
+								<% } else if (el.iid == "dtz82JLEq") { %>
+								<a href="/complete-disinfection">
 									<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
 										data-sizes="auto" />
 								</a>

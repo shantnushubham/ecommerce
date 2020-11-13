@@ -57,7 +57,7 @@
                         <div class="uk-margin">
                             <div class="uk-form-label">
                                 <h1 style="text-align: center; margin-bottom: 0;">
-                                    <span uk-icon="icon: check; ratio: 2.5" style="color: green;">
+                                    <span uk-icon="icon: close; ratio: 2.5" style="color: rgb(255, 2, 2);">
                                     </span> OrderID:
                                     <%=order.orderId%></h1>
                                 <h1 style="text-align: center; color: #fa7725 !important;">
@@ -68,8 +68,6 @@
                                     <% } %>
                                 </h1>
                                 <h5>Shipping Address:</h5>
-                            </div>
-                            <div>
                                 <label>
                                     <br>
                                     <%=(order.fullAddress + ", " + order.landmark  + ", " + order.locality + ", " + 
@@ -82,12 +80,15 @@
                                 <br>
                                 <br>
                                 Payment Method: <%=order.paymentType.toUpperCase()%><br>
-                                <% if (order.paid) { %>
-                                <span uk-icon="check" style="color: green;"></span><span style="color: green;">Payment
-                                    Received</span>
-                                <% } %>
                             </div>
+                            <div>
+                                <div class="uk-form-label">
+                                    
+                                    
+                                    <h6>Please contact custmer care for further details</h6>
+                                    <h6>Message from PAYU :<%=failureMessage%></h6>
 
+                                </div>
                         </div>
                     </div>
                 </div>

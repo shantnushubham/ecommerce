@@ -352,7 +352,7 @@ exports.codPath = function (req, res) {
                                                         orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
                                                             console.log("stock update status:", stocks.success);
                                                         })
-                                                        res.render('successpage', { order: createOrder.order })
+                                                        res.render('successpage', { order: createOrder.order,failure:false,failureMessage:null })
                                                     }
                                                 })
                                             }
@@ -373,7 +373,7 @@ exports.codPath = function (req, res) {
                                                 orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
                                                     console.log("stock update status:", stocks.success);
                                                 })
-                                                res.render('successpage', { order: createOrder.order })
+                                                res.render('successpage', { order: createOrder.order,failure:false,failureMessage:null })
                                             }
                                         })
                                     }
@@ -676,7 +676,7 @@ exports.savedToCod = function (req, res) {
                                 orderServices.updateStockList(updatedOrder.order.orderedItems, function (stocks) {
                                     console.log("stock update status:", stocks.success);
                                 })
-                                res.render('successpage', { order: updatedOrder.order })
+                                res.render('successpage', { order: updatedOrder.order,failure:false,failureMessage:null })
                             }
                         })
                     }
@@ -1089,7 +1089,7 @@ exports.setShipmentStatus = function (req, res) {
     orderServices.setShipStatus(req.params.orderId, req.params.status, function (updated) {
         if (updated.success == false)
             req.flash('error', 'error')
-        res.redirect('/admin/items')
+        res.redirect('/admin/orders-filter')
     })
 }
 //------------------------------------------------------------------------------------------------------------
