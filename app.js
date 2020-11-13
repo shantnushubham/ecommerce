@@ -70,7 +70,9 @@ app.use(session({
     saveUninitialized: false,
     // store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 3 // two weeks
+        maxAge: 1000 * 60 * 60 * 24 ,
+         // two weeks
+         _expires: (1000 * 60 * 60 * 24 ) 
     }
 }));
 
