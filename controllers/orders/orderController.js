@@ -666,7 +666,7 @@ exports.savedToCod = function (req, res) {
                         res.redirect('/saved-orders')
                     }
                     else {
-                        orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'COD', shipmentStatus: 'processing', total: parseInt(foundCod.order.total) * 1.18 }, function (updatedOrder) {
+                        orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'COD',shipmentStatus:"processing", total: parseInt(foundCod.order.total) * 1.18 }, function (updatedOrder) {
                             if (updatedOrder.success == false) {
                                 req.flash('error', 'error in processing order')
                                 res.redirect('/saved-orders')
@@ -705,7 +705,7 @@ exports.savedToCredit = function (req, res) {
                 res.redirect('/saved-orders')
             }
             else {
-                orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'credit', shipmentStatus: 'processing' }, function (updatedOrder) {
+                orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'credit' }, function (updatedOrder) {
                     if (updatedOrder.success == false) {
                         req.flash('error', 'error in processing order')
                         res.redirect('/saved-orders')
@@ -721,7 +721,7 @@ exports.savedToCredit = function (req, res) {
 
 }
 exports.savedToPay = function (req, res) {
-    orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'online', shipmentStatus: 'processing' }, function (updatedOrder) {
+    orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'online'}, function (updatedOrder) {
         if (updatedOrder.success == false) {
             req.flash('error', 'error in processing order')
             res.redirect('/saved-orders')
