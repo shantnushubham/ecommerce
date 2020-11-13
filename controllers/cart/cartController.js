@@ -5,7 +5,7 @@ var cartservices = require('../../openServices/cart')
 var mongoose = require("mongoose")
 var middleware = require('../../Middlewares/common/functions')
 var async = require('async')
-
+var fee = require('../../models/Orders/extraFee')
 //get items from cart
 exports.getAllItems = function (req, res) {
 
@@ -32,7 +32,16 @@ exports.getAllItems = function (req, res) {
                         break
                     }
                 }
-                res.render('cartpage', { cartlisting: found, codAllowed: codAllowed })
+                fee.findOne({ name: "convenience", active: true }, function (err, foundFee) {
+                    var extra = 0
+                    if (err || functions.isEmpty(foundFee))
+                        extra = 0
+                    else {
+                        extra = foundFee.charge
+                    }
+                    res.render('cartpage', { cartlisting: found, codAllowed: codAllowed, fee: extra })
+
+                })
             }
         })
 

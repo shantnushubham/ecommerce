@@ -280,6 +280,7 @@ router.get('/admin/get/allOrderSaved', functions.isAdmin, orderController.adminA
 
 router.get('/admin/sendInvoice/:orderId', functions.isAdmin, orderController.sendInvoice)
 router.get('/admin/generated-invoice', functions.isAdmin, orderController.getGeneratedInvoiceList)
+
 router.get('/fee/update',functions.isAdmin,orderController.getUpdateFee)
 router.get('/codAllow/update',functions.isAdmin,orderController.getUpdateCODAllow)
 
