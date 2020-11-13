@@ -34,7 +34,7 @@ exports.getAllItems = function (req, res) {
                 }
                 fee.findOne({ name: "convenience", active: true }, function (err, foundFee) {
                     var extra = 0
-                    if (err || functions.isEmpty(foundFee))
+                    if (err || middleware.isEmpty(foundFee))
                         extra = 0
                     else {
                         extra = foundFee.charge
