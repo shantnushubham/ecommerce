@@ -36,6 +36,10 @@ router.get("/bio-bubble", (req, res) => {
     res.render("bioBubble")
 })
 
+router.get("/air-fumigation", (req, res) => {
+    res.render("airFumigation");
+})
+
 router.get("/offers", (req, res) => {
     res.render("offers")
 })
