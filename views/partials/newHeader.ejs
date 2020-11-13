@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+	<title>112Cart</title>
+	<link rel="dns-prefetch preconnect" href="https://cdn11.bigcommerce.com/s-xfjb6c0wb4" crossorigin>
+	<link rel="dns-prefetch preconnect" href="https://fonts.googleapis.com" crossorigin>
+	<link rel="dns-prefetch preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel='canonical' href='/' />
+
+	<!-- Favicon -->
+	<link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+	<link rel="manifest" href="/img/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.9/dist/css/uikit.min.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<script>
+		document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+	</script>
+	<script>
+		window.lazySizesConfig = window.lazySizesConfig || {};
+		window.lazySizesConfig.loadMode = 1;
+	</script>
+	<script async
+		src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/dist/theme-bundle.head_async.js"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+	<link data-stencil-stylesheet href="/css/new.css" rel="stylesheet">
+
+
+	<script type="text/javascript">
+		var BCData = { "csrf_token": "cd36370d682412efd9965863c07da173256f12a6c66e831a10b0d06d5188305d" };
+	</script>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<!--<script src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/js/theme/custom/global.js"></script>-->
+</head>
+
+
+<body onLoad="myFunction()" class="default">
+
+	<div id="ttloader"></div>
+
+	<svg data-src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/stencil/3b46b0e0-c505-0138-6438-0242ac11000f/e/ef218730-c512-0138-3ff3-0242ac110010/img/icon-sprite.svg"
+		class="icons-svg-sprite"></svg>
+	<header class="header" role="banner">
+		<div class="header-center">
+			<div class="container">
+				<h1 class="header-logo header-logo--center">
+					<a href="/">
+						<span class="header-logo-image-container" style="margin-top: 10%;">
+							<img class="header-logo-image" src="/img/112cartLogoUp.png" width="175px" alt="112Cart.com"
+								title="112Cart.com">
+						</span>
+					</a>
+				</h1>
+
+				<div class="navUser-item ttquicksearch col-6">
+					<div class="dropdown dropdown--quickSearch desktop" id="quickSearch" aria-hidden="true"
+						tabindex="-1" data-prevent-quick-search-close>
+						<a href="#" class="quickSearch-mobileToggle" title="Submit Search">
+							<span class="mobileMenu-toggleIcon"></span>
+						</a>
+						<form class="form" action="/search" method="POST">
+							<fieldset class="form-fieldset">
+								<div class="form-field">
+									<label class="is-srOnly" for="search_query">Search</label>
+									<input class="form-input" name="test" autocomplete="off" placeholder="Search...">
+									<!-- <input class="button button--primary form-prefixPostfix-button--postfix" type="submit" value=""><svg class="header-icon search-icon"><use xlink:href="#icon-search"></use></svg> -->
+								</div>
+							</fieldset>
+							<div class="search-icon submit">
+
+								<button title="Submit Search"
+									class="button button--primary form-prefixPostfix-button--postfix" type="submit"
+									value="Search">
+									<span class="material-icons">search</span>
+									Search
+								</button>
+
+							</div>
+						</form>
+						<section class="quickSearchResults" data-bind="html: results"></section>
+					</div>
+				</div>
+
+				<div class="tt-phone-number">
+					<div class="content">
+						<div class="contact-title"><a href="/users/add/business-account">
+								<% if (currentUser != "" && currentUser.isBusiness && currentUser.premium) { %>
+								<span style="color: gold;">PREMIUM</span>
+								<% } else if (currentUser != "" && currentUser.isBusiness) { %>
+								<span style="color: rgb(119, 54, 4);">BUSINESS USER</span>
+								<% } else { %>
+								Become a Business User
+								<% } %>
+							</a> | <a href="/terms-conditions">Terms &
+								Conditions</a></div>
+						<!-- <a href="tel:09277077088">9876543210</a> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="full-header header-bottom">
+			<div class="container">
+				<a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
+					<span class="mobileMenu-toggleIcon">Toggle menu</span>
+				</a>
+
+				<div class="tt-header-content">
+					<div class="tt-menu navPages-container col-3" id="menu" data-menu>
+						<nav class="navPages">
+							<div class="ttcat-title">
+								<!-- InnerSearch -->
+								<span class="material-icons">menu</span>
+								<span class="cat-title">shop by categories</span>
+							</div>
+							<ul class="navPages-list cat-Menu-toggle navPages-list-simple">
+								<li class="navPages-item navPages-item-page">
+									<a class="navPages-action" href="/">Home</a>
+								</li>
+								<% var categories = new Array() %>
+								<% categories.push({name: "All Items", linkTo: "/items"}) %>
+								<% categories.push({name: "Sanitation", linkTo: "/items/category/sanitation"}) %>
+								<% categories.push({name: "Cleaning & Hygiene Solutions", linkTo: ""}) %>
+								<% categories.push({name: "Lab Solutions", linkTo: ""}) %>
+								<% categories.push({name: "Pathology & Histopathology", linkTo: ""}) %>
+								<% categories.push({name: "Entomology", linkTo: ""}) %>
+								<% categories.push({name: "Geography and Surveying", linkTo: ""}) %>
+								<% categories.push({name: "Visual Teaching", linkTo: ""}) %>
+								<% categories.push({name: "Electronics", linkTo: ""}) %>
+								<% categories.push({name: "Pharmacy", linkTo: ""}) %>
+								<% categories.push({name: "Books", linkTo: ""}) %>
+								<% categories.push({name: "Winter Uniforms", linkTo: ""}) %>
+
+								<% categories.forEach(category => { %>
+								<li class="navPages-item">
+									<a class="navPages-action" href="<%=category.linkTo%>">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										<%= category.name%>
+									</a>
+								</li>
+								<% }) %>
+								<li class="navPages-item">
+									<a class="navPages-action" href="/offers">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										Offers
+									</a>
+								</li>
+								<li class="navPages-item">
+									<a class="navPages-action" href="/about-us">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										About Us
+									</a>
+								</li>
+								<li class="navPages-item">
+									<a class="navPages-action" href="/contact-us">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										Contact Us
+									</a>
+								</li>
+								<li class="navPages-item">
+									<a class="navPages-action" href="/blogs">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										Blogs
+									</a>
+								</li>
+							</ul>
+
+							<!--Search button was here now at header html page-->
+						</nav>
+					</div>
+
+					<div class="tt-menu-link col-8" id="menu-link" data-menu>
+						<div class="navPages-item-page">
+							<a class="link-action" href="/items">All Items</a>
+						</div>
+						<div class="navPages-item-page">
+							<a class="link-action" href="/offers">Offers</a>
+						</div>
+						<div class="navPages-item-page">
+							<a class="link-action" href="/about-us/">About Us</a>
+						</div>
+						<div class="navPages-item-page">
+							<a class="link-action" href="/contact-us/">Contact
+								Us</a>
+						</div>
+						<div class="navPages-item-page">
+							<a class="link-action" href="/affiliate/">Blogs</a>
+						</div>
+
+					</div>
+
+					<nav class="navUser">
+						<ul class="navUser-section navUser-section--alt">
+							<li class="navUser-item btn-compare">
+								<a class="navUser-action navUser-item--compare" href="/compare" data-compare-nav>
+									<span class="material-icons">sync</span><span
+										class="countPill countPill--positive countPill--alt"></span>
+									<span class="wishlist-text">Compare</span>
+								</a>
+							</li>
+
+							<li class="tt-user-info">
+								<div class="account-link-title" title="My Account">
+									<span class="material-icons">perm_identity</span>
+								</div>
+								<ul class="dropdown-menu dropdown-menu-right account-link-toggle">
+
+									<li class="navUser-item navUser-item--account">
+										<% if (currentUser == "") { %>
+										<a class="navUser-action" href="/users/login">
+											<span class="material-icons">lock_open</span>
+											Sign in
+										</a>
+										<a class="navUser-action" href="/users/register">
+											<span class="material-icons">person</span>
+											Register
+										</a>
+										<% } else { %>
+										<a class="navUser-action" href="/orders">
+											<span class="material-icons">lock_open</span>
+											My Orders
+										</a>
+										<a class="navUser-action" href="/users/update-profile">
+											<span class="material-icons">person</span>
+											Profile
+										</a>
+										<a class="navUser-action" href="/users/logout">
+											<span class="material-icons">person</span>
+											Logout
+										</a>
+										<% } %>
+									</li>
+
+								</ul>
+							</li>
+							<li class="navUser-item navUser-item--cart">
+								<a class="navUser-action" title="Cart" href="/cartPage">
+									<span class="material-icons">shopping_cart</span>
+									<span class="navUser-item-cartLabel">Cart</span>
+									<span class="countPill"><%=cartCount%></span>
+								</a>
+
+								<div class="dropdown-menu" id="cart-preview-dropdown" data-dropdown-content
+									aria-hidden="true"></div>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<% if (error && error.length > 0) { %>
+	<div class="uk-alert-danger" uk-alert>
+		<a class="uk-alert-close" uk-close></a>
+		<p><%=error%> </p>
+	</div>
+	<% } else if (success && success.length > 0) { %>
+	<div class="uk-alert-success" uk-alert>
+		<a class="uk-alert-close" uk-close></a>
+		<p><%=success%></p>
+	</div>
+	<% } %>

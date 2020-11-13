@@ -1676,12 +1676,30 @@
 
 /** Only Mobile Menu **/
 @media only screen and (max-width: 991px) {
+  div.scrollmenu {
+    padding-top: 2%;
+    padding-bottom: 2%;
+  }
+
   #desktop-nav {
     display: none;
   }
 
   #mobile-nav {
     display: block;
+  }
+
+  #desktop-slider {
+    display: none;
+  }
+
+  #mobile-slider {
+    padding-top: 1.5vh;
+    display: block;
+  }
+
+  img.slider-image {
+    border-radius: 20px;
   }
 }
 /*# sourceMappingURL=responsive.css.map */

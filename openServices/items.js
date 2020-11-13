@@ -9,12 +9,12 @@ class items {
 
     }
     getAllItems(callback) {
+
         itemModel.find({ active: true }, function (err, foundItems) {
             if (err) {
                 console.log(err)
                 callback({ success: false, err: err })
-            }
-            else {
+            } else {
                 var category = new Set()
                 var subCategory = new Set()
                 var tag = new Set()
@@ -87,7 +87,13 @@ class items {
                                 groupingTag: foundItem.groupingTag,
                                 vendorId: foundItem.vendorId,
                                 vendorName: foundItem.vendorName,
-                                shortDesc: foundItem.shortDesc
+                                shortDesc: foundItem.shortDesc,
+                                measurementUnit: foundItem.measurementUnit,
+                                isService: foundItem.isService,
+                                tax: foundItem.tax,
+                                sku: foundItem.sku,
+                                stock:foundItem.stock,
+                                cod:foundItem.cod
 
                             }
 
@@ -172,8 +178,16 @@ class items {
             subCategory: data.subCategory,
             tag: data.tag,
             groupingTag: data.groupingTag,
+            stock: data.stock,
+            isService: data.isService == "true" ? true : false,
+            cod: data.cod == true ? true : false,
+            measurementUnit: data.measurementUnit,
+            tax: data.tax==''?18:data.tax,
+            sku: data.sku,
+            isBusiness: data.isBusiness==''?false:true,
 
         }
+        console.log('itemdata=',item_data);
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
 
         vendorModel.findOne({ vendorId: data.vendorId }, function (err, foundV) {
@@ -189,6 +203,7 @@ class items {
                         callback({ success: false, err: "trouble creating item" })
                     }
                     else {
+                        console.log("created",newItem);
                         item_metaData.iid = newItem.iid
                         itemMetaModel.create(item_metaData, function (err, newMeta) {
                             if (err) {
@@ -221,8 +236,15 @@ class items {
             tag: data.tag,
             shortDesc: data.shortDesc,
             groupingTag: data.groupingTag,
+            tax: data.tax==''?18:data.tax,
+            sku: data.sku,
+            stock: data.stock,
+            measurementUnit: data.measurementUnit,
+            isBusiness: data.isBusiness == "true" ? true : false,
+            cod: data.cod == true ? true : false,
 
         }
+        console.log(item_data);
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
         vendorModel.findOne({ vendorId: data.vendorId }, function (err, foundV) {
             if (err || functions.isEmpty(foundV)) {
@@ -233,6 +255,7 @@ class items {
                 item_data["vendorName"] = foundV.vendorName
 
                 itemModel.findOneAndUpdate({ iid: iid }, item_data, function (err, updatedItem) {
+                    console.log(updatedItem);
                     if (err) callback({ success: false, err: err })
                     else {
                         itemMetaModel.findOneAndUpdate({ iid: iid }, item_metaData, function (err, updatedMeta) {
@@ -323,14 +346,14 @@ class items {
 
     updateStock(iid, subtract) {
         return new Promise((resolve, reject) => {
-            itemmodel.findOne({ iid: iid }, function (err, foundItem) {
+            itemModel.findOne({ iid: iid }, function (err, foundItem) {
                 if (err || functions.isEmpty(foundItem))
                     reject({ success: false, iid: iid })
                 else {
-                    if (foundItem.isService) { callback({ success: true }) }
+                    if (foundItem.isService) { resolve({ success: true }) }
                     else {
                         var st = parseInt(foundItem.stock) - parseInt(subtract);
-                        itemmodel.findOneAndUpdate({ iid: iid }, { stock: st }, function (err, updated) {
+                        itemModel.findOneAndUpdate({ iid: iid }, { stock: st }, function (err, updated) {
                             if (err || functions.isEmpty(updated))
                                 reject({ success: false, iid: iid })
                             else

@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const shortid = require("shortid");
-var mongooseHistory = require('mongoose-history')
+var mongooseHistory = require('mongoose-history');
+
 // var textSearch = require('mongoose-text-search');
- 
+
 var itemsSchema = new mongoose.Schema({
     iid: {
         type: String,
@@ -69,6 +70,10 @@ var itemsSchema = new mongoose.Schema({
     vendorName: {
         type: String
     },
+    sku: {
+        type: String,
+        default: shortid.generate
+    },
     cod: {
         type: Boolean,
         default: true
@@ -76,24 +81,36 @@ var itemsSchema = new mongoose.Schema({
     shortDesc: {
         type: String
     },
-    isService:{
-        type:Boolean,
-        default:false
+    isService: {
+        type: Boolean,
+        default: false
     },
-    stock:{
-        type:Number,
-        default:0,
+    stock: {
+        type: Number,
+        default: 0,
         // validate:{
         //     validator: function(num) {
         //         return arr >= 0;
         //       },
         //       message: "stock must be greater than equal to 0"
         // }
+    },
+    measurementUnit: {
+        type: String,
+        default: "Units"
+    },
+    isBusiness: {
+        type: Boolean,
+        default: false
+    },
+    tax: {
+        type: Number,
+        default: 18
     }
 });
 
 itemsSchema.plugin(mongooseHistory)
 // itemsSchema.plugin(textSearch)
-itemsSchema.index({name:'text'})
+itemsSchema.index({ name: 'text' })
 
 module.exports = mongoose.model("items", itemsSchema);

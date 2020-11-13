@@ -9,13 +9,25 @@
     <meta name="author" content="Ansonika">
     <title>112Cart - Admin dashboard</title>
 
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/img//apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
-    <link rel="manifest" href="/img/site.webmanifest">
+    <link rel="manifest" href="/img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.semanticui.min.css">
     <!-- GOOGLE WEB FONT -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800" rel="stylesheet">
@@ -46,7 +58,7 @@
 
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index.html"><img src="/img/112cartLogo.png" data-retina="true" alt="" width="63"
+        <a class="navbar-brand" href="/"><img src="/img/112cartLogo.png" data-retina="true" alt="" width="75"
                 height="36"></a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
             data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
@@ -55,47 +67,62 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link" href="/admin/items">
+                    <a class="nav-link" href="/admin">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Super Admin</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link" href="/admin/item-section">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Items</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
-                    <a class="nav-link" href="/admin/getUsers">
+                    <a class="nav-link" href="/admin/user-section">
                         <i class="fa fa-fw fa-envelope-open"></i>
                         <span class="nav-link-text">Users</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookings">
-                    <a class="nav-link" href="/admin/setDiscount">
+                    <a class="nav-link" href="/admin/offer-section">
                         <i class="fa fa-fw fa-archive"></i>
-                        <span class="nav-link-text">Set Discount <span class="badge badge-pill badge-primary">6
-                                New</span></span>
+                        <span class="nav-link-text">Offers</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
-                    <a class="nav-link" href="/admin/createDeal">
-                        <i class="fa fa-fw fa-star"></i>
-                        <span class="nav-link-text">Create Deal</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
-                    <a class="nav-link" href="/admin/orders-filter">
+                    <a class="nav-link" href="/admin/orders-section">
                         <i class="fa fa-fw fa-star"></i>
                         <span class="nav-link-text">Orders</span>
                     </a>
                 </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+                    <a class="nav-link" href="/admin/account-invoice">
+                        <i class="fa fa-fw fa-star"></i>
+                        <span class="nav-link-text">Accounts & Invoice</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+                    <a class="nav-link" href="/admin/vendors">
+                        <i class="fa fa-fw fa-envelope-open"></i>
+                        <span class="nav-link-text">Vendors</span>
+                    </a>
+                </li>
+
+
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
                     <a class="nav-link" href="/admin/cancels-filter">
                         <i class="fa fa-fw fa-star"></i>
                         <span class="nav-link-text">Cancellation Requests</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookmarks">
-                    <a class="nav-link" href="/admin/discountCodes">
-                        <i class="fa fa-fw fa-heart"></i>
-                        <span class="nav-link-text">Discount Codes</span>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
+                    <a class="nav-link" href="/users/business-accounts">
+                        <i class="fa fa-fw fa-plus-circle"></i>
+                        <span class="nav-link-text">Business Accounts</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">

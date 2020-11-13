@@ -42,5 +42,20 @@ var businessSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    
+    gstNumber: {
+        type: String,
+    },
+
+    panNumber: {
+        type: String,
+        required: true,
+    },
+
+    authorizedSignatoryName: {
+        type: String,
+        required: true,
+    },
+
 });
 module.exports = mongoose.model("businessAcc", businessSchema, "businessAcc");

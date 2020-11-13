@@ -1,0 +1,121 @@
+<%- include("partials/adminHeader.ejs") %>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">User Section</li>
+        </ol>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i>User Section</div>
+            <div class="container margin_60_35">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="box_grid wow">
+                            <figure class="block-reveal">
+                                <div class="block-horizzontal"></div>
+                                <a href="#0" class="wish_bt"></a>
+                                <a href="/admin/getUsers"><img
+                                        src="https://d6fhaebhrj3za.cloudfront.net/images/AdminImages/AllUsers.jpg"
+                                        class="img-fluid" alt=""></a>
+                            </figure>
+                            <div class="wrapper">
+                                <small>Admin Exclusive</small>
+                                <a href="/admin/getUsers">
+                                    <h3>All Users</h3>
+                                </a>
+                                <p>Navigate and view all types of users</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="box_grid wow">
+                            <figure class="block-reveal">
+                                <div class="block-horizzontal"></div>
+                                <a href="#0" class="wish_bt"></a>
+                                <a href="/admin/getIndividuals"><img
+                                        src="https://d6fhaebhrj3za.cloudfront.net/images/AdminImages/IndividualUser.jpg"
+                                        class="img-fluid" alt=""></a>
+                            </figure>
+                            <div class="wrapper">
+                                <small>Admin Exclusive</small>
+                                <a href="/admin/getIndividuals">
+                                    <h3>Individual Users</h3>
+                                </a>
+                                <p>Navigate and view all individual users</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="box_grid wow">
+                            <figure class="block-reveal">
+                                <div class="block-horizzontal"></div>
+                                <a href="#0" class="wish_bt"></a>
+                                <a href="/users/business-accounts/accepted"><img
+                                        src="https://d6fhaebhrj3za.cloudfront.net/images/AdminImages/BusinessUsers.jpg"
+                                        class="img-fluid" alt=""></a>
+
+                            </figure>
+                            <div class="wrapper">
+                                <small>Admin Exclusive</small>
+                                <a href="/users/business-accounts/accepted">
+                                    <h3>Business Users</h3>
+                                </a>
+                                <p>All Business Users</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="box_grid wow">
+                            <figure class="block-reveal">
+                                <div class="block-horizzontal"></div>
+                                <a href="#0" class="wish_bt"></a>
+                                <a href="/users/business-accounts"><img
+                                        src="https://d6fhaebhrj3za.cloudfront.net/images/AdminImages/BusinessUserApplication.jpg"
+                                        class="img-fluid" alt=""></a>
+
+                            </figure>
+                            <div class="wrapper">
+                                <small>Admin Exclusive</small>
+                                <a href="/users/business-accounts">
+                                    <h3>Users that applied for Business User</h3>
+                                </a>
+                                <p>View and navigate through users that have applied for a business user</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="box_grid wow">
+                            <figure class="block-reveal">
+                                <div class="block-horizzontal"></div>
+                                <a href="#0" class="wish_bt"></a>
+                                <a href="/users/all/premium-account"><img
+                                        src="https://d6fhaebhrj3za.cloudfront.net/images/AdminImages/PremiumBusinessUser.jpg"
+                                        class="img-fluid" alt=""></a>
+
+                            </figure>
+                            <div class="wrapper">
+                                <small>Admin Exclusive</small>
+                                <a href="/users/all/premium-account">
+                                    <h3>Premium Business Users</h3>
+                                </a>
+                                <p>View and navigate through premium business users</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/adminFooter") %>

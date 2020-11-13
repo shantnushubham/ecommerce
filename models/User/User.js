@@ -15,6 +15,7 @@ var UserSchema  = new mongoose.Schema({
         type: String,
         required: true
     },
+    
     username: {
         type: String,
     },
@@ -32,7 +33,7 @@ var UserSchema  = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        
     },
     password: {
         type: String
@@ -71,9 +72,41 @@ var UserSchema  = new mongoose.Schema({
         type:Boolean,
         default:false
     },
+    premium:{
+        type:Boolean,
+        default:false
+    },
     creditAllowed:{
         type:Boolean,
         default:false
+    },
+    credPerc:{
+        type:Number,
+        default:0
+    },
+    credBalance:{
+        type:Number,
+        default:0
+    },
+    /**
+     * 112-admin
+     * 1- base user (no authority)
+     * 2-ops,
+     * 3,4,5
+     * 
+     */
+    level:{
+        type:Number,
+        default:1
+    },
+    state:{
+        type:String,
+        required:true,
+        default:"jharkand"
+    },
+    daysToRemind:{
+        type:Number,
+        default:0
     }
 });
 

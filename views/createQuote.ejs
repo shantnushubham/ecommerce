@@ -1,0 +1,85 @@
+<%- include("partials/newHeader") %>
+
+<style>
+    .default-btn {
+        font-weight: light;
+        font-size: medium;
+        background-color: #ffaa3d;
+        border-radius: 50px;
+        padding: 7px 14px 7px 14px;
+        color: white;
+    }
+</style>
+
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="EUR">
+
+    <div class="home-content">
+        <div class="tt-breadcrumbs-main">
+            <div class="tt-breadcrumbs">
+                <div class="container">
+                    <h1 class="category-name">
+                        <span class="breadcrumb-title ">
+                        </span>
+                        <span class="breadcrumb-title is-active">
+                            <span class="breadcrumb-label">Create Quote</span>
+                        </span>
+                    </h1>
+                    <ul class="breadcrumbs" itemscope itemtype="">
+                        <li class="breadcrumb " itemprop="itemListElement" itemscope>
+                            <a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+                            <meta itemprop="position" content="1" />
+                        </li>
+                        <li class="breadcrumb is-active" itemprop="itemListElement" itemscope>
+                            <meta itemprop=" item" content="/cart.php">
+                            <span class="breadcrumb-label" itemprop="name">Your Cancelled Orders</span>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-left: 13%; margin-right: 13%;">
+            <div class="uk-child-width-1-1@m" uk-grid>
+                <form method="POST" action="/service/<%=item.iid%>">
+                    <fieldset class="uk-fieldset">
+
+                        <div class="uk-margin">
+                            <input class="uk-input" type="text" name="email" placeholder="Email"
+                                <% if (currentUser != "") { %> value="<%=currentUser.email%>" <% } %>>
+                        </div>
+
+                        <div class="uk-margin">
+                            <input class="uk-input" type="text" name="phone" placeholder="Phone No."
+                                <% if (currentUser != "") { %> value="<%=currentUser.phone%>" <% } %>>
+                        </div>
+
+                        <div class="uk-margin">
+                            <input class="uk-input" type="text" name="name" placeholder="Name"
+                                <% if (currentUser != "") { %> value="<%=currentUser.name%>" <% } %>>
+                        </div>
+
+                        <div class="uk-margin">
+                            <input class="uk-input" type="number" name="qty"
+                                placeholder="Enter Units (<%=item.measurementUnit%>)" min="1">
+                        </div>
+
+                        <div class="uk-margin" hidden>
+                            <input class="uk-input" type="text" name="unit" value="<%=item.measurementUnit%>"
+                                min="1">
+                        </div>
+
+                    </fieldset>
+                    <div style="text-align: center;">
+                        <button type="submit" class="default-btn">
+                            Get Quote
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/newFooter'); -%>

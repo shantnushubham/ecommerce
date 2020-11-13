@@ -37,11 +37,11 @@
                         <tbody>
                             <% cancellations.forEach(element => { %>
                             <tr>
-                                <td><a href="/admin/cancellations/<%=element.cancellationId%>"><%= element.orderId%></a></td>
-                                <td><a href="/admin/cancellations/<%=element.cancellationId%>"><%= element.cancellationId %></a></td>
-                                <td><a href="/admin/cancellations/<%=element.cancellationId%>"><%= element.dateCreated.toDateString()%>
+                                <td><a href="/cancellations/<%=element.cancellationId%>"><%= element.orderId%></a></td>
+                                <td><a href="/cancellations/<%=element.cancellationId%>"><%= element.cancellationId %></a></td>
+                                <td><a href="/cancellations/<%=element.cancellationId%>"><%= element.dateCreated.toDateString()%>
                                 </a></td>
-                                <td><a href="/admin/cancellations/<%=element.cancellationId%>"><%= element.cancellationStatus.toUpperCase() %>
+                                <td><a href="/cancellations/<%=element.cancellationId%>"><%= element.cancellationStatus.toUpperCase() %>
                                 </a></td>
                             </tr>
                             <% }); %>

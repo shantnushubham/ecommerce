@@ -1,225 +1,583 @@
-<%- include('partials/header', {title: "Welcome to 112Cart", desc: "Best Shopping Website"}); -%>
+<%- include("partials/newHeader.ejs") %>
 
-<!-- Start Page Title Area -->
-<div class="page-title-area item-bg-5">
-	<div class="container">
-		<div class="page-title-content">
-			<h2><%= item.name %></h2>
-			<ul>
-				<li>
-					<a href="/">
-						Items
-						<i class="fa fa-chevron-right"></i>
-					</a>
-				</li>
-				<li><%=item.name%>></li>
-			</ul>
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="EUR">
+
+	<div class="home-content">
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label"><%=item.name%></span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/items" class="breadcrumb-label" itemprop="item"><span
+									itemprop="name">Items</span></a>
+							<meta itemprop="position" content="2" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<meta itemprop="item" content="/laundry-detergent/">
+							<span class="breadcrumb-label" itemprop="name"><%=item.name%></span>
+							<meta itemprop="position" content="3" />
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
+
+		<div class="container" itemscope itemtype="http://schema.org/Product">
+			<div class="productView">
+				<section class="productView-images col-5" data-image-gallery>
+					<figure class="productView-image" data-image-gallery-main data-zoom-image="<%=item.image[0]%>">
+						<div class="productView-img-container">
+							<a href="<%=item.image[0]%>" target="_blank" itemprop="image">
+								<img src="h<%=item.image[0]%>" alt="<%=item.name%>" title="<%=item.name%>"
+									data-sizes="auto" srcset="<%=item.image[0]%>" data-srcset="<%=item.image[0]%>"
+									class="lazyload productView-image--default" data-main-image />
+							</a>
+						</div>
+					</figure>
+					<ul class="productView-thumbnails" data-slick='{
+							"infinite": false,
+							"mobileFirst": true,
+							"dots": false,
+							"slidesToShow": 4,
+							"slidesToScroll": 1,
+							"responsive": [
+								{
+								"breakpoint": 1200,
+								"settings": {
+									"slidesToShow": 4,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 990,
+								"settings": {
+									"slidesToShow": 3,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 800,
+								"settings": {
+									"slidesToShow": 2,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 544,
+								"settings": {
+									"slidesToShow": 4,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 320,
+								"settings": {
+									"slidesToShow": 3,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 0,
+								"settings": {
+									"slidesToShow": 2,
+									"slidesToScroll": 1
+								}
+								}
+							]
+						}'>
+						<% item.image.forEach(image => { %>
+						<li class="productView-thumbnail">
+							<a class="productView-thumbnail-link" href="<%=image%>" data-image-gallery-item
+								data-image-gallery-new-image-url="<%=image%>"
+								data-image-gallery-new-image-srcset="<%=image%>"
+								data-image-gallery-zoom-image-url="<%=image%>">
+								<img src="<%=image%>" alt="<%=item.name%>" title="<%=item.name%>" data-sizes="auto"
+									srcset="<%=image%> 80w" data-srcset="<%=image%>" class="lazyload" />
+							</a>
+						</li>
+						<% }) %>
+
+					</ul>
+				</section>
+
+				<section class="productView-details col-7">
+					<div class="productView-product">
+						<h1 class="productView-title" itemprop="name"><%=item.name%></h1>
+						<h2 class="productView-brand" itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+						</h2>
+						<div class="productView-price">
+
+							<div class="price-section price-section--withTax rrp-price--withTax" style="display: none;">
+								MSRP:
+								<span data-product-rrp-with-tax class="price price--rrp">
+
+								</span>
+							</div>
+
+							<div class="price-section price-section--withTax" itemprop="offers" itemscope
+								itemtype="http://schema.org/Offer">
+								<span class="price-label">
+
+								</span>
+								<span class="price-now-label" style="display: none;">
+								</span>
+								<span data-product-price-with-tax class="price price--withTax">₹ <%=item.price%> +
+									GST (<%=item.tax%>% = <%=Math.ceil(item.price * item.tax/100)%>) = ₹
+									<%=Math.ceil(item.price + (item.price * item.tax/100))%></span>
+								<meta itemprop="availability" itemtype="http://schema.org/ItemAvailability"
+									content="http://schema.org/InStock">
+								<meta itemprop="itemCondition" itemtype="http://schema.org/OfferItemCondition"
+									content="http://schema.org/Condition">
+								<meta itemprop="priceCurrency" content="EUR">
+								<meta itemprop="url" content="/laundry-detergent/">
+								<div itemprop="priceSpecification" itemscope
+									itemtype="http://schema.org/PriceSpecification">
+									<meta itemprop="price" content="1.56">
+									<meta itemprop="priceCurrency" content="EUR">
+									<meta itemprop="valueAddedTaxIncluded" content="true">
+								</div>
+							</div>
+							<div class="price-section price-section--withTax non-sale-price--withTax"
+								style="display: none;">
+								<span data-product-non-sale-price-with-tax class="price price--non-sale">
+
+								</span>
+							</div>
+							<div class="price-section price-section--saving price" style="display: none;">
+								<span class="price">(You save</span>
+								<span data-product-price-saved class="price price--saving">
+
+								</span>
+								<span class="price">)</span>
+							</div>
+						</div>
+						<div data-content-region="product_below_price"></div>
+						<div class="productView-rating" style="visibility: hidden;">
+							<span class="icon icon--ratingEmpty">
+								<span class="material-icons">star_border</span>
+							</span>
+							<span class="icon icon--ratingEmpty">
+								<span class="material-icons">star_border</span>
+							</span>
+							<span class="icon icon--ratingEmpty">
+								<span class="material-icons">star_border</span>
+							</span>
+							<span class="icon icon--ratingEmpty">
+								<span class="material-icons">star_border</span>
+							</span>
+							<span class="icon icon--ratingEmpty">
+								<span class="material-icons">star_border</span>
+							</span>
+							<span class="productView-reviewLink tt-readreview">
+								No reviews yet
+							</span>
+							<span class="productView-reviewLink">
+								<a href="/laundry-detergent/" data-reveal-id="modal-review-form">
+									<span class="material-icons">edit</span>
+									Write a Review
+								</a>
+							</span>
+						</div>
+
+						<dl class="productView-info">
+							<%- item.content %>
+
+						</dl>
+					</div>
+				</section>
+				<section class="productView-btn col-7">
+					<div class="productView-options">
+						<form class="form" method="POST" action="/add/<%=item.iid%>">
+
+							<div data-product-option-change style="display:none;">
+							</div>
+
+							<div class="form-field form-field--increments">
+								<label class="form-label form-label--alternate" for="qty[]">Quantity:</label>
+								<div class="form-increment" data-quantity-change>
+									<button class="button button--icon">
+										<span class="is-srOnly">Decrease Quantity:</span>
+										<i class="icon" aria-hidden="true">
+											<svg>
+												<use xlink:href="#icon-keyboard-arrow-down" />
+											</svg>
+										</i>
+									</button>
+									<input class="form-input form-input--incrementTotal" id="qty[]" name="quantity"
+										type="tel" value="1" data-quantity-min="0" data-quantity-max="0" min="1"
+										pattern="[0-9]*" aria-live="polite">
+									<button class="button button--icon" data-action="inc">
+										<span class="is-srOnly">Increase Quantity:</span>
+										<i class="icon" aria-hidden="true">
+											<svg>
+												<use xlink:href="#icon-keyboard-arrow-up" />
+											</svg>
+										</i>
+									</button>
+								</div>
+							</div>
+							<div class="form-action">
+								<button class="button button--primary" type="submit">Add to Cart</button>
+								<% if (item.isService) { %>
+								<a href="/service/<%=item.iid%>"><button class="button button--primary">
+										Get Quote</button>
+								</a>
+								<% } %>
+							</div>
+						</form>
+
+					</div>
+					<div>
+						<% if (!item.cod) { %>
+						<h2 style="text-align: left; color: red;">Cash on Delivery Not Allowed</h2>
+						<% } %>
+					</div>
+
+					<div class="addthis_toolbox addthis_32x32_style" addthis:url="" addthis:title="" hidden>
+						<ul class="socialLinks">
+							<li class="socialLinks-item socialLinks-item--facebook">
+								<a class="addthis_button_facebook icon icon--facebook"
+									href="https://www.facebook.com/sharer/sharer.php?u=example.org" target="_blank">
+									<svg>
+										<use xlink:href="#icon-facebook" />
+									</svg>
+								</a>
+							</li>
+							<li class="socialLinks-item socialLinks-item--email">
+								<a class="addthis_button_email icon icon--email">
+									<svg>
+										<use xlink:href="#icon-envelope" />
+									</svg>
+								</a>
+							</li>
+							<li class="socialLinks-item socialLinks-item--print">
+								<a class="addthis_button_print icon icon--print">
+									<svg>
+										<use xlink:href="#icon-print" />
+									</svg>
+								</a>
+							</li>
+							<li class="socialLinks-item socialLinks-item--twitter">
+								<a class="addthis_button_twitter icon icon--twitter">
+									<svg>
+										<use xlink:href="#icon-twitter" />
+									</svg>
+								</a>
+							</li>
+							<li class="socialLinks-item socialLinks-item--linkedin">
+								<a class="addthis_button_linkedin icon icon--linkedin"
+									href="https://www.linkedin.com/sharing/share-offsite/?url=112cart.com/items/<%=item.id%>">
+									<svg>
+										<use xlink:href="#icon-linkedin" />
+									</svg>
+								</a>
+							</li>
+							<li class="socialLinks-item socialLinks-item--pinterest">
+								<a class="addthis_button_pinterest icon icon--pinterest">
+									<svg>
+										<use xlink:href="#icon-pinterest" />
+									</svg>
+								</a>
+							</li>
+						</ul>
+						<script type="text/javascript" defer
+							src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4e94ed470ee51e32"></script>
+						<script>
+							window.addEventListener('DOMContentLoaded', function () {
+								if (typeof (addthis) === "object") {
+									addthis.toolbox('.addthis_toolbox');
+								}
+							});
+						</script>
+					</div>
+				</section>
+			</div>
+
+			<div id="previewModal" class="modal modal--large" data-reveal>
+				<a href="#" class="modal-close" aria-label="Close" role="button">
+					<span aria-hidden="true">&#215;</span>
+				</a>
+				<div class="modal-content"></div>
+				<div class="loadingOverlay"></div>
+			</div>
+
+			<div data-content-region="product_below_content"></div>
+
+			<div class="tt-product-tab">
+				<ul class="tabs" data-tab role="tablist">
+					<% if (group.length > 0 && item.groupingTag != "") { %>
+					<li class="tab" role="presentational">
+						<a class="tab-title" href="#tab-related" role="tab" tabindex="0" aria-selected="false"
+							controls="tab-related">Related Products</a>
+					</li>
+					<% } %>
+					<li class="tab is-active" role="presentational">
+						<a class="tab-title" href="#tab-similar" role="tab" tabindex="0" aria-selected="true"
+							controls="tab-similar">Similar Products</a>
+					</li>
+				</ul>
+				<div class="tabs-contents">
+					<% if (group.length > 0  && item.groupingTag != "") { %>
+					<div role="tabpanel" aria-hidden="false" class="tab-content has-jsContent is-active"
+						id="tab-related">
+						<section class="productCarousel row" data-list-name="" data-slick='{
+									"dots": false,
+									"infinite": false,
+									"autoplay": false,
+									"mobileFirst": true,
+									"slidesToShow": 6,
+									"slidesToScroll": 1,
+									"responsive": [
+										{
+										"breakpoint": 1710,
+										"settings": {
+											"slidesToShow": 7,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 1460,
+										"settings": {
+											"slidesToShow": 6,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 1199,
+										"settings": {
+											"slidesToShow": 5,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 991,
+										"settings": {
+											"slidesToShow": 4,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 767,
+										"settings": {
+											"slidesToShow": 3,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 320,
+										"settings": {
+											"slidesToShow": 2,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 0,
+										"settings": {
+											"slidesToShow": 2,
+											"slidesToScroll": 1
+										}
+										}
+									]
+								}'>
+
+							<% group.forEach(el => { %>
+							<div class="productCarousel-slide">
+								<article class="card ">
+									<figure class="card-figure">
+
+										<a href="/items/<%=el.iid%>">
+											<div class="card-img-container">
+												<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+													data-sizes="auto" srcset="<%=el.image[0]%>"
+													data-srcset="<%=el.image[0]%>" class="lazyload card-image" />
+											</div>
+										</a>
+									</figure>
+
+									<div class="card-body">
+										<h4 class="card-title">
+											<a href="<%=el.iid%>"><%=el.name%></a>
+										</h4>
+										<div class="card-text tt-price" data-test-info-type="price">
+											<div class="price-section price-section--withTax rrp-price--withTax"
+												style="display: none;">
+												MSRP:
+												<span data-product-rrp-with-tax class="price price--rrp">
+												</span>
+											</div>
+											<div class="price-section price-section--withTax">
+												<span class="price-label" style="display: none;">
+												</span>
+												<span class="price-now-label">
+												</span>
+												<span data-product-price-with-tax class="price price--withTax">₹
+													<%=el.price%></span>
+											</div>
+											<div class="price-section price-section--withTax non-sale-price--withTax">
+												<span data-product-non-sale-price-with-tax
+													class="price price--non-sale">
+													₹ <%=(1.20)*el.price%>
+												</span>
+											</div>
+										</div>
+
+										<div class="tt-cart-btn">
+											<a href="/canvas-laundry-cart/" data-event-type="product-click"
+												class="button button--small card-figcaption-button"
+												title="Choose Options" data-product-id="103">Go to item</a>
+										</div>
+									</div>
+								</article>
+							</div>
+							<% }) %>
+						</section>
+
+					</div>
+					<% } %>
+
+					<div role="tabpanel" aria-hidden="true" class="tab-content has-jsContent" id="tab-similar">
+						<section class="productCarousel row" data-list-name="Customers Also Viewed" data-slick='{
+									"dots": false,
+									"infinite": false,
+									"autoplay": false,
+									"mobileFirst": true,
+									"slidesToShow": 6,
+									"slidesToScroll": 1,
+									"responsive": [
+										{
+										"breakpoint": 1710,
+										"settings": {
+											"slidesToShow": 7,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 1460,
+										"settings": {
+											"slidesToShow": 6,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 1199,
+										"settings": {
+											"slidesToShow": 5,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 991,
+										"settings": {
+											"slidesToShow": 4,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 767,
+										"settings": {
+											"slidesToShow": 3,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 320,
+										"settings": {
+											"slidesToShow": 2,
+											"slidesToScroll": 1
+										}
+										},
+										{
+										"breakpoint": 0,
+										"settings": {
+											"slidesToShow": 2,
+											"slidesToScroll": 1
+										}
+										}
+									]
+								}'>
+
+							<% similar.forEach(el => { %>
+							<div class="productCarousel-slide">
+								<article class="card ">
+									<figure class="card-figure">
+
+										<a href="/items/<%=el.iid%>">
+											<div class="card-img-container">
+												<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+													data-sizes="auto" srcset="<%=el.image[0]%>"
+													data-srcset="<%=el.image[0]%>" class="lazyload card-image" />
+											</div>
+										</a>
+									</figure>
+
+									<div class="card-body">
+										<h4 class="card-title">
+											<a href="<%=el.iid%>"><%=el.name%></a>
+										</h4>
+										<div class="card-text tt-price" data-test-info-type="price">
+											<div class="price-section price-section--withTax rrp-price--withTax"
+												style="display: none;">
+												MSRP:
+												<span data-product-rrp-with-tax class="price price--rrp">
+												</span>
+											</div>
+											<div class="price-section price-section--withTax">
+												<span class="price-label" style="display: none;">
+												</span>
+												<span class="price-now-label">
+												</span>
+												<span data-product-price-with-tax class="price price--withTax">₹
+													<%=el.price%></span>
+											</div>
+											<div class="price-section price-section--withTax non-sale-price--withTax">
+												<span data-product-non-sale-price-with-tax
+													class="price price--non-sale">
+													₹ <%=(1.20)*el.price%>
+												</span>
+											</div>
+										</div>
+
+										<div class="tt-cart-btn">
+											<a href="/canvas-laundry-cart/" data-event-type="product-click"
+												class="button button--small card-figcaption-button"
+												title="Choose Options" data-product-id="103">Go to item</a>
+										</div>
+									</div>
+								</article>
+							</div>
+							<% }) %>
+
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div id="modal" class="modal" data-reveal data-prevent-quick-search-close>
+		<a href="#" class="modal-close" aria-label="Close" role="button">
+			<span aria-hidden="true">&#215;</span>
+		</a>
+		<div class="modal-content"></div>
+		<div class="loadingOverlay"></div>
 	</div>
 </div>
-<!-- End Page Title Area -->
 
-<!-- Start Product Details Area -->
-<section class="product-details-area ptb-100">
-	<div class="container">
-		<div class="row align-items-center">
-			<div class="col-lg-6 col-md-12">
-				<div class="product-details-image">
-					<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1"
-						uk-slideshow="ratio: 1:1;">
-						<ul class="uk-slideshow-items" style="background-color: white;">
-							<% item.image.forEach(el => { %>
-							<li>
-								<img src="<%=el%>" alt="<%=item.name%>"
-									style="width:auto; height:auto; max-width:100%; max-height:90%;">
-							</li>
-							<% }) %>
-						</ul>
-						<a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"
-							uk-slidenav-previous uk-slideshow-item="previous" style="color: black;"></a>
-						<a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
-							uk-slideshow-item="next" style="color: black;"></a>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-6 col-md-12">
-				<div class="product-details-desc">
-					<h3><%= item.name %></h3>
-
-					<div class="price">
-						<span class="new-price" style="font-size: x-large; color: #fa7725;">Rs. <%= item.price %></span>
-						<span class="old-price">Rs. <%= item.price * (120/100) %></span>
-					</div>
-
-					<p><%- item.content -%></p>
-
-					<form method="POST" action="/add/<%=item.iid%>">
-						<div class="product-add-to-cart">
-							<div class="input-counter">
-								<span class="minus-btn">
-									<i class="fa fa-minus"></i>
-								</span>
-								<input type="text" value="1" name="quantity" min="1">
-								<span class="plus-btn">
-									<i class="fa fa-plus"></i>
-								</span>
-							</div>
-
-							<button type="submit" class="default-btn">
-								<i class="fa fa-cart-plus"></i>
-								Add to Cart
-							</button>
-						</div>
-					</form>
-
-					<!-- <div class="buy-checkbox-btn">
-							<div class="item">
-								<input class="inp-cbx" id="cbx" type="checkbox">
-								<label class="cbx" for="cbx">
-									<span>
-										<svg width="12px" height="10px" viewbox="0 0 12 10">
-											<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-										</svg>
-									</span>
-									<span>I agree with the terms and conditions</span>
-								</label>
-							</div>
-
-							<div class="item">
-								<a href="#" class="default-btn">Buy it now!</a>
-							</div>
-						</div> -->
-
-					<div class="custom-payment-options">
-						<span>Guaranteed safe checkout:</span>
-
-						<div class="payment-methods">
-							<a href="#">
-								<img src="/img/product-details/payment/1.svg" alt="image">
-							</a>
-							<a href="#">
-								<img src="/img/product-details/payment/2.svg" alt="image">
-							</a>
-							<a href="#">
-								<img src="/img/product-details/payment/3.svg" alt="image">
-							</a>
-							<a href="#">
-								<img src="/img/product-details/payment/4.svg" alt="image">
-							</a>
-							<a href="#">
-								<img src="/img/product-details/payment/5.svg" alt="image">
-							</a>
-							<a href="#">
-								<img src="/img/product-details/payment/6.svg" alt="image">
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- End Product Details Area -->
-
-<!-- End Suitable Menu Area -->
-<section class="suitable-menu suitable-menu-related ptb-100">
-	<div class="container">
-		<div class="menu-item-wrap">
-			<div class="section-title">
-				<h2>Our Related <span>Products</span></h2>
-				<img src="/img/shape/1.png" alt="Shape">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-					labore et dolore magna aliqua. Quis ipsum suspendisse ultrices.</p>
-			</div>
-			<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
-
-				<ul class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-3@m">
-					<% group.forEach(el => { %>
-					<li>
-						<div class="single-menu-item">
-							<div class="menu-img">
-								<img src="<%=el.image[0]%>" alt="Menu">
-								<div class="price">
-									<span>Rs. <%=el.price%></span>
-								</div>
-							</div>
-							<div class="item-text">
-								<h3>
-									<a href="#"><%= el.name %></a>
-								</h3>
-								<p style="color: black;"><%= el.shortDesc%></p>
-								<ul>
-									<li>
-										<a class="default-btn" href="/items/<%= el.iid %>">Order Now</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<% }) %>
-					</li>
-				</ul>
-
-				<a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
-					uk-slider-item="previous"></a>
-				<a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
-					uk-slider-item="next"></a>
-
-			</div>
-			<div class="menu-list-wrap owl-carousel owl-theme">
-
-			</div>
-		</div>
-	</div>
-
-	<div class="container" style="margin-top: 30px">
-		<div class="menu-item-wrap">
-			<div class="section-title">
-				<h2>Our Similar <span>Products</span></h2>
-				<img src="/img/shape/1.png" alt="Shape">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-					labore et dolore magna aliqua. Quis ipsum suspendisse ultrices.</p>
-			</div>
-			<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
-
-				<ul class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-3@m">
-					<% similar.forEach(el => { %>
-					<li>
-						<div class="single-menu-item">
-							<div class="menu-img">
-								<img src="<%=el.image[0]%>" alt="Menu">
-								<div class="price">
-									<span>Rs. <%=el.price%></span>
-								</div>
-							</div>
-							<div class="item-text">
-								<h3>
-									<a href="#"><%= el.name %></a>
-								</h3>
-								<p style="color: black;"><%= el.shortDesc%></p>
-								<ul>
-									<li>
-										<a class="default-btn" href="/items/<%= el.iid %>">Order Now</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<% }) %>
-					</li>
-				</ul>
-
-				<a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
-					uk-slider-item="previous"></a>
-				<a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
-					uk-slider-item="next"></a>
-
-			</div>
-			<div class="menu-list-wrap owl-carousel owl-theme">
-
-			</div>
-		</div>
-	</div>
-</section>
-<!-- End Suitable Menu Area -->
-
-<%- include('partials/footer'); -%>
+<%- include("partials/newFooter.ejs") %>

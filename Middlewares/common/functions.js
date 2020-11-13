@@ -17,10 +17,22 @@ exports.isEmpty=function(obj){
 
 exports.isAdmin = function(req, res, next) {
     if (req.isAuthenticated())  {
-        if (req.user.isAdmin == true) {
+        if (req.user.isAdmin == true||req.user.level==112) {
             next();
         } else {
-            res.redirect("/dashboard");
+            res.redirect("/");
+        }
+    } else {
+        res.redirect("/users/login");
+    }
+}
+
+exports.isAdminOrOps = function(req, res, next) {
+    if (req.isAuthenticated())  {
+        if (req.user.isAdmin == true||req.user.level==112||req.user.level==2) {
+            next();
+        } else {
+            res.redirect("/");
         }
     } else {
         res.redirect("/users/login");

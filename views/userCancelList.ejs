@@ -1,91 +1,91 @@
-<%- include('partials/header', {title: "Welcome to 112Cart", desc: "Best Shopping Website"}); -%>
+<%- include("partials/newHeader.ejs") %>
 
-<!-- Start Page Title Area -->
-<div class="page-title-area item-bg-2">
-    <div class="container">
-        <div class="page-title-content">
-            <h2>Cancellations</h2>
-            <ul>
-                <li>
-                    <a href="index.html">
-                        Home
-                        <i class="fa fa-chevron-right"></i>
-                    </a>
-                </li>
-                <li>Your Cancellations</li>
-            </ul>
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="EUR">
+
+    <div class="home-content">
+        <div class="tt-breadcrumbs-main">
+            <div class="tt-breadcrumbs">
+                <div class="container">
+                    <h1 class="category-name">
+                        <span class="breadcrumb-title ">
+                        </span>
+                        <span class="breadcrumb-title is-active">
+                            <span class="breadcrumb-label">Your Cancelled Orders</span>
+                        </span>
+                    </h1>
+                    <ul class="breadcrumbs" itemscope itemtype="">
+                        <li class="breadcrumb " itemprop="itemListElement" itemscope>
+                            <a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+                            <meta itemprop="position" content="1" />
+                        </li>
+                        <li class="breadcrumb is-active" itemprop="itemListElement" itemscope>
+                            <meta itemprop=" item" content="/cart.php">
+                            <span class="breadcrumb-label" itemprop="name">Your Cancelled Orders</span>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<!-- End Page Title Area -->
 
-<!-- Start Cart Area -->
-<section class="cart-area ptb-100">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <form>
-                    <div class="cart-table table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Order ID</th>
-                                    <th scope="col">Cancellation ID</th>
-                                    <th scope="col">Cancellation Status</th>
-                                    <th scope="col">Date</th>
-                                </tr>
-                            </thead>
+        <div style="margin-left: 13%; margin-right: 13%;">
+            <div class="uk-child-width-1-1@m" uk-grid>
+                <div class="uk-overflow-auto">
+                    <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+                        <thead>
+                            <style>
+                                th.uk-table-small {
+                                    text-align: center;
+                                    color: #2a3746;
+                                    font-weight: bold;
+                                }
 
-                            <tbody>
-                                <% cancellations.forEach(el => { %>
-                                <tr>
-                                    <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>"><%=el.orderId%></a>
-                                    </td>
+                                .default-btn {
+                                    font-weight: light;
+                                    font-size: medium;
+                                    background-color: #ffaa3d;
+                                    border-radius: 50px;
+                                    padding: 7px 14px 7px 14px;
+                                    color: white;
+                                }
+                            </style>
+                            <tr>
+                                <th class="uk-table-small">Order-ID</th>
+                                <th class="uk-table-small">Cancellation ID</th>
+                                <th class="uk-table-small">Cancellation Status</th>
+                                <th class="uk-table-small">Date of Cancellation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% var sum = 0 %>
 
-                                    <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>"><%=el.cancellationId%></a>
-                                    </td>
-
-                                    <td class="product-name">
-                                        <a
-                                            href="/user-order/<%=el.orderId%>"><%=el.cancellationStatus.toUpperCase() %></a>
-                                    </td>
-
-                                    <td class="product-name">
-                                        <a href="/user-order/<%=el.orderId%>"><%=el.dateCreated.toDateString() %></a>
-                                    </td>
-                                </tr>
-                                </a>
-                                <% }) %>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="cart-buttons">
-                        <div class="row align-items-center">
-                            <div class="col-lg-7 col-sm-7 col-md-7">
-                                <div class="continue-shopping-box">
-                                    <a href="/items" class="default-btn">
-                                        Continue Shopping
-                                        <i class="flaticon-right-arrow-forward"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-5 col-sm-5 col-md-5 text-right">
-                                <a href="#" class=" default-btn">
-                                    Update Cart
-                                    <i class="flaticon-right-arrow-forward"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                            <% cancellations.forEach(order => { %>
+                            <tr>
+                                <td class="uk-table-link">
+                                    <a class="uk-link-reset"
+                                        href="/user-order/<%=order.orderId%>"><%=order.orderId%></a>
+                                </td>
+                                <td class="uk-table-link">
+                                    <a class="uk-link-reset"
+                                        href="/user-order/<%=order.orderId%>"><%=order.cancellationId%></a>
+                                </td>
+                                <td class="uk-table-link">
+                                    <a class="uk-link-reset"
+                                        href="/user-order/<%=order.orderId%>"><%=order.cancellationStatus.toUpperCase() %></a>
+                                </td>
+                                <td class="uk-table-link">
+                                    <a class="uk-link-reset"
+                                        href="/user-order/<%=order.orderId%>"><%=order.dateCreated.toDateString() %></a>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</section>
-<!-- End Cart Area -->
+</div>
 
-<%- include('partials/footer') -%>
+<%- include("partials/newFooter.ejs") %>

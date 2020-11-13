@@ -1,0 +1,55 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Business Accounts </li>
+        </ol>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Business Accounts</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Business Name</th>
+                                <th>GST Number</th>
+                                <th>PAN</th>
+                                <th>Authorized Signatory Name</th>
+                                <th>Phone Number</th>
+                                <th>Address</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% list.forEach(el => { %>
+                            <tr>
+                                <td><%=el.businessName%></td>
+                                <td><%=el.gstNumber%></td>
+                                <td><%=el.panNumber%></td>
+                                <td><%=el.authorizedSignatoryName%></td>
+                                <td><%=el.businessPhone%></td>
+                                <td><%=el.businessAddress%></td>
+                                <td>
+                                    <a href="/users/premium-account/<%=el.uuid%>"><button
+                                            class="ui small green button">Set Credit</button></a>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /tables-->
+    </div>
+    <!-- /container-fluid-->
+</div>
+<!-- /container-wrapper-->
+
+<%- include('partials/adminFooter'); -%>

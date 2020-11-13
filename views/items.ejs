@@ -1,131 +1,430 @@
-<%- include('partials/header', {title: "Welcome to 112Cart", desc: "Best Shopping Website"}); -%>
+<%- include("partials/newHeader") %>
 
-<!-- Start Page Title Area -->
-<div class="page-title-area item-bg-7">
-	<div class="container">
-		<div class="page-title-content">
-			<h2>Shop</h2>
-			<ul>
-				<li>
-					<a href="/">
-						Home
-						<i class="fa fa-chevron-right"></i>
-					</a>
-				</li>
-				<li>Items</li>
-			</ul>
-		</div>
-	</div>
-</div>
-<!-- End Page Title Area -->
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="INR">
 
-<main>
-	<!--/hero_in-->
-	<div class="container margin_60_35">
-		<div class="row">
-			<aside class="col-lg-3" id="sidebar">
-				<div id="filters_col">
-					<a class="filters" style="font-weight: bold;">Collapse Filters</a>
-					<div class="collapse show" id="collapseFilters">
-						<form method="POST" action="/items">
-							<hr>
-							<% if (!(category.length == 1 && category[0] == '')) { %>
-							<div class="filter_type">
-								<h5>Categories</h5>
-								<ul>
-									<% category.forEach(element => { %>
-									<li>
-										<label>
-											<input type="checkbox" name="category" value="<%=element%>">&nbsp;
-											<b><%=element.toUpperCase()%></b>
-										</label>
-									</li>
-									<% }); %>
-								</ul>
-							</div>
-							<hr>
-							<% } %>
-							<% if (!(subCategory.length == 1 && subCategory[0] == '')) { %>
-							<div class="filter_type">
-								<h5>Sub-Category</h5>
-								<ul>
-									<% subCategory.forEach(element => { %>
-									<li>
-										<label>
-											<input type="checkbox" name="subCategory" value="<%=element%>">&nbsp;
-											<b><%=element.toUpperCase()%></b>
-										</label>
-									</li>
-									<% }); %>
-								</ul>
-							</div>
-							<hr>
-							<% } %>
-							<% if (!(tag.length == 1 && tag[0] == '')) { %>
-							<div class="filter_type">
-								<h5>Tags</h5>
-								<ul>
-									<% tag.forEach(element => { %>
-									<li>
-										<label>
-											<input type="checkbox" name="tag" value="<%=element%>">&nbsp;
-											<b><%=element.toUpperCase()%></b>
-										</label>
-									</li>
-									<% }); %>
-								</ul>
-							</div>
-							<% } %>
-							<button class="default-btn" type="submit">Search</button>
-						</form>
+	<% function changeCase(string) { var newString = string.replace("_", " "); return newString; } %>
 
-					</div>
-					<!--/collapse -->
+	<div class="home-content">
+
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label">All Items</span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<meta itemprop="item" content="/laptop/">
+							<span class="breadcrumb-label" itemprop="name">All Items</span>
+							<meta itemprop="position" content="2" />
+						</li>
+					</ul>
 				</div>
-				<!--/filters col-->
-			</aside>
-			<!-- /aside -->
+			</div>
+		</div>
 
-			<div class="col-lg-9">
-				<div class="row">
-					<div class="container">
-						<div class="row">
-							<% itemlist.forEach(el => { %>
-							<div class="col-lg-6 col-md-6 col-sm-6">
-								<div class="single-menu-item" style="background-color: white !important;">
-									<div class="menu-img">
-										<a href="/items/<%= el.iid %>"><img src="<%=el.image[0]%>" loading="lazy"
-												alt="<%= el.name %>"></a>
-										<div class="price">
-											<span style="font-size: small;">Rs. <%= el.price %></span>
+		<div class="page container">
+			<div class="row">
+				<aside class="page-sidebar" id="faceted-search-container">
+					<nav>
+						<div id="facetedSearch" class="facetedSearch">
+							<div class="facetedSearch-refineFilters">
+								<h5 class="sidebarBlock-heading">
+									Filters
+								</h5>
+
+							</div>
+
+							<a href="#facetedSearch-navList" role="button" class="facetedSearch-toggle toggleLink"
+								data-collapsible>
+								<span class="facetedSearch-toggle-text">
+									Browse by Categories, Sub-Categories &amp; more
+
+								</span>
+
+								<span class="facetedSearch-toggle-indicator">
+									<span class="toggleLink-text toggleLink-text--on">
+										Hide Filters
+
+										<i class="icon" aria-hidden="true">
+											<svg>
+												<use xlink:href="#icon-keyboard-arrow-up" /></svg>
+										</i>
+									</span>
+
+									<span class="toggleLink-text toggleLink-text--off">
+										Show Filters
+
+										<i class="icon" aria-hidden="true">
+											<svg>
+												<use xlink:href="#icon-keyboard-arrow-down" /></svg>
+										</i>
+									</span>
+								</span>
+							</a>
+
+							<div id="facetedSearch-navList" class="facetedSearch-navList blocker-container">
+								<form method="POST" action="/items">
+									<div class="accordion accordion--navList">
+
+										<% if (!(category.length == 1 && category[0] == '')) { %>
+										<div class="accordion-block">
+											<div class="accordion-navigation toggleLink  is-open " role="button"
+												data-collapsible="#facetedSearch-content--brand">
+												<h5 class="accordion-title">
+													Category
+												</h5>
+
+												<div class="accordion-navigation-actions">
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--off">
+														<use xlink:href="#icon-add" />
+													</svg>
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--on">
+														<use xlink:href="#icon-remove" />
+													</svg>
+												</div>
+											</div>
+											<% category.forEach(element => { %>
+											<div id="facetedSearch-content--brand" class="accordion-content  is-open ">
+												<ul id="facetedSearch-navList--brand" data-facet="brand" class="navList"
+													data-has-more-results="false">
+													<li class="navList-item">
+														<input type="checkbox" name="category"
+															value="<%=element%>">&nbsp;
+														<%=changeCase(element).toUpperCase()%>
+														<span class="navList-action-close" aria-hidden="true">
+															<svg class="icon">
+																<use xlink:href="#icon-close" />
+															</svg>
+														</span>
+													</li>
+												</ul>
+											</div>
+											<% }) %>
+										</div>
+										<% } %>
+
+										<% if (!(subCategory.length == 1 && subCategory[0] == '')) { %>
+										<div class="accordion-block">
+											<div class="accordion-navigation toggleLink  is-open " role="button"
+												data-collapsible="#facetedSearch-content--Color">
+												<h5 class="accordion-title">
+													Sub-Categories
+												</h5>
+
+												<div class="accordion-navigation-actions">
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--off">
+														<use xlink:href="#icon-add" />
+													</svg>
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--on">
+														<use xlink:href="#icon-remove" />
+													</svg>
+												</div>
+											</div>
+
+											<div id="facetedSearch-content--Color" class="accordion-content">
+												<ul id="facetedSearch-navList--Color" data-facet="Color" class="navList"
+													data-has-more-results="false">
+													<% subCategory.forEach(element => { %>
+													<li class="navList-item">
+														<input type="checkbox" name="subCategory"
+															value="<%=element%>">&nbsp;
+														<%=changeCase(element).toUpperCase()%>
+
+														<span class="navList-action-close" aria-hidden="true">
+															<svg class="icon">
+																<use xlink:href="#icon-close" />
+															</svg>
+														</span>
+														</a>
+													</li>
+													<% }) %>
+												</ul>
+
+											</div>
+										</div>
+										<% } %>
+
+										<% if (!(tag.length == 1 && tag[0] == '')) { %>
+										<div class="accordion-block">
+											<div class="accordion-navigation toggleLink" role="button"
+												data-collapsible="#facetedSearch-content--Color">
+												<h5 class="accordion-title">
+													Tags
+												</h5>
+
+												<div class="accordion-navigation-actions">
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--off">
+														<use xlink:href="#icon-add" />
+													</svg>
+													<svg
+														class="icon accordion-indicator toggleLink-text toggleLink-text--on">
+														<use xlink:href="#icon-remove" />
+													</svg>
+												</div>
+											</div>
+
+											<div id="facetedSearch-content--Color" class="accordion-content  is-open ">
+												<ul id="facetedSearch-navList--Color" data-facet="Color" class="navList"
+													data-has-more-results="false">
+													<% tag.forEach(element => { %>
+													<li class="navList-item">
+														<input type="checkbox" name="tag" value="<%=element%>">&nbsp;
+														<%=changeCase(element).toUpperCase()%>
+														<span class="navList-action-close" aria-hidden="true">
+															<svg class="icon">
+																<use xlink:href="#icon-close" />
+															</svg>
+														</span>
+														</a>
+													</li>
+													<% }) %>
+												</ul>
+
+											</div>
+										</div>
+										<% } %>
+									</div>
+									<div style="text-align: center;">
+										<button class="button button--small card-figcaption-button" type="submit">
+											<span class="material-icons">add</span>
+											Submit
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</nav>
+				</aside>
+
+				<main class="page-content" id="product-listing-container">
+					<style>
+						@media (min-width: 600px) {
+							#forPhone {
+								display: none;
+							}
+						}
+
+						@media (max-width: 600px) {
+							.productGrid .product {
+								display: none
+							}
+						}
+					</style>
+
+					<ul class="productGrid">
+						<% itemlist.forEach(el => { %>
+						<% if (el.active) { %>
+						<li class="product">
+							<article class="card ">
+								<figure class="card-figure">
+									<div class="sale-flag-side"> </div>
+									<% if (el.iid === "-HDsE_c5p") { %>
+									<a href="/bio-bubble">
+										<div class="card-img-container">
+											<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+												data-sizes="auto" class="lazyload card-image" />
+										</div>
+									</a>
+									<% } else if (el.iid === "dtz82JLEq") { %>
+									<a href="/complete-disinfection">
+										<div class="card-img-container">
+											<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+												data-sizes="auto" class="lazyload card-image" />
+										</div>
+									</a>
+									<% } else if (el.iid === "26hJIJfwP") { %>
+									<a href="/air-fumigation">
+										<div class="card-img-container">
+											<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+												data-sizes="auto" class="lazyload card-image" />
+										</div>
+									</a>
+									<% } else { %>
+									<a href="/items/<%= el.iid %>">
+										<div class="card-img-container">
+											<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+												data-sizes="auto" class="lazyload card-image" />
+										</div>
+									</a>
+									<% } %>
+								</figure>
+
+								<div class="card-body">
+									<h4 class="card-title">
+										<% if (el.iid === "-HDsE_c5p") { %>
+										<a href="/bio-bubble"><%=el.name%></a>
+										<% } else { %>
+										<a href="/items/<%= el.iid %>"><%=el.name%></a>
+										<% } %>
+									</h4>
+									<div class="card-text tt-price" data-test-info-type="price">
+
+										<div class="price-section price-section--withTax rrp-price--withTax"
+											style="display: none;">
+											MSRP:
+											<span data-product-rrp-with-tax class="price price--rrp">
+											</span>
+										</div>
+
+										<div class="price-section price-section--withTax">
+											<span class="price-label" style="display: none;">
+
+											</span>
+											<span class="price-now-label">
+											</span>
+											<span data-product-price-with-tax
+												class="price price--withTax">₹<%=el.price%></span>
+										</div>
+										<div class="price-section price-section--withTax non-sale-price--withTax">
+											<span data-product-non-sale-price-with-tax class="price price--non-sale">
+												₹<%=(1.20) * el.price%>
+											</span>
 										</div>
 									</div>
-									<div class="item-text">
-										<h3>
-											<a href="/items/<%= el.iid %>"></a><%= el.name %></a>
-										</h3>
-										<p><%= el.shortDesc%></p>
-										<ul>
-											<li>
-												<a class="default-btn" href="/items/<%= el.iid %>">Order Now</a>
-											</li>
-										</ul>
+
+									<div class="tt-cart-btn">
+										<% if (el.iid === "-HDsE_c5p") { %>
+										<a href="/bio-bubble" data-event-type="product-click" title="Add to Cart"
+											class="button button--small card-figcaption-button">
+											<span class="material-icons">add</span>
+											Go To Page
+										</a>
+										<% } else if (el.iid === "dtz82JLEq") { %>
+										<a href="/complete-disinfection" data-event-type="product-click"
+											title="Add to Cart" class="button button--small card-figcaption-button">
+											<span class="material-icons">add</span>
+											Go To Page
+										</a>
+										<% } else if (el.iid === "26hJIJfwP") { %>
+										<a href="/air-fumigation" data-event-type="product-click" title="Add to Cart"
+											class="button button--small card-figcaption-button">
+											<span class="material-icons">add</span>
+											Go To Page
+										</a>
+										<% } else { %>
+										<a href="/items/<%= el.iid %>" data-event-type="product-click"
+											title="Add to Cart" class="button button--small card-figcaption-button">
+											<span class="material-icons">add</span>
+											Buy Now
+										</a>
+										<% } %>
+									</div>
+								</div>
+							</article>
+						</li>
+						<% } %>
+						<% }) %>
+					</ul>
+					<div data-content-region="category_below_content"></div>
+				</main>
+				<div class="uk-child-width-1-2 uk-text-center" uk-grid="masonry: true" id="forPhone">
+					<% itemlist.forEach(el => { %>
+					<div>
+						<!-- <div class="uk-card uk-card-default uk-card-body">
+							<div> -->
+						<div class="uk-card uk-card-default">
+							<div class="uk-card-media-top">
+								<% if (el.iid == "-HDsE_c5p") { %>
+								<a href="/bio-bubble">
+									<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+										data-sizes="auto" />
+								</a>
+								<% } else if (el.iid == "26hJIJfwP") { %>
+								<a href="/air-fumigation">
+									<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+										data-sizes="auto" />
+								</a>
+								<% } else if (el.iid == "dtz82JLEq") { %>
+								<a href="/complete-disinfection">
+									<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+										data-sizes="auto" />
+								</a>
+								<% } else { %>
+								<a href="/items/<%= el.iid %>">
+									<img src="<%=el.image[0]%>" alt="<%=el.name%>" title="<%=el.name%>"
+										data-sizes="auto" />
+								</a>
+								<% } %>
+							</div>
+							<div class="uk-card-body" style="padding: 0;">
+								<div class="card-body">
+									<h4 class="card-title">
+										<% if (el.iid == "-HDsE_c5p") { %>
+										<a href="/bio-bubble"><%=el.name%></a>
+										<% } else { %>
+										<a href="/items/<%= el.iid %>"><%=el.name%></a>
+										<% } %>
+									</h4>
+									<div class="card-text tt-price" data-test-info-type="price">
+										<div class="price-section price-section--withTax rrp-price--withTax"
+											style="display: none;">
+											MRP:
+											<span data-product-rrp-with-tax class="price price--rrp">
+											</span>
+										</div>
+
+										<div class="price-section price-section--withTax">
+											<span class="price-label" style="display: none;">
+
+											</span>
+											<span class="price-now-label">
+											</span>
+											<span data-product-price-with-tax
+												class="price price--withTax">₹<%=el.price%></span>
+										</div>
+										<div class="price-section price-section--withTax non-sale-price--withTax">
+											<span data-product-non-sale-price-with-tax class="price price--non-sale">
+												₹<%=(1.20) * el.price%>
+											</span>
+										</div>
 									</div>
 								</div>
 							</div>
-							<% }) %>
 						</div>
-					</div>
-					<!-- End Suitable Menu Area -->
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /col -->
-		</div>
-		<!-- /row -->
-	</div>
-	<!-- /container -->
-</main>
-<!--/main-->
 
-<%- include('partials/footer'); -%>
+					</div>
+
+					<% }) %>
+				</div>
+
+			</div>
+		</div>
+
+
+	</div>
+	<div id="modal" class="modal" data-reveal data-prevent-quick-search-close>
+		<a href="#" class="modal-close" aria-label="Close" role="button">
+			<span aria-hidden="true">&#215;</span>
+		</a>
+		<div class="modal-content"></div>
+		<div class="loadingOverlay"></div>
+	</div>
+	<div id="alert-modal" class="modal modal--alert modal--small" data-reveal data-prevent-quick-search-close>
+		<div class="swal2-icon swal2-error swal2-icon-show"><span class="swal2-x-mark"><span
+					class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div>
+
+		<div class="modal-content"></div>
+
+		<div class="button-container"><button type="button" class="confirm button" data-reveal-close>OK</button>
+		</div>
+	</div>
+</div>
+
+<%- include("partials/newFooter.ejs") %>

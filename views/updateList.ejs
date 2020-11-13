@@ -107,8 +107,8 @@
 
 						<ul>
 							<li>Subtotal <span>Rs. <%= sum %></span></li>
-							<li>GST <span>Rs. <%= ((0.18) * sum) %></span></li>
-							<li>Total <span><b>Rs. <%= ((1.18) * sum) %></b></span></li>
+							<li>GST <span>Rs. <%= Math.ceil((0.18) * sum) %></span></li>
+							<li>Total <span><b>Rs. <%= Math.ceil((1.18) * sum) %></b></span></li>
 						</ul>
 						<a href="#" class="default-btn">
 							Proceed to Checkout

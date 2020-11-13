@@ -5,13 +5,14 @@ var mongoose = require("mongoose")
 
 
 exports.getAllItems = function (req, res) {
+
     itemservices.getAllItems(function (itemlist) {
         if (itemlist.success == false) {
             req.flash('error', 'error in getting items')
             res.redirect('/')
         }
         else {
-            console.log('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
+            // console.log('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
 
             res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
         }
@@ -50,15 +51,15 @@ exports.filterItems = function (req, res) {
             res.redirect('/')
         }
         else {
-            console.log({ itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag });
+            // console.log({ itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag });
             res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: ca, s_sub: su, s_tag: ta })
 
         }
     })
 }
 
-exports.search=function(req,res){
-    itemservices.searchBar(req.body.test,function(itemlist){
+exports.search = function (req, res) {
+    itemservices.searchBar(req.body.test, function (itemlist) {
         if (itemlist.success == false) {
             req.flash('error', 'error in getting items')
             res.redirect('/items')
@@ -84,9 +85,7 @@ exports.categoryPages = function (req, res) {
         if (itemlist.success == false) {
             req.flash('error', 'error in getting items')
             res.redirect('/')
-        }
-        else {
-            console.log({ itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag });
+        } else {
             res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: ca, s_sub: su, s_tag: ta })
 
         }

@@ -12,6 +12,12 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-table"></i> Users Data Table</div>
+            <div style="text-align: center;">
+                <a class="ui primary button" href="/downloads/users/individual">Download CSV with Individual Users</a>
+                <a class="ui primary button" href="/downloads/users/business">Download CSV with Business Users</a>
+                <a class="ui primary button" href="/downloads/users/premium">Download CSV with Premium Users</a>
+
+            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -21,16 +27,22 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
+                                <% if (type == "all") { %>
+                                <th>Allow Credit</th>
+                                <% } %>
                             </tr>
                         </thead>
-
                         <tbody>
                             <% user.forEach(element => { %>
                             <tr>
-                                <td><%= element.uuid %></td>
-                                <td><%= element.name %></td>
-                                <td><%= element.email %></td>
-                                <td><%= element.phone %></td>
+                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.uuid %></a></td>
+                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.name %></a></td>
+                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.email %></a></td>
+                                <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.phone %></a></td>
+                                <% if (type == "all") { %>
+                                <td><a class="ui green button" href="/business/allowCredit/<%=element.uuid%>">Allow
+                                        Credit</a></td>
+                                <% } %>
                             </tr>
                             <% }); %>
                         </tbody>

@@ -5,11 +5,9 @@ var cartservices = require('../../openServices/cart')
 var mongoose = require("mongoose")
 var middleware = require('../../Middlewares/common/functions')
 var async = require('async')
-
+var fee = require('../../models/Orders/extraFee')
 //get items from cart
 exports.getAllItems = function (req, res) {
-    console.log('user=' + req.user);
-    console.log('body=' + req.body);
 
     cartmodel.aggregate([
         { $match: { uuid: req.user.uuid } },
@@ -34,7 +32,16 @@ exports.getAllItems = function (req, res) {
                         break
                     }
                 }
-                res.render('cartpage', { cartlisting: found, codAllowed: codAllowed })
+                fee.findOne({ name: "convenience", active: true }, function (err, foundFee) {
+                    var extra = 0
+                    if (err || middleware.isEmpty(foundFee))
+                        extra = 0
+                    else {
+                        extra = foundFee.charge
+                    }
+                    res.render('cartpage', { cartlisting: found, codAllowed: codAllowed, fee: extra })
+
+                })
             }
         })
 
@@ -58,18 +65,24 @@ exports.addItem = function (req, res) {
                 res.redirect('/items')
             }
             else {
-                cartservices.addToCart(founditem.iid, req.user.uuid, req.body.quantity, function (addedCart) {
-                    if (addedCart.success == false) {
-                        console.log(addedCart.message);
-                        req.flash('error', addedCart.message)
-                        res.redirect('/items')
-                    }
-                    else {
-                        console.log('success');
-                        req.flash('success', 'added to cart')
-                        res.redirect('/cartPage')
-                    }
-                })
+                if (founditem.isBusiness == true && req.user.isBusiness == false) {
+                    req.flash('Sorry! this item is reserved for business accounts')
+                    res.redirect('/items')
+                }
+                else {
+                    cartservices.addToCart(founditem.iid, req.user.uuid, req.body.quantity, function (addedCart) {
+                        if (addedCart.success == false) {
+                            console.log(addedCart.message);
+                            req.flash('error', addedCart.message)
+                            res.redirect('/items')
+                        }
+                        else {
+                            console.log('success');
+                            req.flash('success', 'added to cart')
+                            res.redirect('/cartPage')
+                        }
+                    })
+                }
             }
         }
     })
@@ -89,9 +102,9 @@ exports.getUpdateCart = function (req, res) {
             res.render('cartpage', { cart: cartlisting })
         }
         else {
-            var promiseArr=[]
+            var promiseArr = []
             cartitem.items.forEach(element => {
-               promiseArr.push( cartservices.getItemForList(element.iid,element.quantity,req.user.uuid))
+                promiseArr.push(cartservices.getItemForList(element.iid, element.quantity, req.user.uuid))
             });
             Promise.all(promiseArr).then((respo) => {
                 res.render('updateCart', { cartlisting: respo })
@@ -104,7 +117,7 @@ exports.getUpdateCart = function (req, res) {
 
     // cartlisting = cartservices.verifyCart(cartlisting, req.user.uuid)
     console.log(cartlisting);
-    
+
 }
 
 exports.updateCart = function (req, res) {

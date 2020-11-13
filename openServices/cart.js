@@ -193,17 +193,42 @@ class cart {
     addToCart(iid, uuid, quantity, callback) {
         itemmodel.findOne({ iid: iid, active: true }, function (err, founditem) {
             if (err) {
+                console.log(err);
                 callback({ success: false, message: 'could not find any item by that name' })
 
             }
             else {
                 if (functions.isEmpty(founditem)) {
+                    console.log({ success: false, message: 'could not find any item by that name' });
                     callback({ success: false, message: 'could not find any item by that name' })
 
                 }
                 else {//item is not a service
-                    cartmodel.find({}, function (err, foundS) {
-                        if (err) { callback({ success: false, message: 'db error' }) }
+                    cartmodel.aggregate([
+                        { $match: { uuid: uuid } },
+                        { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
+                        {
+                            $project: {
+                                "quantity": "$quantity",
+                                "iid": "$iid",
+                                "item": { "$arrayElemAt": ["$item", 0] },
+
+                            }
+
+                        },
+                        {
+                            $project: {
+                                "isService": "$item.isService",
+                                "quantity": "$quantity",
+                                "iid": "$iid",
+                                "item": "$item"
+                            }
+                        }
+                    ]).exec(function (err, foundS) {
+                        if (err) {
+                            console.log(err);
+                            callback({ success: false, message: 'db error' })
+                        }
                         else {
                             var containsService = false, containsProduct = false
                             if (foundS.length > 0 && foundS[0].isService) {
@@ -214,12 +239,17 @@ class cart {
                                 containsProduct = true
 
                             }
+                            // console.log("containsService",containsService);
+                            // console.log("containsProduct",containsProduct);
+
+                            // console.log("should be added?",(founditem.isService == false && containsService == true) || (founditem.isService == true && containsProduct == true));
                             if ((founditem.isService == false && containsService == true) || (founditem.isService == true && containsProduct == true)) {
                                 callback({ success: false, message: 'cannot add a product with a service to cart' })
                             }
                             else {
                                 cartmodel.findOne({ iid: iid, uuid: uuid }, function (err, foundItem) {
                                     if (err) {
+                                        console.log(err);
                                         callback({ success: false, found: false })
 
                                     }
@@ -379,7 +409,7 @@ class cart {
         })
     }
 
-    getListingForOrder(uuid, callback) {
+    getListingForOrder(uuid, user, callback) {
         cartmodel.aggregate([
             { $match: { uuid: uuid } },
             { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
@@ -387,8 +417,20 @@ class cart {
                 $project: {
                     "quantity": "$quantity",
                     "iid": "$iid",
-                    "item": { "$arrayElemAt": ["$item", 0] }
-                    , "price": "$item.price"
+                    "item": { "$arrayElemAt": ["$item", 0] },
+
+                }
+
+            },
+            {
+                $project: {
+                    "price": "$item.price",
+                    "name": "$item.name",
+                    "sku": "$item.sku",
+                    "quantity": "$quantity",
+                    "tax": "$item.tax",
+                    "iid": "$iid",
+                    "item": "$item"
                 }
             }
         ]).exec(function (err, cartItem) {
@@ -401,25 +443,40 @@ class cart {
                 let total = 0
                 let cartlist = []
                 let allowCOD = true
+                let itemArray = []
+                var tax = 0;
                 cartItem.forEach(cartEl => {
                     var item = {}
                     item.quantity = cartEl.quantity
                     item.iid = cartEl.iid
-                    if (item.cod == false) allowCOD = false
+                    item.name = cartEl.item.name
+                    item.sku = cartEl.sku
+                    item.selling_price = cartEl.price
+
+                    if (cartEl.item.cod == false) allowCOD = false
                     cartlist.push(item)
-                    total = total + parseInt((parseInt(cartEl.price[0]) * (1 - cartEl.item.discount) * cartEl.quantity))
+                    itemArray.push(cartEl.item)
+                    var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt((parseInt(cartEl.price) * cartEl.quantity * (cartEl.tax / 200))) * 2 : parseInt((parseInt(cartEl.price) * cartEl.quantity * (cartEl.tax / 100)))
+                    tax += temptax
+                    total = total + (parseInt(cartEl.price) * cartEl.quantity) + temptax
                 });
+                console.log("cartitems", cartItem);
+                console.log(cartlist);
                 console.log('total amt=', total);
                 if (total <= 0 || cartlist.length == 0) {
                     callback({ success: false, message: "cant checkout with empty cart" })
                 }
                 else
-                    callback({ success: true, cartList: cartlist, total: total, allowCOD: allowCOD })
+                    callback({
+                        success: true, cartList: cartlist,
+                        itemArray: itemArray, total: total,
+                        allowCOD: allowCOD, tax: tax
+                    })
             }
         })
     }
 
-    getListingForCheckout(uuid, callback) {
+    getListingForCheckout(uuid, user, callback) {
 
         cartmodel.aggregate([
             { $match: { uuid: uuid } },
@@ -429,7 +486,8 @@ class cart {
                     "quantity": "$quantity",
                     "iid": "$iid",
                     "item": { "$arrayElemAt": ["$item", 0] }
-                    , "price": "$item.price"
+                    , "price": "$item.price",
+                    "tax": "$item.tax"
                 }
             }
         ]).exec(function (err, cartItem) {
@@ -438,16 +496,23 @@ class cart {
                 callback({ success: false })
             }
             else {
-                console.log(cartItem);
+                // console.log(cartItem);
                 let total = 0
+                let allowCOD = true
+                var tax = 0
                 cartItem.forEach(cartEl => {
-                    total = total + parseInt((parseInt(cartEl.price[0]) * (1 - cartEl.item.discount) * cartEl.quantity))
+                    if (cartEl.item.cod == false) allowCOD = false
+                    var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt((parseInt(cartEl.price[0]) * cartEl.quantity * (cartEl.tax[0] / 200))) * 2 : parseInt((parseInt(cartEl.price[0]) * cartEl.quantity * (cartEl.tax[0] / 100)))
+                    tax += temptax
+                    total = total + (parseInt(cartEl.price[0]) * cartEl.quantity) + temptax
+                    // total = total + parseInt((parseInt(cartEl.price[0]) * cartEl.quantity))
                 });
+                console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax });
                 if (total <= 0) {
                     callback({ success: false, message: "cant checkout with empty cart" })
                 }
                 else
-                    callback({ success: true, cartList: cartItem, total: total })
+                    callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax })
             }
         })
 
@@ -466,7 +531,8 @@ class cart {
                         price: foundItem.price,
                         image: foundItem.image,
                         uuid: uuid,
-                        item: foundItem
+                        item: foundItem,
+                        tax: foundItem.tax
                     }
                     resolve(itemdata)
                 }
