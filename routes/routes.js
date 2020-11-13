@@ -40,6 +40,10 @@ router.get("/air-fumigation", (req, res) => {
     res.render("airFumigation");
 })
 
+router.get("/complete-disinfection", (req, res) => {
+    res.render("completeDisinfection");
+})
+
 router.get("/offers", (req, res) => {
     res.render("offers")
 })
