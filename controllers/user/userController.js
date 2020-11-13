@@ -199,7 +199,7 @@ exports.getAllUsers = function (req, res) {
             res.redirect('/admin/userNotFound')
         }
         else {
-            res.render('userPeek', { user: foundUser })
+            res.render('userpeek', { user: foundUser })
         }
     })
 }
@@ -211,7 +211,7 @@ exports.getAllIndividual = function (req, res) {
             res.redirect('/admin/userNotFound')
         }
         else {
-            res.render('userPeek', { user: foundUser })
+            res.render('userpeek', { user: foundUser })
         }
     })
 }
@@ -507,8 +507,7 @@ exports.getBusinessAccountReg = function (req, res) {
             if (functions.isEmpty(foundB))
                 res.render('businessAccountReg')
             else {
-                req.flash('error', 'request has already been sent')
-                res.redirect('/')
+                res.render('userBusinessNotif',{business:foundB})
             }
         }
     })
@@ -603,7 +602,7 @@ exports.postAdminPA = function (req, res) {
     if (credPerc == 0 || credBalance == 0)
         res.redirect('/users/business-accounts/accepted')
     else {
-        User.findOneAndUpdate({ uuid: req.params.uuid }, { credPerc: credPerc, credBalance: credBalance, premium: true, isBusiness: true }, function (err, updatedUser) {
+        User.findOneAndUpdate({ uuid: req.params.uuid }, { daysToRemind:req.body.days,credPerc: credPerc, credBalance: credBalance, premium: true, isBusiness: true }, function (err, updatedUser) {
             if (err) {
                 req.flash('error', 'error in db')
                 res.redirect('/users/business-accounts/accepted')
@@ -628,6 +627,7 @@ exports.getAllPA = function (req, res) {
                 "days": "$days",
                 "credPerc": "$credPerc",
                 "name": "$name",
+                "days":"$daysToRemind",
                 "premium": "$premium",
                 "isBalance": "$isBalance",
                 "business": { "$arrayElemAt": ["$user", 0] }
