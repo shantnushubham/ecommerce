@@ -85,9 +85,7 @@ exports.categoryPages = function (req, res) {
         if (itemlist.success == false) {
             req.flash('error', 'error in getting items')
             res.redirect('/')
-        }
-        else {
-            console.log({ itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag });
+        } else {
             res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: ca, s_sub: su, s_tag: ta })
 
         }

@@ -1,0 +1,42 @@
+<%- include("partials/newHeader.ejs") %>
+
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="EUR">
+
+    <div class="home-content">
+        <div class="tt-breadcrumbs-main">
+            <div class="tt-breadcrumbs">
+                <div class="container">
+                    <h1 class="category-name">
+                        <span class="breadcrumb-title ">
+                        </span>
+                        <span class="breadcrumb-title is-active">
+                            <span class="breadcrumb-label">Your Business Account</span>
+                        </span>
+                    </h1>
+                    <ul class="breadcrumbs" itemscope itemtype="">
+                        <li class="breadcrumb " itemprop="itemListElement" itemscope>
+                            <a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+                            <meta itemprop="position" content="1" />
+                        </li>
+                        <li class="breadcrumb is-active" itemprop="itemListElement" itemscope>
+                            <meta itemprop=" item" content="/cart.php">
+                            <span class="breadcrumb-label" itemprop="name">Your List Items</span>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-left: 13%; margin-right: 13%;">
+            <div class="uk-child-width-1-1@m" uk-grid>
+
+                <h4 style="text-align: center;">You don't have any lists.</h4>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/newFooter.ejs") %>

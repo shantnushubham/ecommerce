@@ -625,6 +625,7 @@ exports.getAllPA = function (req, res) {
             $project: {
                 "credBalance": "$credBalance",
                 "uuid": "$uuid",
+                "days": "$days",
                 "credPerc": "$credPerc",
                 "name": "$name",
                 "premium": "$premium",
