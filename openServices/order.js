@@ -687,7 +687,7 @@ class order {
 
     allowCredit(orderId, percent, days, callback) {
         ordermodel.findOneAndUpdate({ orderId: orderId, },
-            { creditAllowed: true, creditPercent: percent, paymentType: 'credit', shipmentStatus: 'processing', daysToRemind: days },
+            { creditAllowed: true, creditPercent: percent, paymentType: 'credit', daysToRemind: days },
             function (err, updatedOrder) {
                 if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
                 else
