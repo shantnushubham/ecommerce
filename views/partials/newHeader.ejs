@@ -108,8 +108,15 @@
 
 				<div class="tt-phone-number">
 					<div class="content">
-						<div class="contact-title"><a href="/users/add/business-account">Become a Business User</a> | <a
-								href="/terms-conditions">Terms &
+						<div class="contact-title"><a href="/users/add/business-account">
+								<% if (currentUser != "" && currentUser.isBusiness && currentUser.premium) { %>
+								<span style="color: gold;">PREMIUM</span>
+								<% } else if (currentUser != "" && currentUser.isBusiness) { %>
+								<span style="color: rgb(119, 54, 4);">BUSINESS USER</span>
+								<% } else { %>
+								Become a Business User
+								<% } %>
+							</a> | <a href="/terms-conditions">Terms &
 								Conditions</a></div>
 						<!-- <a href="tel:09277077088">9876543210</a> -->
 					</div>
