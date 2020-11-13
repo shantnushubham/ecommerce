@@ -200,7 +200,7 @@ class order {
 
     updatePaymentByTransactionId(transaction_id, status, callback) {
         var st = status === "success" ? "authorized" : "initiated"
-        ordermodel.findOneAndUpdate({ transaction_id: transaction_id }, { '$set': { status: st } }, (err, updatedOrder) => {
+        ordermodel.findOneAndUpdate({ transaction_id: transaction_id }, { '$set': { status: st,shipmentStatus:"processing" } }, (err, updatedOrder) => {
             if (err) {
                 console.log(err);
                 callback({ success: false })
@@ -563,26 +563,84 @@ class order {
     }
 
     getOrderByShipment(status, callback) {
-        ordermodel.find({ shipmentStatus: status }, function (err, order) {
+        ordermodel.aggregate([
+            {$match:{ shipmentStatus: status }},
+            { $lookup: { from: 'User', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
+            {
+                $project: {
+                    "orderId": "$orderId",
+                    "paymentType": "$paymentType",
+                    "shipmentStatus": "$shipmentStatus",
+                    "status": "$status",
+                    "purchaseTime": "$purchaseTime",
+                    "total": "$total",
+                    "uuid":"$uuid",
+                    "user": { "$arrayElemAt": ["$user", 0] }
+                }
+            }]).exec(function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
     }
 
     getOrderByPST(status, callback) {
-        ordermodel.find({ status: status }, function (err, order) {
+        ordermodel.aggregate([
+            {$match:{ status: status }},
+            { $lookup: { from: 'User', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
+            {
+                $project: {
+                    "orderId": "$orderId",
+                    "paymentType": "$paymentType",
+                    "shipmentStatus": "$shipmentStatus",
+                    "status": "$status",
+                    "purchaseTime": "$purchaseTime",
+                    "total": "$total",
+                    "uuid":"$uuid",
+                    "user": { "$arrayElemAt": ["$user", 0] }
+                }
+            }
+        ]).exec(function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
     }
     getAllOrders(callback) {
-        ordermodel.find({}, function (err, order) {
+        ordermodel.aggregate([
+            {$match:{}},
+            { $lookup: { from: 'User', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
+            {
+                $project: {
+                    "orderId": "$orderId",
+                    "paymentType": "$paymentType",
+                    "shipmentStatus": "$shipmentStatus",
+                    "status": "$status",
+                    "purchaseTime": "$purchaseTime",
+                    "total": "$total",
+                    "uuid":"$uuid",
+                    "user": { "$arrayElemAt": ["$user", 0] }
+                }
+            }
+        ]).exec(function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
     }
     getOrderByPayment(status, callback) {
-        ordermodel.find({ paymentType: status }, function (err, order) {
+        ordermodel.aggregate([
+            {$match:{ paymentType: status }},
+            { $lookup: { from: 'User', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
+            {
+                $project: {
+                    "orderId": "$orderId",
+                    "paymentType": "$paymentType",
+                    "shipmentStatus": "$shipmentStatus",
+                    "status": "$status",
+                    "purchaseTime": "$purchaseTime",
+                    "total": "$total",
+                    "uuid":"$uuid",
+                    "user": { "$arrayElemAt": ["$user", 0] }
+                }
+            }]).exec(function (err, order) {
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
