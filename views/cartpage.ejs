@@ -51,8 +51,8 @@
 								<th class="cart-header-item" colspan="2">Item</th>
 								<th class="cart-header-item">Price</th>
 								<th class="cart-header-item cart-header-quantity">Quantity</th>
-								<th class="cart-header-item cart-header-quantity">Tax</th>
-								<th class="cart-header-item">Total</th>
+								<th class="cart-header-item cart-header-quantity">Total (Exc. Tax)</th>
+								<th class="cart-header-item">Tax</th>
 							</tr>
 						</thead>
 						<tbody class="cart-list">
@@ -89,17 +89,17 @@
 								<% totalWithoutTax = totalWithoutTax + parseInt(cartItem.quantity) * parseInt(cartItem.item.price) %>
 
 								<td class="cart-item-block cart-item-info tt-full-price">
+									<span class="cart-item-label">Total</span>
+									<strong class="cart-item-value ">₹
+										<%=parseInt(cartItem.quantity) * parseInt(cartItem.item.price)%></strong>
+								</td>
+
+								<td class="cart-item-block cart-item-info">
 									<span class="cart-item-label">Tax</span>
 									<span class="cart-item-value ">₹
 										<%=Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) * parseInt(cartItem.quantity)))%>
 										<% totalTax = totalTax + Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) * parseInt(cartItem.quantity))) %>
 										(<%=cartItem.item.tax%>%) </span>
-								</td>
-
-								<td class="cart-item-block cart-item-info">
-									<span class="cart-item-label">Total</span>
-									<strong class="cart-item-value ">₹
-										<%=parseInt(cartItem.quantity) * parseInt(cartItem.item.price)%></strong>
 								</td>
 							</tr>
 							<% }) %>
@@ -148,7 +148,7 @@
 							<div class="cart-total-label">
 								<strong>Convenience Fee</strong>
 							</div>
-							<div class="cart-total-value cart-total-grandTotal">
+							<div class="cart-total-value">
 								<span>₹ <%=fee%></span>
 							</div>
 						</li>
@@ -163,27 +163,26 @@
 					</ul>
 				</div>
 
-				<div class="cart-actions">
-					<a class="button button--primary" href="/checkout" title="Click here to proceed to checkout">Check
-						out</a>
-				</div><br>
-				<div class="cart-actions">
-					<a class="button button--primary" href="/clearCart" style="background-color: red;"
-						title="Click here to proceed to checkout">Clear
-						Cart</a>
-				</div>
-				<br>
-				<div class="cart-actions">
-					<a class="button button--primary" href="/updateCart" style="background-color: rgb(126, 230, 126);"
-						title="Click here to proceed to checkout">
-						Update Cart</a>
-				</div>
 				<% } else { %>
 				<h1 style="text-align: center; font-size: larger;"> You don't have any items in your cart.</h1>
 				<% } %>
-
-
 			</main>
+			<div class="uk-child-width-expand@s uk-text-center" uk-grid>
+				<div>
+					<a class="button button--primary" href="/clearCart" style="background-color:#F67963;"
+						title="Click here to proceed to checkout">Clear
+						Cart</a>
+				</div>
+				<div>
+					<a class="button button--primary" href="/updateCart" title="Click here to proceed to checkout">
+						Update Cart</a>
+				</div>
+				<div>
+					<a class="button button--primary" href="/checkout" style="background-color: #A2C68C;"
+						title="Click here to proceed to checkout">Check
+						out</a>
+				</div>
+			</div>
 		</div>
 
 	</div>
