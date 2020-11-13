@@ -13,7 +13,7 @@
 						<span class="breadcrumb-title ">
 						</span>
 						<span class="breadcrumb-title is-active">
-							<span class="breadcrumb-label">Your Cart</span>
+							<span class="breadcrumb-label">Update Cart</span>
 						</span>
 					</h1>
 					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
@@ -25,7 +25,7 @@
 						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
 							itemtype="http://schema.org/ListItem">
 							<meta itemprop="item" content="/cart.php">
-							<span class="breadcrumb-label" itemprop="name">Your Cart</span>
+							<span class="breadcrumb-label" itemprop="name">Update Cart</span>
 							<meta itemprop="position" content="2" />
 						</li>
 					</ul>
@@ -39,7 +39,7 @@
 
 					<h1 class="page-heading tt-cart-view" data-cart-page-title>
 						<% var items = "item" + ((cartCount > 1) ? "s" : '') %>
-						Your Cart ( <%=cartCount%> <%=items%> )
+						Update Cart ( <%=cartCount%> <%=items%> )
 					</h1>
 
 					<div data-cart-status>
@@ -93,12 +93,10 @@
 
 									<td class="cart-item-block cart-item-info tt-full-price">
 										<span class="cart-item-label">Tax</span>
-										<% if (currentUser != "" && currentUser.state.toLowerCase() === "jharkhand") { %>
 										<span class="cart-item-value ">₹
 											<%=Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price))))%>
 											<% totalTax = totalTax + Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) *  parseInt(cartItem.quantity))) %>
 											(<%=cartItem.item.tax%>%) </span>
-										<% } %>
 									</td>
 
 									<td class="cart-item-block cart-item-info">
@@ -169,7 +167,7 @@
 						title="Click here to proceed to checkout">Clear
 						Cart</a>
 				</div>
-				
+
 
 
 			</main>

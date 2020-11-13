@@ -57,6 +57,7 @@
                                 <th>Shipment Status</th>
                                 <th>Total</th>
                                 <th>Send Invoice</th>
+                                <th>Mark as Complete</th>
                             </tr>
                         </thead>
 
@@ -77,6 +78,8 @@
                                 <td><a href="/admin/orders/<%=element.orderId%>">Rs. <%= element.total %></a></td>
                                 <td><a class="ui small green button" href="/admin/sendInvoice/<%=element.orderId%>">Send
                                         Invoice</a></td>
+                                <td><a class="ui small green button"
+                                        href="/admin/shipmentStatus/<%=element.orderId%>/completed">Complete</a></td>
                             </tr>
                             <% }); %>
                         </tbody>
