@@ -606,21 +606,22 @@ class order {
     }
     getAllOrders(callback) {
         ordermodel.aggregate([
-            {$match:{}},
+            // {$match:{}},
             { $lookup: { from: 'User', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
-            {
-                $project: {
-                    "orderId": "$orderId",
-                    "paymentType": "$paymentType",
-                    "shipmentStatus": "$shipmentStatus",
-                    "status": "$status",
-                    "purchaseTime": "$purchaseTime",
-                    "total": "$total",
-                    "uuid":"$uuid",
-                    "user": { "$arrayElemAt": ["$user", 0] }
-                }
-            }
+            // {
+            //     $project: {
+            //         "orderId": "$orderId",
+            //         "paymentType": "$paymentType",
+            //         "shipmentStatus": "$shipmentStatus",
+            //         "status": "$status",
+            //         "purchaseTime": "$purchaseTime",
+            //         "total": "$total",
+            //         "uuid":"$uuid",
+            //         "user":"$user"
+            //     }
+            // }
         ]).exec(function (err, order) {
+            console.log(order);
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
