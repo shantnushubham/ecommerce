@@ -21,21 +21,66 @@
                         </li>
                         <li class="breadcrumb is-active" itemprop="itemListElement" itemscope>
                             <meta itemprop=" item" content="/cart.php">
-                            <span class="breadcrumb-label" itemprop="name">Your List Items</span>
+                            <span class="breadcrumb-label" itemprop="name">Your Business Account</span>
                             <meta itemprop="position" content="2" />
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-
+        <% if (business.isAccepted) { %>
         <div style="margin-left: 13%; margin-right: 13%;">
             <div class="uk-child-width-1-1@m" uk-grid>
-
-                <h4 style="text-align: center;">You don't have any lists.</h4>
-
+                <h4 style="text-align: center;">You already have a Business Account.</h4>
+                <br>
             </div>
         </div>
+        <br>
+        <style>
+            #tab {
+                margin-bottom: 2px;
+                margin-top: 2px;
+            }
+        </style>
+        <div style="margin-left: 13%; margin-right: 13%;">
+            <div class="uk-child-width-1-1@m" uk-grid>
+                <h3 id="tab">Business Name: <%=business.businessName%></h3>
+                <h3 id="tab">Business Email: <%=business.businessEmail%></h3>
+                <h3 id="tab">Business Address: <%=business.businessAddress%></h3>
+                <h3 id="tab">Business City: <%=business.businessCity%></h3>
+                <h3 id="tab">Business State: <%=business.businessState%></h3>
+                <h3 id="tab">Business PIN: <%=business.businessPin%></h3>
+                <h3 id="tab">Business PAN: <%=business.panNumber%></h3>
+                <h3 id="tab">Business GST: <%=business.gstNumber%></h3>
+            </div>
+        </div>
+        <% } else { %>
+        <div style="margin-left: 13%; margin-right: 13%;">
+            <div class="uk-child-width-1-1@m" uk-grid>
+                <h4 style="text-align: center;">Your Business Account Request is waiting for Approval.</h4>
+                <br>
+            </div>
+        </div>
+        <br>
+        <style>
+            #tab {
+                margin-bottom: 2px;
+                margin-top: 2px;
+            }
+        </style>
+        <div style="margin-left: 13%; margin-right: 13%;">
+            <div class="uk-child-width-1-1@m" uk-grid>
+                <h3 id="tab">Business Name: <%=business.businessName%></h3>
+                <h3 id="tab">Business Email: <%=business.businessEmail%></h3>
+                <h3 id="tab">Business Address: <%=business.businessAddress%></h3>
+                <h3 id="tab">Business City: <%=business.businessCity%></h3>
+                <h3 id="tab">Business State: <%=business.businessState%></h3>
+                <h3 id="tab">Business PIN: <%=business.businessPin%></h3>
+                <h3 id="tab">Business PAN: <%=business.panNumber%></h3>
+                <h3 id="tab">Business GST: <%=business.gstNumber%></h3>
+            </div>
+        </div>
+        <% } %>
     </div>
 </div>
 
