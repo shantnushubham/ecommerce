@@ -162,7 +162,7 @@ router.post('/payment/failure', (req, res) => {
     orderServices.updatePaymentByTransactionId(req.body.txnid, req.body.status, function (updatedOtx) {
 
         console.log('redirect to success page');
-        res.render('successpage', { order: updatedOtx.order, failure: true, failureMessage: req.body.error_Message })
+        res.render('failurepage', { order: updatedOtx.order, failure: true, failureMessage: req.body.error_Message })
     })
 
 })

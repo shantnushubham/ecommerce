@@ -57,7 +57,7 @@
                         <div class="uk-margin">
                             <div class="uk-form-label">
                                 <h1 style="text-align: center; margin-bottom: 0;">
-                                    <span uk-icon="icon: check; ratio: 2.5" style="color: green;">
+                                    <span uk-icon="icon: close; ratio: 2.5" style="color: rgb(255, 2, 2);">
                                     </span> OrderID:
                                     <%=order.orderId%></h1>
                                 <h1 style="text-align: center; color: #fa7725 !important;">
@@ -83,14 +83,10 @@
                             </div>
                             <div>
                                 <div class="uk-form-label">
-                                    <h1 style="text-align: center; margin-bottom: 0;">
-                                        <span uk-icon="icon: check; close: 2.5" style="color: red;">
-                                        </span> OrderID:
-                                        <%=order.orderId%></h1>
-                                    <h1 style="text-align: center; color: #fa7725 !important;">Your order has failed.
-                                    </h1>
+                                    
+                                    
                                     <h6>Please contact custmer care for further details</h6>
-                                    <h5>failureMessage</h5>
+                                    <h6>Message from PAYU :<%=failureMessage%></h6>
 
                                 </div>
                         </div>

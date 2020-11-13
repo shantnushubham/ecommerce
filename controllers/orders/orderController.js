@@ -1089,7 +1089,7 @@ exports.setShipmentStatus = function (req, res) {
     orderServices.setShipStatus(req.params.orderId, req.params.status, function (updated) {
         if (updated.success == false)
             req.flash('error', 'error')
-        res.redirect('/admin/items')
+        res.redirect('/admin/orders-filter')
     })
 }
 //------------------------------------------------------------------------------------------------------------
