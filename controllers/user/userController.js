@@ -199,7 +199,7 @@ exports.getAllUsers = function (req, res) {
             res.redirect('/admin/userNotFound')
         }
         else {
-            res.render('userpeek', { user: foundUser })
+            res.render('userpeek', { user: foundUser, type: "all" })
         }
     })
 }
@@ -211,7 +211,7 @@ exports.getAllIndividual = function (req, res) {
             res.redirect('/admin/userNotFound')
         }
         else {
-            res.render('userpeek', { user: foundUser })
+            res.render('userpeek', { user: foundUser, type: "individual" })
         }
     })
 }

@@ -110,7 +110,9 @@ exports.askQuote = function (email, data, callback) {
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
-            templateId: 5
+            templateId: 5,
+            "bcc":[{"email":"support@112cart.com","name":"112Cart"}]
+
         },
 
     };
@@ -145,7 +147,9 @@ exports.orderReceived=function(email,data,callback)
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
-            templateId: 6
+            templateId: 6,
+            "bcc":[{"email":"support@112cart.com","name":"112Cart"}]
+
         },
 
     };
@@ -180,7 +184,9 @@ exports.sendPerforma=function(email,data,callback)
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
-            templateId: 2
+            templateId: 2,
+            "bcc":[{"email":"support@112cart.com","name":"112Cart"}]
+
         },
 
     };
@@ -219,7 +225,9 @@ exports.sendInvoice=function(email,data,callback)
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
-            templateId: 2
+            templateId: 2,
+            "bcc":[{"email":"support@112cart.com","name":"112Cart"}]
+
         },
 
     };
@@ -259,7 +267,8 @@ exports.serviceQuote=function(email,data,callback)
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
-            templateId: 2
+            templateId: 2,
+            "bcc":[{"email":"support@112cart.com","name":"112Cart"}]
         },
 
     };

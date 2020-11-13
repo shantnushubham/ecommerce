@@ -352,7 +352,7 @@ exports.codPath = function (req, res) {
                                                         orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
                                                             console.log("stock update status:", stocks.success);
                                                         })
-                                                        res.render('successpage', { order: createOrder.order,failure:false,failureMessage:null })
+                                                        res.render('successpage', { order: createOrder.order, failure: false, failureMessage: null })
                                                     }
                                                 })
                                             }
@@ -373,7 +373,7 @@ exports.codPath = function (req, res) {
                                                 orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
                                                     console.log("stock update status:", stocks.success);
                                                 })
-                                                res.render('successpage', { order: createOrder.order,failure:false,failureMessage:null })
+                                                res.render('successpage', { order: createOrder.order, failure: false, failureMessage: null })
                                             }
                                         })
                                     }
@@ -666,7 +666,7 @@ exports.savedToCod = function (req, res) {
                         res.redirect('/saved-orders')
                     }
                     else {
-                        orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'COD', shipmentStatus: 'processing', total: parseInt(foundCod.order.total) * 1.18 }, function (updatedOrder) {
+                        orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'COD', shipmentStatus: "processing", total: parseInt(foundCod.order.total) * 1.18 }, function (updatedOrder) {
                             if (updatedOrder.success == false) {
                                 req.flash('error', 'error in processing order')
                                 res.redirect('/saved-orders')
@@ -676,7 +676,7 @@ exports.savedToCod = function (req, res) {
                                 orderServices.updateStockList(updatedOrder.order.orderedItems, function (stocks) {
                                     console.log("stock update status:", stocks.success);
                                 })
-                                res.render('successpage', { order: updatedOrder.order,failure:false,failureMessage:null })
+                                res.render('successpage', { order: updatedOrder.order, failure: false, failureMessage: null })
                             }
                         })
                     }
@@ -705,7 +705,7 @@ exports.savedToCredit = function (req, res) {
                 res.redirect('/saved-orders')
             }
             else {
-                orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'credit', shipmentStatus: 'processing' }, function (updatedOrder) {
+                orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'credit' }, function (updatedOrder) {
                     if (updatedOrder.success == false) {
                         req.flash('error', 'error in processing order')
                         res.redirect('/saved-orders')
@@ -721,7 +721,7 @@ exports.savedToCredit = function (req, res) {
 
 }
 exports.savedToPay = function (req, res) {
-    orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'online', shipmentStatus: 'processing' }, function (updatedOrder) {
+    orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'online' }, function (updatedOrder) {
         if (updatedOrder.success == false) {
             req.flash('error', 'error in processing order')
             res.redirect('/saved-orders')
@@ -1370,7 +1370,7 @@ exports.getUpdateFee = function (req, res) {
     })
 }
 exports.postUpdateCODAllow = function (req, res) {
-    codaAllow.findOneAndUpdate({ name: req.body.name, from: req.body.from }, function (err, updatedC) {
+    codaAllow.findOneAndUpdate({ name: req.body.name }, { from: req.body.from }, function (err, updatedC) {
         if (err)
             req.flash('error', 'error')
         else
