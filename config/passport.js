@@ -45,8 +45,9 @@ module.exports = function (passport) {
                                     // save the user
 
                                     User.create(new User(newUser), function (err) {
+                                        console.log(err);
                                         if (err)
-                                            throw err;
+                                        return done(err);
                                         Mailer.Register({ email: profile.emails[0].value, name: profile.displayName }, function (rspp) {
                                             console.log(rspp);
                                             return done(null, newUser);
@@ -91,7 +92,7 @@ module.exports = function (passport) {
 
                     User.create(new User(newUser), function (err) {
                         if (err)
-                            throw err;
+                        return done(err);
 
 
                         Mailer.Register({ email: profile['_json']['email'], name: profile.displayName }, function (rspp) {

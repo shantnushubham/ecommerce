@@ -75,8 +75,8 @@
                             <% orders.forEach(element => { %>
                             <tr>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.orderId%></a></td>
-                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.user.name %></a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.uuid %></a></td>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.user.name %></a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.paymentType.toUpperCase()%>
                                     </a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.status.toUpperCase() %>

@@ -149,7 +149,7 @@ app.get('/auth/google', passport.authenticate('google', {
 }));
 
 app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login' }),
+    passport.authenticate('google', { failureRedirect: '/' }),
     function (req, res) {
         res.redirect('/');
     }
@@ -165,7 +165,7 @@ app.get('/auth/facebook',
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
         successRedirect: '/',
-        failureRedirect: '/login'
+        failureRedirect: '/'
     })
 );
 
