@@ -12170,7 +12170,7 @@ body.hasAdminBar .navPages-container.is-open {
     margin: 0;
     padding: 0;
     text-align: left;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 @media (min-width: 1200px) and (max-width: 1630px) {
     .footer .tt-subscription .container .footer-info-headings {
