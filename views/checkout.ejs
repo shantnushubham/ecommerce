@@ -168,7 +168,8 @@
 							<form method="POST" action="/checkout">
 								<div class="uk-margin">
 									<div class="uk-form-label">
-										<h6>Select your Address:</h6>
+										<h6>Select your Address: <%=(code == null)%>
+										</h6>
 									</div>
 									<div class="uk-form-controls uk-form-controls-text">
 
@@ -191,7 +192,7 @@
 
 								<div class="uk-margin" style="text-align: center;">
 									<input class="uk-input uk-form-width-large" type="text" name="offer"
-										placeholder="Offer Code">
+										placeholder="Offer Code" value="<%=code%>" hidden>
 								</div>
 
 								<div class="uk-grid-column-small uk-grid-row-small uk-child-width-1-4@s uk-text-center"
