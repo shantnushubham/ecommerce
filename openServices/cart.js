@@ -600,7 +600,7 @@ class cart {
         ]).exec(function (err, cartItem) {
             if (err) {
                 console.log(err);
-                callback({ success: false })
+                callback({ success: false,message:'database error' })
             }
             else {
                 // console.log(cartItem);

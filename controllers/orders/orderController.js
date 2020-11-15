@@ -22,8 +22,9 @@ exports.getCheckout = function (req, res) {
         code = ""
     cartServices.getListingForCheckout(req.user.uuid, req.user, code, function (cart) {
         if (cart.success == false) {
-            req.flash('error', 'empty cart!')
-            res.redirect('/cartpage')
+            req.flash('error', cart.message)
+            req.session.save( function(){ res.redirect('/cartpage'); })
+            // res.redirect('/cartpage')
         }
         else {
             console.log('here');
