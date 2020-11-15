@@ -409,7 +409,7 @@ class cart {
         })
     }
 
-    getListingForOrder(uuid, user,code, callback) {
+    getListingForOrder(uuid, user, code, callback) {
         cartmodel.aggregate([
             { $match: { uuid: uuid } },
             { $lookup: { from: 'items', localField: 'iid', foreignField: 'iid', as: 'item' } },
@@ -445,140 +445,137 @@ class cart {
                 let allowCOD = true
                 let itemArray = []
                 var tax = 0;
-                if(code.length>2)
-                {
+                if (code.length > 2) {
 
-                
-                offersModel.findOne({ code: code, active: true, discount: { $gt: 0 } }, function (err, offer) {
-                    var di = 0
-                    if (err) {
-                        di = 0;
-                    }
-                    else if (functions.isEmpty(offer)) {
-                        callback({ success: false, message: 'code invalid' })
-                    }
-                    else {
-                        if (offer.used.includes(uuid)) {
-                            callback({ success: false, message: "This code has already been used by you." })
+
+                    offersModel.findOne({ code: code, active: true, discount: { $gt: 0 } }, function (err, offer) {
+                        var di = 0
+                        if (err) {
+                            di = 0;
+                        }
+                        else if (functions.isEmpty(offer)) {
+                            callback({ success: false, message: 'code invalid' })
                         }
                         else {
-                            var valid = true
-                            if (offer.items.length > 0) {
-
-                                for (var i = 0; i < cartList.length; i++) {
-                                    if (offer.items.includes(cartItem[i].iid) == false) {
-                                        valid = false
-                                        break;
-                                    }
-                                }
-
-                            }
-                            if (valid == false) {
-                                callback({ success: false, message: 'there are items in your cart on which this code is not applicable' })
+                            if (offer.used.includes(uuid)) {
+                                callback({ success: false, message: "This code has already been used by you." })
                             }
                             else {
+                                var valid = true
+                                if (offer.items.length > 0) {
 
-                                if (offer.isPercent) {
-                                    di=offer.discount
-                                    cartItem.forEach(cartEl => {
-                                        var item = {}
-
-                                        item.quantity = cartEl.quantity
-                                        item.iid = cartEl.iid
-                                        item.name = cartEl.item.name
-                                        item.sku = cartEl.sku
-                                        item.selling_price = parseInt(cartEl.price*(1-(di/100)))
-                    
-                                        if (cartEl.item.cod == false) allowCOD = false
-                                        cartlist.push(item)
-                                        itemArray.push(cartEl.item)
-                                        var itemprice=parseInt(cartEl.price*(1-(di/100)))
-                                        var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax / 200)) * 2 : parseInt(itemprice* cartEl.quantity * (cartEl.tax / 100))
-                                        tax += temptax
-                                        total = total + (itemprice * cartEl.quantity) + temptax
-                                    });
-                                    
-                                    if (total <= 0 || cartlist.length == 0) {
-                                        callback({ success: false, message: "cant checkout with empty cart" })
+                                    for (var i = 0; i < cartList.length; i++) {
+                                        if (offer.items.includes(cartItem[i].iid) == false) {
+                                            valid = false
+                                            break;
+                                        }
                                     }
-                                    else
-                                        callback({
-                                            success: true, cartList: cartlist,
-                                            itemArray: itemArray, total: total,
-                                            allowCOD: allowCOD, tax: tax,code:code,
-                                            discount:di,isPercent:true
-                                        })
+
                                 }
-                                else
-                                {
-                                    di=0
-                                    cartItem.forEach(cartEl => {
-                                        var item = {}
+                                if (valid == false) {
+                                    callback({ success: false, message: 'there are items in your cart on which this code is not applicable' })
+                                }
+                                else {
 
-                                        item.quantity = cartEl.quantity
-                                        item.iid = cartEl.iid
-                                        item.name = cartEl.item.name
-                                        item.sku = cartEl.sku
-                                        item.selling_price = parseInt(cartEl.price*(1-(di/100)))
-                    
-                                        if (cartEl.item.cod == false) allowCOD = false
-                                        cartlist.push(item)
-                                        itemArray.push(cartEl.item)
-                                        var itemprice=parseInt(cartEl.price*(1-(di/100)))
-                                        var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax / 200)) * 2 : parseInt(itemprice* cartEl.quantity * (cartEl.tax / 100))
-                                        tax += temptax
-                                        total = total + (itemprice * cartEl.quantity) + temptax
-                                    });
-                                    
-                                    if (total <= 0 || cartlist.length == 0) {
-                                        callback({ success: false, message: "cant checkout with empty cart" })
+                                    if (offer.isPercent) {
+                                        di = offer.discount
+                                        cartItem.forEach(cartEl => {
+                                            var item = {}
+
+                                            item.quantity = cartEl.quantity
+                                            item.iid = cartEl.iid
+                                            item.name = cartEl.item.name
+                                            item.sku = cartEl.sku
+                                            item.selling_price = parseInt(cartEl.price * (1 - (di / 100)))
+
+                                            if (cartEl.item.cod == false) allowCOD = false
+                                            cartlist.push(item)
+                                            itemArray.push(cartEl.item)
+                                            var itemprice = parseInt(cartEl.price * (1 - (di / 100)))
+                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax / 100))
+                                            tax += temptax
+                                            total = total + (itemprice * cartEl.quantity) + temptax
+                                        });
+
+                                        if (total <= 0 || cartlist.length == 0) {
+                                            callback({ success: false, message: "cant checkout with empty cart" })
+                                        }
+                                        else
+                                            callback({
+                                                success: true, cartList: cartlist,
+                                                itemArray: itemArray, total: total,
+                                                allowCOD: allowCOD, tax: tax, code: code,
+                                                discount: di, isPercent: true
+                                            })
                                     }
-                                    else
-                                        callback({
-                                            success: true, cartList: cartlist,
-                                            itemArray: itemArray, total: total,
-                                            allowCOD: allowCOD, tax: tax,code:code,
-                                            discount:di,isPercent:false
-                                        })
+                                    else {
+                                        di = 0
+                                        cartItem.forEach(cartEl => {
+                                            var item = {}
+
+                                            item.quantity = cartEl.quantity
+                                            item.iid = cartEl.iid
+                                            item.name = cartEl.item.name
+                                            item.sku = cartEl.sku
+                                            item.selling_price = parseInt(cartEl.price * (1 - (di / 100)))
+
+                                            if (cartEl.item.cod == false) allowCOD = false
+                                            cartlist.push(item)
+                                            itemArray.push(cartEl.item)
+                                            var itemprice = parseInt(cartEl.price * (1 - (di / 100)))
+                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax / 100))
+                                            tax += temptax
+                                            total = total + (itemprice * cartEl.quantity) + temptax
+                                        });
+
+                                        if (total <= 0 || cartlist.length == 0) {
+                                            callback({ success: false, message: "cant checkout with empty cart" })
+                                        }
+                                        else
+                                            callback({
+                                                success: true, cartList: cartlist,
+                                                itemArray: itemArray, total: total,
+                                                allowCOD: allowCOD, tax: tax, code: code,
+                                                discount: di, isPercent: false
+                                            })
+                                    }
                                 }
                             }
                         }
-                    }
-                })
-            }
-            else
-            {
-                di=0
-                cartItem.forEach(cartEl => {
-                    var item = {}
-
-                    item.quantity = cartEl.quantity
-                    item.iid = cartEl.iid
-                    item.name = cartEl.item.name
-                    item.sku = cartEl.sku
-                    item.selling_price = parseInt(cartEl.price*(1-(di/100)))
-
-                    if (cartEl.item.cod == false) allowCOD = false
-                    cartlist.push(item)
-                    itemArray.push(cartEl.item)
-                    var itemprice=parseInt(cartEl.price*(1-(di/100)))
-                    var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax / 200)) * 2 : parseInt(itemprice* cartEl.quantity * (cartEl.tax / 100))
-                    tax += temptax
-                    total = total + (itemprice * cartEl.quantity) + temptax
-                });
-                
-                if (total <= 0 || cartlist.length == 0) {
-                    callback({ success: false, message: "cant checkout with empty cart" })
-                }
-                else
-                    callback({
-                        success: true, cartList: cartlist,
-                        itemArray: itemArray, total: total,
-                        allowCOD: allowCOD, tax: tax,code:null,
-                        discount:0,isPercent:false
                     })
-            }
-                
+                }
+                else {
+                    var di = 0
+                    cartItem.forEach(cartEl => {
+                        var item = {}
+
+                        item.quantity = cartEl.quantity
+                        item.iid = cartEl.iid
+                        item.name = cartEl.item.name
+                        item.sku = cartEl.sku
+                        item.selling_price = parseInt(cartEl.price * (1 - (di / 100)))
+
+                        if (cartEl.item.cod == false) allowCOD = false
+                        cartlist.push(item)
+                        itemArray.push(cartEl.item)
+                        var itemprice = parseInt(cartEl.price * (1 - (di / 100)))
+                        var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax / 100))
+                        tax += temptax
+                        total = total + (itemprice * cartEl.quantity) + temptax
+                    });
+
+                    if (total <= 0 || cartlist.length == 0) {
+                        callback({ success: false, message: "cant checkout with empty cart" })
+                    }
+                    else
+                        callback({
+                            success: true, cartList: cartlist,
+                            itemArray: itemArray, total: total,
+                            allowCOD: allowCOD, tax: tax, code: null,
+                            discount: 0, isPercent: false
+                        })
+                }
+
             }
         })
     }
@@ -600,12 +597,11 @@ class cart {
         ]).exec(function (err, cartItem) {
             if (err) {
                 console.log(err);
-                callback({ success: false,message:'database error' })
+                callback({ success: false, message: 'database error' })
             }
             else {
                 // console.log(cartItem);
-                if(code.length>2)
-                {
+                if (code.length > 2) {
                     offersModel.findOne({ code: code, active: true, discount: { $gt: 0 } }, function (err, offer) {
                         var di = 0
                         if (err) {
@@ -621,20 +617,20 @@ class cart {
                             else {
                                 var valid = true
                                 if (offer.items.length > 0) {
-    
+
                                     for (var i = 0; i < cartList.length; i++) {
                                         if (offer.items.includes(cartItem[i].iid) == false) {
                                             valid = false
                                             break;
                                         }
                                     }
-    
+
                                 }
                                 if (valid == false) {
                                     callback({ success: false, message: 'there are items in your cart on which this code is not applicable' })
                                 }
                                 else {
-    
+
                                     if (offer.isPercent) {
                                         di = offer.discount
                                         let total = 0
@@ -653,44 +649,39 @@ class cart {
                                             callback({ success: false, message: "cant checkout with empty cart" })
                                         }
                                         else
-                                            callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax,code:code,discount:di,isPercent:true })
+                                            callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax, code: code, discount: di, isPercent: true })
                                     }
-                                    else
-                                        {
-                                            di = 0
-                                            let total = 0
-                                            let allowCOD = true
-                                            var tax = 0
-                                            cartItem.forEach(cartEl => {
-                                                if (cartEl.item.cod == false) allowCOD = false
-                                                var itemprice = parseInt(cartEl.price[0]) * (1 - (di / 100));
-                                                var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 100))
-                                                tax += temptax
-                                                total = total + (itemprice * cartEl.quantity) + temptax
-                                               
-                                            });
-                                            console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax });
-                                            if (total <= 0) {
-                                                callback({ success: false, message: "cant checkout with empty cart" })
-                                            }
-                                            else
-                                                callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax,code:code,discount:di,isPercent:false })
+                                    else {
+                                        di = 0
+                                        let total = 0
+                                        let allowCOD = true
+                                        var tax = 0
+                                        cartItem.forEach(cartEl => {
+                                            if (cartEl.item.cod == false) allowCOD = false
+                                            var itemprice = parseInt(cartEl.price[0]) * (1 - (di / 100));
+                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 100))
+                                            tax += temptax
+                                            total = total + (itemprice * cartEl.quantity) + temptax
+
+                                        });
+                                        console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax });
+                                        if (total <= 0) {
+                                            callback({ success: false, message: "cant checkout with empty cart" })
                                         }
-                                    
-                                    
+                                        else
+                                            callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax, code: code, discount: di, isPercent: false })
+                                    }
+
+
                                 }
                             }
-    
-    
+
+
                         }
-    
+
                     })
-    
-    
-                }
-                else
-                {
-                    di = 0
+                } else {
+                    var di = 0
                     let total = 0
                     let allowCOD = true
                     var tax = 0
@@ -700,17 +691,17 @@ class cart {
                         var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 100))
                         tax += temptax
                         total = total + (itemprice * cartEl.quantity) + temptax
-                       
+
                     });
                     console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax });
                     if (total <= 0) {
                         callback({ success: false, message: "cant checkout with empty cart" })
                     }
                     else
-                        callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax,code:null,discount:0,isPercent:false })
-               
+                        callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax, code: null, discount: 0, isPercent: false })
+
                 }
-               
+
 
             }
         })

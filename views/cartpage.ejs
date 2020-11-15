@@ -167,22 +167,28 @@
 				<h1 style="text-align: center; font-size: larger;"> You don't have any items in your cart.</h1>
 				<% } %>
 			</main>
-			<div class="uk-child-width-expand@s uk-text-center" uk-grid>
-				<div>
-					<a class="button button--primary" href="/clearCart" style="background-color:#F67963;"
-						title="Click here to proceed to checkout">Clear
-						Cart</a>
+			<form action="/proceed" method="POST">
+				<div class="uk-margin" style="text-align: center;">
+					<input class="uk-input uk-form-width-large" type="text" name="offer" placeholder="Offer Code">
 				</div>
-				<div>
-					<a class="button button--primary" href="/updateCart" title="Click here to proceed to checkout">
-						Update Cart</a>
+
+				<div class="uk-child-width-expand@s uk-text-center" uk-grid>
+					<div>
+						<a class="button button--primary" href="/clearCart" style="background-color:#F67963;"
+							title="Click here to proceed to checkout">Clear
+							Cart</a>
+					</div>
+					<div>
+						<a class="button button--primary" href="/updateCart" title="Click here to proceed to checkout">
+							Update Cart</a>
+					</div>
+					<div>
+						<button class="button button--primary" type="submit" style="background-color: #A2C68C;"
+							title="Click here to proceed to checkout">Check
+							out</button>
+					</div>
 				</div>
-				<div>
-					<a class="button button--primary" href="/checkout" style="background-color: #A2C68C;"
-						title="Click here to proceed to checkout">Check
-						out</a>
-				</div>
-			</div>
+			</form>
 		</div>
 
 	</div>
