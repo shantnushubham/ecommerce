@@ -41,6 +41,10 @@ exports.getCheckout = function (req, res) {
                         else {
                             extra = foundFee.charge
                         }
+                        console.log({ total: cart.total, cart: cart.cartList,
+                            address: address, codAllowed: cart.codAllowed, tax: cart.tax,
+                            fee: extra, code: cart.code, discount: cart.discount,
+                            percent: cart.isPercent});
                         res.render('checkout', {
                             total: cart.total, cart: cart.cartList,
                             address: address, codAllowed: cart.codAllowed, tax: cart.tax,
@@ -292,7 +296,7 @@ exports.codPath = function (req, res) {
                                         codAllowed: true,
                                         tax: cart.tax
                                     }
-                                   
+                                   console.log("orderDetails=",order);
                                     
 
                                         order["total"] = order["total"] + extra
