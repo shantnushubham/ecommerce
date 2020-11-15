@@ -28,14 +28,12 @@
 	}'>
 
 			<% var bannerArray = new Array() %>
-			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner1new.jpg", linkTo: ""}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner1new.jpg", linkTo: "/contact-us"}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner2.jpeg", linkTo: "/bio-bubble"}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner3new.jpg", linkTo: "/items/category/sanitation"}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner4.jpeg", linkTo: "/items/category/sanitation"}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner5.jpeg", linkTo: "/items/category/sanitation"}) %>
 			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner6.jpeg", linkTo: ""}) %>
-			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner1.jpeg", linkTo: ""}) %>
-			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner2.jpeg", linkTo: ""}) %>
-			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner3.jpeg", linkTo: ""}) %>
-			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner4.jpeg", linkTo: ""}) %>
-			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner5.jpeg", linkTo: ""}) %>
-
 
 			<% bannerArray.forEach((banner, index) => { %>
 			<a href="<%=banner.linkTo%>" id="slider-slider<%=index%>">
