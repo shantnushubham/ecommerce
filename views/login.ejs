@@ -32,7 +32,6 @@
 			</div>
 		</div>
 		<div class="login page-content--centered">
-
 			<h1 class="page-heading">Sign in</h1>
 			<div class="login-row">
 				<form class="login-form form" action="/users/login" method="POST">
@@ -44,12 +43,14 @@
 						<label class="form-label" for="login_pass">Password:</label>
 						<input class="form-input" id="login_pass" type="password" name="password" autocomplete="off">
 					</div>
-					<div class="form-actions">
-						<input type="submit" class="button button--primary" value="Sign in">
+					<div class="form-actions" style="text-align: center;">
+						<input type="submit" class="button button--primary" value="Sign in"><br>
 						<a class="forgot-password" href="/recover">Forgot your password?</a>
 					</div>
-					<div class="addthis_toolbox addthis_32x32_style" style="margin-top: 15px;">
-						<ul class="socialLinks">
+					<div class="addthis_toolbox addthis_32x32_style" style="margin-top: 15px;  text-align: center;">
+						<label class="forgot-password" for="login_pass" style="color: #ffaa3d;"><b>Or signin
+								using:</b></label>
+						<ul class="socialLinks" style="text-align: center; margin-top: 5px;">
 							<li class="socialLinks-item socialLinks-item--facebook">
 								<a uk-icon="facebook" href="/auth/facebook"
 									style="text-align: center; font-size: large;">
@@ -75,7 +76,6 @@
 								<li class="new-customer-fact">Save multiple shipping addresses</li>
 								<li class="new-customer-fact">Access your order history</li>
 								<li class="new-customer-fact">Track new orders</li>
-								<li class="new-customer-fact">Save items to your Wish List</li>
 							</ul>
 							<a href="/users/register"><button class="button button--primary">Create
 									Account</button></a>

@@ -623,7 +623,6 @@ class order {
                 }
             }
         ]).exec(function (err, order) {
-            console.log(order);
             if (err) callback({ success: false })
             else callback({ success: true, order: order })
         })
