@@ -127,8 +127,7 @@ passport.use(
                                 newUser.username = profile.emails[0].value;
                                 newUser.phone = 0;
                                 // save the user
-
-                                User.create(new User(newUser), function (err) {
+                                newUser.save(function(err,user){
                                     console.log(err);
                                     if (err)
                                     return done(err);
@@ -136,7 +135,8 @@ passport.use(
                                         console.log(rspp);
                                         return done(null, newUser);
                                     });
-                                });
+                                })
+                                
                             }
                         });
                     }
