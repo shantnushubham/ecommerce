@@ -530,7 +530,7 @@ class order {
                                             axios(config)
                                                 .then(function (response) {
                                                     console.log(JSON.stringify(response.data));
-                                                    if (response.data.status == 1) {
+                                                    if (response.data.status_code == 1) {
                                                         data.shiprocket_shipment_id = response.data["shipment_id"]
                                                         data.shiprocket_order_id = response.data["order_id"]
                                                         ordermodel.findOneAndUpdate({ orderId: orderId }, data, function (err, updatedOrder) {
@@ -542,19 +542,12 @@ class order {
                                                     }
                                                     else
                                                     {
-                                                        data.shiprocket_shipment_id = response.data["shipment_id"]
-                                                        data.shiprocket_order_id = response.data["order_id"]
-                                                        ordermodel.findOneAndUpdate({ orderId: orderId }, data, function (err, updatedOrder) {
-                                                            if (err)
-                                                                callback({ success: false, message: "error in updating order" })
-                                                            else
-                                                                callback({ success: true, message: "shiprocket request made!" })
-                                                        })
+                                                        callback({ success: false, message: "error in updating order,please check shiprocket dashboard" })
                                                     }
                                                 })
                                                 .catch(function (error) {
                                                     console.log(error);
-                                                    callback({ success: false, message: "error in placing order.please check logs" })
+                                                    callback({ success: false, message: "error in placing order. Please check logs" })
 
                                                 });
 
