@@ -540,6 +540,17 @@ class order {
                                                                 callback({ success: true, message: "shiprocket request made!" })
                                                         })
                                                     }
+                                                    else
+                                                    {
+                                                        data.shiprocket_shipment_id = response.data["shipment_id"]
+                                                        data.shiprocket_order_id = response.data["order_id"]
+                                                        ordermodel.findOneAndUpdate({ orderId: orderId }, data, function (err, updatedOrder) {
+                                                            if (err)
+                                                                callback({ success: false, message: "error in updating order" })
+                                                            else
+                                                                callback({ success: true, message: "shiprocket request made!" })
+                                                        })
+                                                    }
                                                 })
                                                 .catch(function (error) {
                                                     console.log(error);
