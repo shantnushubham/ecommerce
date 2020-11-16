@@ -53,6 +53,7 @@
                                 <th>User ID</th>
                                 <th>User Name</th>
                                 <th>Phone Number</th>
+                                <th>Delivery Address</th>
                                 <th>Payment Type</th>
                                 <th>Payment Status</th>
                                 <th>Order Date</th>
@@ -79,6 +80,7 @@
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.uuid %></a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.user.name %></a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.user.phone %></a></td>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.fullAddress %></a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.paymentType.toUpperCase()%>
                                     </a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.status.toUpperCase() %>
