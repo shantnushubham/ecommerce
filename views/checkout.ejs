@@ -162,11 +162,16 @@
 									<td><b id="orange">Discount
 											<% if (code != null && code != "" && code.length >= 2) { %>
 											<br>
-											<span class="uk-text-small uk-text-success"> (Code Applied: <%=code%>)
+											<span class="uk-text-small uk-text-success" style="font-weight: 100;"> (Code Applied: <%=code%>)
 											</span>
 											<% } %>
 										</b></td>
-									<td>₹ <%=totalDiscount%></td>
+									<td>₹ <%=totalDiscount%>
+										<br>
+										<% if (discount != null && discount > 0) { %>
+										<span class="uk-text-small uk-text-success" style="font-weight: 100;">(<%=discount%>%)</span>
+										<% } %>
+									</td>
 								</tr>
 								<tr>
 									<td></td>
