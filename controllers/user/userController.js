@@ -497,7 +497,7 @@ exports.checkPinCodeValid = (req, res) => {
         });
 }
 
-exports.zgetBusinessAccountReg = function (req, res) {
+exports.getBusinessAccountReg = function (req, res) {
     businessReg.findOne({ uuid: req.user.uuid }, function (err, foundB) {
         if (err) {
             req.flash('error', 'error in Servers.Try later')
