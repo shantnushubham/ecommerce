@@ -159,8 +159,14 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									<td><b id="orange">Discount</b></td>
-									<td>- ₹ <%=totalDiscount%></td>
+									<td><b id="orange">Discount
+											<% if (code != null && code != "" && code.length >= 2) { %>
+											<br>
+											<span class="uk-text-small uk-text-success"> (Code Applied: <%=code%>)
+											</span>
+											<% } %>
+										</b></td>
+									<td>₹ <%=totalDiscount%></td>
 								</tr>
 								<tr>
 									<td></td>
@@ -168,7 +174,7 @@
 									<td></td>
 									<td></td>
 									<td><b id="orange">Convenience Fee</b></td>
-									<td>₹ <%=fee%></td>
+									<td>+ ₹ <%=fee%></td>
 								</tr>
 								<tr>
 									<td></td>

@@ -25,30 +25,6 @@
     <div class="highlight-product">
         <div data-content-region="home_below_menu"></div>
     </div>
-    <div class="tt-heroCarousel">
-        <section class="heroCarousel" data-slick='{
-        "arrows": true,
-        "mobileFirst": true,
-        "slidesToShow": 1,
-        "fade": true,
-        "slidesToScroll": 1,
-        "autoplay": true,
-        "autoplaySpeed": 5000,
-        "lazyLoad": "anticipated"
-	}'>
-
-            <% var bannerArray = new Array() %>
-            <% bannerArray.push({src: "https://112cart.s3.ap-south-1.amazonaws.com/images/homePage/aboutus.jpg", linkTo: "#"}) %>
-
-            <% bannerArray.forEach((banner, index) => { %>
-            <a href="<%=banner.linkTo%>" id="slider-slider<%=index%>">
-                <div class="heroCarousel-slide">
-                    <img class="heroCarousel-image" src="<%=banner.src%>" alt="" />
-                </div>
-            </a>
-            <% }) %>
-        </section>
-    </div>
 
     <div class="home-content">
 
@@ -131,83 +107,117 @@
                 contributes and get the benefits as a byproduct. Purity is to work without the stimuli of greed and
                 fear.
             </p>
+            <div class="tt-blog-list">
+                <h1 class="page-heading">Profile of Directors</h1>
+                <article class="tt-blog-content">
+                    <div class="blog-post-figure col-5">
+                        <figure class="blog-thumbnail">
+                            <p class="blog-date">Ankit Kabra</p>
+                            <img class="lazyload"
+                                src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/aboutus1.jpg"
+                                alt="Ankit Kabra" title="Ankit Kabra">
+                            <span class="image-block-hover">
+                                <span class="block-hover-icons">
+                                    <a href="https://theme-payeeshop.mybigcommerce.com/blog/lacus-rhoncus-tincidunt/"><i
+                                            class="fa fa-link"></i></a>
+                                </span>
+                            </span>
 
-            <h2 class="page-heading" style="margin-bottom: 15px;">Profile of Directors</h2>
-            <h3 class="director"><u>Akash Jalan</u></h3>
-            <div uk-grid>
-                <div class="uk-width-1-2@s">
-                    <img src="">
-                </div>
-                <div class="uk-width-1-2@s">
-                    Mr. Akash Jalan, promoter of Jalan Group, hold a bachelor degree of Science in Business
-                    Administration from American University of Sharjah, UAE, he completed his Psychology and Human
-                    Resource Management from The Wharton School University of Pennsylvania, and has and expertise in
-                    International Business and Management Finance from Harvard University. Mr. Jalan did his internships
-                    and has got training from various diversified fields such as Aviation Industry, IT Industry, Media
-                    Industry and one of the biggest real estate firm , Majid Al Futtaim Group of Co. , UAE. He is from a
-                    business background hence he entered his family’s business in 2005 through the paper industry (A
-                    Manufacturing Unit) in Bilaspur as the Director, Head Marketing and Sales and with his experience in
-                    management he joined the family entertainment group, “Eylex Films Pvt Ltd” as one of the Directors.
-                    As a Director and Marketing personnel, Mr. Akash is instrumental in identifying the important
-                    business initiatives and strategic opportunities for the company.
+                        </figure>
+                    </div>
+
+                    <div class="blog-post-body col-7">
+                        <header class="blog-header">
+                            <h2 class="blog-title">
+                                Ankit Kabra
+                            </h2>
+                        </header>
+
+                        <div class="blog-post">
+                            Ankit Kabra, Proprietor at Trinity Scientific Stores and Hemant Traders has been in the
+                            business of distribution of Lab Chemicals, Industrial Chemicals, Food Chemicals, Water
+                            Treatment Chemicals, Lab equipments, Scientific Instruments, Machineries for Industries,
+                            Solution provider for Industries big and small.<br><br>
+                            Ankit Kabra was also a Partner at Samriddhi Financial Services and has experience as a stock
+                            broker and wealth manager.
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tt-blog-content">
+                    <div class="blog-post-figure col-5">
+                        <figure class="blog-thumbnail">
+                            <p class="blog-date">Akash Jalan</p>
+                            <img class="lazyload"
+                                src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/aboutus2.jpg"
+                                alt="Akash Jalan" title="Akash Jalan">
+                            <span class="image-block-hover">
+                                <span class="block-hover-icons">
+                                    <a href="https://theme-payeeshop.mybigcommerce.com/blog/lacus-rhoncus-tincidunt/"><i
+                                            class="fa fa-link"></i></a>
+                                </span>
+                            </span>
+                        </figure>
+                    </div>
+
+                    <div class="blog-post-body col-7">
+                        <header class="blog-header">
+                            <h2 class="blog-title">
+                                Akash Jalan
+                            </h2>
+                        </header>
+
+                        <div class="blog-post">
+                            Mr. Akash Jalan, promoter of Jalan Group, hold a bachelor degree of Science in Business
+                            Administration from American University of Sharjah, UAE, he completed his Psychology and
+                            Human Resource Management from The Wharton School University of Pennsylvania, and has and
+                            expertise in International Business and Management Finance from Harvard University.
+                            Mr. Jalan did his internships and has got training from various diversified fields such as
+                            Avaition Industry, IT Industry, Media Industry and one of the biggest real estate firm ,
+                            Majid Al Futtaim Group of Co. , UAE. He is from a business background hence he entered his
+                            family’s business in 2005 through the paper industry (A Manufacturing Unit) in Bilaspur as
+                            the Director, Head Marketing and Sales and with his experience in management he joined the
+                            family entertainment group, “Eylex Films Pvt Ltd” as one of the Directors. As a Director and
+                            Marketing personnel, Mr. Akash is instrumental in identifying the important business
+                            initiatives and strategic opportunities for the company.
+                        </div>
+                    </div>
+                </article>
+                <div style="text-align: left; margin-top: 30px;">
+                    <h4>Jalan Group Business in India:</h4>
+                    <h3>Cinema - Exhibition, Distribution & Production</h3>
+                    <li>Eylex Films Pvt. Ltd</li>
+                    <li>Ranchi Entertainment Pvt. Ltd.</li>
+                    <li>Eylex Motion Pictures</li>
+                    <br><br>
+
+                    <h3>Solar Energy</h3>
+                    Eylex Renewal Energy Pvt. Ltd
+                    <br><br>
+
+                    <h3>Schools</h3>
+                    Bridgeford Group of Education under Agesis of G.P. Jalan Memorial Trust (4 School’s operation under
+                    this trust)
+                    <br><br>
+
+                    <h3>Real Estate</h3>
+                    <li>Pristise Regent Infratect Pvt. Ltd.</li>
+                    <li>Advik Developers </li>
+                    <li>Panas Realtors </li>
+                    <br><br>
+
+                    <h3>Hospitals</h3>
+                    <li>Rinchi Trust Hospital Manufacturing </li>
+                    <li>Pristine Brick & Tiles Pvt. Ltd.</li>
+                    <br><br>
+
+                    <h3>Law Firms</h3>
+                    <li>Pristine Partners </li>
+                    <li>Legal Solution</li>
                 </div>
             </div>
-
-            <h3 class="director"><u>Akash Jalan</u></h3>
-            <div uk-grid>
-                <div class="uk-width-1-2@s">
-                    <img src="">
-                </div>
-                <div class="uk-width-1-2@s">
-                    Mr. Akash Jalan, promoter of Jalan Group, hold a bachelor degree of Science in Business
-                    Administration from American University of Sharjah, UAE, he completed his Psychology and Human
-                    Resource Management from The Wharton School University of Pennsylvania, and has and expertise in
-                    International Business and Management Finance from Harvard University. Mr. Jalan did his internships
-                    and has got training from various diversified fields such as Aviation Industry, IT Industry, Media
-                    Industry and one of the biggest real estate firm , Majid Al Futtaim Group of Co. , UAE. He is from a
-                    business background hence he entered his family’s business in 2005 through the paper industry (A
-                    Manufacturing Unit) in Bilaspur as the Director, Head Marketing and Sales and with his experience in
-                    management he joined the family entertainment group, “Eylex Films Pvt Ltd” as one of the Directors.
-                    As a Director and Marketing personnel, Mr. Akash is instrumental in identifying the important
-                    business initiatives and strategic opportunities for the company.
-                </div>
-            </div>
-            <div style="text-align: left;">
-                <h4>Jalan Group Business in India:</h4>
-                <h3>Cinema - Exhibition, Distribution & Production</h3>
-                <li>Eylex Films Pvt. Ltd</li>
-                <li>Ranchi Entertainment Pvt. Ltd.</li>
-                <li>Eylex Motion Pictures</li>
-                <br><br>
-
-                <h3>Solar Energy</h3>
-                Eylex Renewal Energy Pvt. Ltd
-                <br><br>
-
-                <h3>Schools</h3>
-                Bridgeford Group of Education under Agesis of G.P. Jalan Memorial Trust (4 School’s operation under this
-                trust)
-                <br><br>
-
-                <h3>Real Estate</h3>
-                <li>Pristise Regent Infratect Pvt. Ltd.</li>
-                <li>Advik Developers </li>
-                <li>Panas Realtors </li>
-                <br><br>
-
-                <h3>Hospitals</h3>
-                <li>Rinchi Trust Hospital Manufacturing </li>
-                <li>Pristine Brick & Tiles Pvt. Ltd.</li>
-                <br><br>
-
-                <h3>Law Firms</h3>
-                <li>Pristine Partners </li>
-                <li>Legal Solution</li>
-            </div>
-
         </div>
     </div>
 </div>
-
 
 <%- include("partials/newFooter") %>
