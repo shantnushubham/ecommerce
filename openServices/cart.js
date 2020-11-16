@@ -4,6 +4,7 @@ var cartmodel = require('../models/cart/cart')
 var functions = require('../Middlewares/common/functions')
 var codeModel = require('../models/offer/offer')
 var mongoose = require("mongoose")
+var offersModel=require('../models/offer/offer')
 class cart {
     constructor() {
 
@@ -491,8 +492,8 @@ class cart {
                                             if (cartEl.item.cod == false) allowCOD = false
                                             cartlist.push(item)
                                             itemArray.push(cartEl.item)
-                                            var itemprice = parseInt(cartEl.price * (1 - (di / 100)))
-                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax / 100))
+                                            var itemprice = cartEl.price * (1 - (di / 100))
+                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax / 200)* 2 : itemprice * cartEl.quantity * (cartEl.tax / 100)
                                             tax += temptax
                                             total = total + (itemprice * cartEl.quantity) + temptax
                                         });
@@ -503,7 +504,7 @@ class cart {
                                         else
                                             callback({
                                                 success: true, cartList: cartlist,
-                                                itemArray: itemArray, total: total,
+                                                itemArray: itemArray, total: parseInt(total),
                                                 allowCOD: allowCOD, tax: tax, code: code,
                                                 discount: di, isPercent: true
                                             })
@@ -522,8 +523,8 @@ class cart {
                                             if (cartEl.item.cod == false) allowCOD = false
                                             cartlist.push(item)
                                             itemArray.push(cartEl.item)
-                                            var itemprice = parseInt(cartEl.price * (1 - (di / 100)))
-                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax / 100))
+                                            var itemprice = cartEl.price * (1 - (di / 100))
+                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax / 100)
                                             tax += temptax
                                             total = total + (itemprice * cartEl.quantity) + temptax
                                         });
@@ -534,7 +535,7 @@ class cart {
                                         else
                                             callback({
                                                 success: true, cartList: cartlist,
-                                                itemArray: itemArray, total: total,
+                                                itemArray: itemArray, total: parseInt(total),
                                                 allowCOD: allowCOD, tax: tax, code: code,
                                                 discount: di, isPercent: false
                                             })
@@ -558,8 +559,8 @@ class cart {
                         if (cartEl.item.cod == false) allowCOD = false
                         cartlist.push(item)
                         itemArray.push(cartEl.item)
-                        var itemprice = parseInt(cartEl.price * (1 - (di / 100)))
-                        var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax / 100))
+                        var itemprice = cartEl.price * (1 - (di / 100))
+                        var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax / 100)
                         tax += temptax
                         total = total + (itemprice * cartEl.quantity) + temptax
                     });
@@ -570,7 +571,7 @@ class cart {
                     else
                         callback({
                             success: true, cartList: cartlist,
-                            itemArray: itemArray, total: total,
+                            itemArray: itemArray, total: parseInt(total),
                             allowCOD: allowCOD, tax: tax, code: null,
                             discount: 0, isPercent: false
                         })
@@ -638,18 +639,21 @@ class cart {
                                         var tax = 0
                                         cartItem.forEach(cartEl => {
                                             if (cartEl.item.cod == false) allowCOD = false
-                                            var itemprice = parseInt(cartEl.price[0]) * (1 - (di / 100));
-                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 100))
+                                            var itemprice = cartEl.price[0] * (1 - (di / 100));
+                                            console.log("items price",itemprice);
+                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax[0] / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax[0] / 100)
+                                            console.log("temptax",temptax);
                                             tax += temptax
                                             total = total + (itemprice * cartEl.quantity) + temptax
+                                            console.log("tot",total);
                                             // total = total + parseInt((parseInt(cartEl.price[0]) * cartEl.quantity))
                                         });
-                                        console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax });
+                                        // console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax });
                                         if (total <= 0) {
                                             callback({ success: false, message: "cant checkout with empty cart" })
                                         }
                                         else
-                                            callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax, code: code, discount: di, isPercent: true })
+                                            callback({ success: true, cartList: cartItem, total: parseInt(total), codAllowed: allowCOD, tax: tax, code: code, discount: di, isPercent: true })
                                     }
                                     else {
                                         di = 0
@@ -658,18 +662,18 @@ class cart {
                                         var tax = 0
                                         cartItem.forEach(cartEl => {
                                             if (cartEl.item.cod == false) allowCOD = false
-                                            var itemprice = parseInt(cartEl.price[0]) * (1 - (di / 100));
-                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 100))
+                                            var itemprice = cartEl.price[0]* (1 - (di / 100));
+                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax[0] / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax[0] / 100)
                                             tax += temptax
                                             total = total + (itemprice * cartEl.quantity) + temptax
 
                                         });
-                                        console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax });
+                                        // console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax });
                                         if (total <= 0) {
                                             callback({ success: false, message: "cant checkout with empty cart" })
                                         }
                                         else
-                                            callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax, code: code, discount: di, isPercent: false })
+                                            callback({ success: true, cartList: cartItem, total: parseInt(total), codAllowed: allowCOD, tax: tax, code: code, discount: di, isPercent: false })
                                     }
 
 
@@ -687,8 +691,8 @@ class cart {
                     var tax = 0
                     cartItem.forEach(cartEl => {
                         if (cartEl.item.cod == false) allowCOD = false
-                        var itemprice = parseInt(cartEl.price[0]) * (1 - (di / 100));
-                        var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 200)) * 2 : parseInt(itemprice * cartEl.quantity * (cartEl.tax[0] / 100))
+                        var itemprice = cartEl.price[0] * (1 - (di / 100));
+                        var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax[0] / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax[0] / 100)
                         tax += temptax
                         total = total + (itemprice * cartEl.quantity) + temptax
 
@@ -698,7 +702,7 @@ class cart {
                         callback({ success: false, message: "cant checkout with empty cart" })
                     }
                     else
-                        callback({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax, code: null, discount: 0, isPercent: false })
+                        callback({ success: true, cartList: cartItem, total:parseInt(total), codAllowed: allowCOD, tax: tax, code: null, discount: 0, isPercent: false })
 
                 }
 

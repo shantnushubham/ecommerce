@@ -298,6 +298,8 @@ exports.codPath = function (req, res) {
                                         codAllowed: true,
                                         tax: cart.tax
                                     }
+                                   console.log("orderDetails=",order);
+                                    
 
 
 

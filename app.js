@@ -14,7 +14,13 @@ var MongoStore = require('connect-mongo')(session)
 const cors = require("cors");
 const axios = require('axios')
 const cartModel = require('./models/cart/cart')
+const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20');
+const FacebookStrategy = require('passport-facebook');
+const Mailer = require('./controllers/common/Mailer')
 
+// // Load User model
+// const User = require('./models/User/User');
 
 
 require('dotenv').config()
@@ -29,8 +35,8 @@ var User = require('./models/User/User');
 var listRoutes = require('./routes/lists')
 var packageRoutes = require('./routes/packages')
 var vendorRoutes = require('./routes/vendors');
-const { CLIENT_RENEG_LIMIT } = require('tls');
-require('./config/passport')(passport);
+// const { CLIENT_RENEG_LIMIT } = require('tls');
+// require('./config/passport')(passport);
 // const OAuthCredentials = require('./config/auth');
 
 
@@ -62,17 +68,15 @@ app.use(logger('dev'));
 
 app.use(compression());
 
+app.use(flash());
 
 
 app.use(session({
-    secret: 'my-secret',
+    secret: 'Bingo',
     resave: false,
     saveUninitialized: false,
-    // store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24 ,
-         // two weeks
-         _expires: (1000 * 60 * 60 * 24 ) 
+        expires: 6000000
     }
 }));
 
@@ -85,19 +89,116 @@ app.use(function (req, res, next) {
 
 
 // Connect flash
-app.use(flash());
 
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, User.authenticate()));
 
-// Global variables
-app.use(function (req, res, next) {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    next();
+passport.use(
+    new GoogleStrategy({
+        clientID: envData.gAuth_client_id,
+        clientSecret: envData.gAuth_client_Secret,
+        callbackURL: envData.gAuth_client_callBackURL
+    }, (accessToken, refreshToken, profile, done) => {
+        process.nextTick(function () {
+            User.findOne({ "email": profile.emails[0].value }, function (err, founduser) {
+                if (err) {
+                    return done(err);
+                } else {
+                    if (founduser) {
+                        return done(null, founduser);
+                    } else {
+                        User.findOne({ 'googleUserId': profile.id }, function (err, user) {
+                            if (err)
+                                return done(err);
+                            if (user) {
+                                // if a user is found, log them in
+                                return done(null, user);
+                            } else {
+                                // if the user isnt in our database, create a new user
+                                var newUser = new User();
+                                // set all of the relevant information
+                                newUser.googleUserId = profile.id;
+                                // var nm=profile.name.split(" ")
+                                newUser.name = profile.displayName;
+                                // newUser.lastname=nm.length>1?nm[1]:"User"
+                                newUser.email = profile.emails[0].value; // pull the first email
+                                newUser.username = profile.emails[0].value;
+                                newUser.phone = 0;
+                                // save the user
+
+                                User.create(new User(newUser), function (err) {
+                                    console.log(err);
+                                    if (err)
+                                    return done(err);
+                                    Mailer.Register({ email: profile.emails[0].value, name: profile.displayName }, function (rspp) {
+                                        console.log(rspp);
+                                        return done(null, newUser);
+                                    });
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+            // try to find the user based on their google id
+        });
+    })
+);
+
+passport.use(new FacebookStrategy({
+    clientID: envData.fbAuth_client_id,
+    clientSecret: envData.fbAuth_client_Secret,
+    callbackURL: envData.fbAuth_client_callBackURL,
+    profileFields: ['id', 'displayName', 'email']
+},
+    function (accessToken, refreshToken, profile, done) {
+        User.findOne({ 'facebookId': profile.id }, function (err, user) {
+            if (err)
+                return done(err);
+            if (user) {
+                // if a user is found, log them in
+                return done(null, user);
+            } else {
+                //                 // if the user isnt in our database, create a new user
+
+                var newUser = new User();
+                // set all of the relevant information
+                newUser.facebookId = profile.id;
+                // var nm=profile.displayName.split(" ")
+                newUser.name = profile.displayName;
+                // newUser.lastname=nm.length>1?nm[1]:"User"
+                newUser.email = profile['_json']['email']; // pull the first email
+                newUser.username = profile['_json']['email'];
+                newUser.phone = 0;
+                // save the user
+
+                User.create(new User(newUser), function (err) {
+                    if (err)
+                    return done(err);
+
+
+                    Mailer.Register({ email: profile['_json']['email'], name: profile.displayName }, function (rspp) {
+                        console.log(rspp);
+                        return done(null, newUser);
+                    });
+
+                });
+            }
+        });
+    }
+));
+
+passport.serializeUser(function(user, cb) {
+    cb(null, user);
 });
+
+passport.deserializeUser(function(obj, cb) {
+    cb(null, obj);
+});
+// Global variables
+
 app.use(function (req, res, next) {
     if (req.isAuthenticated()) {
         res.locals.currentUser = req.user;
@@ -130,6 +231,7 @@ app.use(function (req, res, next) {
     }
 
 });
+
 
 // app.use('/', require('./routes/routes'));
 app.use(cartRoutes)
