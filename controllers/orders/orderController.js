@@ -551,8 +551,8 @@ exports.savedToCod = function (req, res) {
         }
         else {
             codaAllow.find({}, function (err, foundThres) {
-                console.log("coderr",err , foundThres.length >= 1 ,foundCod.order.allowCOD,"uuid",req.user );
-                if (!err && foundThres.length >= 1 && foundCod.order.allowCOD == true) {
+                console.log("coderr",err , foundThres.length >= 1 ,foundCod.order.codAllowed,"uuid",req.user );
+                if (!err && foundThres.length >= 1 && foundCod.order.codAllowed == true) {
                     if (foundCod.order.total < foundThres[0].from) {
                         req.flash('error', 'COD not allowed')
                         res.redirect('/saved-orders')
