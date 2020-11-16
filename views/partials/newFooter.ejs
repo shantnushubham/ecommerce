@@ -1,29 +1,26 @@
 <footer class="footer" role="contentinfo">
+    
+    <style>
+        @media (min-width:600px) {
+            #sideBtn {
+                float: right;
+            }
+        };
+    </style>
 
     <div class="tt-subscription">
         <div class="container">
             <article class="full-subscription" data-section-type="newsletterSubscription">
                 <div class="newsletter-tittle">
                     <h5 class="footer-info-headings">
-                        <span uk-icon="icon: happy; ratio: 2"></span>
-                        &nbsp; We're just a few clicks away
+                        <span uk-icon="icon: happy; ratio: 1.5"></span>
+                        &nbsp; Just a few clicks away
                     </h5>
-                    <span class="newletter-desc">....for all your inquiries, comments, and issues.</span>
+                    <span class="newletter-desc">...for all your inquiries, comments, and issues.</span>
                 </div>
 
-                <div class="newsletter-contents">
-                    <form class="form" action="/subscribe.php" method="post">
-                        <fieldset class="form-fieldset">
-                            <div class="form-field">
-                                <label class="form-label is-srOnly" for="nl_email">Email Address</label>
-                                <div class="form-prefixPostfix wrap">          
-                                    <input class="button button--primary form-prefixPostfix-button--postfix"
-                                        type="submit" value="Get in touch" formmethod="GET" formaction="/contact-us"  />
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
+                <a class="button button--primary" id="sideBtn" href="/contact-us">Get in touch</a>
+
             </article>
         </div>
     </div>

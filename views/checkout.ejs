@@ -162,14 +162,16 @@
 									<td><b id="orange">Discount
 											<% if (code != null && code != "" && code.length >= 2) { %>
 											<br>
-											<span class="uk-text-small uk-text-success" style="font-weight: 100;"> (Code Applied: <%=code%>)
+											<span class="uk-text-small uk-text-success" style="font-weight: 100;"> (Code
+												Applied: <%=code%>)
 											</span>
 											<% } %>
 										</b></td>
 									<td>₹ <%=totalDiscount%>
 										<br>
 										<% if (discount != null && discount > 0) { %>
-										<span class="uk-text-small uk-text-success" style="font-weight: 100;">(<%=discount%>%)</span>
+										<span class="uk-text-small uk-text-success"
+											style="font-weight: 100;">(<%=discount%>%)</span>
 										<% } %>
 									</td>
 								</tr>
@@ -197,6 +199,7 @@
 
 					<div class="uk-card uk-card-default" style="text-align: left !important;">
 						<div class="uk-card-body">
+							<% if (address.address.length > 0) { %>
 							<form method="POST" action="/checkout">
 								<div class="uk-margin">
 									<div class="uk-form-label">
@@ -204,7 +207,6 @@
 										</h6>
 									</div>
 									<div class="uk-form-controls uk-form-controls-text">
-
 										<% address.address.forEach(el => { %>
 										<input class="uk-radio" type="radio" name="address" value="<%=el._id%>"
 											required>
@@ -261,6 +263,12 @@
 
 
 							</form>
+							<% } else { %>
+							Please add an address to create an order
+							<div class="form-actions">
+								<a class="button button--primary" href="/address">Add New Address</a>
+							</div>
+							<% } %>
 						</div>
 					</div>
 				</div>
