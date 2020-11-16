@@ -545,10 +545,12 @@ exports.createQuotation = function (req, res) {
 exports.savedToCod = function (req, res) {
     orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundCod) {
         if (foundCod.success == false) {
-
+            req.flash('error', 'error in getting order')
+            res.redirect('/saved-orders')
         }
         else {
             codaAllow.find({}, function (err, foundThres) {
+                console.log("coderr",err , foundThres.length >= 1 ,foundCod.order.allowCOD );
                 if (!err && foundThres.length >= 1 && foundCod.order.allowCOD == true) {
                     if (foundCod.order.total < foundThres[0].from) {
                         req.flash('error', 'COD not allowed')
