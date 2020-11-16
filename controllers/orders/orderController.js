@@ -544,7 +544,7 @@ exports.createQuotation = function (req, res) {
 
 exports.savedToCod = function (req, res) {
     orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundCod) {
-        console.log("order is ",foundCod);
+        console.log("order is ",foundCod.order);
         if (foundCod.success == false) {
             req.flash('error', 'error in getting order')
             res.redirect('/saved-orders')
