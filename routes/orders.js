@@ -232,7 +232,8 @@ router.get('/pay/save/cred/:orderId', ensureAuthenticated, orderController.saved
 router.get('/allow-credit/:orderId', functions.isAdmin, orderController.getAllowCred)
 router.post('/allow-credit/:orderId', functions.isAdmin, orderController.allowCred)
 
-router.get('/checkout', ensureAuthenticated, orderController.getCheckout)
+router.post('/proceed',ensureAuthenticated,orderController.getCheckout)
+// router.get('/checkout', ensureAuthenticated, orderController.getCheckout)
 router.post('/checkout', ensureAuthenticated, orderController.postCheckout)
 router.get("/user-order/:orderId", ensureAuthenticated, orderController.checkUserOrder)
 router.get('/orders', ensureAuthenticated, orderController.userOrderList)

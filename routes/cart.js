@@ -4,6 +4,7 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../Middlewares/us
 var app = express();
 
 app.get('/cartpage',ensureAuthenticated,cartController.getAllItems)
+// app.post('/proceed',ensureAuthenticated,cartController)
 app.get('/updateCart',ensureAuthenticated,cartController.getUpdateCart)
 app.post('/updateCart',ensureAuthenticated,cartController.updateCart)
 app.get('/clearcart',ensureAuthenticated,cartController.clearCart)
