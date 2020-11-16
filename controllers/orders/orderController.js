@@ -15,11 +15,16 @@ const fee = require('../../models/Orders/extraFee')
 const functions = require('../../Middlewares/common/functions')
 
 exports.getCheckout = function (req, res) {
-
-    cartServices.getListingForCheckout(req.user.uuid, req.user, function (cart) {
+    var code = ""
+    if (req.body.code && req.body.code.length > 2)
+        code = req.body.code
+    else
+        code = ""
+    cartServices.getListingForCheckout(req.user.uuid, req.user, code, function (cart) {
         if (cart.success == false) {
-            req.flash('error', 'empty cart!')
-            res.redirect('/cartpage')
+            req.flash('error', cart.message)
+            req.session.save(function () { res.redirect('/cartpage'); })
+            // res.redirect('/cartpage')
         }
         else {
             console.log('here');
@@ -36,7 +41,18 @@ exports.getCheckout = function (req, res) {
                         else {
                             extra = foundFee.charge
                         }
-                        res.render('checkout', { total: cart.total, cart: cart.cartList, address: address, codAllowed: cart.codAllowed, tax: cart.tax, fee: extra })
+                        console.log({
+                            total: cart.total, cart: cart.cartList,
+                            address: address, codAllowed: cart.codAllowed, tax: cart.tax,
+                            fee: extra, code: cart.code, discount: cart.discount,
+                            percent: cart.isPercent
+                        })
+                        res.render('checkout', {
+                            total: cart.total, cart: cart.cartList,
+                            address: address, codAllowed: cart.codAllowed, tax: cart.tax,
+                            fee: extra, code: cart.code, discount: cart.discount,
+                            percent: cart.isPercent
+                        })
 
 
                     })
@@ -47,9 +63,13 @@ exports.getCheckout = function (req, res) {
 }
 
 exports.postCheckout = function (req, res) {
-    // console.log('enter');
-    // console.log(req.body);
-    cartServices.getListingForOrder(req.user.uuid, req.user, function (cart) {//get total and cart items
+
+    var code = ""
+    if (req.body.offer && req.body.offer.length > 2)
+        code = req.body.offer
+    else
+        code = ""
+    cartServices.getListingForOrder(req.user.uuid, req.user, code, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
@@ -85,54 +105,26 @@ exports.postCheckout = function (req, res) {
                             uuid: req.user.uuid,
                             tax: cart.tax
                         }
-                        if (req.body.offer && req.body.offer.length > 1) {
-
-                            orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
-                                if (foundOffer.success == false) {
-                                    req.flash('error', foundOffer.message)
-                                    res.redirect('/cartpage')
-                                }
-                                else {
 
 
-                                    order["offerUsed"] = true
-                                    order["offerCode"] = req.body.offer
-
-
-
-                                    order["total"] = foundOffer.total + extra
-
-                                    orderServices.createOrder(order, function (createOrder) {
-                                        if (createOrder.success == false) {
-                                            console.log('error in creating order');
-                                            req.flash('error', 'error in creating order')
-                                            res.redirect('/cartpage')
-                                        }
-                                        else {
-                                            console.log('success');
-                                            res.redirect('/order/' + createOrder.order.orderId + '/payment')
-                                        }
-                                    })
-                                }
-                            })
-
-
+                        order["total"] = order["total"] + extra
+                        if (req.body.code && req.body.code.length > 0 && cart.code != null && cart.discount > 0) {
+                            order["offerUsed"] = true
+                            order["offerCode"] = req.body.offer
                         }
-                        else {
-                            order["total"] = order["total"] + extra
-                            // console.log("order Details=", order);
-                            orderServices.createOrder(order, function (createOrder) {
-                                if (createOrder.success == false) {
-                                    console.log('error in creating order');
-                                    req.flash('error', 'error in creating order')
-                                    res.redirect('/cartpage')
-                                }
-                                else {
-                                    console.log('success');
-                                    res.redirect('/order/' + createOrder.order.orderId + '/payment')
-                                }
-                            })
-                        }
+                        // console.log("order Details=", order);
+                        orderServices.createOrder(order, function (createOrder) {
+                            if (createOrder.success == false) {
+                                console.log('error in creating order');
+                                req.flash('error', 'error in creating order')
+                                res.redirect('/cartpage')
+                            }
+                            else {
+                                console.log('success');
+                                res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                            }
+                        })
+
 
 
                     })
@@ -155,7 +147,12 @@ exports.creditPath = function (req, res) {
         res.redirect('/cartpage')
     }
     else {
-        cartServices.getListingForOrder(req.user.uuid, req.user, function (cart) {//get total and cart items
+        var code = ""
+        if (req.body.offer && req.body.offer.length > 2)
+            code = req.body.offer
+        else
+            code = ""
+        cartServices.getListingForOrder(req.user.uuid, req.user, code, function (cart) {//get total and cart items
             if (cart.success == false) {
                 console.log('error in getting cart list');
                 req.flash('error', 'error in getting cart list')
@@ -211,56 +208,27 @@ exports.creditPath = function (req, res) {
                                         creditPercent: credPerc,
                                         tax: cart.tax
                                     }
-                                    if (req.body.offer && req.body.offer.length > 1) {
-
-                                        orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
-                                            if (foundOffer.success == false) {
-                                                req.flash('error', foundOffer.message)
-                                                res.redirect('/cartpage')
-                                            }
-                                            else {
-
-
-                                                order["offerUsed"] = true
-                                                order["offerCode"] = req.body.offer
 
 
 
-                                                order["total"] = foundOffer.total + extra
-
-                                                orderServices.createOrder(order, function (createOrder) {
-                                                    if (createOrder.success == false) {
-                                                        console.log('error in creating order');
-                                                        req.flash('error', 'error in creating order')
-                                                        res.redirect('/cartpage')
-                                                    }
-                                                    else {
-                                                        // console.log('success');
-                                                        req.session.mode = 'credit'
-                                                        res.redirect('/order/' + createOrder.order.orderId + '/payment')
-                                                    }
-                                                })
-                                            }
-                                        })
-
-
+                                    order["total"] = order["total"] + extra
+                                    if (req.body.code && req.body.code.length > 0 && cart.code != null && cart.discount > 0) {
+                                        order["offerUsed"] = true
+                                        order["offerCode"] = req.body.offer
                                     }
-                                    else {
+                                    orderServices.createOrder(order, function (createOrder) {
+                                        if (createOrder.success == false) {
+                                            console.log('error in creating order');
+                                            req.flash('error', 'error in creating order')
+                                            res.redirect('/cartpage')
+                                        }
+                                        else {
+                                            req.session.mode = 'credit'
+                                            res.redirect('/order/' + createOrder.order.orderId + '/payment')
+                                        }
+                                    })
 
-                                        order["total"] = order["total"] + extra
-                                        orderServices.createOrder(order, function (createOrder) {
-                                            if (createOrder.success == false) {
-                                                console.log('error in creating order');
-                                                req.flash('error', 'error in creating order')
-                                                res.redirect('/cartpage')
-                                            }
-                                            else {
-                                                req.session.mode = 'credit'
-                                                res.redirect('/order/' + createOrder.order.orderId + '/payment')
-                                            }
-                                        })
 
-                                    }
                                 })
                             }
                         })
@@ -281,7 +249,12 @@ exports.creditPath = function (req, res) {
 
 exports.codPath = function (req, res) {
     // console.log(req.body);
-    cartServices.getListingForOrder(req.user.uuid, req.user, function (cart) {//get total and cart items
+    var code = ""
+    if (req.body.offer && req.body.offer.length > 2)
+        code = req.body.offer
+    else
+        code = ""
+    cartServices.getListingForOrder(req.user.uuid, req.user, code, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
@@ -325,58 +298,30 @@ exports.codPath = function (req, res) {
                                         codAllowed: true,
                                         tax: cart.tax
                                     }
-                                    if (req.body.offer && req.body.offer.length > 1) {
-
-                                        orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
-                                            if (foundOffer.success == false) {
-                                                req.flash('error', foundOffer.message)
-                                                res.redirect('/cartpage')
-                                            }
-                                            else {
-
-
-                                                order["offerUsed"] = true
-                                                order["offerCode"] = req.body.offer
+                                   console.log("orderDetails=",order);
+                                    
 
 
 
-                                                order["total"] = foundOffer.total + extra
-
-                                                orderServices.createOrder(order, function (createOrder) {
-                                                    if (createOrder.success == false) {
-                                                        console.log('error in creating order');
-                                                        req.flash('error', 'error in creating order')
-                                                        res.redirect('/cartPage')
-                                                    }
-                                                    else {
-                                                        orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
-                                                            console.log("stock update status:", stocks.success);
-                                                        })
-                                                        res.render('successpage', { order: createOrder.order, failure: false, failureMessage: null })
-                                                    }
-                                                })
-                                            }
-                                        })
-
-
+                                    order["total"] = order["total"] + extra
+                                    if (req.body.code && req.body.code.length > 0 && cart.code != null && cart.discount > 0) {
+                                        order["offerUsed"] = true
+                                        order["offerCode"] = req.body.offer
                                     }
-                                    else {
+                                    orderServices.createOrder(order, function (createOrder) {
+                                        if (createOrder.success == false) {
+                                            console.log('error in creating order');
+                                            req.flash('error', 'error in creating order')
+                                            res.redirect('/cartPage')
+                                        }
+                                        else {
+                                            orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
+                                                console.log("stock update status:", stocks.success);
+                                            })
+                                            res.render('successpage', { order: createOrder.order, failure: false, failureMessage: null })
+                                        }
+                                    })
 
-                                        order["total"] = order["total"] + extra
-                                        orderServices.createOrder(order, function (createOrder) {
-                                            if (createOrder.success == false) {
-                                                console.log('error in creating order');
-                                                req.flash('error', 'error in creating order')
-                                                res.redirect('/cartPage')
-                                            }
-                                            else {
-                                                orderServices.updateStockList(createOrder.order.orderedItems, function (stocks) {
-                                                    console.log("stock update status:", stocks.success);
-                                                })
-                                                res.render('successpage', { order: createOrder.order, failure: false, failureMessage: null })
-                                            }
-                                        })
-                                    }
                                 })
                             }
 
@@ -398,7 +343,12 @@ exports.codPath = function (req, res) {
 //------------------------------------------------------------------------------------------------------------
 
 exports.saveOrder = function (req, res) {
-    cartServices.getListingForOrder(req.user.uuid, req.user, function (cart) {//get total and cart items
+    var code = ""
+    if (req.body.offer && req.body.offer.length > 2)
+        code = req.body.offer
+    else
+        code = ""
+    cartServices.getListingForOrder(req.user.uuid, req.user, code, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
@@ -453,54 +403,25 @@ exports.saveOrder = function (req, res) {
                                 creditPercent: credPerc,
                                 tax: cart.tax
                             }
-                            if (req.body.offer && req.body.offer.length > 1) {
-
-                                orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
-                                    if (foundOffer.success == false) {
-                                        console.log(foundOffer.message);
-                                        req.flash('error', foundOffer.message)
-                                        res.redirect('/cartpage')
-                                    }
-                                    else {
 
 
-                                        order["offerUsed"] = true
-                                        order["offerCode"] = req.body.offer
-
-
-
-                                        order["total"] = foundOffer.total + extra
-
-                                        orderServices.createOrder(order, function (createOrder) {
-                                            if (createOrder.success == false) {
-                                                console.log('error in creating order');
-                                                req.flash('error', 'error in creating order')
-                                                res.redirect('/cartpage')
-                                            }
-                                            else {
-                                                res.redirect('/saved-orders')
-                                            }
-                                        })
-                                    }
-                                })
-
-
+                            order["total"] = order["total"] + extra
+                            if (req.body.code && req.body.code.length > 0 && cart.code != null && cart.discount > 0) {
+                                order["offerUsed"] = true
+                                order["offerCode"] = req.body.offer
                             }
-                            else {
-                                order["total"] = order["total"] + extra
 
+                            orderServices.createOrder(order, function (createOrder) {
+                                if (createOrder.success == false) {
+                                    console.log('error in creating order');
+                                    req.flash('error', 'error in creating order')
+                                    res.redirect('/cartpage')
+                                }
+                                else {
+                                    res.redirect('/saved-orders')
+                                }
+                            })
 
-                                orderServices.createOrder(order, function (createOrder) {
-                                    if (createOrder.success == false) {
-                                        console.log('error in creating order');
-                                        req.flash('error', 'error in creating order')
-                                        res.redirect('/cartpage')
-                                    }
-                                    else {
-                                        res.redirect('/saved-orders')
-                                    }
-                                })
-                            }
                         })
                     }
                 })
@@ -517,7 +438,12 @@ exports.saveOrder = function (req, res) {
 
 
 exports.createQuotation = function (req, res) {
-    cartServices.getListingForOrder(req.user.uuid, req.user, function (cart) {//get total and cart items
+    var code = ""
+    if (req.body.offer && req.body.offer.length > 2)
+        code = req.body.offer
+    else
+        code = ""
+    cartServices.getListingForOrder(req.user.uuid, req.user, code, function (cart) {//get total and cart items
         if (cart.success == false) {
             console.log('error in getting cart list');
             req.flash('error', 'error in getting cart list')
@@ -573,70 +499,33 @@ exports.createQuotation = function (req, res) {
                                 quoteAsked: true,
                                 tax: cart.tax
                             }
-                            if (req.body.offer && req.body.offer.length > 1) {
-
-                                orderServices.returnOfferPrice(req.body.offer, cart.cartList, req.user.uuid, finalAmt, function (foundOffer) {
-                                    if (foundOffer.success == false) {
-                                        req.flash('error', foundOffer.message)
-                                        res.redirect('/cartpage')
-                                    }
-                                    else {
 
 
-                                        order["offerUsed"] = true
-                                        order["offerCode"] = req.body.offer
-
-
-
-                                        order["total"] = foundOffer.total + extra
-
-                                        orderServices.createOrder(order, function (createdOrder) {
-                                            if (createdOrder.success == false) {
-                                                console.log('error in creating order');
-                                                req.flash('error', 'error in creating order')
-                                                res.redirect('/cartpage')
-                                            }
-                                            else {
-                                                req.flash('success', 'Quote Requested!')
-                                                res.redirect('/cartpage')
-                                                var maildata = {
-                                                    order: createdOrder,
-                                                    items: cart.itemArray,
-                                                    user: req.user
-                                                }
-                                                mailer.askQuote(req.body.email, maildata, function (mailed) {
-                                                    console.log(mailed);
-                                                })
-                                            }
-                                        })
-                                    }
-                                })
-
-
+                            order["total"] = order["total"] + extra
+                            if (req.body.code && req.body.code.length > 0 && cart.code != null && cart.discount > 0) {
+                                order["offerUsed"] = true
+                                order["offerCode"] = req.body.offer
                             }
-                            else {
-                                order["total"] = order["total"] + extra
+                            orderServices.createOrder(order, function (createOrder) {
+                                if (createOrder.success == false) {
+                                    console.log('error in creating order');
+                                    req.flash('error', 'error in creating order')
+                                    res.redirect('/cartpage')
+                                }
+                                else {
+                                    req.flash('success', 'Quote Requested!')
+                                    res.redirect('/cartpage')
+                                    var maildata = {
+                                        order: createOrder,
+                                        items: cart.itemArray,
+                                        user: req.user
+                                    }
+                                    mailer.askQuote(req.body.email, maildata, function (mailed) {
+                                        console.log(mailed);
+                                    })
+                                }
+                            })
 
-                                orderServices.createOrder(order, function (createOrder) {
-                                    if (createOrder.success == false) {
-                                        console.log('error in creating order');
-                                        req.flash('error', 'error in creating order')
-                                        res.redirect('/cartpage')
-                                    }
-                                    else {
-                                        req.flash('success', 'Quote Requested!')
-                                        res.redirect('/cartpage')
-                                        var maildata = {
-                                            order: createOrder,
-                                            items: cart.itemArray,
-                                            user: req.user
-                                        }
-                                        mailer.askQuote(req.body.email, maildata, function (mailed) {
-                                            console.log(mailed);
-                                        })
-                                    }
-                                })
-                            }
                         })
                     }
                 })
@@ -655,12 +544,15 @@ exports.createQuotation = function (req, res) {
 
 exports.savedToCod = function (req, res) {
     orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundCod) {
+        console.log("order is ",foundCod.order);
         if (foundCod.success == false) {
-
+            req.flash('error', 'error in getting order')
+            res.redirect('/saved-orders')
         }
         else {
             codaAllow.find({}, function (err, foundThres) {
-                if (!err && foundThres.length >= 1 && foundCod.order.allowCOD == true) {
+                console.log("coderr",err , foundThres.length >= 1 ,foundCod.order.codAllowed,"uuid",req.user );
+                if (!err && foundThres.length >= 1 && foundCod.order.codAllowed == true) {
                     if (foundCod.order.total < foundThres[0].from) {
                         req.flash('error', 'COD not allowed')
                         res.redirect('/saved-orders')
@@ -668,7 +560,7 @@ exports.savedToCod = function (req, res) {
                     else {
                         orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'COD', shipmentStatus: "processing", total: parseInt(foundCod.order.total) * 1.18 }, function (updatedOrder) {
                             if (updatedOrder.success == false) {
-                                req.flash('error', 'error in processing order')
+                                req.flash('error', 'error in updating order for cod')
                                 res.redirect('/saved-orders')
                             }
                             else {
@@ -696,7 +588,7 @@ exports.savedToCod = function (req, res) {
 exports.savedToCredit = function (req, res) {
     orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundOrder) {
         if (foundOrder.success == false) {
-            req.flash('error', 'error in processing order')
+            req.flash('error', 'error in getting order')
             res.redirect('/saved-orders')
         }
         else {
@@ -707,7 +599,7 @@ exports.savedToCredit = function (req, res) {
             else {
                 orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'credit' }, function (updatedOrder) {
                     if (updatedOrder.success == false) {
-                        req.flash('error', 'error in processing order')
+                        req.flash('error', 'error in updating order')
                         res.redirect('/saved-orders')
                     }
                     else {
@@ -723,7 +615,7 @@ exports.savedToCredit = function (req, res) {
 exports.savedToPay = function (req, res) {
     orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'online' }, function (updatedOrder) {
         if (updatedOrder.success == false) {
-            req.flash('error', 'error in processing order')
+            req.flash('error', 'error in updating order for payu')
             res.redirect('/saved-orders')
         }
         else {

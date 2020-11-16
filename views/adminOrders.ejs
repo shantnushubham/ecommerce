@@ -12,7 +12,7 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fa fa-table"></i> Orders Data Table</div>
-            <div class="row" style="margin: 5px;">
+            <!-- <div class="row" style="margin: 5px;">
                 <div class="col-sm-1" style="text-align: center;">
                     <a class="ui primary button" href="/admin/orders-filter-paymentStatus/initialised">Initialized</a>
                 </div>
@@ -38,7 +38,7 @@
                 <div class="col-sm-1" style="text-align: center;">
                     <a class="ui primary button" href="/admin/orders-filter-shipment/completed">Completed</a>
                 </div>
-            </div>
+            </div> -->
             <div style="text-align: center;">
                 <a class="ui primary button" href="/downloads/invoice/payment">Download CSV with Payment</a>
                 <a class="ui primary button" href="/downloads/invoice/shipment">Download CSV with Shipment</a>
@@ -52,6 +52,8 @@
                                 <th>Order ID</th>
                                 <th>User ID</th>
                                 <th>User Name</th>
+                                <th>Phone Number</th>
+                                <th>Delivery Address</th>
                                 <th>Payment Type</th>
                                 <th>Payment Status</th>
                                 <th>Order Date</th>
@@ -77,12 +79,15 @@
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.orderId%></a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.uuid %></a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.user.name %></a></td>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.user.phone %></a></td>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><%= element.fullAddress %></a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.paymentType.toUpperCase()%>
                                     </a></td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.status.toUpperCase() %>
                                     </a></td>
-                                <td><a
-                                        href="/admin/orders/<%=element.orderId%>"><%=element.purchaseTime.toLocaleDateString()%></a>
+                                <td><a href="/admin/orders/<%=element.orderId%>"><span
+                                            style="color: transparent; font-size: 1px;"><%=(element.purchaseTime).getTime()%></span>
+                                        <%=element.purchaseTime.toLocaleDateString()%></a>
                                 </td>
                                 <td><a href="/admin/orders/<%=element.orderId%>"><%= element.shipmentStatus.toUpperCase() %>
                                     </a></td>

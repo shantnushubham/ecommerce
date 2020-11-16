@@ -79,7 +79,7 @@ exports.addItem = function (req, res) {
                         else {
                             console.log('success');
                             req.flash('success', 'added to cart')
-                            res.redirect('/cartPage')
+                            res.redirect('/items')
                         }
                     })
                 }
@@ -178,7 +178,7 @@ exports.addManyToCart = function (req, res) {
 
 
 }
-exports.verify = function (req, res) {
+exports.verify = function (req, res) {//
     console.log('user=' + req.user);
     cartservices.getListingForCheckout(req.user.uuid, function (resp) {
         console.log(resp);

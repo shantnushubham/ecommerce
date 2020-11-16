@@ -31,7 +31,10 @@
         <% if (business.isAccepted) { %>
         <div style="margin-left: 13%; margin-right: 13%;">
             <div class="uk-child-width-1-1@m" uk-grid>
-                <h4 style="text-align: center;">You already have a Business Account.</h4>
+                <h4 style="text-align: center;">You already have a <% if (currentUser.premium) { %>
+                    Premium
+                    <% } %>
+                    Business Account.</h4>
                 <br>
             </div>
         </div>
