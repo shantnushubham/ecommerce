@@ -673,7 +673,7 @@ exports.revokeBizAcc = function (req, res) {
             res.redirect('/users/business-accounts')
         }
         else {
-            User.findOneAndUpdate({ uuid: updatedB.uuid }, { isBusiness: false }, function (err, updatedU) {
+            User.findOneAndUpdate({ uuid: updatedB.uuid }, { isBusiness: false,premium:false }, function (err, updatedU) {
                 if (err) {
                     req.flash('error', 'request could not be processed.user not updated')
                     res.redirect('/users/business-accounts')

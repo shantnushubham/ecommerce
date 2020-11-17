@@ -8,6 +8,7 @@ class vendor{
     createVendor(data,callback)
     {
         vendorModel.create(data,function(err,createdVendor){
+            console.log(err);
             if(err)callback({success:false})
             else callback({success:true,vendor:createdVendor})
         })
