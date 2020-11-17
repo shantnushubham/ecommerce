@@ -1,0 +1,55 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Show Offer on Offer Page</li>
+        </ol>
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+                <h2><i class="fa fa-file"></i>Show Offer on Offer Page</h2>
+            </div>
+
+            <div class="container">
+                <br>
+                <h1>Show Offer on Offer Page</h1>
+                <br>
+                <br>
+                <form action="/admin/offerpage" method="POST">
+                    <div class="ui form">
+
+                        <div class="field">
+                            <label>Image Link (For multiple images, separate links using "||")</label>
+                            <% var image = ""; 
+                            for (var x = 0; x < data.cover.length - 1; x++) { image = image + data.cover[x] + "||" } if (data.cover.length > 0) {image = image + data.cover[data.cover.length - 1] } %>
+                            <input type="text" placeholder="ImageLink" name="images" value="<%=image%>">
+                        </div>
+                        <div class="field">
+                            <label>Content</label>
+                            <p>For a bold text, enclose the text to bold with <code>&lt;b&gt;</code>
+                                Example: <code>&lt;b&gt; This is a bold text &lt;/b&gt;</code><br>
+                                For an italic text, enclose the text to italicize with <code>&lt;i&gt;</code>
+                                Example: <code>&lt;i&gt; This is an italic text &lt;/i&gt;</code><br>
+                                For an underlined text, enclose the text to underline with <code>&lt;u&gt;</code>
+                                Example: <code>&lt;u&gt; This is an underlined text &lt;/u&gt;</code><br>
+                                For inserting a line break, use <code>&lt;br&gt;</code>
+                                Example: Line 1 <code>&lt;br&gt;</code> Line 2<br>
+                                For using a list, enclose the list items with <code>&lt;li&gt;</code>
+                                Example: <code>&lt;li&gt;</code> Item 1 <code>&lt;/li&gt;</code><code>&lt;li&gt;</code>
+                                Item 2 <code>&lt;/li&gt;</code><code>&lt;li&gt;</code> Item 3 <code>&lt;/li&gt;</code>
+                            </p>
+                            <textarea spellcheck="true" placeholder="Content" name="data" required><%=data.data%></textarea>
+                        </div>
+                    </div>
+                    <button class="ui button" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/adminFooter'); -%>

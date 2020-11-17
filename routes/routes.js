@@ -78,7 +78,8 @@ router.post('/admin/offerpage', functions.isAdmin, function (req, res) {
         if (err)
             return res.redirect('/admin')
         else {
-            res.render('adminOfferPage', { data: found })
+            req.flash("success", "Successfully Updated")
+            res.redirect('/admin/offer-section')
         }
     })
 })
