@@ -18,7 +18,7 @@ exports.Register = function (to, name, uuid, callback) {
             'api-key': envData.sendinblue
         },
         data: {
-            sender: { name: 'inversion', email: 'support@112cart.com' },
+            sender: { name: '112Cart', email: 'support@112cart.com' },
             to: [{ email: to, name: 'Prakhar Shrivastava' }],
             params: { name:name,uuid:uuid  },
             tags: ['signup'],
@@ -47,7 +47,7 @@ exports.forgotPassword = function (to, token, callback) {
             'api-key': envData.sendinblue
         },
         data: {
-            sender: { name: 'inversion', email: 'support@112cart.com' },
+            sender: { name: '112Cart', email: 'support@112cart.com' },
             to: [{ email: to, }],
             params: { token: token },
             tags: ['password reset'],
@@ -72,7 +72,7 @@ exports.changedPassword = function (to, callback) {
             'api-key': envData.sendinblue
         },
         data: {
-            sender: { name: 'inversion', email: 'support@112cart.com' },
+            sender: { name: '112Cart', email: 'support@112cart.com' },
             to: [{ email: to, }],
             params: { mail: to },
             tags: ['password reset'],
@@ -106,7 +106,7 @@ exports.askQuote = function (email, data, callback) {
             'api-key': envData.sendinblue
         },
         data: {
-            sender: { name: 'inversion', email: 'support@112cart.com' },
+            sender: { name: '112Cart', email: 'support@112cart.com' },
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
@@ -143,7 +143,7 @@ exports.orderReceived=function(email,data,callback)
             'api-key': envData.sendinblue
         },
         data: {
-            sender: { name: 'inversion', email: 'support@112cart.com' },
+            sender: { name: '112Cart', email: 'support@112cart.com' },
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
@@ -169,8 +169,12 @@ exports.sendPerforma=function(email,data,callback)
         name: data.user.name,
         order: data.order,
         items: data.items,
-        user: data.user
+        user: data.user,
+        sgst: data.order.state.toLowerCase() === "jharkhand" ? data.order.tax/2 : 0,
+        cgst: data.order.state.toLowerCase() === "jharkhand" ? data.order.tax/2 : 0,
+        igst: data.order.state.toLowerCase() != "jharkhand" ? data.order.tax : 0,
     }
+    // console.log(d);
     const options = {
         method: 'POST',
         url: 'https://api.sendinblue.com/v3/smtp/email',
@@ -180,7 +184,7 @@ exports.sendPerforma=function(email,data,callback)
             'api-key': envData.sendinblue
         },
         data: {
-            sender: { name: 'inversion', email: 'support@112cart.com' },
+            sender: { name: '112Cart', email: 'support@112cart.com' },
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
@@ -211,7 +215,7 @@ exports.sendInvoice=function(email,data,callback)
         cgst: data.order.state.toLowerCase() === "jharkhand" ? data.order.tax/2 : 0,
         igst: data.order.state.toLowerCase() != "jharkhand" ? data.order.tax : 0,
     }
-    console.log(d)
+    console.log("invoice data",d)
     const options = {
         method: 'POST',
         url: 'https://api.sendinblue.com/v3/smtp/email',
@@ -221,7 +225,7 @@ exports.sendInvoice=function(email,data,callback)
             'api-key': envData.sendinblue
         },
         data: {
-            sender: { name: 'inversion', email: 'support@112cart.com' },
+            sender: { name: '112Cart', email: 'support@112cart.com' },
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
@@ -263,7 +267,7 @@ exports.serviceQuote=function(email,data,callback)
             'api-key': envData.sendinblue
         },
         data: {
-            sender: { name: 'inversion', email: 'support@112cart.com' },
+            sender: { name: '112Cart', email: 'support@112cart.com' },
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
