@@ -842,7 +842,9 @@ exports.postConfirmCancellation = function (req, res) {
             res.redirect('/admin/cancels-filter')
         }
         else {
-
+            mailer.cancelled(cancelled.user.email,{name:cancelled.user.name,orderId:cancelled.order.orderId},function(mailed){
+                console.log(mailed);
+            })
             req.flash('success', 'success')
             res.redirect('/admin/cancels-filter')
         }
@@ -864,7 +866,8 @@ exports.confirmOrder = function (req, res) {
         weight: req.body.weight,
         paid: true,
         status: 'authorized',
-        vendorId: req.body.vendorId
+        vendorId: req.body.vendorId,
+        prepaid:req.body.prepaid=="true"?"Prepaid":"COD"
 
     }
     orderServices.acceptOrder(req.params.orderId, d, function (order) {

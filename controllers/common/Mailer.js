@@ -19,7 +19,7 @@ exports.Register = function (to, name, uuid, callback) {
         },
         data: {
             sender: { name: '112Cart', email: 'support@112cart.com' },
-            to: [{ email: to, name: 'Prakhar Shrivastava' }],
+            to: [{ email: to, }],
             params: { name:name,uuid:uuid  },
             tags: ['signup'],
             templateId: 1
@@ -284,4 +284,32 @@ exports.serviceQuote=function(email,data,callback)
     });
 
     callback({ success: true })
+}
+
+exports.cancelled=function(email,data,callback){
+    const options = {
+        method: 'POST',
+        url: 'https://api.sendinblue.com/v3/smtp/email',
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            'api-key': envData.sendinblue
+        },
+        data: {
+            sender: { name: '112Cart', email: 'support@112cart.com' },
+            to: [{ email: to,  }],
+            params: { name:data.name,orderId:data.orderId  },
+            tags: ['Order-Cancellation'],
+            templateId: 9
+        },
+
+    };
+    axios(options).then((result) => {
+        callback({success:true})
+        // console.log(result)
+    }).catch((err) => {
+        console.log("sendinblue error",err)
+        callback({success:false})
+        
+    });
 }
