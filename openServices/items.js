@@ -93,7 +93,8 @@ class items {
                                 tax: foundItem.tax,
                                 sku: foundItem.sku,
                                 stock:foundItem.stock,
-                                cod:foundItem.cod
+                                cod:foundItem.cod,
+                                isBusiness: foundItem.isBusiness
 
                             }
 

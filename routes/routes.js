@@ -28,8 +28,8 @@ router.get('/dashboard', (req, res) => {
     })
 });
 
-router.get('/covid19', (req, res) => {
-    res.render('covid19')
+router.get('/franchisee', (req, res) => {
+    res.render('franchisee')
 })
 
 router.get("/bio-bubble", (req, res) => {
