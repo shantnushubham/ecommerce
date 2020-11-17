@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const { forwardAuthenticated, ensureAuthenticated } = require('../Middlewares/user/middleware');
-
+var functions = require('../Middlewares/common/functions')
 // Controllers
 var viewController = require('../controllers/view_controller');
 var UserControl = require('../controllers/user/userController');
-
+var offerpage = require('../models/Items/offerpage')
 
 router.get('/', (req, res) => {
     if (!req.user) {
@@ -45,9 +45,43 @@ router.get("/complete-disinfection", (req, res) => {
 })
 
 router.get("/offers", (req, res) => {
-    res.render("offers")
+    offerpage.findOne({ name: "offer" }, function (err, found) {
+        if (err)
+            return res.redirect('/')
+        else if (functions.isEmpty(found)) {
+            req.flash('success', 'No offers for now. Please check back later.')
+            return res.redirect('/')
+        }
+        else {
+            res.render('offers', { data: found })
+        }
+
+    })
 })
 
+router.get("/admin/offerpage", functions.isAdmin, function (req, res) {
+    offerpage.findOne({ name: "offer" }, function (err, found) {
+        if (err)
+            return res.redirect('/admin')
+        else {
+            res.render('adminOfferPage', { data: found })
+        }
+
+
+    })
+})
+
+router.post('/admin/offerpage', functions.isAdmin, function (req, res) {
+    var img = req.body.images.split('||')
+    var data = req.body.data
+    offerpage.findOneAndUpdate({ name: "offer" }, { cover: img, data: data }, function (err, found) {
+        if (err)
+            return res.redirect('/admin')
+        else {
+            res.render('adminOfferPage', { data: found })
+        }
+    })
+})
 router.get("/terms-conditions", (req, res) => {
     res.render("termsAndConditions")
 })
