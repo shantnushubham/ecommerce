@@ -59,36 +59,15 @@
             <% var bannerArray = new Array() %>
             <% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/offerCover.jpg", linkTo: ""}) %>
 
-            <% bannerArray.forEach((banner, index) => { %>
-            <a href="<%=banner.linkTo%>" id="slider-slider<%=index%>">
+            <% data.cover.forEach((banner, index) => { %>
                 <div class="heroCarousel-slide">
-                    <img class="heroCarousel-image" src="<%=banner.src%>" alt="" />
+                    <img class="heroCarousel-image" src="<%=banner%>" alt="" />
                 </div>
-            </a>
             <% }) %>
         </section>
     </div>
     <div style="text-align: left; margin-left: 15%; margin-right: 15%;">
-        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Cras nec purus blandit, fringilla lectus eget, molestie turpis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Suspendisse a metus a purus eleifend aliquam in quis risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Etiam a ex quis magna mattis bibendum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Cras nec purus blandit, fringilla lectus eget, molestie turpis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Suspendisse a metus a purus eleifend aliquam in quis risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Etiam a ex quis magna mattis bibendum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Cras nec purus blandit, fringilla lectus eget, molestie turpis.</li>
-        <li>Suspendisse a metus a purus eleifend aliquam in quis risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Etiam a ex quis magna mattis bibendum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Cras nec purus blandit, fringilla lectus eget, molestie turpis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Suspendisse a metus a purus eleifend aliquam in quis risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Etiam a ex quis magna mattis bibendum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Cras nec purus blandit, fringilla lectus eget, molestie turpis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Suspendisse a metus a purus eleifend aliquam in quis risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-        <li>Etiam a ex quis magna mattis bibendum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+        <%- data.data -%>
     </div>
 
 

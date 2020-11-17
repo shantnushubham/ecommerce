@@ -47,7 +47,7 @@ app.get('/downloads/bizAccounts',functions.isAdmin,adminController.downloadBizAc
 app.get("/downloads/invoice/payment", functions.isAdmin, adminController.getCSVDownloadPagePayment)
 app.post('/downloads/invoice/payment',functions.isAdmin,adminController.downloadInvoiceByRangePayment)
 app.get("/downloads/invoice/shipment", functions.isAdmin, adminController.getCSVDownloadPageShipment)
-app.post('/downloads/invoice/shipment',functions.isAdmin,adminController.downloadInvoiceByRangePayment)
+app.post('/downloads/invoice/shipment',functions.isAdmin,adminController.downloadInvoiceByRangeShipment)
 app.get('/downloads/users/:type',adminController.downloadUserList)
 
 

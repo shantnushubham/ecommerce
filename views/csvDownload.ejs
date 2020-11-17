@@ -30,10 +30,13 @@
                             <input type="date" placeholder="End Date" name="to" value="" required>
                         </div>
                         <div class="field">
-                            <label>Payment Status</label>
-                            <input type="text" placeholder="Payment Status(initialised/authorized)" name="payment" value="">
+                            <label>Select Payment Status</label>
+                            <select id="cars" name="payment" required>
+                                <option value="all">All</option>
+                                <option value="initialised">Initialised</option>
+                                <option value="authorized">Authorized</option>
+                            </select>
                         </div>
-                    </div>
                     <button class="ui button" type="submit">Submit</button>
                 </form>
             </div>

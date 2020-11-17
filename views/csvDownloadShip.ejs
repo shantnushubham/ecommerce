@@ -30,8 +30,16 @@
                             <input type="date" placeholder="End Date" name="to" value="" required>
                         </div>
                         <div class="field">
-                            <label>Shipment Status</label>
-                            <input type="text" placeholder="shipment status" name="shipment" value="">
+                            <label>Select Shipment Status</label>
+                            <select id="cars" name="shipment" required>
+                                <option value="all">All</option>
+                                <option value="processing">Processing</option>
+                                <option value="approved">Approved</option>
+                                <option value="cancelled">Cancelled</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancellation-processing">Cancellation Processing</option>
+                                <option value="saved">Saved</option>
+                            </select>
                         </div>
                     </div>
                     <button class="ui button" type="submit">Submit</button>
