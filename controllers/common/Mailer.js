@@ -97,6 +97,7 @@ exports.askQuote = function (email, data, callback) {
         items: data.items,
         user: data.user
     }
+    console.log("maildata",d);
     const options = {
         method: 'POST',
         url: 'https://api.sendinblue.com/v3/smtp/email',
@@ -188,7 +189,7 @@ exports.sendPerforma=function(email,data,callback)
             to: [{ email: d.mail, }],
             params: d,
             tags: ['Quotation'],
-            templateId: 2,
+            templateId: 4,
             "bcc":[{"email":"support@112cart.com","name":"112Cart"}]
 
         },

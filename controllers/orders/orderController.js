@@ -324,7 +324,7 @@ exports.codPath = function (req, res) {
                                             if (req.user) {
                                                 var promiseArr=[]
                                                 // console.log(createOrder.order.orderedItems);
-                                                console.log("list",createOrder.order.orderedItems);
+                                                // console.log("list",createOrder.order.orderedItems);
                                                 for( var i=0;i< createOrder.order.orderedItems.length;i++){
                                                     // console.log("foreach",createOrder.order.orderedItems[i]);
                                                     if(createOrder.order.orderedItems[i].iid!=undefined)
@@ -547,10 +547,11 @@ exports.createQuotation = function (req, res) {
                                     req.flash('success', 'Quote Requested!')
                                     res.redirect('/cartpage')
                                     var maildata = {
-                                        order: createOrder,
-                                        items: cart.itemArray,
+                                        order: createOrder.order,
+                                        items: cart.cartList,
                                         user: req.user
                                     }
+                                    console.log("items",maildata.items);
                                     mailer.askQuote(req.body.email, maildata, function (mailed) {
                                         console.log(mailed);
                                     })
@@ -1308,5 +1309,25 @@ exports.postUpdateFee = function (req, res) {
         else
             req.flash('success', 'success')
         res.redirect('/admin')
+    })
+}
+//-----------------------------------------------------------------------------------------------------
+exports.getTrack=function(req,res)
+{
+    res.render('addTrack',{orderId:req.params.orderId})
+}
+exports.postTrack=function(req,res)
+{
+    orderServices.addTrack(req.params.orderId,req.body.link,function(updated){
+        if(updated.success==false)
+        {
+            req.flash('error','error')
+            res.redirect('/admin/track/'+req.params.orderId)
+        }
+        else
+        {
+            req.flash('success','success')
+            res.redirect('/admin/track/'+req.params.orderId)
+        }
     })
 }
