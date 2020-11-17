@@ -401,11 +401,19 @@ class order {
                     callback({ success: false })
                 else {
                     ordermodel.findOneAndUpdate({ orderId: cancelReq.orderId }, { shipmentStatus: 'cancelled', transaction_id: transaction_id }, function (err, updatedOrder) {
-                        if (err)
+                        if (err||functions.isEmpty(updatedOrder))
                             callback({ success: false })
-                        else
-                            callback({ success: true })
-                    })
+                        else{
+                            userModel.findOne({uuid:updatedOrder.uuid},function(err,user){
+                                if(err)
+                                callback({success:false})
+                                else
+                                callback({ success: true,order:updatedOrder,cancelRequest:cancelReq,user:user })
+
+                            })
+                        
+                        }
+                        })
                 }
             })
     }
