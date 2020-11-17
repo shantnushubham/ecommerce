@@ -110,11 +110,17 @@ class order {
         if (!(f instanceof Date) || !(t instanceof Date))
             callback({ success: false })
         else {
+            var filter={}
+            if(payment==="all")
+            filter={ $match: { purchaseTime: { $gte: f, $lte: t },  invoiceSent: true }}
+            else
+            filter={ $match: { purchaseTime: { $gte: f, $lte: t },status:payment,  invoiceSent: true }}
             ordermodel.aggregate([
-                { $match: { purchaseTime: { $gte: f, $lte: t }, status: payment, invoiceSent: true } },
+                 filter,
 
             ]).exec((err, foundOrder) => {
                 console.log(err);
+                console.log(f,t,payment);
                 if (err) callback({ success: false })
                 else callback({ success: true, data: foundOrder })
 
@@ -130,8 +136,13 @@ class order {
         if (!(f instanceof Date) || !(t instanceof Date))
             callback({ success: false })
         else {
+            var filter={}
+            if(shipment==="all")
+            filter={ $match: { purchaseTime: { $gte: f, $lte: t }, invoiceSent: true } }
+            else
+            filter={ $match: { purchaseTime: { $gte: f, $lte: t },shipmentStatus: shipment, invoiceSent: true } }
             ordermodel.aggregate([
-                { $match: { purchaseTime: { $gte: f, $lte: t }, shipmentStatus: shipment, invoiceSent: true } },
+                filter,
 
             ]).exec((err, foundOrder) => {
                 console.log(err);
