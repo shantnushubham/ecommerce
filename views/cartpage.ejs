@@ -1,0 +1,215 @@
+<%- include("partials/newHeader.ejs") %>
+
+<% var isJH = currentUser != "" && currentUser.state.toLowerCase() === "jharkhand" %>
+
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="EUR">
+
+	<div class="home-content">
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label">Your Cart</span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<meta itemprop="item" content="/cart.php">
+							<span class="breadcrumb-label" itemprop="name">Your Cart</span>
+							<meta itemprop="position" content="2" />
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="page page-content--centered">
+			<main class="page-content" data-cart>
+				<h1 class="page-heading tt-cart-view" data-cart-page-title>
+					<% var items = "item" + ((cartCount > 1) ? "s" : '') %>
+					Your Cart ( <%=cartCount%> <%=items%> )
+				</h1>
+				<% if (cartlisting.length > 0 ) { %>
+
+				<div data-cart-status>
+				</div>
+
+				<div class="loadingOverlay"></div>
+				<div data-cart-content>
+					<table class="cart" data-cart-quantity="1">
+						<thead class="cart-header">
+							<tr>
+								<th class="cart-header-item" colspan="2">Item</th>
+								<th class="cart-header-item">Price</th>
+								<th class="cart-header-item cart-header-quantity">Quantity</th>
+								<th class="cart-header-item cart-header-quantity">Total (Exc. Tax)</th>
+								<th class="cart-header-item">Tax</th>
+							</tr>
+						</thead>
+						<tbody class="cart-list">
+							<% var totalWithoutTax = 0 %>
+							<% var totalTax = 0 %>
+							<% cartlisting.forEach((cartItem, index) => { %>
+							<tr class="cart-item" data-item-row>
+								<td class="cart-item-block cart-item-figure">
+									<img src="<%=cartItem.item.image[0]%>" alt="<%=cartItem.item.name%>"
+										title="<%=cartItem.item.name%>" data-sizes="auto"
+										srcset="<%=cartItem.item.image[0]%>" class=" cart-item-image" />
+								</td>
+								<td class="cart-item-block cart-item-title">
+									<h4 class="cart-item-name"><a
+											href="/items/<%=cartItem.item.iid%>"><%=cartItem.item.name%></a></h4>
+
+								</td>
+								<td class="cart-item-block cart-item-info tt-full-price">
+									<span class="cart-item-label">Price</span>
+									<span class="cart-item-value ">₹ <%=cartItem.item.price%></span>
+								</td>
+
+								<td class="cart-item-block cart-item-info cart-item-quantity">
+
+									<label class="form-label cart-item-label"
+										for="qty-b893fdb7-4892-4ac7-af0d-3f90c1a8bae5">Quantity:</label>
+									<div class="form-increment" data-quantity-change>
+										<input name="quantity" style="border-color: transparent;" type="number"
+											value=<%=cartItem.quantity%> data-quantity-min="0"
+											id="productQuant<%=index%>" readonly>
+									</div>
+
+								</td>
+								<% totalWithoutTax = totalWithoutTax + parseInt(cartItem.quantity) * parseInt(cartItem.item.price) %>
+
+								<td class="cart-item-block cart-item-info tt-full-price">
+									<span class="cart-item-label">Total</span>
+									<strong class="cart-item-value ">₹
+										<%=parseInt(cartItem.quantity) * parseInt(cartItem.item.price)%></strong>
+								</td>
+
+								<td class="cart-item-block cart-item-info">
+									<span class="cart-item-label">Tax</span>
+									<span class="cart-item-value ">₹
+										<%=Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) * parseInt(cartItem.quantity)))%>
+										<% totalTax = totalTax + Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) * parseInt(cartItem.quantity))) %>
+										(<%=cartItem.item.tax%>%) </span>
+								</td>
+							</tr>
+							<% }) %>
+						</tbody>
+					</table>
+				</div>
+
+				<div data-cart-totals>
+					<ul class="cart-totals">
+						<li class="cart-total">
+							<div class="cart-total-label">
+								<strong>Subtotal:</strong>
+							</div>
+							<div class="cart-total-value">
+								<span>₹ <%=totalWithoutTax%> </span>
+							</div>
+						</li>
+						<% if (isJH) { %>
+						<li class="cart-total">
+							<div class="cart-total-label">
+								<strong>SGST </strong>
+							</div>
+							<div class="cart-total-value">
+								<span>₹ <%=totalTax/2%></span>
+							</div>
+						</li>
+						<li class="cart-total">
+							<div class="cart-total-label">
+								<strong>CGST</strong>
+							</div>
+							<div class="cart-total-value">
+								<span>₹ <%=totalTax/2%></span>
+							</div>
+						</li>
+						<% } else { %>
+						<li class="cart-total">
+							<div class="cart-total-label">
+								<strong>IGST </strong>
+							</div>
+							<div class="cart-total-value">
+								<span>₹ <%=totalTax%></span>
+							</div>
+						</li>
+						<% } %>
+						<li class="cart-total">
+							<div class="cart-total-label">
+								<strong>Convenience Fee</strong>
+							</div>
+							<div class="cart-total-value">
+								<span>₹ <%=fee%></span>
+							</div>
+						</li>
+						<li class="cart-total">
+							<div class="cart-total-label">
+								<strong>Grand total:</strong>
+							</div>
+							<div class="cart-total-value cart-total-grandTotal">
+								<span>₹ <%=(totalWithoutTax + totalTax + fee)%></span>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<% } else { %>
+				<h1 style="text-align: center; font-size: larger;"> You don't have any items in your cart.</h1>
+				<% } %>
+			</main>
+			<% if (cartlisting.length > 0 ) { %>
+			<form action="/proceed" method="POST">
+				<div class="uk-margin" style="text-align: center;">
+					<input class="uk-input uk-form-width-large" type="text" name="code" placeholder="Offer Code">
+				</div>
+
+				<div class="uk-child-width-expand@s uk-text-center" uk-grid>
+					<div>
+						<a class="button button--primary" href="/clearCart" style="background-color:#F67963;"
+							title="Click here to proceed to checkout">Clear
+							Cart</a>
+					</div>
+					<div>
+						<a class="button button--primary" href="/updateCart" title="Click here to proceed to checkout">
+							Update Cart</a>
+					</div>
+					<div>
+						<button class="button button--primary" type="submit" style="background-color: #A2C68C;"
+							title="Click here to proceed to checkout">Check
+							out</button>
+					</div>
+				</div>
+			</form>
+			<% } %>
+
+		</div>
+
+	</div>
+	<div id="modal" class="modal" data-reveal data-prevent-quick-search-close>
+		<a href="#" class="modal-close" aria-label="Close" role="button">
+			<span aria-hidden="true">&#215;</span>
+		</a>
+		<div class="modal-content"></div>
+		<div class="loadingOverlay"></div>
+	</div>
+	<div id="alert-modal" class="modal modal--alert modal--small" data-reveal data-prevent-quick-search-close>
+		<div class="swal2-icon swal2-error swal2-icon-show"><span class="swal2-x-mark"><span
+					class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div>
+
+		<div class="modal-content"></div>
+
+		<div class="button-container"><button type="button" class="confirm button" data-reveal-close>OK</button></div>
+	</div>
+</div>
+
+<%- include("partials/newFooter.ejs") %>

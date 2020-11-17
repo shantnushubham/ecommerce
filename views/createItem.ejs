@@ -1,0 +1,141 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Add Item/Service</li>
+        </ol>
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+                <h2><i class="fa fa-file"></i>Add Item/Service</h2>
+            </div>
+
+            <div class="container">
+                <br>
+                <h1>Add Item/Service</h1>
+                <br>
+                <br>
+                <form action="/admin/createItem" method="POST">
+                    <div class="ui form">
+                        <div class="field">
+                            <label>Name</label>
+                            <input type="text" placeholder="Name" name="name" required>
+                        </div>
+                        <div class="field">
+                            <label>Price</label>
+                            <input type="text" placeholder="Price" name="price" required>
+                        </div>
+                        <div class="field">
+                            <label>GST Percentage</label>
+                            <input type="text" placeholder="GST Percent" name="gstPercent">
+                        </div>
+                        <div class="field">
+                            <label>Weight</label>
+                            <input type="text" placeholder="Weight" name="weight">
+                        </div>
+                        <div class="field">
+                            <label>Color</label>
+                            <input type="text" placeholder="Color" name="color">
+                        </div>
+                        <div class="field">
+                            <label>Category</label>
+                            <input type="text" placeholder="Category" name="category" required>
+                        </div>
+                        <div class="field">
+                            <label>Sub-Category</label>
+                            <input type="text" placeholder="Sub-Category" name="subCategory">
+                        </div>
+                        <div class="field">
+                            <label>Tag</label>
+                            <input type="text" placeholder="Tag" name="tag">
+                        </div>
+                        <div class="field">
+                            <label>Grouping-Tag</label>
+                            <input type="text" placeholder="Grouping-Tag" name="groupingTag">
+                        </div>
+                        <div class="field">
+                            <label>Vendor Id</label>
+                            <input type="text" placeholder="Vendor Id" name="vendorId" required>
+                        </div>
+                        <div class="field">
+                            <label>Stock</label>
+                            <input type="number" placeholder="Stock Count" name="stock" required>
+                        </div>
+                        <div class="inline fields">
+                            <label for="fruit">Is this a Service?</label>
+                            <div class="field">
+                                <input type="radio" name="isService" value="true" tabindex="0" class="hidden" required>
+                                <label>Yes</label>
+
+                            </div>
+                            <div class="field">
+                                <input type="radio" name="isService" value="false" tabindex="0" class="hidden">
+                                <label>No</label>
+                            </div>
+                        </div>
+                        <div class="inline fields">
+                            <label for="fruit">Is COD Allowed?</label>
+                            <div class="field">
+                                <input type="radio" name="cod" value="true" tabindex="0" class="hidden" required>
+                                <label>Yes</label>
+                            </div>
+                            <div class="field">
+                                <input type="radio" name="cod" value="false" tabindex="0" class="hidden">
+                                <label>No</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Measurement unit (valid only for services)</label>
+                            <input type="text" placeholder="Measurement Unit" name="measurementUnit">
+                        </div>
+                        <div class="inline fields">
+                            <label for="fruit">Only for Business Accounts? (If your category is "Chemicals" please
+                                choose "Yes")</label>
+                            <div class="field">
+                                <input type="radio" name="isBusiness" value="true" tabindex="0" class="hidden" required>
+                                <label>Yes</label>
+
+                            </div>
+                            <div class="field">
+                                <input type="radio" name="isBusiness" value="false" tabindex="0" class="hidden">
+                                <label>No</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Image Link (For multiple images, separate links using "||")</label>
+                            <input type="text" placeholder="ImageLink" name="image" required>
+                        </div>
+                        <div class="field">
+                            <label>Short Description</label>
+                            <input type="text" placeholder="Short Description" name="shortDesc" required>
+                        </div>
+
+                        <div class="field">
+                            <label>Content</label>
+                            <p>For a bold text, enclose the text to bold with <code>&lt;b&gt;</code>
+                                Example: <code>&lt;b&gt; This is a bold text &lt;/b&gt;</code><br>
+                                For an italic text, enclose the text to italicize with <code>&lt;i&gt;</code>
+                                Example: <code>&lt;i&gt; This is an italic text &lt;/i&gt;</code><br>
+                                For an underlined text, enclose the text to underline with <code>&lt;u&gt;</code>
+                                Example: <code>&lt;u&gt; This is an underlined text &lt;/u&gt;</code><br>
+                                For inserting a line break, use <code>&lt;br&gt;</code>
+                                Example: Line 1 <code>&lt;br&gt;</code> Line 2<br>
+                                For using a list, enclose the list items with <code>&lt;li&gt;</code>
+                                Example: <code>&lt;li&gt;</code> Item 1 <code>&lt;/li&gt;</code><code>&lt;li&gt;</code>
+                                Item 2 <code>&lt;/li&gt;</code><code>&lt;li&gt;</code> Item 3 <code>&lt;/li&gt;</code>
+                            </p>
+                            <textarea spellcheck="true" placeholder="Content" name="content" required></textarea>
+                        </div>
+                    </div>
+                    <button class="ui button" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/adminFooter'); -%>

@@ -1,0 +1,60 @@
+<%- include("partials/adminHeader.ejs") %>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Accounts & Invoice Section</li>
+        </ol>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i>Accounts & Invoice Section</div>
+            <div class="container margin_60_35">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="box_grid wow">
+                            <figure class="block-reveal">
+                                <div class="block-horizzontal"></div>
+                                <a href="#0" class="wish_bt"></a>
+                                <a href="/admin/orders-filter-shipment/approved"><img
+                                        src="https://d6fhaebhrj3za.cloudfront.net/images/AdminImages/generateInvoive.jpg"
+                                        class="img-fluid" alt=""></a>
+                            </figure>
+                            <div class="wrapper">
+                                <small>Admin Exclusive</small>
+                                <a href="/admin/orders-filter-shipment/approved">
+                                    <h3>Generate Invoice</h3>
+                                </a>
+                                <p>Generate Invoice to Any Completed Order</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="box_grid wow">
+                            <figure class="block-reveal">
+                                <div class="block-horizzontal"></div>
+                                <a href="#0" class="wish_bt"></a>
+                                <a href="/admin/generated-invoice"><img
+                                        src="https://d6fhaebhrj3za.cloudfront.net/images/AdminImages/generatedInvoice.jpg"
+                                        class="img-fluid" alt=""></a>
+                            </figure>
+                            <div class="wrapper">
+                                <small>Admin Exclusive</small>
+                                <a href="/admin/generated-invoice">
+                                    <h3>Generated Invoices</h3>
+                                </a>
+                                <p>List of generated invoices with an option to resend invoice.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/adminFooter") %>

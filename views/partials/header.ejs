@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="<%=desc%>">
+    <meta name="author" content="Ansonika">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img//apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/img/site.webmanifest">
+    <!-- TITLE -->
+    <title><%=title%></title>
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="https://d6fhaebhrj3za.cloudfront.net/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style1.css" rel="stylesheet">
+    <link href="/css/vendors.css" rel="stylesheet">
+    <link href="/css/all_icons.min.css" rel="stylesheet">
+
+    <!-- Owl Theme Default CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/owl.theme.default.min.css">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/owl.carousel.min.css">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/animate.min.css">
+    <!-- Flaticon CSS -->
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/nice-select.css">
+    <!-- Imagelightbox CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/imagelightbox.min.css">
+    <!-- Meanmenu CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/meanmenu.min.css">
+    <!-- Date Picker CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/date-picker.min.css">
+    <!-- Date Picker CSS -->
+    <link rel="stylesheet" href="https://d6fhaebhrj3za.cloudfront.net/css/odometer.min.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="/css/responsive.css">
+
+    <!-- SPECIFIC CSS -->
+    <!-- <link href="css/skins/square/grey.css" rel="stylesheet"> -->
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.8/dist/css/uikit.min.css" />
+
+</head>
+
+<body>
+
+    <style>
+        .uk-navbar-nav li a {
+            color: white;
+        }
+
+        .uk-navbar-nav li a:hover {
+            color: #FA7725;
+        }
+
+        #sideBtn {
+            background-color: #FA7725;
+            color: white;
+        }
+
+        #sideBtn:hover {
+            color: #303030;
+        }
+
+        #searchBar::placeholder {
+            color: white;
+        }
+    </style>
+
+    <% if (error && error.length > 0) { %>
+    <div class="alert alert-danger" role="alert" style="text-align: center;">
+        <%= error %>
+    </div>
+    <% } else if (success && success.length > 0) { %>
+    <div class="alert alert-success" role="alert" style="text-align: center;">
+        <%= success %>
+    </div>
+    <% } %>
+
+    <% var array = new Array() %>
+    <% array.push({name : "COVID-19 Solutions", linkTo: "/covid19", desc: ""}) %>
+    <% array.push({name : "Lab Solutions", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Pathology", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Histopathology", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Entomology", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Geography", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Surveying", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Visual Teaching", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Electronics", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Pharmacy", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Books", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Glassware", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Summer Uniforms", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Winter Uniforms", linkTo: "#coming-soon", desc: ""}) %>
+    <% array.push({name : "Coming Soon", linkTo: "#coming-soon", desc: ""}) %>
+
+    <!-- Start Preloader Area -->
+    <!-- <div class="preloader">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div> -->
+    <!-- End Preloader Area -->
+
+    <div id="page" class="theia-exception">
+
+        <!-- Start Desktop Navbar Area -->
+        <div style="background-color: #122B76;" id="desktop-nav"
+            uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar">
+            <nav class="uk-navbar-container uk-margin" style="background-color: #122B76; margin-bottom: 0;" uk-navbar>
+                <div class="uk-navbar-left">
+                    <a class="uk-navbar-item uk-logo" href="/"><img src="/img/newLogo.png" width="150px"></a>
+                </div>
+                <div class="uk-navbar-center">
+                    <ul class="uk-navbar-nav">
+                        <li><a href="/" class="nav-link">Home</a></li>
+                        <li><a href="/items" class="nav-link">All Items</a></li>
+                        <li><a href="/cartPage" class="nav-link">Cart (<%=cartCount%>) &nbsp;<span
+                                    uk-icon="cart"></span></a></li>
+                    </ul>
+                </div>
+                <div class="uk-navbar-right">
+                    <div class="uk-navbar-item">
+                        <a class="uk-navbar-toggle" uk-search-icon href="#" style="color: white;"></a>
+                        <div class="uk-drop" uk-drop="mode: click; pos: left-center; offset: 0">
+                            <form class="uk-search uk-search-navbar uk-width-1-1" action="/search" method="POST">
+                                <input class="uk-search-input" type="search" placeholder="Search..." id="searchBar"
+                                    name="test" autofocus>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="uk-navbar-item">
+                        <% if (currentUser != "") { %>
+                        <ul class="uk-navbar-nav">
+                            <li><a class="nav-link" href="users/logout">Logout</a></li>
+                        </ul>
+                        <a href="#" data-toggle="modal" data-target="#myModal2" class="uk-button uk-button-default"
+                            id="sideBtn"><%=currentUser.name.split(" ")[0]%> &nbsp; <span uk-icon="menu"></span></a>
+                        <% } else { %>
+                        <a href="/users/login" class="uk-button uk-button-default" id="sideBtn">Login &nbsp; <span
+                                uk-icon="user"></span></a>
+                        <% } %>
+                    </div>
+                </div>
+            </nav>
+            <div class="scrollmenu">
+                <div uk-slider>
+                    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+                        <ul class="uk-slider-items">
+                            <% array.forEach(element => { %>
+                            <li>
+                                <a href="<%=element.linkTo%>" class="navBtn" uk-toggle><%=element.name%></a>
+                            </li>
+                            <% }); %>
+                        </ul>
+                        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"
+                            uk-slidenav-previous uk-slider-item="previous"></a>
+                        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+                            uk-slider-item="next"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Desktop Navbar Area -->
+
+        <!-- Start Mobile Navbar Area -->
+        <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky" id="mobile-nav">
+            <nav class="uk-navbar-container" style="background-color: #122B76; margin-bottom: 0;" uk-navbar>
+                <div class="nav-overlay uk-navbar-left">
+                    <a class="uk-navbar-item uk-logo" href="/"><img src="/img/newLogo.png" width="100px"></a>
+                </div>
+                <div class="nav-overlay uk-navbar-right">
+                    <a class="uk-navbar-toggle" uk-search-icon style="color: white;"
+                        uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+                    <a href="#toggle-animation" class="uk-navbar-toggle" style="color: white;"
+                        uk-toggle="target: #toggle-animation; animation: uk-animation-fade" uk-navbar-toggle-icon></a>
+                    <div id="toggle-animation" style="width: 100%;" uk-dropdown="pos: bottom-center">
+                        <ul class="uk-nav uk-dropdown-nav">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/items">All Items</a></li>
+                            <li><a href="/cartPage">Cart (0) &nbsp;<span uk-icon="cart"></span></a></li>
+                            <li class="uk-nav-divider"></li>
+                            <% if (currentUser != "") { %>
+                            <li><a href="/users/logout">Logout</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#myModal2"
+                                    class="uk-button uk-button-default" id="sideBtn"><%=currentUser.name.split(" ")[0]%>
+                                    &nbsp; <span uk-icon="menu"></span></a></li>
+                            <% } else { %>
+                            <li><a href="/users/login" class="uk-button uk-button-default" id="sideBtn">Login &nbsp;
+                                    <span uk-icon="user"></span></a></li>
+                            <% } %>
+                        </ul>
+                    </div>
+                    <!-- <div id="toggle-animation" class="uk-card uk-card-default uk-card-body uk-margin-small">Animation
+                    </div> -->
+                </div>
+                <div class="nav-overlay uk-navbar-left uk-flex-1" hidden>
+                    <div class="uk-navbar-item uk-width-expand">
+                        <form class="uk-search uk-search-navbar uk-width-1-1" method="POST" action="/search">
+                            <input class="uk-search-input" type="search" placeholder="Search..." id="searchBar"
+                                name="test" autofocus>
+                        </form>
+                    </div>
+                    <a class="uk-navbar-toggle" style="color: white;" uk-close
+                        uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+                </div>
+            </nav>
+            <div class="scrollmenu">
+                <div uk-slider>
+                    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+                        <ul class="uk-slider-items">
+                            <% array.forEach(element => { %>
+                            <li>
+                                <a href="<%=element.linkTo%>" class="navBtn" uk-toggle><%=element.name%></a>
+                            </li>
+                            <% }); %>
+                        </ul>
+                        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"
+                            uk-slidenav-previous uk-slider-item="previous"></a>
+                        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+                            uk-slider-item="next"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Mobile Navbar Area -->
+
+        <!-- Start Coming Soon Modal -->
+        <div id="coming-soon" class="uk-flex-top" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+                <h2 style="text-align: center;">This Category is <br>
+                    <b style="color: #004aad;">Coming soon.</b>
+                </h2>
+                <h4 style="text-align: center;">Checkout available:</h4>
+                <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+                    <div style="text-align: center;">
+                        <a class="default-btn-two" href="#productsAndServices"
+                            style="padding: 8px 15px 8px 15px; color: white;" uk-scroll>
+                            Products </a>
+                    </div>
+                    <div style="text-align: center;">
+                        <a class="default-btn-two" href="#productsAndServices"
+                            style="padding: 8px 15px 8px 15px; color: white;" uk-scroll>
+                            Services </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Coming Soon Modal -->
+
+        <!-- Start Sidebar Modal -->
+        <div class="sidebar-modal">
+            <div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <i class="fa fa-times"></i>
+                                </span>
+                            </button>
+                            <h2 class="modal-title" id="myModalLabel2">
+                                <a href="/">
+                                    <img src="/img/112cartLogo.png" alt="Logo">
+                                </a>
+                                <p style="text-align: center; font-style: italic; color: white; margin-top: 5px;">
+                                    Service is salvation</p>
+                            </h2>
+                        </div>
+                        <div class="modal-body">
+                            <div class="sidebar-modal-widget">
+                                <h3 class="title">My Account</h3>
+                                <ul>
+                                    <li>
+                                        <a href="#"> Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="/orders">My Orders</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Become a Service Partner</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="sidebar-modal-widget">
+                                <h3 class="title">Connect With Us</h3>
+                                <ul class="social-list">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-instagram"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-linkedin"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="sidebar-modal-widget">
+                                <h3 class="title">Contact Info</h3>
+                                <ul class="contact-info">
+                                    <li>
+                                        <i class="fa fa-map-marker"></i>
+                                        Address
+                                        <span>44 Canal Center Plaza #200, Alexandria, VA 22314, USA</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-envelope"></i>
+                                        Email
+                                        <span>asahi@gmail.com</span>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-phone"></i>
+                                        Phone
+                                        <span>+25462755, 265497466</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Sidebar Modal -->

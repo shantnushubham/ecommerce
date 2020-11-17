@@ -1,0 +1,280 @@
+<%- include("partials/newHeader.ejs") %>
+
+<style>
+	.default-btn {
+		font-weight: light;
+		font-size: medium;
+		background-color: #ffaa3d;
+		border-radius: 50px;
+		padding: 7px 14px 7px 14px;
+		color: white;
+	}
+
+	#orange {
+		color: #ffaa3d;
+	}
+</style>
+
+<% var isJH = currentUser != "" && currentUser.state.toLowerCase() === "jharkhand" %>
+
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="EUR">
+
+	<div class="home-content">
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label">Checkout</span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/items" class="breadcrumb-label" itemprop="item"><span
+									itemprop="name">Cart</span></a>
+							<meta itemprop="position" content="2" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<meta itemprop="item" content="/laundry-detergent/">
+							<span class="breadcrumb-label" itemprop="name">Checkout</span>
+							<meta itemprop="position" content="3" />
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div style="margin-left: 15%; margin-right: 15%;">
+			<div class="uk-child-width-1-1@m" uk-grid>
+				<div style="text-align: left !important;">
+					<div class="uk-overflow-auto">
+						<table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+							<thead>
+								<tr>
+									<th class="uk-table-shrink">Image</th>
+									<th class="uk-table-expand">Name</th>
+									<th class="uk-width-small">Quantity</th>
+									<th class="uk-width-small">Amount</th>
+									<th class="uk-width-small">GST</th>
+									<th class="uk-width-small">Total <small>(Inc. Tax, Disc.)</small></th>
+								</tr>
+							</thead>
+							<tbody>
+								<% var totalDiscount = 0 %>
+								<% var itemAmount = 0 %>
+								<% var itemDiscount = 0 %>
+								<% var totalDiscountPerItem = 0 %>
+								<% var totalAmount = 0 %>
+								<% var payForItem = 0 %>
+								<% var taxPerItem = 0 %>
+								<% var totalTax = 0 %>
+								<% var totalPerItem = 0 %>
+
+
+								<% cart.forEach(cartItem => { %>
+
+								<% itemAmount = ((cartItem.quantity) * (cartItem.price[0])) %></a>
+								<% discountPerItem = (cartItem.price[0] * (discount/100)) %>
+								<% totalDiscountPerItem = discountPerItem * cartItem.quantity %>
+								<% payForItem = (itemAmount - totalDiscountPerItem) %>
+								<% totalDiscount = totalDiscount + totalDiscountPerItem %>
+								<% taxPerItem = (payForItem * (cartItem.tax[0])/100) %>
+								<% totalTax += taxPerItem %>
+								<% totalPerItem = payForItem + taxPerItem %>
+								<% totalAmount += totalPerItem %>
+
+								<tr>
+									<td><img class="uk-preserve-width uk-border-circle"
+											src="<%=cartItem.item.image[0]%>" width="40" alt=""></td>
+									<td class="uk-table-link">
+										<a class="uk-link-reset" href=""><%=cartItem.item.name%></a>
+									</td>
+									<td class="uk-table-link">
+										<a class="uk-link-reset" href=""><%=cartItem.quantity%></a>
+									</td>
+									<td class="uk-table-link">
+										<a class="uk-link-reset" href="">₹ <%=parseInt(payForItem)%>
+									</td>
+									<td class="uk-table-link">
+										<a class="uk-link-reset" href="">₹ <%= parseInt(taxPerItem)%>
+											<span
+												class="uk-text-small uk-text-success">(<%=parseInt(cartItem.tax[0])%>%)</span></a>
+									</td>
+									<td class="uk-text-nowrap">
+										₹ <%=(parseInt(totalPerItem))%>
+									</td>
+
+									<td></td>
+								</tr>
+								<% }) %>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><b id="orange">Cart Subtotal</b></td>
+									<td>₹ <%=parseInt(totalAmount)%></td>
+								</tr>
+								<% if (isJH) { %>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><b id="orange">SGST </b></td>
+									<td>₹ <%=(totalTax/2).toFixed(2)%></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><b id="orange">CGST </b></td>
+									<td>₹ <%=(totalTax/2).toFixed(2)%></td>
+								</tr>
+								<% } else { %>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><b id="orange">IGST </b></td>
+									<td>₹ <%=totalTax.toFixed(2)%></td>
+								</tr>
+								<% } %>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><b id="orange">Discount
+											<% if (code != null && code != "" && code.length >= 2) { %>
+											<br>
+											<span class="uk-text-small uk-text-success" style="font-weight: 100;"> (Code
+												Applied: <%=code%>)
+											</span>
+											<% } %>
+										</b></td>
+									<td>₹ <%=totalDiscount%>
+										<br>
+										<% if (discount != null && discount > 0) { %>
+										<span class="uk-text-small uk-text-success"
+											style="font-weight: 100;">(<%=discount%>%)</span>
+										<% } %>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><b id="orange">Convenience Fee</b></td>
+									<td>+ ₹ <%=fee%></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><b id="orange">Total</b></td>
+									<td>₹ <%=parseInt(totalAmount + fee) %></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div>
+
+					<div class="uk-card uk-card-default" style="text-align: left !important;">
+						<div class="uk-card-body">
+							<% if (address.address.length > 0) { %>
+							<form method="POST" action="/checkout">
+								<div class="uk-margin">
+									<div class="uk-form-label">
+										<h6>Select your Address:
+										</h6>
+									</div>
+									<div class="uk-form-controls uk-form-controls-text">
+										<% address.address.forEach(el => { %>
+										<input class="uk-radio" type="radio" name="address" value="<%=el._id%>"
+											required>
+										<label>
+											<span
+												style="color: #fa7725; text-transform: uppercase; font-size: medium;"><%=el.addressType%></span>
+											<br>
+											<%=(el.fullAddress + ", " + el.landmark  + ", " + el.locality + ", " + 
+											el.city + ", " + el.state +".")%><br>
+											PIN: <%=(el.pincode) %><br>
+											Phone Number: <span
+												style="color: #fa7725; text-transform: uppercase;"><%=el.phone%></span></label><br>
+										<% }) %>
+
+									</div>
+								</div>
+
+								<div class="uk-margin" style="text-align: center;">
+									<input class="uk-input uk-form-width-large" type="text" name="offer"
+										placeholder="Offer Code" value="<%=code%>" hidden>
+								</div>
+
+								<div class="uk-grid-column-small uk-grid-row-small uk-child-width-1-4@s uk-text-center"
+									style="padding-left:20%; padding-right: 20%;" uk-grid>
+									<div>
+										<button class="default-btn" type="submit">Place Order</button>
+									</div>
+									<% if (codAllowed) { %>
+									<div>
+										<button class="default-btn" type="submit" formaction="/order-cod">Order as
+											COD</button>
+									</div>
+									<% } %>
+									<% if (((currentUser.isBusiness == true && currentUser.premium == true) || (currentUser.isBusiness == false && currentUser.creditAllowed == true)) && (currentUser.credPerc > 0 && currentUser.credBalance >= total)) {  %>
+									<div>
+										<button class="default-btn" type="submit" formaction="/order-credit">Credit
+											Payment</button>
+									</div>
+									<% } %>
+									<div>
+										<button class="default-btn" type="submit" formaction="/save-order">Save
+											Order</button>
+									</div>
+
+								</div>
+								<div style="text-align: center; margin: 15px">
+									<input class="uk-input uk-form-width-large" type="text" name="email"
+										placeholder="Email">
+								</div>
+								<div style="text-align: center; margin: 15px">
+									<button class="default-btn" type="submit" formaction="/quotation">Create
+										Quote</button>
+								</div>
+
+
+							</form>
+							<% } else { %>
+							Please add an address to create an order
+							<div class="form-actions">
+								<a class="button button--primary" href="/address">Add New Address</a>
+							</div>
+							<% } %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%- include("partials/newFooter.ejs") %>

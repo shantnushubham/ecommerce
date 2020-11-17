@@ -1,0 +1,82 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Items List</li>
+        </ol>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Items Data Table</div>
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <a href="/admin/createItem" class="ui large green button" style="margin-bottom: 5px;">Create
+                        Item</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>IID</th>
+                                <th>Name</th>
+                                <th>Is Business</th>
+                                <th>Is COD</th>
+                                <th>Active</th>
+                                <th>Category</th>
+                                <th>Sub-Category</th>
+                                <th>Price</th>
+                                <th>Open/Update</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% itemlist.forEach(element => { %>
+                            <tr>
+                                <td><img src="<%= element.image[0] %>" width="100px" height="100px"></td>
+                                <td><%= element.iid %></td>
+                                <td><%= element.name %></td>
+                                <td><% if (element.isBusiness) { %>
+                                    Business
+                                    <% } else { %>
+                                    NotBiz
+                                    <% } %>
+                                </td>
+                                <td><% if (element.cod) { %>
+                                    Yes
+                                    <% } else { %>
+                                    NotAllowed
+                                    <% } %>
+                                </td>
+                                <td><% if (element.active) { %>
+                                    <a href="/admin/items/<%=element.iid%>/deactivate"><button
+                                            class="ui small green button">Active</button></a>
+                                    <% } else { %>
+                                    <a href="/admin/items/<%=element.iid%>/activate"><button
+                                            class="ui small red button">Deactivated</button></a>
+                                    <% } %>
+                                </td>
+                                <td><%= element.category %></td>
+                                <td><%= element.subCategory %></td>
+                                <td><%= element.price %></td>
+                                <td><a href="/admin/update-item/<%=element.iid%>"><button
+                                            class="ui small green button">Open
+                                            Item</button></a></td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /tables-->
+    </div>
+    <!-- /container-fluid-->
+</div>
+<!-- /container-wrapper-->
+
+<%- include('partials/adminFooter'); -%>

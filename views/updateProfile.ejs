@@ -1,0 +1,135 @@
+<%- include("partials/newHeader") %>
+
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="INR">
+
+    <div class="home-content">
+        <div class="tt-breadcrumbs-main">
+            <div class="tt-breadcrumbs">
+                <div class="container">
+                    <h1 class="category-name">
+                        <span class="breadcrumb-title ">
+                        </span>
+                        <span class="breadcrumb-title is-active">
+                            <span class="breadcrumb-label">Update Profile</span>
+                        </span>
+                    </h1>
+                    <ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+                        <li class="breadcrumb " itemprop="itemListElement" itemscope
+                            itemtype="http://schema.org/ListItem">
+                            <a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+                            <meta itemprop="position" content="1" />
+                        </li>
+                        <li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+                            itemtype="http://schema.org/ListItem">
+                            <meta itemprop="item">
+                            <span class="breadcrumb-label" itemprop="name">Update Profile</span>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tt-create-account page-content--centered">
+            <h1 class="page-heading">Update Profile</h1>
+
+            <div class="account tt-account-create">
+                <div class="account-body">
+                    <form action="/users/update-profile" data-create-account-form method="POST" class="form">
+                        <div class="form-row form-row--half">
+                            <div class="form-field" id="FormField_1"
+                                data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Email Address&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+                                data-type="EmailAddress">
+                                <label class="form-label" for="FormField_1_input">Email Address
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" id="FormField_1_input" data-label="Email Address" name="email"
+                                    <% if (currentUser != null) { %> value="<%=currentUser.email%>" <% } %>
+                                    class="form-input" aria-required="true" data-field-type="EmailAddress" required
+                                    readonly>
+                            </div>
+
+                            <div class="form-field" id="FormField_4"
+                                data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;First Name&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
+                                data-type="FirstName">
+                                <label class="form-label" for="FormField_4_input">Name
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" id="FormField_4_input" data-label="Name" name="name"
+                                    <% if (currentUser != null) { %> value="<%=currentUser.name%>" <% } %>
+                                    class="form-input" aria-required="true" data-field-type="FirstName" required
+                                    readonly>
+                            </div>
+
+                            <div class="form-field" id="FormField_7"
+                                data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Phone Number&quot;,&quot;required&quot;:false,&quot;maxlength&quot;:0}"
+                                data-type="Phone">
+                                <label class="form-label" for="FormField_7_input">Phone Number
+                                    <small>Required</small>
+                                </label>
+                                <input type="text" id="FormField_7_input" data-label="Phone Number" name="phone"
+                                    <% if (currentUser != null) { %> value="<%=currentUser.phone%>" <% } %>
+                                    class="form-input" aria-required="false" data-field-type="Phone" required>
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="form-actions">
+                            <input type="submit" class="button button--primary" value="Update Profile" />
+                        </div>
+                    </form>
+
+                    <div class="uk-card uk-card-default" style="text-align: left !important;">
+                        <div class="uk-card-body">
+                            <div class="uk-margin">
+                                <div class="uk-form-label">
+                                    <h6>Your Addresses:</h6>
+                                </div>
+                                <div class="uk-form-controls uk-form-controls-text">
+
+                                    <% address.forEach(el => { %>
+                                    <label>
+                                        <span
+                                            style="color: #fa7725; text-transform: uppercase; font-size: medium;"><%=el.addressType%></span>
+                                        <br>
+                                        <a href="/users/update-address/<%=el._id%>">
+                                            <%=(el.fullAddress + ", " + el.landmark  + ", " + el.locality + ", " + 
+											el.city + ", " + el.state +".")%><br>
+                                            PIN: <%=(el.pincode) %><br>
+                                            Phone Number: <span
+                                                style="color: #fa7725; text-transform: uppercase;"><%=el.phone%></span>
+                                        </a>
+                                    </label><br>
+                                    <hr>
+                                    <% }) %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <a class="button button--primary" href="/address">Add New Address</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="modal" class="modal" data-reveal data-prevent-quick-search-close>
+        <a href="#" class="modal-close" aria-label="Close" role="button">
+            <span aria-hidden="true">&#215;</span>
+        </a>
+        <div class="modal-content"></div>
+        <div class="loadingOverlay"></div>
+    </div>
+    <div id="alert-modal" class="modal modal--alert modal--small" data-reveal data-prevent-quick-search-close>
+        <div class="swal2-icon swal2-error swal2-icon-show"><span class="swal2-x-mark"><span
+                    class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div>
+
+        <div class="modal-content"></div>
+
+        <div class="button-container"><button type="button" class="confirm button" data-reveal-close>OK</button>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/newFooter") %>

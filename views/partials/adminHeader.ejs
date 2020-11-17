@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Ansonika">
+    <title>112Cart - Admin dashboard</title>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.semanticui.min.css">
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800" rel="stylesheet">
+
+    <!-- Bootstrap core CSS-->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Main styles -->
+    <link href="/css/admin.css" rel="stylesheet">
+    <!-- Icon fonts-->
+    <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Plugin styles -->
+    <link href="/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Your custom styles -->
+    <link href="/css/custom.css" rel="stylesheet">
+
+</head>
+
+<body class="fixed-nav sticky-footer" id="page-top">
+    <% if (error && error.length > 0) { %>
+    <div class="alert alert-danger" role="alert" style="text-align: center;">
+        <%= error %>
+    </div>
+    <% } else if (success && success.length > 0) { %>
+    <div class="alert alert-success" role="alert" style="text-align: center;">
+        <%= success %>
+    </div>
+    <% } %>
+
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-default fixed-top" id="mainNav">
+        <a class="navbar-brand" href="/"><img src="/img/112cartLogo.png" data-retina="true" alt="" width="75"
+                height="36"></a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link" href="/admin">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Super Admin</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link" href="/admin/item-section">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Items</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+                    <a class="nav-link" href="/admin/user-section">
+                        <i class="fa fa-fw fa-envelope-open"></i>
+                        <span class="nav-link-text">Users</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bookings">
+                    <a class="nav-link" href="/admin/offer-section">
+                        <i class="fa fa-fw fa-archive"></i>
+                        <span class="nav-link-text">Offers</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+                    <a class="nav-link" href="/admin/orders-section">
+                        <i class="fa fa-fw fa-star"></i>
+                        <span class="nav-link-text">Orders</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+                    <a class="nav-link" href="/admin/account-invoice">
+                        <i class="fa fa-fw fa-star"></i>
+                        <span class="nav-link-text">Accounts & Invoice</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Messages">
+                    <a class="nav-link" href="/admin/vendors">
+                        <i class="fa fa-fw fa-envelope-open"></i>
+                        <span class="nav-link-text">Vendors</span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reviews">
+                    <a class="nav-link" href="/admin/cancels-filter">
+                        <i class="fa fa-fw fa-star"></i>
+                        <span class="nav-link-text">Cancellation Requests</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add listing">
+                    <a class="nav-link" href="/users/business-accounts">
+                        <i class="fa fa-fw fa-plus-circle"></i>
+                        <span class="nav-link-text">Business Accounts</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav sidenav-toggler">
+                <li class="nav-item">
+                    <a class="nav-link text-center" id="sidenavToggler">
+                        <i class="fa fa-fw fa-angle-left"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <form class="form-inline my-2 my-lg-0 mr-lg-2">
+                        <div class="input-group">
+                            <input class="form-control search-top" type="text" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <script>
+        $('.ui.sidebar').sidebar('toggle');
+    </script>

@@ -1,0 +1,50 @@
+<%- include('partials/header', {title: "Welcome to 112Cart", desc: "Best Shopping Website"}); -%>
+
+<!-- Start Cart Area -->
+<section class="cart-area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <!-- <form> -->
+                <div class="cart-table table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">List Name</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% let x = 0; %>
+                            <% if (list.length > 0) { %>
+                            <% list.forEach(function(x) { %>
+                            <tr>
+                                <td class="product-name">
+                                    <a href="/user/list-items/<%=x.lid%>"><%= x.name %></a>
+                                </td>
+                            </tr>
+                            <% });%>
+                            <% } else { %>
+                            <h4 style="text-align: center;">You don't have any lists.</h4>
+                            <% } %>
+                        </tbody>
+                    </table>
+
+                    <form method="POST" action="/user/create-list">
+                        <div class="form-group">
+                            <label>Create List<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="listName">
+                        </div>
+                        <button type="submit" class="btn default-btn">
+                            Create List
+                        </button>
+                    </form>
+                </div>
+                <!-- </form> -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Cart Area -->
+
+<%- include('partials/footer') %>

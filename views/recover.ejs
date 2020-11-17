@@ -1,0 +1,82 @@
+<%- include("partials/newHeader.ejs") %>
+
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="INR">
+
+	<div class="home-content">
+
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label">Forgot Password</span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="https://theme-payeeshop.mybigcommerce.com/" class="breadcrumb-label"
+								itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<meta itemprop="item" content="https://theme-payeeshop.mybigcommerce.com/contact-us/">
+							<span class="breadcrumb-label" itemprop="name">Forgot Password</span>
+							<meta itemprop="position" content="2" />
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<main class="tt-page page-content--centered">
+			<h1 class="page-heading">Forgot Password</h1>
+
+
+			<div id="contact-us-page" class="page-content">
+				<p>
+
+				<form method="POST" action="/recover">
+
+
+					<input type="hidden" name="page_id" id="page_id" value="4">
+					<div class="form-row form-row--half">
+						<div class="form-field">
+							<label class="form-label" for="contact_fullname">Email
+								<small>Required</small>
+							</label>
+							<input class="form-input" type="text" id="contact_fullname" name="email" required>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input class="button button--primary" type="submit" value="Confirm">
+					</div>
+				</form>
+				
+			</div>
+
+		</main>
+
+
+	</div>
+	<div id="modal" class="modal" data-reveal data-prevent-quick-search-close>
+		<a href="#" class="modal-close" aria-label="Close" role="button">
+			<span aria-hidden="true">&#215;</span>
+		</a>
+		<div class="modal-content"></div>
+		<div class="loadingOverlay"></div>
+	</div>
+	<div id="alert-modal" class="modal modal--alert modal--small" data-reveal data-prevent-quick-search-close>
+		<div class="swal2-icon swal2-error swal2-icon-show"><span class="swal2-x-mark"><span
+					class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div>
+
+		<div class="modal-content"></div>
+
+		<div class="button-container"><button type="button" class="confirm button" data-reveal-close>OK</button></div>
+	</div>
+</div>
+
+<%- include("partials/newFooter.ejs") %>

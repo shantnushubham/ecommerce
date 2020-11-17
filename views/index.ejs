@@ -1,0 +1,785 @@
+<%- include("partials/newHeader") %>
+
+<div data-content-region="header_bottom">
+	<div data-layout-id="3fa4ff75-7562-47bd-abdd-3d8b397e02c2">
+		<div data-sub-layout-container="512790dd-27db-4a97-8c22-c7af8d5c244e" data-layout-name="Layout">
+
+		</div>
+		<div data-sub-layout="5de32a06-5015-4f9f-94a6-b877f6cb4427">
+
+		</div>
+	</div>
+</div>
+
+<div class="body" data-currency-code="INR">
+	<div class="highlight-product">
+		<div data-content-region="home_below_menu"></div>
+	</div>
+	<div class="tt-heroCarousel">
+		<section class="heroCarousel" data-slick='{
+        "arrows": true,
+        "mobileFirst": true,
+        "slidesToShow": 1,
+        "fade": true,
+        "slidesToScroll": 1,
+        "autoplay": true,
+        "autoplaySpeed": 5000,
+        "lazyLoad": "anticipated"
+	}'>
+
+			<% var bannerArray = new Array() %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner1new.jpg", linkTo: "/contact-us"}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner2.jpeg", linkTo: "/bio-bubble"}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner3new.jpg", linkTo: "/items/category/sanitation"}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner4.jpeg", linkTo: "/items/category/sanitation"}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner5.jpeg", linkTo: "/items/category/sanitation"}) %>
+			<% bannerArray.push({src: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/banner6.jpeg", linkTo: ""}) %>
+
+			<% bannerArray.forEach((banner, index) => { %>
+			<a href="<%=banner.linkTo%>" id="slider-slider<%=index%>">
+				<div class="heroCarousel-slide">
+					<img class="heroCarousel-image" src="<%=banner.src%>" alt="" />
+				</div>
+			</a>
+			<% }) %>
+		</section>
+	</div>
+
+	<div class="home-content">
+
+		<!------>
+
+
+		<!-- START CATEGORIES DIV ---->
+
+		<div class="tt-featured container">
+			<h2 class="page-heading" style="margin-bottom: 15px;">Featured Categories</h2>
+
+			<div class="allcategories container">
+				<section class="subcategories-carousel row">
+					<% var featuredCategories = new Array() %>
+
+					<% featuredCategories.push({name: "Lab Solutions", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc1.jpg", linkTo: ""}) %>
+					<% featuredCategories.push({name: "Covid-19 Solutions", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc2.jpg", linkTo: ""}) %>
+					<% featuredCategories.push({name: "Cleaning Chemicals", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc3.jpg", linkTo: ""}) %>
+					<% featuredCategories.push({name: "Books", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc4.jpg", linkTo: ""}) %>
+					<% featuredCategories.push({name: "School Uniforms", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc5.jpg", linkTo: ""}) %>
+
+					<% featuredCategories.forEach(category => { %>
+					<div class="tt-categories subcategories-23">
+						<div class="content">
+							<div class="image">
+								<a class="subcat-img" href="<%=category.linkTo%>">
+									<img class="lazyload" data-sizes="auto" alt="" src="/img/loading.svg"
+										data-src="<%=category.imageSrc%>">
+								</a>
+							</div>
+							<div class="caption">
+								<div class="cat-title">
+									<h4><a href="<%=category.linkTo%>"><%=category.name%></a>
+									</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+					<% }) %>
+
+				</section>
+			</div>
+			<!-- END CATEGORIES DIV ---->
+		</div>
+
+		<!-- START FEATURED PRODUCT CAROUSEL DIV -->
+		<div class="tt-featured container">
+			<h2 class="page-heading">Sanitation Chemicals &nbsp;<a href="/items/category/sanitation"
+					style="font-weight: light; font-size: medium; color: #ffaa3d">View All</a></h2>
+
+			<section class="productCarousel row" data-list-name="" data-slick='{
+					"dots": false,
+					"infinite": false,
+					"autoplay": false,
+					"mobileFirst": true,
+					"slidesToShow": 4,
+					"slidesToScroll": 1,
+					"responsive": [
+						{
+						"breakpoint": 1710,
+						"settings": {
+							"slidesToShow": 7,
+							"slidesToScroll": 1
+						}
+						},
+						{
+						"breakpoint": 1460,
+						"settings": {
+							"slidesToShow": 6,
+							"slidesToScroll": 1
+						}
+						},
+						{
+						"breakpoint": 1199,
+						"settings": {
+							"slidesToShow": 5,
+							"slidesToScroll": 1
+						}
+						},
+						{
+						"breakpoint": 991,
+						"settings": {
+							"slidesToShow": 4,
+							"slidesToScroll": 1
+						}
+						},
+						{
+						"breakpoint": 767,
+						"settings": {
+							"slidesToShow": 3,
+							"slidesToScroll": 1
+						}
+						},
+						{
+						"breakpoint": 320,
+						"settings": {
+							"slidesToShow": 2,
+							"slidesToScroll": 1
+						}
+						},
+						{
+						"breakpoint": 0,
+						"settings": {
+							"slidesToShow": 2,
+							"slidesToScroll": 1
+						}
+						}
+					]
+				}'>
+
+				<% var sanitationChem = new Array() %>
+				<% sanitationChem.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+				<% sanitationChem.push({name: "Alstasan LF125 (Quaternary Ammonium Compound based Aerial Fumigation Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/6e9de14a-b767-4154-8ed1-e221a1be7870-315x315.jpg", price: 4490}) %>
+				<% sanitationChem.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/649cb967-2ebf-42f1-8746-0ba894996fb8-315x315.jpg", price: 1390}) %>
+				<% sanitationChem.push({name: "Chemtex Alstacol 25+ (Instant Spray Disinfectant, Kill time 5 seconds)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/0a87e186-00b9-4ab2-ac8d-9d7c640fa89e-315x315.jpg", price: 1790}) %>
+				<% sanitationChem.push({name: "Chemtex Alstasan Silvox 150 MIST (Fog and Spray – Universal Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/7e234b3a-c43d-4d5d-8c78-4b51d5befff7-1-315x315.jpg", price: 5490}) %>
+				<% sanitationChem.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/05/Alstasan-Hand-Rub_x56-315x315.jpg", price: 1990}) %>
+				<% sanitationChem.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+
+				<% sanitationChem.forEach(sanitationItem => { %>
+				<div class="productCarousel-slide">
+					<article class="card ">
+						<figure class="card-figure">
+							<a href="<%=sanitationItem.linkTo%>">
+								<div class="card-img-container">
+									<img src="<%=sanitationItem.imageSrc%>" alt="<%=sanitationItem.name%>"
+										title="<%=sanitationItem.name%>" data-sizes="auto"
+										srcset="<%=sanitationItem.imageSrc%>" data-srcset="<%=sanitationItem.imageSrc%>"
+										class="lazyload card-image" />
+								</div>
+							</a>
+						</figure>
+
+						<div class="card-body">
+							<h4 class="card-title">
+								<a href="<%=sanitationItem.linkTo%>"><%=sanitationItem.name%></a>
+							</h4>
+
+							<div class="card-text tt-price" data-test-info-type="price">
+								<div class="price-section price-section--withTax rrp-price--withTax"
+									style="display: none;">
+									MSRP:
+									<span data-product-rrp-with-tax class="price price--rrp">
+									</span>
+								</div>
+
+								<div class="price-section price-section--withTax">
+									<span class="price-label"> </span>
+									<span class="price-now-label" style="display: none;">
+									</span>
+									<span data-product-price-with-tax class="price price--withTax">₹
+										<%=sanitationItem.price%></span>
+								</div>
+								<div class="price-section price-section--withTax non-sale-price--withTax"
+									style="display: none;">
+									<span data-product-non-sale-price-with-tax class="price price--non-sale">
+
+									</span>
+								</div>
+							</div>
+
+							<div class="tt-cart-btn">
+								<a href="/items" title="View Item" class="button button--small card-figcaption-button">
+									<span class="material-icons">add</span>
+									View Item
+								</a>
+							</div>
+						</div>
+					</article>
+				</div>
+				<% }) %>
+
+			</section>
+
+			<!-- <div data-content-region="home_below_featured_products"></div> -->
+		</div>
+		<!-- END FEATURED PRODUCT CAROUSEL DIV -->
+
+		<!-- START FEATURED PRODUCT CAROUSEL DIV -->
+		<style>
+			#needHour {
+				padding-top: 40%;
+				text-align: left;
+				font-weight: bold
+			}
+
+			#id {
+				text-align: left !important;
+				margin-top: 5%;
+			}
+
+			@media only screen and (max-width: 600px) {
+				#needHour {
+					padding-top: 0%;
+					text-align: center;
+					font-weight: bold
+				}
+
+				#id {
+					text-align: center !important;
+					margin-top: 10px;
+				}
+			}
+		</style>
+
+		<div class="tt-featured container">
+			<h2 class="page-heading">Services: Need of the hour </h2>
+
+			<div class="uk-text-center" uk-grid>
+				<div class="uk-width-2-3@m">
+					<img src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/biobubble.png">
+				</div>
+				<div class="uk-width-1-3@m">
+					<h1 class="uk-heading-medium" id="needHour">90 Days
+						Long<br> Lasting Anti-Virus<br> Coating Service
+					</h1>
+					<div id="id">
+						<a href="/bio-bubble"
+							style="font-weight: light; font-size: large; background-color: #ffaa3d; border-radius: 50px; padding: 15px 30px 15px 30px; color: white;">Book
+							Now</a>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- <div data-content-region="home_below_featured_products"></div> -->
+		</div>
+		<!-- END FEATURED PRODUCT CAROUSEL DIV -->
+
+		<!-- START CMS BANNER BOTTOM DIV ---->
+
+		<div class="bottom-banner">
+			<div class="container">
+				<div class="banners" data-banner-location="bottom">
+					<div class="banner">
+						<div id='104941989'>
+							<div id="ttcmsbottombanner">
+								<div class="ttcmsbottombanner-img1 ttbanner"><a href="#"> <img
+											class="__mce_add_custom__" title="bottom-banner-01.jpg"
+											src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/AirFumigationSmall.jpg"
+											alt="bottom-banner-01.jpg" width="825" height="250" /> </a></div>
+								<div class="ttcmsbottombanner-img2 ttbanner"><a href="#"> <img
+											class="__mce_add_custom__" title="bottom-banner-02.jpg"
+											src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/CompleteDisinfectionSmall.jpg"
+											alt="bottom-banner-02.jpg" width="825" height="250" /> </a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END CMS BANNER BOTTOM DIV ---->
+
+		<!-- START NEW PRODUCT CAROUSEL DIV -->
+		<div class="tt-new">
+			<div class="container">
+				<h2 class="page-heading">Sanitation Equipments &nbsp;<a href="/items/category/sanitation"
+						style="font-weight: light; font-size: medium; color: #ffaa3d">View All</a></h2>
+
+				<section class="productCarousel row" data-list-name="" data-slick='{
+							"dots": false,
+							"infinite": false,
+							"autoplay": false,
+							"mobileFirst": true,
+							"slidesToShow": 4,
+							"slidesToScroll": 1,
+							"responsive": [
+								{
+								"breakpoint": 1710,
+								"settings": {
+									"slidesToShow": 7,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 1460,
+								"settings": {
+									"slidesToShow": 6,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 1199,
+								"settings": {
+									"slidesToShow": 5,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 991,
+								"settings": {
+									"slidesToShow": 4,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 767,
+								"settings": {
+									"slidesToShow": 3,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 320,
+								"settings": {
+									"slidesToShow": 2,
+									"slidesToScroll": 1
+								}
+								},
+								{
+								"breakpoint": 0,
+								"settings": {
+									"slidesToShow": 2,
+									"slidesToScroll": 1
+								}
+								}
+							]
+						}'>
+
+					<% var sanitationEquip = new Array() %>
+					<% sanitationEquip.push({name: "Chemtex Alstacol 25+ (Instant Spray Disinfectant, Kill time 5 seconds)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/0a87e186-00b9-4ab2-ac8d-9d7c640fa89e-315x315.jpg", price: 1790}) %>
+					<% sanitationEquip.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+					<% sanitationEquip.push({name: "Chemtex Alstasan Silvox 150 MIST (Fog and Spray – Universal Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/7e234b3a-c43d-4d5d-8c78-4b51d5befff7-1-315x315.jpg", price: 5490}) %>
+					<% sanitationEquip.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/05/Alstasan-Hand-Rub_x56-315x315.jpg", price: 1990}) %>
+					<% sanitationEquip.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+					<% sanitationEquip.push({name: "Alstasan LF125 (Quaternary Ammonium Compound based Aerial Fumigation Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/6e9de14a-b767-4154-8ed1-e221a1be7870-315x315.jpg", price: 4490}) %>
+					<% sanitationEquip.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/649cb967-2ebf-42f1-8746-0ba894996fb8-315x315.jpg", price: 1390}) %>
+
+					<% sanitationEquip.forEach(sanitationItem => { %>
+					<div class="productCarousel-slide">
+						<article class="card ">
+							<figure class="card-figure">
+								<a href="<%=sanitationItem.linkTo%>">
+									<div class="card-img-container">
+										<img src="<%=sanitationItem.imageSrc%>" alt="<%=sanitationItem.name%>"
+											title="<%=sanitationItem.name%>" data-sizes="auto"
+											srcset="<%=sanitationItem.imageSrc%>"
+											data-srcset="<%=sanitationItem.imageSrc%>" class="lazyload card-image" />
+									</div>
+								</a>
+							</figure>
+
+							<div class="card-body">
+								<h4 class="card-title">
+									<a href="<%=sanitationItem.linkTo%>"><%=sanitationItem.name%></a>
+								</h4>
+
+								<div class="card-text tt-price" data-test-info-type="price">
+									<div class="price-section price-section--withTax rrp-price--withTax"
+										style="display: none;">
+										MSRP:
+										<span data-product-rrp-with-tax class="price price--rrp">
+										</span>
+									</div>
+
+									<div class="price-section price-section--withTax">
+										<span class="price-label"> </span>
+										<span class="price-now-label" style="display: none;">
+										</span>
+										<span data-product-price-with-tax class="price price--withTax">₹
+											<%=sanitationItem.price%></span>
+									</div>
+									<div class="price-section price-section--withTax non-sale-price--withTax"
+										style="display: none;">
+										<span data-product-non-sale-price-with-tax class="price price--non-sale">
+
+										</span>
+									</div>
+								</div>
+
+								<div class="tt-cart-btn">
+									<a href="/items" title="View Item"
+										class="button button--small card-figcaption-button">
+										<span class="material-icons">add</span>
+										View Item
+									</a>
+								</div>
+							</div>
+						</article>
+					</div>
+					<% }) %>
+
+				</section>
+
+				<!--  <div data-content-region="home_below_new_products"></div> -->
+			</div>
+		</div>
+		<!-- END NEW PRODUCT CAROUSEL DIV -->
+
+		<!-- START CMS BANNER TOP DIV ---->
+		<div class="tt-new" style="padding-bottom: 10px;">
+			<div class="container">
+				<h2 class="page-heading">Students' Corner &nbsp;<a href="#"
+						style="font-weight: light; font-size: medium; color: #ffaa3d">Coming Soon</a></h2>
+			</div>
+		</div>
+		<div class="topbanner">
+			<div class="banners container" data-banner-location="top">
+				<div class="banner">
+					<div id='1475563518'>
+						<div class="ttcmsbanner">
+							<div class="ttbanner-img1 ttbanner"><a href="#"> <img class="__mce_add_custom__"
+										title="top-banner-01.jpg"
+										src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/studentscornerComingSoon1.jpg"
+										alt="top-banner-01.jpg" width="540" height="240" /> </a></div>
+							<div class="ttbanner-img2 ttbanner"><a href="#"> <img class="__mce_add_custom__"
+										title="top-banner-02.jpg"
+										src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/studentscornerComingSoon2.jpg"
+										alt="top-banner-02.jpg" width="540" height="240" /> </a></div>
+							<div class="ttbanner-img3 ttbanner"><a href="#"> <img class="__mce_add_custom__"
+										title="top-banner-03.jpg"
+										src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/studentscornerComingSoon3.jpg"
+										alt="top-banner-03.jpg" width="540" height="240" /> </a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- END CMS BANNER TOP DIV ---->
+
+		<div class="tt-top-seller">
+			<div class="container">
+				<h2 class="page-heading">Sanitation Consumables&nbsp;<a href="/items/category/sanitation"
+						style="font-weight: light; font-size: medium; color: #ffaa3d">View All</a></h2>
+
+				<section class="productCarousel row" data-list-name="" data-slick='{
+						"dots": false,
+						"infinite": false,
+						"autoplay": false,
+						"mobileFirst": true,
+						"slidesToShow": 4,
+						"slidesToScroll": 1,
+						"responsive": [
+							{
+							"breakpoint": 1710,
+							"settings": {
+								"slidesToShow": 7,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 1460,
+							"settings": {
+								"slidesToShow": 6,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 1199,
+							"settings": {
+								"slidesToShow": 5,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 991,
+							"settings": {
+								"slidesToShow": 4,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 767,
+							"settings": {
+								"slidesToShow": 3,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 320,
+							"settings": {
+								"slidesToShow": 2,
+								"slidesToScroll": 1
+							}
+							},
+							{
+							"breakpoint": 0,
+							"settings": {
+								"slidesToShow": 2,
+								"slidesToScroll": 1
+							}
+							}
+						]
+					}'>
+
+					<% var sanitationCons = new Array() %>
+					<% sanitationCons.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+					<% sanitationCons.push({name: "Alstasan LF125 (Quaternary Ammonium Compound based Aerial Fumigation Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/6e9de14a-b767-4154-8ed1-e221a1be7870-315x315.jpg", price: 4490}) %>
+					<% sanitationCons.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/649cb967-2ebf-42f1-8746-0ba894996fb8-315x315.jpg", price: 1390}) %>
+					<% sanitationCons.push({name: "Chemtex Alstasan Silvox 150 MIST (Fog and Spray – Universal Disinfectant)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/7e234b3a-c43d-4d5d-8c78-4b51d5befff7-1-315x315.jpg", price: 5490}) %>
+					<% sanitationCons.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/05/Alstasan-Hand-Rub_x56-315x315.jpg", price: 1990}) %>
+					<% sanitationCons.push({name: "Chemtex Alstacol 25+ (Instant Spray Disinfectant, Kill time 5 seconds)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/0a87e186-00b9-4ab2-ac8d-9d7c640fa89e-315x315.jpg", price: 1790}) %>
+					<% sanitationCons.push({name: "Chemtex Alstasan Handrub (Alc. based Handrub)", linkTo: "", imageSrc: "https://www.chemtexltd.com/wp-content/uploads/2020/06/ba46a7b1-11a0-4761-ab88-61b3a5fd165e-315x315.jpg", price: 1590}) %>
+
+					<% sanitationCons.forEach(sanitationItem => { %>
+					<div class="productCarousel-slide">
+						<article class="card ">
+							<figure class="card-figure">
+								<a href="<%=sanitationItem.linkTo%>">
+									<div class="card-img-container">
+										<img src="<%=sanitationItem.imageSrc%>" alt="<%=sanitationItem.name%>"
+											title="<%=sanitationItem.name%>" data-sizes="auto"
+											srcset="<%=sanitationItem.imageSrc%>"
+											data-srcset="<%=sanitationItem.imageSrc%>" class="lazyload card-image" />
+									</div>
+								</a>
+							</figure>
+
+							<div class="card-body">
+								<h4 class="card-title">
+									<a href="<%=sanitationItem.linkTo%>"><%=sanitationItem.name%></a>
+								</h4>
+
+								<div class="card-text tt-price" data-test-info-type="price">
+									<div class="price-section price-section--withTax rrp-price--withTax"
+										style="display: none;">
+										MSRP:
+										<span data-product-rrp-with-tax class="price price--rrp">
+										</span>
+									</div>
+
+									<div class="price-section price-section--withTax">
+										<span class="price-label"> </span>
+										<span class="price-now-label" style="display: none;">
+										</span>
+										<span data-product-price-with-tax class="price price--withTax">₹
+											<%=sanitationItem.price%></span>
+									</div>
+									<div class="price-section price-section--withTax non-sale-price--withTax"
+										style="display: none;">
+										<span data-product-non-sale-price-with-tax class="price price--non-sale">
+
+										</span>
+									</div>
+								</div>
+
+								<div class="tt-cart-btn">
+									<a href="/items" title="View Item"
+										class="button button--small card-figcaption-button">
+										<span class="material-icons">add</span>
+										View Item
+									</a>
+								</div>
+							</div>
+						</article>
+					</div>
+					<% }) %>
+				</section>
+
+				<!-- <div data-content-region="home_below_top_products"></div> -->
+			</div>
+		</div>
+
+
+		<!-- START  BLOG -->
+		<!-- <div class="tt-blogpost">
+			<div class="container">
+				<h1 class="page-heading">Latest Blog</h1>
+				<ul class="bloglist ttblog-carousel row">
+					<li>
+						<div class="blog-content">
+							<div class="ttblog_image_holder blog_image_holder">
+								<figure class="blog-thumbnail">
+									<a href="/blog/lacus-rhoncus-tincidunt/">
+										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/300x300/uploaded_images/blog-05.jpg?t=1591696630"
+											alt="Lacus rhoncus tincidunt" title="Lacus rhoncus tincidunt">
+
+										<div class="blog-hover"></div>
+									</a>
+								</figure>
+								<span class="bloglinks">
+									<a class="read-more" href="/blog/lacus-rhoncus-tincidunt/"><span
+											class="material-icons">search</span></a>
+								</span>
+							</div>
+							<div class="blog-caption blog-sub-content">
+								<a class="post_title" title="Lacus rhoncus tincidunt">Lacus rhoncus tincidunt</a>
+								<div class="blog-description">Donec dignissim, lacus et rhoncus tincidunt, mauris
+									tellus iaculis est,
+									in fermentum est nulla a</div>
+								<div class="author">
+									<span class="material-icons">person_outline</span>
+									<span>John Doe</span>
+								</div>
+								<span class="blog-date"><span class="material-icons">calendar_today</span>30th Jun
+									2020</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="blog-content">
+							<div class="ttblog_image_holder blog_image_holder">
+								<figure class="blog-thumbnail">
+									<a href="/blog/ant-incidunt-erat-utlabore/">
+										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/300x300/uploaded_images/blog-01.jpg?t=1591696425"
+											alt="Ant Incidunt erat utlabore" title="Ant Incidunt erat utlabore">
+
+										<div class="blog-hover"></div>
+									</a>
+								</figure>
+								<span class="bloglinks">
+									<a class="read-more" href="/blog/ant-incidunt-erat-utlabore/"><span
+											class="material-icons">search</span></a>
+								</span>
+							</div>
+							<div class="blog-caption blog-sub-content">
+								<a class="post_title" title="Ant Incidunt erat utlabore">Ant Incidunt erat
+									utlabore</a>
+								<div class="blog-description">Donec dignissim, lacus et rhoncus tincidunt, mauris
+									tellus iaculis est,
+									in fermentum est nulla a</div>
+								<div class="author">
+									<span class="material-icons">person_outline</span>
+									<span>Admin</span>
+								</div>
+								<span class="blog-date"><span class="material-icons">calendar_today</span>8th May
+									2020</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="blog-content">
+							<div class="ttblog_image_holder blog_image_holder">
+								<figure class="blog-thumbnail">
+									<a href="/blog/meproratoin-incidunt-utlabore/">
+										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/300x300/uploaded_images/blog-02.jpg?t=1591696502"
+											alt="Meproratoin incidunt utlabore" title="Meproratoin incidunt utlabore">
+
+										<div class="blog-hover"></div>
+									</a>
+								</figure>
+								<span class="bloglinks">
+									<a class="read-more" href="/blog/meproratoin-incidunt-utlabore/"><span
+											class="material-icons">search</span></a>
+								</span>
+							</div>
+							<div class="blog-caption blog-sub-content">
+								<a class="post_title" title="Meproratoin incidunt utlabore">Meproratoin incidunt
+									utlabore</a>
+								<div class="blog-description">Donec dignissim, lacus et rhoncus tincidunt, mauris
+									tellus iaculis est,
+									in fermentum est nulla a</div>
+								<div class="author">
+									<span class="material-icons">person_outline</span>
+									<span>Admin</span>
+								</div>
+								<span class="blog-date"><span class="material-icons">calendar_today</span>8th May
+									2020</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="blog-content">
+							<div class="ttblog_image_holder blog_image_holder">
+								<figure class="blog-thumbnail">
+									<a href="/blog/tempora-incidunt-utlabore/">
+										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/300x300/uploaded_images/blog-03.jpg?t=1591696573"
+											alt="tempora incidunt utlabore" title="tempora incidunt utlabore">
+
+										<div class="blog-hover"></div>
+									</a>
+								</figure>
+								<span class="bloglinks">
+									<a class="read-more" href="/blog/tempora-incidunt-utlabore/"><span
+											class="material-icons">search</span></a>
+								</span>
+							</div>
+							<div class="blog-caption blog-sub-content">
+								<a class="post_title" title="tempora incidunt utlabore">tempora incidunt
+									utlabore</a>
+								<div class="blog-description">Donec dignissim, lacus et rhoncus tincidunt, mauris
+									tellus iaculis est,
+									in fermentum est nulla a</div>
+								<div class="author">
+									<span class="material-icons">person_outline</span>
+									<span>Admin</span>
+								</div>
+								<span class="blog-date"><span class="material-icons">calendar_today</span>8th May
+									2020</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="blog-content">
+							<div class="ttblog_image_holder blog_image_holder">
+								<figure class="blog-thumbnail">
+									<a href="/blog/your-first-blog-post/">
+										<img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/300x300/uploaded_images/blog-04.jpg?t=1591696598"
+											alt="Your first blog post!" title="Your first blog post!">
+
+										<div class="blog-hover"></div>
+									</a>
+								</figure>
+								<span class="bloglinks">
+									<a class="read-more" href="/blog/your-first-blog-post/"><span
+											class="material-icons">search</span></a>
+								</span>
+							</div>
+							<div class="blog-caption blog-sub-content">
+								<a class="post_title" title="Your first blog post!">Your first blog post!</a>
+								<div class="blog-description">Donec dignissim, lacus et rhoncus tincidunt, mauris
+									tellus iaculis est,
+									in fermentum est nulla a</div>
+								<div class="author">
+									<span class="material-icons">person_outline</span>
+									<span>Mical</span>
+								</div>
+								<span class="blog-date"><span class="material-icons">calendar_today</span>15th Feb
+									2014</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div> -->
+		<!-- END BLOG --->
+
+	</div>
+	<div id="modal" class="modal" data-reveal data-prevent-quick-search-close>
+		<a href="#" class="modal-close" aria-label="Close" role="button">
+			<span aria-hidden="true">&#215;</span>
+		</a>
+		<div class="modal-content"></div>
+		<div class="loadingOverlay"></div>
+	</div>
+	<div id="alert-modal" class="modal modal--alert modal--small" data-reveal data-prevent-quick-search-close>
+		<div class="swal2-icon swal2-error swal2-icon-show"><span class="swal2-x-mark"><span
+					class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div>
+
+		<div class="modal-content"></div>
+
+		<div class="button-container"><button type="button" class="confirm button" data-reveal-close>OK</button>
+		</div>
+	</div>
+</div>
+
+<%- include("partials/newFooter") %>

@@ -1,0 +1,107 @@
+<%- include("partials/newHeader") %>
+
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="INR">
+
+	<div class="home-content">
+
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label">Login</span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+							itemtype="http://schema.org/ListItem">
+							<meta itemprop="item" content="/login.php">
+							<span class="breadcrumb-label" itemprop="name">Login</span>
+							<meta itemprop="position" content="2" />
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="login page-content--centered">
+			<h1 class="page-heading">Sign in</h1>
+			<div class="login-row">
+				<form class="login-form form" action="/users/login" method="POST">
+					<div class="form-field">
+						<label class="form-label" for="login_email">Email Address:</label>
+						<input class="form-input" name="email" id="login_email" type="email">
+					</div>
+					<div class="form-field">
+						<label class="form-label" for="login_pass">Password:</label>
+						<input class="form-input" id="login_pass" type="password" name="password" autocomplete="off">
+					</div>
+					<div class="form-actions" style="text-align: center;">
+						<input type="submit" class="button button--primary" value="Sign in"><br>
+						<a class="forgot-password" href="/recover">Forgot your password?</a>
+					</div>
+					<div class="addthis_toolbox addthis_32x32_style" style="margin-top: 15px;  text-align: center;">
+						<label class="forgot-password" for="login_pass" style="color: #ffaa3d;"><b>Or signin
+								using:</b></label>
+						<ul class="socialLinks" style="text-align: center; margin-top: 5px;">
+							<li class="socialLinks-item socialLinks-item--facebook">
+								<a uk-icon="facebook" href="/auth/facebook"
+									style="text-align: center; font-size: large;">
+								</a>
+							</li>
+							<li class="socialLinks-item socialLinks-item--email">
+								<a uk-icon="google" href="/auth/google" style="text-align: center; font-size: large;">
+								</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+
+				<div class="new-customer">
+					<div class="panel">
+						<div class="panel-header">
+							<h2 class="panel-title">New Customer?</h2>
+						</div>
+						<div class="panel-body">
+							<p class="new-customer-intro">Create an account with us and you&#x27;ll be able to:</p>
+							<ul class="new-customer-fact-list">
+								<li class="new-customer-fact">Check out faster</li>
+								<li class="new-customer-fact">Save multiple shipping addresses</li>
+								<li class="new-customer-fact">Access your order history</li>
+								<li class="new-customer-fact">Track new orders</li>
+							</ul>
+							<a href="/users/register"><button class="button button--primary">Create
+									Account</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div id="modal" class="modal" data-reveal data-prevent-quick-search-close>
+		<a href="#" class="modal-close" aria-label="Close" role="button">
+			<span aria-hidden="true">&#215;</span>
+		</a>
+		<div class="modal-content"></div>
+		<div class="loadingOverlay"></div>
+	</div>
+	<div id="alert-modal" class="modal modal--alert modal--small" data-reveal data-prevent-quick-search-close>
+		<div class="swal2-icon swal2-error swal2-icon-show"><span class="swal2-x-mark"><span
+					class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div>
+
+		<div class="modal-content"></div>
+
+		<div class="button-container"><button type="button" class="confirm button" data-reveal-close>OK</button>
+		</div>
+	</div>
+</div>
+
+<%- include("partials/newFooter.ejs") %>

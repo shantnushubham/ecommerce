@@ -1,0 +1,80 @@
+<%- include("partials/newHeader.ejs") %>
+
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="EUR">
+
+	<div class="home-content">
+		<div class="tt-breadcrumbs-main">
+			<div class="tt-breadcrumbs">
+				<div class="container">
+					<h1 class="category-name">
+						<span class="breadcrumb-title ">
+						</span>
+						<span class="breadcrumb-title is-active">
+							<span class="breadcrumb-label">Your List Items</span>
+						</span>
+					</h1>
+					<ul class="breadcrumbs" itemscope itemtype="">
+						<li class="breadcrumb " itemprop="itemListElement" itemscope>
+							<a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+							<meta itemprop="position" content="1" />
+						</li>
+						<li class="breadcrumb is-active" itemprop="itemListElement" itemscope>
+							<meta itemprop=" item" content="/cart.php">
+							<span class="breadcrumb-label" itemprop="name">Your List Items</span>
+							<meta itemprop="position" content="2" />
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div style="margin-left: 13%; margin-right: 13%;">
+			<div class="uk-child-width-1-1@m" uk-grid>
+				<% if (list.length > 0) { %>
+				<div class="uk-overflow-auto">
+					<table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+						<thead>
+							<style>
+								th.uk-table-small {
+									text-align: center;
+									color: #2a3746;
+									font-weight: bold;
+								}
+							</style>
+							<tr>
+								<th class="uk-table-small">Product</th>
+								<th class="uk-table-small">Name</th>
+								<th class="uk-table-small">Quantity</th>
+								<th class="uk-table-small">Unit Price</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% let x = 0; %>
+							<% for (let i = 0; i < list.length; i++) { %>
+							<tr>
+								<td class="uk-table-link">
+									<img src="<%=list.item.image[0]%>" alt="item" width="40px">
+								</td>
+								<td class="uk-table-link"> <%= list[i].item.name %>
+								</td>
+								<% x = x + parseInt(list[i].quantity) * parseInt(list[i].item.price) %>
+								<td class="uk-table-link"> <%=list[i].quantity%>
+								</td>
+								<td class="uk-table-link">
+									₹ <%= list[i].item.price %>
+								</td>
+							</tr>
+							<% } %>
+						</tbody>
+					</table>
+				</div>
+				<% } else { %>
+				<h4 style="text-align: center;">You don't have any lists.</h4>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<%- include("partials/newFooter.ejs") %>

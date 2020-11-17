@@ -1,0 +1,60 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Offers List</li>
+        </ol>
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Offers Data Table</div>
+            <div class="card-body">
+                <div style="text-align: center;">
+                    <a href="/admin/offers/create" class="ui large green button" style="margin-bottom: 5px;">Create
+                        Offer</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>IsPercent</th>
+                                <th>Discount</th>
+                                <th>Active/Deactivate</th>
+                                <th>Open/Update</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <% offer.forEach(element => { %>
+                            <tr>
+                                <td><%=element.code%></td>
+                                <td><%= element.isPercent %></td>
+                                <td><%= element.discount %></td>
+                                <td><% if (element.active) { %>
+                                    <a href=""><button class="ui small green button">Active</button></a>
+                                    <% } else { %>
+                                    <a href=""><button class="ui small red button">Deactivated</button></a>
+                                    <% } %>
+                                </td>
+                                <td><a href="/admin/offers/update/<%=element.code%>"><button
+                                            class="ui small green button">Open/Update</button></a></td>
+                            </tr>
+                            <% }); %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /tables-->
+    </div>
+    <!-- /container-fluid-->
+</div>
+<!-- /container-wrapper-->
+
+<%- include('partials/adminFooter'); -%>
