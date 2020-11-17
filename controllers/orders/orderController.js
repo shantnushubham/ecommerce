@@ -261,6 +261,7 @@ exports.codPath = function (req, res) {
             res.redirect('/cartpage')
         }
         else {
+            console.log("cartlist",cart.cartList);
             codaAllow.find({}, function (err, foundThres) {
                 var cod = false
                 if (!err && foundThres.length >= 1 && cart.allowCOD == true) {
@@ -298,7 +299,7 @@ exports.codPath = function (req, res) {
                                         codAllowed: true,
                                         tax: cart.tax
                                     }
-                                   console.log("orderDetails=",order);
+                                //    console.log("orderDetails=",order);
                                     
 
 
@@ -319,6 +320,36 @@ exports.codPath = function (req, res) {
                                                 console.log("stock update status:", stocks.success);
                                             })
                                             res.render('successpage', { order: createOrder.order, failure: false, failureMessage: null })
+                                           
+                                            if (req.user) {
+                                                var promiseArr=[]
+                                                // console.log(createOrder.order.orderedItems);
+                                                // console.log("list",createOrder.order.orderedItems);
+                                                for( var i=0;i< createOrder.order.orderedItems.length;i++){
+                                                    // console.log("foreach",createOrder.order.orderedItems[i]);
+                                                    if(createOrder.order.orderedItems[i].iid!=undefined)
+                                                    promiseArr.push(cartServices.getItemForList(createOrder.order.orderedItems[i].iid, createOrder.order.orderedItems[i].quantity, req.user.uuid))
+                                                };
+                                                Promise.all(promiseArr).then((respo) => {
+                                                    var data = {
+                                                        mail:req.user.email,
+                                                        user: req.user,
+                                                        items: respo,
+                                                        order: createOrder.order
+                                                    }
+                                                    // console.log(respo);
+                                                    console.log("maildata",data);
+                                                    mailer.sendPerforma(req.user.email, data, function (mailed) {
+                                                        console.log(mailed);
+                                                    })
+                                                    mailer.orderReceived(req.user.email, data, function (mailed) {
+                                                        console.log(mailed);
+                                                    })
+                                                }).catch(err => {
+                                                    console.log(err);
+                                    
+                                                })
+                                            }
                                         }
                                     })
 
@@ -516,10 +547,11 @@ exports.createQuotation = function (req, res) {
                                     req.flash('success', 'Quote Requested!')
                                     res.redirect('/cartpage')
                                     var maildata = {
-                                        order: createOrder,
-                                        items: cart.itemArray,
+                                        order: createOrder.order,
+                                        items: cart.cartList,
                                         user: req.user
                                     }
+                                    console.log("items",maildata.items);
                                     mailer.askQuote(req.body.email, maildata, function (mailed) {
                                         console.log(mailed);
                                     })
@@ -1277,5 +1309,25 @@ exports.postUpdateFee = function (req, res) {
         else
             req.flash('success', 'success')
         res.redirect('/admin')
+    })
+}
+//-----------------------------------------------------------------------------------------------------
+exports.getTrack=function(req,res)
+{
+    res.render('addTrack',{orderId:req.params.orderId})
+}
+exports.postTrack=function(req,res)
+{
+    orderServices.addTrack(req.params.orderId,req.body.link,function(updated){
+        if(updated.success==false)
+        {
+            req.flash('error','error')
+            res.redirect('/admin/track/'+req.params.orderId)
+        }
+        else
+        {
+            req.flash('success','success')
+            res.redirect('/admin/track/'+req.params.orderId)
+        }
     })
 }
