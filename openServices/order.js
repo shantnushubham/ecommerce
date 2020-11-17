@@ -708,6 +708,8 @@ class order {
 
     updateOrderDoc(orderId, data, callback) {
         ordermodel.findOneAndUpdate({ orderId: orderId, }, data, function (err, updatedOrder) {
+            console.log("order",updatedOrder);
+            console.log("error:",err);
             if (err || functions.isEmpty(updatedOrder)) callback({ success: false })
             else
                 callback({ success: true, order: updatedOrder })

@@ -544,12 +544,15 @@ exports.createQuotation = function (req, res) {
 
 exports.savedToCod = function (req, res) {
     orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundCod) {
+        console.log("order is ",foundCod.order);
         if (foundCod.success == false) {
-
+            req.flash('error', 'error in getting order')
+            res.redirect('/saved-orders')
         }
         else {
             codaAllow.find({}, function (err, foundThres) {
-                if (!err && foundThres.length >= 1 && foundCod.order.allowCOD == true) {
+                console.log("coderr",err , foundThres.length >= 1 ,foundCod.order.codAllowed,"uuid",req.user );
+                if (!err && foundThres.length >= 1 && foundCod.order.codAllowed == true) {
                     if (foundCod.order.total < foundThres[0].from) {
                         req.flash('error', 'COD not allowed')
                         res.redirect('/saved-orders')
@@ -557,7 +560,7 @@ exports.savedToCod = function (req, res) {
                     else {
                         orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'COD', shipmentStatus: "processing", total: parseInt(foundCod.order.total) * 1.18 }, function (updatedOrder) {
                             if (updatedOrder.success == false) {
-                                req.flash('error', 'error in processing order')
+                                req.flash('error', 'error in updating order for cod')
                                 res.redirect('/saved-orders')
                             }
                             else {
@@ -585,7 +588,7 @@ exports.savedToCod = function (req, res) {
 exports.savedToCredit = function (req, res) {
     orderServices.findOrderById(req.params.orderId, req.user.uuid, function (foundOrder) {
         if (foundOrder.success == false) {
-            req.flash('error', 'error in processing order')
+            req.flash('error', 'error in getting order')
             res.redirect('/saved-orders')
         }
         else {
@@ -596,7 +599,7 @@ exports.savedToCredit = function (req, res) {
             else {
                 orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'credit' }, function (updatedOrder) {
                     if (updatedOrder.success == false) {
-                        req.flash('error', 'error in processing order')
+                        req.flash('error', 'error in updating order')
                         res.redirect('/saved-orders')
                     }
                     else {
@@ -612,7 +615,7 @@ exports.savedToCredit = function (req, res) {
 exports.savedToPay = function (req, res) {
     orderServices.updateOrderDoc(req.params.orderId, { paymentType: 'online' }, function (updatedOrder) {
         if (updatedOrder.success == false) {
-            req.flash('error', 'error in processing order')
+            req.flash('error', 'error in updating order for payu')
             res.redirect('/saved-orders')
         }
         else {

@@ -79,7 +79,7 @@ exports.addItem = function (req, res) {
                         else {
                             console.log('success');
                             req.flash('success', 'added to cart')
-                            res.redirect('/cartPage')
+                            res.redirect('/items')
                         }
                     })
                 }

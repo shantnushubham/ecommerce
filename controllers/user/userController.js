@@ -507,7 +507,7 @@ exports.getBusinessAccountReg = function (req, res) {
             if (functions.isEmpty(foundB))
                 res.render('businessAccountReg')
             else {
-                res.render('userBusinessNotif',{business:foundB})
+                res.render('userBusinessNotif', { business: foundB })
             }
         }
     })
@@ -602,7 +602,7 @@ exports.postAdminPA = function (req, res) {
     if (credPerc == 0 || credBalance == 0)
         res.redirect('/users/business-accounts/accepted')
     else {
-        User.findOneAndUpdate({ uuid: req.params.uuid }, { daysToRemind:req.body.days,credPerc: credPerc, credBalance: credBalance, premium: true, isBusiness: true }, function (err, updatedUser) {
+        User.findOneAndUpdate({ uuid: req.params.uuid }, { daysToRemind: req.body.days, credPerc: credPerc, credBalance: credBalance, premium: true, isBusiness: true }, function (err, updatedUser) {
             if (err) {
                 req.flash('error', 'error in db')
                 res.redirect('/users/business-accounts/accepted')
@@ -627,7 +627,7 @@ exports.getAllPA = function (req, res) {
                 "days": "$days",
                 "credPerc": "$credPerc",
                 "name": "$name",
-                "days":"$daysToRemind",
+                "days": "$daysToRemind",
                 "premium": "$premium",
                 "isBalance": "$isBalance",
                 "business": { "$arrayElemAt": ["$user", 0] }
@@ -650,17 +650,17 @@ exports.acceptBizReq = function (req, res) {
     businessReg.findOneAndUpdate({ bid: req.params.bid }, { isAccepted: true }, function (err, updatedB) {
         if (err) {
             req.flash('error', 'request could not be processed')
-            res.redirect('/users/business-account')
+            res.redirect('/users/business-accounts')
         }
         else {
             User.findOneAndUpdate({ uuid: updatedB.uuid }, { isBusiness: true }, function (err, updatedU) {
                 if (err) {
                     req.flash('error', 'request could not be processed.user not updated')
-                    res.redirect('/users/business-account')
+                    res.redirect('/users/business-accounts')
                 }
                 else {
                     req.flash('success', 'success')
-                    res.redirect('/users/business-account')
+                    res.redirect('/users/business-accounts')
                 }
             })
         }
@@ -670,17 +670,17 @@ exports.revokeBizAcc = function (req, res) {
     businessReg.findOneAndUpdate({ bid: req.params.bid }, { isAccepted: false }, function (err, updatedB) {
         if (err) {
             req.flash('error', 'request could not be processed')
-            res.redirect('/users/business-account')
+            res.redirect('/users/business-accounts')
         }
         else {
-            User.findOneAndUpdate({ uuid: updatedB.uuid }, { isBusiness: false }, function (err, updatedU) {
+            User.findOneAndUpdate({ uuid: updatedB.uuid }, { isBusiness: false,premium:false }, function (err, updatedU) {
                 if (err) {
                     req.flash('error', 'request could not be processed.user not updated')
-                    res.redirect('/users/business-account')
+                    res.redirect('/users/business-accounts')
                 }
                 else {
                     req.flash('success', 'success')
-                    res.redirect('/users/business-account')
+                    res.redirect('/users/business-accounts')
                 }
             })
         }
