@@ -111,7 +111,7 @@ class order {
             callback({ success: false })
         else {
             var filter={}
-            if(status==="all")
+            if(payment==="all")
             filter={ $match: { purchaseTime: { $gte: f, $lte: t },  invoiceSent: true }}
             else
             filter={ $match: { purchaseTime: { $gte: f, $lte: t },status:payment,  invoiceSent: true }}
