@@ -937,6 +937,16 @@ class order {
             }
         })
     }
+    addTrack(orderId,link,callback)
+    {
+        ordermodel.findOneAndUpdate({ orderId: orderId },{trackingLink:link}, function (err, foundInvoiceList) {
+            if (err) {
+                callback({ success: false })
+            } else {
+                callback({ success: true, })
+            }
+        })
+    }
 
 
 }

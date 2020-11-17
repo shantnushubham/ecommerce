@@ -166,6 +166,9 @@ var orderSchema = new mongoose.Schema({
     invoiceSent:{
         type:Boolean,
         default:false
+    },
+    trackingLink:{
+        type:String
     }
 
 });

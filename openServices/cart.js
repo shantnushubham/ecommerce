@@ -715,8 +715,10 @@ class cart {
     getItemForList(iid, qty, uuid) {
         return new Promise((resolve, reject) => {
             itemmodel.findOne({ iid: iid }, function (err, foundItem) {
-                if (err)
-                    reject({ success: false, item: {} })
+                if (err||foundItem==null||functions.isEmpty(foundItem))
+                    {
+                        console.log(iid);
+                        reject({ success: false, item: {} })}
                 else {
                     var itemdata = {
                         itemID: foundItem.iid,

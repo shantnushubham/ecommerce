@@ -130,15 +130,20 @@ router.post('/payment/success', (req, res) => {
         })
         var promiseArr = []
         if (req.user) {
-            updatedOtx.order.orderedItems.forEach(element => {
-                promiseArr.push(cartServices.getItemForList(element.iid, element.quantity, req.user.uuid))
-            });
+            for( var i=0;i< updatedOtx.order.orderedItems.length;i++){
+                // console.log("foreach",createOrder.order.orderedItems[i]);
+                if(updatedOtx.order.orderedItems[i].iid!=undefined)
+                promiseArr.push(cartServices.getItemForList(updatedOtx.order.orderedItems[i].iid, updatedOtx.order.orderedItems[i].quantity, req.user.uuid))
+            };
             Promise.all(promiseArr).then((respo) => {
                 var data = {
+                    mail:req.user.email,
                     user: req.user,
                     items: respo,
                     order: updatedOtx.order
                 }
+                // console.log(respo);
+                console.log("maildata",data);
                 mailer.sendPerforma(req.user.email, data, function (mailed) {
                     console.log(mailed);
                 })
@@ -287,6 +292,8 @@ router.get('/codAllow/update', functions.isAdmin, orderController.getUpdateCODAl
 router.post('/fee/update', functions.isAdmin, orderController.postUpdateFee)
 router.post('/codAllow/update', functions.isAdmin, orderController.postUpdateCODAllow)
 
+router.get('/admin/track/:orderId',functions.isAdmin,orderController.getTrack)
+router.post('/admin/track/:orderId',functions.isAdmin,orderController.postTrack)
 
 
 
