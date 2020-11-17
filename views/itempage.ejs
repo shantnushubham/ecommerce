@@ -318,7 +318,7 @@
 			<div data-content-region="product_below_content"></div>
 
 			<div class="tt-product-tab">
-				<% if (!(group.length > 0 && item.groupingTag != 0)) { %>
+				<% if ((group.length > 0 && item.groupingTag != 0)) { %>
 				<ul class="tabs" data-tab role="tablist">
 					<li class="tab is-active" role="presentational">
 						<a class="tab-title" href="#tab-related" role="tab" tabindex="0" aria-selected="true"
