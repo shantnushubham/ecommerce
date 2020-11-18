@@ -873,11 +873,11 @@ exports.confirmOrder = function (req, res) {
     orderServices.acceptOrder(req.params.orderId, d, function (order) {
         if (order.success == false) {
             req.flash('error', 'error ' + order.message)
-            res.redirect('/admin/orders-filter')
+            res.redirect('back');
         }
         else {
             req.flash('success', 'success ' + order.message)
-            res.redirect('/admin/orders-filter')
+            res.redirect('back');
         }
     })
 }
@@ -890,11 +890,11 @@ exports.allowCred = function (req, res) {
     orderServices.allowCredit(req.params.orderId, req.body.credPerc, req.body.days, function (order) {
         if (order.success == false) {
             req.flash('error', 'error')
-            res.redirect('/admin/orders-filter')
+            res.redirect('back');
         }
         else {
             req.flash('success', 'success')
-            res.redirect('/admin/orders-filter')
+            res.redirect('back');
         }
     })
 }
@@ -1008,7 +1008,7 @@ exports.authorizeOrder = function (req, res) {
     orderServices.authorizeOrder(req.params.orderId, function (updated) {
         if (updated.success == false)
             req.flash('error', 'error')
-        res.redirect('/admin/orders-filter-paymentStatus/authorized')
+            res.redirect('back');
     })
 }
 

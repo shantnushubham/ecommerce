@@ -241,7 +241,7 @@ class items {
             sku: data.sku,
             stock: data.stock,
             measurementUnit: data.measurementUnit,
-            isBusiness: data.isBusiness == "true" ? true : false,
+            isBusiness: data.isBusiness ,
             cod: data.cod == true ? true : false,
 
         }

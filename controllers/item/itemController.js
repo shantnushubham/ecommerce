@@ -66,8 +66,10 @@ exports.search = function (req, res) {
         }
         else {
             // console.log('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
-
+            if(itemlist.foundItems.length>0)
             res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
+            else
+            res.redirect('/items')
         }
     })
 }

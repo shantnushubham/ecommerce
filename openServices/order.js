@@ -217,7 +217,7 @@ class order {
                 callback({ success: false })
             }
             else {
-                if (updatedOrder.paymentType === "credit") {
+                if (updatedOrder.paymentType === "credit"&&st==="authorized") {
                     userModel.findOne({ uuid: updatedOrder.uuid }, function (err, foundUser) {
                         if (err)
                             console.log(err);
