@@ -297,7 +297,7 @@ exports.cancelled=function(email,data,callback){
         },
         data: {
             sender: { name: '112Cart', email: 'support@112cart.com' },
-            to: [{ email: to,  }],
+            to: [{ email: email,  }],
             params: { name:data.name,orderId:data.orderId  },
             tags: ['Order-Cancellation'],
             templateId: 9

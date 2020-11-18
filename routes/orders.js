@@ -13,6 +13,7 @@ const jssha = require('jssha')
 const uniq = require('generate-unique-id')
 const mailer = require('../controllers/common/Mailer')
 const { route } = require('./admin')
+const userModel = require('../models/User/User')
 
 router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
@@ -129,35 +130,44 @@ router.post('/payment/success', (req, res) => {
             console.log("stock update status:", stocks.success);
         })
         var promiseArr = []
-        if (req.user) {
-            for( var i=0;i< updatedOtx.order.orderedItems.length;i++){
-                // console.log("foreach",createOrder.order.orderedItems[i]);
-                if(updatedOtx.order.orderedItems[i].iid!=undefined)
-                promiseArr.push(cartServices.getItemForList(updatedOtx.order.orderedItems[i].iid, updatedOtx.order.orderedItems[i].quantity, req.user.uuid))
-            };
-            Promise.all(promiseArr).then((respo) => {
-                var data = {
-                    mail:req.user.email,
-                    user: req.user,
-                    items: respo,
-                    order: updatedOtx.order
-                }
-                // console.log(respo);
-                console.log("maildata",data);
-                mailer.sendPerforma(req.user.email, data, function (mailed) {
-                    console.log(mailed);
-                })
-                mailer.orderReceived(req.user.email, data, function (mailed) {
-                    console.log(mailed);
-                })
-            }).catch(err => {
-                console.log(err);
+        userModel.findOne({ uuid: updatedOtx.order.uuid }, function (err, user) {
+            if (!err && user != null && user != undefined) {
 
-            })
-        }
+
+                for (var i = 0; i < updatedOtx.order.orderedItems.length; i++) {
+                    // console.log("foreach",createOrder.order.orderedItems[i]);
+                    if (updatedOtx.order.orderedItems[i].iid != undefined)
+                        promiseArr.push(cartServices.getItemForList(updatedOtx.order.orderedItems[i].iid, updatedOtx.order.orderedItems[i].quantity, user.uuid))
+                };
+                Promise.all(promiseArr).then((respo) => {
+                    var data = {
+                        mail: user.email,
+                        user: user,
+                        items: respo,
+                        order: updatedOtx.order
+                    }
+                    // console.log(respo);
+                    console.log("maildata", data);
+                    mailer.sendPerforma(user.email, data, function (mailed) {
+                        console.log(mailed);
+                    })
+                    mailer.orderReceived(user.email, data, function (mailed) {
+                        console.log(mailed);
+                    })
+                }).catch(err => {
+                    console.log(err);
+
+                })
+                
+                cartServices.clearCart(user.uuid,function(cleared){
+                    console.log(cleared);
+                })
+            }
+        })
 
         console.log('redirect to success page');
         res.render('successpage', { order: updatedOtx.order, failure: false, failureMessage: null })
+        
     })
 
 })
@@ -237,7 +247,7 @@ router.get('/pay/save/cred/:orderId', ensureAuthenticated, orderController.saved
 router.get('/allow-credit/:orderId', functions.isAdmin, orderController.getAllowCred)
 router.post('/allow-credit/:orderId', functions.isAdmin, orderController.allowCred)
 
-router.post('/proceed',ensureAuthenticated,orderController.getCheckout)
+router.post('/proceed', ensureAuthenticated, orderController.getCheckout)
 // router.get('/checkout', ensureAuthenticated, orderController.getCheckout)
 router.post('/checkout', ensureAuthenticated, orderController.postCheckout)
 router.get("/user-order/:orderId", ensureAuthenticated, orderController.checkUserOrder)
@@ -292,8 +302,8 @@ router.get('/codAllow/update', functions.isAdmin, orderController.getUpdateCODAl
 router.post('/fee/update', functions.isAdmin, orderController.postUpdateFee)
 router.post('/codAllow/update', functions.isAdmin, orderController.postUpdateCODAllow)
 
-router.get('/admin/track/:orderId',functions.isAdmin,orderController.getTrack)
-router.post('/admin/track/:orderId',functions.isAdmin,orderController.postTrack)
+router.get('/admin/track/:orderId', functions.isAdmin, orderController.getTrack)
+router.post('/admin/track/:orderId', functions.isAdmin, orderController.postTrack)
 
 
 

@@ -465,7 +465,7 @@ class cart {
                                 var valid = true
                                 if (offer.items.length > 0) {
 
-                                    for (var i = 0; i < cartList.length; i++) {
+                                    for (var i = 0; i < cartItem.length; i++) {
                                         if (offer.items.includes(cartItem[i].iid) == false) {
                                             valid = false
                                             break;
@@ -619,7 +619,7 @@ class cart {
                                 var valid = true
                                 if (offer.items.length > 0) {
 
-                                    for (var i = 0; i < cartList.length; i++) {
+                                    for (var i = 0; i < cartItem.length; i++) {
                                         if (offer.items.includes(cartItem[i].iid) == false) {
                                             valid = false
                                             break;
