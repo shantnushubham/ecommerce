@@ -124,6 +124,9 @@
 			</div>
 		</div>
 		<div class="full-header header-bottom">
+
+			<% const snakeCase = string => {return string.replace(/\W+/g, " ").split(/ |\B(?=[A-Z])/).map(word => word.toLowerCase()).join('_');}; %>
+			
 			<div class="container">
 				<a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
 					<span class="mobileMenu-toggleIcon">Toggle menu</span>
@@ -142,27 +145,71 @@
 									<a class="navPages-action" href="/">Home</a>
 								</li>
 								<% var categories = new Array() %>
-								<% categories.push({name: "All Items", linkTo: "/items"}) %>
-								<% categories.push({name: "Sanitation", linkTo: "/items/category/sanitation"}) %>
-								<% categories.push({name: "Cleaning & Hygiene Solutions", linkTo: ""}) %>
-								<% categories.push({name: "Lab Solutions", linkTo: ""}) %>
-								<% categories.push({name: "Pathology & Histopathology", linkTo: ""}) %>
-								<% categories.push({name: "Entomology", linkTo: ""}) %>
-								<% categories.push({name: "Geography and Surveying", linkTo: ""}) %>
-								<% categories.push({name: "Visual Teaching", linkTo: ""}) %>
-								<% categories.push({name: "Electronics", linkTo: ""}) %>
-								<% categories.push({name: "Pharmacy", linkTo: ""}) %>
-								<% categories.push({name: "Books", linkTo: ""}) %>
-								<% categories.push({name: "Winter Uniforms", linkTo: ""}) %>
+								<% categories.push({showName: "Covid-19 Solutions", realName: "sanitation", linkTo: "/items/category/sanitation", subCat: ["Sanitation Chemicals", "Sanitation Equipments", "Sanitation Consumables", "Sanitation Services"]}) %>
+								<% categories.push({showName: "Lab Solutions", realName: "lab_solutions", linkTo: "/items/category/lab_solutions", subCat: ["Physics", "Chemistry", "Biology", "Applied Mechanics", "Quartz Glassware"]}) %>
+								<% categories.push({showName: "Cleaning & Hygiene", realName: "cleaning_&_hygiene", linkTo: "/items/category/cleaning_&_hygiene", subCat: []}) %>
+								<% categories.push({showName: "Lab Chemicals", realName: "lab_chemicals", linkTo: "/items/category/lab_chemicals", subCat: []}) %>
 
-								<% categories.forEach(category => { %>
+								<% var comingSoon = new Array() %>
+								<% comingSoon.push({showName: "Pathology & Histopathology"}) %>
+								<% comingSoon.push({showName: "Entomology"}) %>
+								<% comingSoon.push({showName: "Geography and Surveying"}) %>
+								<% comingSoon.push({showName: "Visual Teaching"}) %>
+								<% comingSoon.push({showName: "Electronics"}) %>
+								<% comingSoon.push({showName: "Pharmacy"}) %>
+								<% comingSoon.push({showName: "Books"}) %>
+								<% comingSoon.push({showName: "Winter Uniforms"}) %>
+
+								<li class="navPages-item">
+									<a class="navPages-action" href="/items">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										All Items
+									</a>
+								</li>
+
+								<% categories.forEach((category, index) => { %>
+								<% if (category.subCat.length == 0) { %>
 								<li class="navPages-item">
 									<a class="navPages-action" href="<%=category.linkTo%>">
 										<span class="material-icons tt-left-arrow">arrow_forward</span>
-										<%= category.name%>
+										<%= category.showName%>
+									</a>
+								</li>
+								<% } else { %>
+								<li class="navPages-item">
+									<a class="navPages-action has-subMenu" href="<%=category.linkTo%>">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										<%=category.showName%>
+										<span class="material-icons tt-right-arrow"
+											data-collapsible="navPages-<%=index%>">keyboard_arrow_down</span>
+									</a>
+									<div class="navPage-subMenu" id="navPages-<%=index%>" aria-hidden="true"
+										tabindex="-1">
+										<ul class="navPage-subMenu-list grid-3">
+											<% category.subCat.forEach(el => { %>
+											<li class="navPage-subMenu-item">
+												<a class="navPage-subMenu-action navPages-action"
+													href="/get-items/<%=category.realName%>/?sub-category=<%=snakeCase(el)%>"><%=el%></a>
+											</li>
+											<% }) %>
+										</ul>
+									</div>
+								</li>
+								<% } %>
+								<% }) %>
+								<hr style="margin: 0;">
+								<h6 style="margin: 5px; font-weight: bold;">Coming Soon</h6>
+
+								<% comingSoon.forEach(el => { %>
+								<li class="navPages-item">
+									<a class="navPages-action" style="pointer-events: none;">
+										<span class="material-icons tt-left-arrow">arrow_forward</span>
+										<%=el.showName%>
 									</a>
 								</li>
 								<% }) %>
+
+								<hr style="margin: 0">
 								<li class="navPages-item">
 									<a class="navPages-action" href="/offers">
 										<span class="material-icons tt-left-arrow">arrow_forward</span>

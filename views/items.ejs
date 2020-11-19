@@ -3,7 +3,7 @@
 <div data-content-region="header_bottom"></div>
 <div class="body" data-currency-code="INR">
 
-	<% function changeCase(string) { var newString = string.replace("_", " "); return newString; } %>
+	<% function changeCase(string) { var newString = string.replace(/_/g, " "); return newString; } %>
 
 	<div class="home-content">
 
