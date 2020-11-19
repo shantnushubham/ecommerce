@@ -141,10 +141,18 @@ exports.getItemsByCategoryAndSubCategory = (req, res) => {
     let subCategory = req.query['sub-category'];
     console.log(category, subCategory)
     itemModel.find({ $and: [{ category: category }, { subCategory: subCategory }] }).then((foundItems) => {
-        console.log(foundItems);
-        // res.render("items", {})
+        var cat = new Set()
+        var subCat = new Set()
+        var tag = new Set()
+        foundItems.forEach(el => {
+            cat.add(el.category)
+            subCat.add(el.subCategory)
+            tag.add(el.tag)
+        })
+        res.render('items', { itemlist: foundItems, category: Array.from(cat), subCategory: Array.from(subCat), tag: Array.from(tag), s_cat: [category], s_sub: [subCategory], s_tag: [] })
+
     }).catch((err) => {
-        console.log(err)
+        res.redirect('/items')
     })
 }
 
