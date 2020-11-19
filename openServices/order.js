@@ -523,7 +523,7 @@ class order {
                                         "billing_phone": foundUser.phone,
                                         "shipping_is_billing": true,
                                         "order_items": orderitems,
-                                        "payment_method": "Prepaid",
+                                        "payment_method": data.prepaid,
                                         "sub_total": foundOrder.total,
                                         "length": data.length, "breadth": data.breadth, "height": data.height, "weight": data.weight
                                     }
