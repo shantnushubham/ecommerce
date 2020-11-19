@@ -232,34 +232,45 @@
 								<div class="uk-grid-column-small uk-grid-row-small uk-child-width-1-4@s uk-text-center"
 									style="padding-left:20%; padding-right: 20%;" uk-grid>
 									<div>
-										<button class="default-btn" type="submit">Place Order</button>
+										<button class="default-btn" onclick="makeRequired(false)" type="submit">Place
+											Order</button>
 									</div>
 									<% if (codAllowed) { %>
 									<div>
-										<button class="default-btn" type="submit" formaction="/order-cod">Order as
+										<button class="default-btn" onclick="makeRequired(false)" type="submit"
+											formaction="/order-cod">Order as
 											COD</button>
 									</div>
 									<% } %>
 									<% if (((currentUser.isBusiness == true && currentUser.premium == true) || (currentUser.isBusiness == false && currentUser.creditAllowed == true)) && (currentUser.credPerc > 0 && currentUser.credBalance >= total)) {  %>
 									<div>
-										<button class="default-btn" type="submit" formaction="/order-credit">Credit
+										<button class="default-btn" onclick="makeRequired(false)" type="submit"
+											formaction="/order-credit">Credit
 											Payment</button>
 									</div>
 									<% } %>
 									<div>
-										<button class="default-btn" type="submit" formaction="/save-order">Save
+										<button class="default-btn" onclick="makeRequired(false)" type="submit"
+											formaction="/save-order">Save
 											Order</button>
 									</div>
 
 								</div>
 								<div style="text-align: center; margin: 15px">
-									<input class="uk-input uk-form-width-large" type="text" name="email"
+									<input class="uk-input uk-form-width-large" type="text" name="email" id="quoteEmail"
 										placeholder="Email">
 								</div>
 								<div style="text-align: center; margin: 15px">
-									<button class="default-btn" type="submit" formaction="/quotation">Create
+									<button class="default-btn" onclick="makeRequired(true)" type="submit"
+										formaction="/quotation">Create
 										Quote</button>
 								</div>
+
+								<script>
+									function makeRequired(expression) {
+										document.getElementById("quoteEmail").required = expression;
+									}
+								</script>
 
 
 							</form>

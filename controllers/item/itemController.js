@@ -66,10 +66,10 @@ exports.search = function (req, res) {
         }
         else {
             // console.log('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
-            if(itemlist.foundItems.length>0)
-            res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
+            if (itemlist.foundItems.length > 0)
+                res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
             else
-            res.redirect('/items')
+                res.redirect('/items')
         }
     })
 }
@@ -133,6 +133,18 @@ exports.deactivateItem = function (req, res) {
 exports.activateItem = function (req, res) {
     itemservices.activateItem(req.params.iid, function (updatedItem) {
         res.redirect('/admin/items')
+    })
+}
+
+exports.getItemsByCategoryAndSubCategory = (req, res) => {
+    let category = req.params.category;
+    let subCategory = req.query['sub-category'];
+    console.log(category, subCategory)
+    itemModel.find({ $and: [{ category: category }, { subCategory: subCategory }] }).then((foundItems) => {
+        console.log(foundItems);
+        // res.render("items", {})
+    }).catch((err) => {
+        console.log(err)
     })
 }
 
