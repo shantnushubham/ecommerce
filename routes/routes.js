@@ -83,8 +83,8 @@ router.post('/admin/offerpage', functions.isAdmin, function (req, res) {
         }
     })
 })
-router.get("/terms-conditions", (req, res) => {
-    res.render("termsAndConditions")
+router.get("/conditions-of-use", (req, res) => {
+    res.render("conditionsOfUse")
 })
 
 router.get("/contact-us", (req, res) => {
@@ -93,6 +93,14 @@ router.get("/contact-us", (req, res) => {
 
 router.get("/about-us", (req, res) => {
     res.render("aboutUs");
+})
+
+router.get("/cookies-notice", (req, res) => {
+    res.render("cookiesNotice")
+})
+
+router.get("/privacy-policy", (req, res) => {
+    res.render("privacyPolicy")
 })
 
 router.post('/checkPincodeValid', UserControl.checkPinCodeValid);

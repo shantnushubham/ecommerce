@@ -226,10 +226,18 @@
 								display: none
 							}
 						}
+
+						span.discount {
+							color: red;
+							font-size: small;
+							text-decoration: none;
+						}
 					</style>
 
 					<ul class="productGrid">
 						<% itemlist.forEach(el => { %>
+						<% var itemWithTax = el.price * (1 + el.tax/100) %>
+						<% var slashedWithTax = el.slashedPrice * (1 + el.tax/100) %>
 						<% if (el.active) { %>
 						<li class="product">
 							<article class="card ">
@@ -285,16 +293,28 @@
 
 										<div class="price-section price-section--withTax">
 											<span class="price-label" style="display: none;">
-
 											</span>
 											<span class="price-now-label">
 											</span>
 											<span data-product-price-with-tax
-												class="price price--withTax">₹<%=el.price%></span>
+												class="price price--withTax">₹<%=Math.ceil(itemWithTax)%></span>
 										</div>
 										<div class="price-section price-section--withTax non-sale-price--withTax">
-											<span data-product-non-sale-price-with-tax class="price price--non-sale">
-												₹<%=(1.20) * el.price%>
+											<span data-product-non-sale-price-with-tax>
+												<% if (el.slashedPrice > itemWithTax) { %>
+												<span
+													style="text-decoration: line-through;">₹<%=Math.ceil(el.slashedPrice)%></span>
+												<span
+													class="discount">(<%=Math.ceil(((el.slashedPrice - itemWithTax) * 100)/el.slashedPrice)%>%
+													off)</span>
+												<% } else { %>
+												<% var slashedPrice = 1.20 * ((el.price) * (1 + el.tax/100)) %>
+												<span
+													style="text-decoration: line-through;">₹<%=Math.ceil(slashedPrice)%>
+												</span> <span
+													class="discount">(<%=Math.ceil(((slashedPrice - itemWithTax) * 100)/slashedPrice) %>%
+													off)</span>
+												<% } %>
 											</span>
 										</div>
 									</div>
@@ -336,6 +356,8 @@
 				</main>
 				<div class="uk-child-width-1-2 uk-text-center" uk-grid="masonry: true" id="forPhone">
 					<% itemlist.forEach(el => { %>
+					<% var itemWithTax = el.price * (1 + el.tax/100) %>
+					<% var slashedWithTax = el.slashedPrice * (1 + el.tax/100) %>
 					<div>
 						<!-- <div class="uk-card uk-card-default uk-card-body">
 							<div> -->
@@ -390,8 +412,21 @@
 												class="price price--withTax">₹<%=el.price%></span>
 										</div>
 										<div class="price-section price-section--withTax non-sale-price--withTax">
-											<span data-product-non-sale-price-with-tax class="price price--non-sale">
-												₹ <%=Math.ceil((1.20) * el.price)%>
+											<span data-product-non-sale-price-with-tax>
+												<% if (el.slashedPrice > itemWithTax) { %>
+												<span
+													style="text-decoration: line-through;">₹<%=Math.ceil(el.slashedPrice)%></span>
+												<span
+													class="discount">(<%=Math.ceil(((el.slashedPrice - itemWithTax) * 100)/el.slashedPrice)%>%
+													off)</span>
+												<% } else { %>
+												<% var slashedPrice = 1.20 * ((el.price) * (1 + el.tax/100)) %>
+												<span
+													style="text-decoration: line-through;">₹<%=Math.ceil(slashedPrice)%>
+												</span> <span
+													class="discount">(<%=Math.ceil(((slashedPrice - itemWithTax) * 100)/slashedPrice) %>%
+													off)</span>
+												<% } %>
 											</span>
 										</div>
 									</div>

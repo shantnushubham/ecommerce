@@ -1,0 +1,110 @@
+<%- include("partials/newHeader.ejs") %>
+
+<style>
+    h1,
+    h2 {
+        font-weight: bold;
+    }
+</style>
+
+<div data-content-region="header_bottom"></div>
+<div class="body" data-currency-code="INR">
+
+    <div class="home-content">
+
+        <div class="tt-breadcrumbs-main">
+            <div class="tt-breadcrumbs">
+                <div class="container">
+                    <h1 class="category-name">
+                        <span class="breadcrumb-title ">
+                        </span>
+                        <span class="breadcrumb-title is-active">
+                            <span class="breadcrumb-label">Cookies Notice</span>
+                        </span>
+                    </h1>
+                    <ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+                        <li class="breadcrumb " itemprop="itemListElement" itemscope
+                            itemtype="http://schema.org/ListItem">
+                            <a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
+                            <meta itemprop="position" content="1" />
+                        </li>
+                        <li class="breadcrumb is-active" itemprop="itemListElement" itemscope
+                            itemtype="http://schema.org/ListItem">
+                            <meta itemprop="item" content="/terms-conditions/">
+                            <span class="breadcrumb-label" itemprop="name">Cookies Notice</span>
+                            <meta itemprop="position" content="2" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <main class="tt-page page-content--centered">
+            <h1 class="page-heading">Cookies Notice<br>
+                <span style="font-size: medium;">Last updated: 16-Nov-2020</span></h1>
+
+
+            <div data-content-region="page_builder_content"></div>
+
+            <div class="page-content">
+                <p>
+                    College of Purity (“COP”) is the licensed owner of the brand <a href="/"><b>112cart.com</b></a> and
+                    the website <a href="/"><b>www.112cart.com</b></a> (”The Site”). We use cookies, pixels, and other
+                    technologies (collectively, "cookies") to recognize your browser or device, learn more about your
+                    interests and provide you with essential features and services and for additional purposes,
+                    including:
+                    <li>Recognizing you when you sign-in to use our services. This allows us to provide you with
+                        product recommendations, display personalized content and provide other customized features and
+                        services;</li>
+                    <li>Keeping track of your specified preferences;</li>
+                    <li>Keeping track of items stored in your shopping cart;</li>
+                    <li>Conducting research and diagnostics to improve our content, products, and services;</li>
+                    <li>Preventing fraudulent activity;</li>
+                    <li>Improving security;</li>
+                    <li>Delivering content, including ads, relevant to your interests on our site and third-party
+                        sites;</li>
+                    <li>Reporting. This allows us to measure and analyse the performance of our services.</li>
+
+                    112cart.com’s cookies allow you to take advantage of some of the Site’s essential features. For
+                    instance, if you block or otherwise reject our cookies, you will not be able to add items to your
+                    Shopping Cart, proceed to Checkout, or use any products and services that require you to sign in.
+                    <br><br>
+
+                    Approved third parties may also set cookies when you interact with 112cart.com’s services. Third
+                    parties include search engines, providers of measurement and analytics services, social media
+                    networks, and advertising companies. Third parties use cookies in the process of delivering content,
+                    including ads relevant to your interests, to measure the effectiveness of their ads, and to perform
+                    services on behalf of COP.<br><br>
+
+                    You can manage browser cookies through your browser settings. The 'Help' feature on most browsers
+                    will tell you how to prevent your browser from accepting new cookies, how to have the browser notify
+                    you when you receive a new cookie, how to block cookies, and when cookies will expire. If you block
+                    all cookies on your browser, neither we nor third parties will transfer cookies to your browser. If
+                    you do this, however, you may have to manually adjust some preferences every time you visit a site
+                    and some features and services may not work.<br><br>
+
+                    See our Privacy Policy for more information about the types of information we gather.
+                </p>
+            </div>
+
+        </main>
+
+
+    </div>
+    <div id="modal" class="modal" data-reveal data-prevent-quick-search-close>
+        <a href="#" class="modal-close" aria-label="Close" role="button">
+            <span aria-hidden="true">&#215;</span>
+        </a>
+        <div class="modal-content"></div>
+        <div class="loadingOverlay"></div>
+    </div>
+    <div id="alert-modal" class="modal modal--alert modal--small" data-reveal data-prevent-quick-search-close>
+        <div class="swal2-icon swal2-error swal2-icon-show"><span class="swal2-x-mark"><span
+                    class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div>
+
+        <div class="modal-content"></div>
+
+        <div class="button-container"><button type="button" class="confirm button" data-reveal-close>OK</button></div>
+    </div>
+</div>
+
+<%- include("partials/newFooter.ejs") %>
