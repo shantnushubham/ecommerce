@@ -92,8 +92,8 @@ class items {
                                 isService: foundItem.isService,
                                 tax: foundItem.tax,
                                 sku: foundItem.sku,
-                                stock:foundItem.stock,
-                                cod:foundItem.cod,
+                                stock: foundItem.stock,
+                                cod: foundItem.cod,
                                 isBusiness: foundItem.isBusiness
 
                             }
@@ -183,13 +183,13 @@ class items {
             isService: data.isService == "true" ? true : false,
             cod: data.cod == true ? true : false,
             measurementUnit: data.measurementUnit,
-            tax: data.tax==''?18:data.tax,
+            tax: data.tax == '' ? 18 : data.tax,
             sku: data.sku,
-            isBusiness: data.isBusiness==''?false:true,
-            slashedPrice:data.slashedPrice==''||data.slashedPrice==undefined?0:data.slashedPrice
+            isBusiness: data.isBusiness == '' ? false : true,
+            slashedPrice: data.slashedPrice == '' || data.slashedPrice == undefined ? 0 : data.slashedPrice
 
         }
-        console.log('itemdata=',item_data);
+        console.log('itemdata=', item_data);
         var item_metaData = { weight: data.weight, content: data.content, color: data.color }
 
         vendorModel.findOne({ vendorId: data.vendorId }, function (err, foundV) {
@@ -205,7 +205,7 @@ class items {
                         callback({ success: false, err: "trouble creating item" })
                     }
                     else {
-                        console.log("created",newItem);
+                        console.log("created", newItem);
                         item_metaData.iid = newItem.iid
                         itemMetaModel.create(item_metaData, function (err, newMeta) {
                             if (err) {
@@ -238,13 +238,13 @@ class items {
             tag: data.tag,
             shortDesc: data.shortDesc,
             groupingTag: data.groupingTag,
-            tax: data.tax==''?18:data.tax,
+            tax: data.tax == '' ? 18 : data.tax,
             sku: data.sku,
             stock: data.stock,
             measurementUnit: data.measurementUnit,
-            isBusiness: data.isBusiness ,
+            isBusiness: data.isBusiness,
             cod: data.cod == true ? true : false,
-            slashedPrice:data.slashedPrice==''||data.slashedPrice==undefined?0:data.slashedPrice
+            slashedPrice: data.slashedPrice == '' || data.slashedPrice == undefined ? 0 : data.slashedPrice
 
 
         }
