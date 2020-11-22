@@ -9,4 +9,5 @@ app.get('/items/:iid', itemController.getItem)
 
 app.post('/items', itemController.filterItems)
 app.post('/search',itemController.search)
+// app.get('/inc',itemController.inc)
 module.exports = app

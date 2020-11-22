@@ -157,3 +157,12 @@ exports.getItemsByCategoryAndSubCategory = (req, res) => {
 }
 
 
+exports.inc=function(req,res){
+    itemModel.updateMany({category:req.body.category,subCategory:req.body.subCategory},{$mul:{price:(1-(10/100))}},function(err,founditems){
+        if(err)
+        req.flash('error','error')
+        else
+        req.flash('success','success')
+        res.redirect('back')
+    })
+}
