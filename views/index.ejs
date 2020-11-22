@@ -61,9 +61,9 @@
 
 					<% featuredCategories.push({name: "Lab Solutions", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc1.jpg", linkTo: "/items/category/lab_solutions"}) %>
 					<% featuredCategories.push({name: "Covid-19 Solutions", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc2.jpg", linkTo: "/items/category/sanitation"}) %>
-					<% featuredCategories.push({name: "Cleaning Chemicals", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc3.jpg", linkTo: ""}) %>
-					<% featuredCategories.push({name: "Books", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc4.jpg", linkTo: ""}) %>
-					<% featuredCategories.push({name: "School Uniforms", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc5.jpg", linkTo: ""}) %>
+					<% featuredCategories.push({name: "Cleaning Chemicals", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc3.jpg", linkTo: "/items/category/cleaning_chemicals"}) %>
+					<% featuredCategories.push({name: "Books", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc4.jpg", linkTo: "#comingSoon"}) %>
+					<% featuredCategories.push({name: "School Uniforms", imageSrc: "https://d6fhaebhrj3za.cloudfront.net/images/homePage/fc5.jpg", linkTo: "#comingSoon"}) %>
 
 					<% featuredCategories.forEach(category => { %>
 					<div class="tt-categories subcategories-23">
@@ -183,12 +183,6 @@
 							</h4>
 
 							<div class="card-text tt-price" data-test-info-type="price">
-								<div class="price-section price-section--withTax rrp-price--withTax"
-									style="display: none;">
-									MSRP:
-									<span data-product-rrp-with-tax class="price price--rrp">
-									</span>
-								</div>
 
 								<div class="price-section price-section--withTax">
 									<span class="price-label"> </span>
@@ -281,12 +275,12 @@
 					<div class="banner">
 						<div id='104941989'>
 							<div id="ttcmsbottombanner">
-								<div class="ttcmsbottombanner-img1 ttbanner"><a href="#"> <img
-											class="__mce_add_custom__" title="bottom-banner-01.jpg"
+								<div class="ttcmsbottombanner-img1 ttbanner"><a href="/air-fumigation"> <img
+											class="__mce_add_custom__" title="Air Fumigation"
 											src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/AirFumigationSmall.jpg"
 											alt="bottom-banner-01.jpg" width="825" height="250" /> </a></div>
-								<div class="ttcmsbottombanner-img2 ttbanner"><a href="#"> <img
-											class="__mce_add_custom__" title="bottom-banner-02.jpg"
+								<div class="ttcmsbottombanner-img2 ttbanner"><a href="/complete-disinfection"> <img
+											class="__mce_add_custom__" title="Complete Disinfection"
 											src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/CompleteDisinfectionSmall.jpg"
 											alt="bottom-banner-02.jpg" width="825" height="250" /> </a></div>
 							</div>
@@ -392,13 +386,6 @@
 								</h4>
 
 								<div class="card-text tt-price" data-test-info-type="price">
-									<div class="price-section price-section--withTax rrp-price--withTax"
-										style="display: none;">
-										MSRP:
-										<span data-product-rrp-with-tax class="price price--rrp">
-										</span>
-									</div>
-
 									<div class="price-section price-section--withTax">
 										<span class="price-label"> </span>
 										<span class="price-now-label" style="display: none;">
@@ -435,7 +422,7 @@
 
 		<!-- START CMS BANNER TOP DIV ---->
 		<div class="tt-new" style="padding-bottom: 10px;">
-			<div class="container">
+			<div class="container" id="comingSoon">
 				<h2 class="page-heading">Students' Corner &nbsp;<a href="#"
 						style="font-weight: light; font-size: medium; color: #ffaa3d">Coming Soon</a></h2>
 			</div>
@@ -445,15 +432,15 @@
 				<div class="banner">
 					<div id='1475563518'>
 						<div class="ttcmsbanner">
-							<div class="ttbanner-img1 ttbanner"><a href="#"> <img class="__mce_add_custom__"
+							<div class="ttbanner-img1 ttbanner"><a href="#" style="pointer-events: none;"> <img class="__mce_add_custom__"
 										title="top-banner-01.jpg"
 										src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/studentscornerComingSoon1.jpg"
 										alt="top-banner-01.jpg" width="540" height="240" /> </a></div>
-							<div class="ttbanner-img2 ttbanner"><a href="#"> <img class="__mce_add_custom__"
+							<div class="ttbanner-img2 ttbanner"><a href="#" style="pointer-events: none;"> <img class="__mce_add_custom__"
 										title="top-banner-02.jpg"
 										src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/studentscornerComingSoon2.jpg"
 										alt="top-banner-02.jpg" width="540" height="240" /> </a></div>
-							<div class="ttbanner-img3 ttbanner"><a href="#"> <img class="__mce_add_custom__"
+							<div class="ttbanner-img3 ttbanner"><a href="#" style="pointer-events: none;"> <img class="__mce_add_custom__"
 										title="top-banner-03.jpg"
 										src="https://d6fhaebhrj3za.cloudfront.net/images/homePage/studentscornerComingSoon3.jpg"
 										alt="top-banner-03.jpg" width="540" height="240" /> </a></div>

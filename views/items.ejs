@@ -163,7 +163,7 @@
 										<% if (!(tag.length == 1 && tag[0] == '')) { %>
 										<div class="accordion-block">
 											<div class="accordion-navigation toggleLink" role="button"
-												data-collapsible="#facetedSearch-content--Color">
+												data-collapsible="#facetedSearch-content--Color1">
 												<h5 class="accordion-title">
 													Tags
 												</h5>
@@ -180,8 +180,8 @@
 												</div>
 											</div>
 
-											<div id="facetedSearch-content--Color" class="accordion-content  is-open ">
-												<ul id="facetedSearch-navList--Color" data-facet="Color" class="navList"
+											<div id="facetedSearch-content--Color" class="accordion-content">
+												<ul id="facetedSearch-navList--Color1" data-facet="Color1" class="navList"
 													data-has-more-results="false">
 													<% tag.forEach(element => { %>
 													<li class="navList-item">
@@ -231,6 +231,10 @@
 							color: red;
 							font-size: small;
 							text-decoration: none;
+						}
+
+						span.showDiscount {
+							color: green;
 						}
 					</style>
 
@@ -311,12 +315,16 @@
 												<% var slashedPrice = 1.20 * ((el.price) * (1 + el.tax/100)) %>
 												<span
 													style="text-decoration: line-through;">₹<%=Math.ceil(slashedPrice)%>
-												</span> <span
+												</span>
+												<span
 													class="discount">(<%=Math.ceil(((slashedPrice - itemWithTax) * 100)/slashedPrice) %>%
 													off)</span>
 												<% } %>
+												<br>
 											</span>
 										</div>
+										<br>
+										<span class="showDiscount"> Additional x% off </span>
 									</div>
 
 									<div class="tt-cart-btn">
@@ -429,6 +437,7 @@
 												<% } %>
 											</span>
 										</div>
+										<span class="showDiscount"> Additional x% off </span>
 									</div>
 								</div>
 							</div>

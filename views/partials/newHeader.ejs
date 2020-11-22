@@ -71,8 +71,9 @@
 				<h1 class="header-logo header-logo--center">
 					<a href="/">
 						<span class="header-logo-image-container" style="margin-top: 10%;">
-							<img class="header-logo-image" src="https://d6fhaebhrj3za.cloudfront.net/images/cart.com.png" width="175px" alt="112Cart.com"
-								title="112Cart.com">
+							<img class="header-logo-image"
+								src="https://d6fhaebhrj3za.cloudfront.net/images/cart.com.png" width="175px"
+								alt="112Cart.com" title="112Cart.com">
 						</span>
 					</a>
 				</h1>
@@ -125,7 +126,18 @@
 		<div class="full-header header-bottom">
 
 			<% const snakeCase = string => {return string.replace(/\W+/g, " ").split(/ |\B(?=[A-Z])/).map(word => word.toLowerCase()).join('_');}; %>
-			
+
+			<style>
+				a.navPages-action:hover {
+					color: #ffaa3d
+				}
+
+				a.link-action:hover {
+					color: #ffaa3d;
+				}
+			</style>
+
+
 			<div class="container">
 				<a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
 					<span class="mobileMenu-toggleIcon">Toggle menu</span>
@@ -150,12 +162,6 @@
 								<% categories.push({showName: "Lab Chemicals", realName: "lab_chemicals", linkTo: "/items/category/lab_chemicals", subCat: []}) %>
 
 								<% var comingSoon = new Array() %>
-								<% comingSoon.push({showName: "Pathology & Histopathology"}) %>
-								<% comingSoon.push({showName: "Entomology"}) %>
-								<% comingSoon.push({showName: "Geography and Surveying"}) %>
-								<% comingSoon.push({showName: "Visual Teaching"}) %>
-								<% comingSoon.push({showName: "Electronics"}) %>
-								<% comingSoon.push({showName: "Pharmacy"}) %>
 								<% comingSoon.push({showName: "Books"}) %>
 								<% comingSoon.push({showName: "Winter Uniforms"}) %>
 
@@ -191,13 +197,24 @@
 													href="/get-items/<%=category.realName%>/?sub-category=<%=snakeCase(el)%>"><%=el%></a>
 											</li>
 											<% }) %>
+											<% if (category.showName == "Lab Solutions") { %>
+											<% var tempItems = ["Pathology & Histopathology", "Entomology", "Geography and Surveying", "Visual Teaching", "Electronics", "Pharmacy"] %>
+											<hr style="margin: 0;">
+											<h6 style="margin: 5px; font-weight: bold; color: #ffaa3d;">Coming Soon</h6>
+											<% tempItems.forEach(el => { %>
+											<li class="navPage-subMenu-item">
+												<a class="navPage-subMenu-action navPages-action"
+													style="pointer-events: none;"><%=el%></a>
+											</li>
+											<% }) %>
+											<% } %>
 										</ul>
 									</div>
 								</li>
 								<% } %>
 								<% }) %>
 								<hr style="margin: 0;">
-								<h6 style="margin: 5px; font-weight: bold;">Coming Soon</h6>
+								<h6 style="margin: 5px; font-weight: bold; color: #ffaa3d;">Coming Soon</h6>
 
 								<% comingSoon.forEach(el => { %>
 								<li class="navPages-item">
@@ -244,15 +261,20 @@
 							<a class="link-action" href="/about-us/">About Us</a>
 						</div>
 						<div class="navPages-item-page">
-							<a class="link-action" href="/contact-us/">Contact
-								Us</a>
+							<a class="link-action" href="/contact-us/">Contact Us</a>
 						</div>
 						<div class="navPages-item-page">
 							<a class="link-action" href="/franchisee/">Become a Franchisee</a>
 						</div>
-						<!-- <div class="navPages-item-page">
-							<a class="link-action" href="/affiliate/">Blogs</a>
-						</div> -->
+						<div class="navPages-item-page">
+							<a class="link-action" href="/conditions-of-use/">Conditions of Use</a>
+						</div>
+						<div class="navPages-item-page">
+							<a class="link-action" href="/privacy-policy">Privacy Policy</a>
+						</div>
+						<div class="navPages-item-page">
+							<a class="link-action" href="/cookies-notice">Cookies Notice</a>
+						</div>
 
 					</div>
 
