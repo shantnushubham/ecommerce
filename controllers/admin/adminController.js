@@ -73,8 +73,9 @@ exports.createItem = function (req, res) {
         measurementUnit: data.measurementUnit,
         isBusiness: data.isBusiness,
         tax: data.gstPercent,
-        slashedPrice: data.slashedPrice
-
+        slashedPrice: data.slashedPrice,
+        discount:data.discount,
+        sale:data.sale=="true"?true:false
 
 
 
@@ -113,7 +114,9 @@ exports.updateItem = function (req, res) {
         tax: data.gstPercent,
         sku: data.sku,
         measurementUnit: data.measurementUnit,
-        slashedPrice: data.slashedPrice
+        slashedPrice: data.slashedPrice,
+        discount:data.discount,
+        sale:data.sale=="true"?true:false
 
     }, function (createdItem) {
         if (createdItem.success == false) req.flash('error', 'error in update')

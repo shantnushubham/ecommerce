@@ -71,6 +71,24 @@
                                 required>
                         </div>
                         <div class="field">
+                            <label>Additional Discount</label>
+                            <input type="number" placeholder="Discount" name="discount"  value="<%=item.discount%>" required>
+                        </div>
+                        <div class="inline fields">
+                            <label for="fruit">Switch on the discount?</label>
+                            <div class="field">
+                                <input type="radio" name="sale" <% if (item.sale) { %> checked="" <% } %>
+                                    value="true" tabindex="0" class="hidden" required>
+                                <label>Yes</label>
+
+                            </div>
+                            <div class="field">
+                                <input type="radio" name="sale" <% if (!item.sale) { %> checked="" <% } %>
+                                    value="false" tabindex="0" class="hidden">
+                                <label>No</label>
+                            </div>
+                        </div>
+                        <div class="field">
                             <label>Slashed Price</label>
                             <input type="number" placeholder="Slashed Price" name="slashedPrice" value="<%=item.slashedPrice%>" required>
                         </div>
