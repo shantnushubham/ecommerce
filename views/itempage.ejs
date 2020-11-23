@@ -133,19 +133,19 @@
 								<span class="price-now-label" style="display: none;">
 
 								</span>
-								<%if(item.sale==true&&typeof item.discount == 'number'&&isNaN(item.discount)==false){%>
+								<% if (item.sale == true && typeof item.discount == 'number' && isNaN(item.discount) == false) {%>
 								<span data-product-price-with-tax class="price price--withTax">₹
-									<%=(item.price*(1-(item.discount/100))).toFixed(2)%> +
+									<%=(item.price * (1 - (item.discount/100))).toFixed(2) %> +
 									GST (<%=item.tax%>% =
-									<%=Math.ceil(item.price*(1-(item.discount/100)) * item.tax/100)%>) = ₹
-									<%=Math.ceil(item.price*(1-(item.discount/100)) + (item.price*(1-(item.discount/100)) * item.tax/100))%></span>
-									<span class="showDiscount" style="color: green;"> (Additional <%=item.discount%>% discount Applied! )</span>
-									<%}else{%>
-
+									<%=Math.ceil(item.price * (1 - (item.discount/100)) * item.tax/100)%>) = ₹
+									<%=Math.ceil(item.price * (1 - (item.discount/100)) + (item.price * (1 - (item.discount/100)) * item.tax/100))%></span>
+								<span class="showDiscount" style="color: green;"> (Additional <%=item.discount%>%
+									discount Applied!)</span>
+								<% } else { %>
 								<span data-product-price-with-tax class="price price--withTax">₹ <%=item.price%> +
 									GST (<%=item.tax%>% = <%=Math.ceil(item.price * item.tax/100)%>) = ₹
 									<%=Math.ceil(item.price + (item.price * item.tax/100))%></span>
-								<%}%>
+								<% } %>
 								
 									<meta itemprop="availability" itemtype="http://schema.org/ItemAvailability"
 									content="http://schema.org/InStock">
