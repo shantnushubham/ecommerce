@@ -181,8 +181,8 @@
 											</div>
 
 											<div id="facetedSearch-content--Color" class="accordion-content">
-												<ul id="facetedSearch-navList--Color1" data-facet="Color1" class="navList"
-													data-has-more-results="false">
+												<ul id="facetedSearch-navList--Color1" data-facet="Color1"
+													class="navList" data-has-more-results="false">
 													<% tag.forEach(element => { %>
 													<li class="navList-item">
 														<input type="checkbox" name="tag" value="<%=element%>">&nbsp;
@@ -324,10 +324,9 @@
 											</span>
 										</div>
 										<br>
-										<%if(el.sale==true&&typeof el.discount == 'number'&&isNaN(el.discount)==false){%>
+										<% if (el.sale == true && typeof el.discount == 'number' && isNaN(el.discount) == false) {%>
 										<span class="showDiscount"> Additional <%=el.discount%>% off </span>
-										<%}%>
-										
+										<% } %>
 
 									</div>
 
@@ -441,7 +440,9 @@
 												<% } %>
 											</span>
 										</div>
-										<span class="showDiscount"> Additional x% off </span>
+										<% if (el.sale == true && typeof el.discount == 'number' && isNaN(el.discount) == false) {%>
+										<span class="showDiscount"> Additional <%=el.discount%>% off </span>
+										<% } %>
 									</div>
 								</div>
 							</div>
