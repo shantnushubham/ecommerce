@@ -78,6 +78,7 @@ class items {
                                 price: foundItem.price,
                                 image: foundItem.image,
                                 discount: foundItem.discount,
+                                sale:foundItem.sale,
                                 content: foundMeta.content,
                                 weight: foundMeta.weight,
                                 color: foundMeta.color,

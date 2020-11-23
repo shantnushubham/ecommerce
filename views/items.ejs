@@ -324,7 +324,11 @@
 											</span>
 										</div>
 										<br>
-										<span class="showDiscount"> Additional x% off </span>
+										<%if(el.sale==true&&typeof el.discount == 'number'&&isNaN(el.discount)==false){%>
+										<span class="showDiscount"> Additional <%=el.discount%>% off </span>
+										<%}%>
+										
+
 									</div>
 
 									<div class="tt-cart-btn">
