@@ -1,4 +1,5 @@
 const express = require('express');
+// const cookieSession=require('cookie-session')
 // const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -45,7 +46,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.set("views", path.join(__dirname, 'views'));
-app.use(cors());
+app.use(cors({credentials: true}));
 
 
 mongoose.connect(envData.DB, { useUnifiedTopology: true, useNewUrlParser: true });
@@ -76,13 +77,14 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 6000000
+        expires: 6000000,
+        
     }
 }));
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+    res.header('Access-Control-Allow-Methods', 'DELETE, PUT, POST');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });

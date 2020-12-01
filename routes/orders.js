@@ -46,17 +46,17 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                     }
                     else {
                         var payload = {
-                            key: "RhPPuiIm",
+                            key: "7rnFly",
                             txnid: tx,
                             amount: parseInt(totAmt),
                             productinfo: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
                             firstname: req.user.name,
-                            purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
+                            // purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
                             phone: req.user.phone,
-                            buyer_name: req.user.name,
+                            // buyer_name: req.user.name,
                             surl: envData.surl,
                             furl: envData.furl,
-                            service_provider: "payu_paisa",
+                            // service_provider: "payu_paisa",
                             // send_email: true,
                             // webhook: '',
                             // send_sms: true,
@@ -64,20 +64,20 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                             // allow_repeated_payments: false
                         }
 
-                        const hashString = 'RhPPuiIm' //store in in different file
+                        const hashString = "7rnFly" //store in in different file
                             + '|' + payload.txnid
                             + '|' + payload.amount
                             + '|' + payload.productinfo
                             + '|' + payload.firstname
                             + '|' + payload.email
                             + '|' + '||||||||||'
-                            + 'AXU18HEr7j' //store in in different file
+                            + "pjVQAWpA" //store in in different file
                         const sha = new jssha('SHA-512', "TEXT");
                         sha.update(hashString);
                         //Getting hashed value from sha module
                         const hash = sha.getHash("HEX");
                         payload.hash = hash
-                        request.post('https://sandboxsecure.payu.in/_payment', { form: payload, headers: headers }, function (error, response, body) {
+                        request.post('https://test.payu.in/_payment', { form: payload, headers: headers }, function (error, response, body) {
                             // console.log(response);
                             console.log(error);
                             console.log(response.statusCode);
@@ -125,6 +125,7 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 router.post('/payment/success', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
     //Based on the response Implement UI as per you want
+    console.log(req.body);
     orderServices.updatePaymentByTransactionId(req.body.txnid, req.body.status, function (updatedOtx) {
         orderServices.updateStockList(updatedOtx.order.orderedItems, function (stocks) {
             console.log("stock update status:", stocks.success);
