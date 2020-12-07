@@ -74,8 +74,8 @@ exports.createItem = function (req, res) {
         isBusiness: data.isBusiness,
         tax: data.gstPercent,
         slashedPrice: data.slashedPrice,
-        discount:data.discount,
-        sale:data.sale=="true"?true:false
+        discount: data.discount,
+        sale: data.sale == "true" ? true : false
 
 
 
@@ -115,8 +115,8 @@ exports.updateItem = function (req, res) {
         sku: data.sku,
         measurementUnit: data.measurementUnit,
         slashedPrice: data.slashedPrice,
-        discount:data.discount,
-        sale:data.sale=="true"?true:false
+        discount: data.discount,
+        sale: data.sale == "true" ? true : false
 
     }, function (createdItem) {
         if (createdItem.success == false) req.flash('error', 'error in update')
@@ -384,15 +384,22 @@ exports.downloadUserList = function (req, res) {
     var filter = {
 
     }
+
+    let fileName = "";
+
     if (req.params.type == "individual") {
         filter.isBusiness = false
         filter.premium = false
+        fileName = "Individual Users"
     }
-    if (req.params.type === "business")
+    if (req.params.type === "business") {
         filter.isBusiness = true
+        fileName = "Business Users";
+    }
     if (req.params.type === "premium") {
         filter.isBusiness = true
         filter.premium = true
+        fileName = "Premium Business Users"
     }
     userModel.find(filter, function (err, foundUsers) {
         console.log(foundUsers);
@@ -453,7 +460,7 @@ exports.downloadUserList = function (req, res) {
             const json2csv = new Parser({ fields });
             const csv = json2csv.parse(foundUsers);
             res.header('Content-Type', 'text/csv');
-            res.attachment("users.csv");
+            res.attachment(fileName + ".csv");
             return res.send(csv);
 
         }
