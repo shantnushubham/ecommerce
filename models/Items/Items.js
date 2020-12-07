@@ -106,6 +106,10 @@ var itemsSchema = new mongoose.Schema({
     tax: {
         type: Number,
         default: 18
+    },
+    slashedPrice:{
+        type:Number,
+        default:0
     }
 });
 

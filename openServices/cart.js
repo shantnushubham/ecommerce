@@ -4,7 +4,7 @@ var cartmodel = require('../models/cart/cart')
 var functions = require('../Middlewares/common/functions')
 var codeModel = require('../models/offer/offer')
 var mongoose = require("mongoose")
-var offersModel=require('../models/offer/offer')
+var offersModel = require('../models/offer/offer')
 class cart {
     constructor() {
 
@@ -465,7 +465,7 @@ class cart {
                                 var valid = true
                                 if (offer.items.length > 0) {
 
-                                    for (var i = 0; i < cartList.length; i++) {
+                                    for (var i = 0; i < cartItem.length; i++) {
                                         if (offer.items.includes(cartItem[i].iid) == false) {
                                             valid = false
                                             break;
@@ -487,13 +487,21 @@ class cart {
                                             item.iid = cartEl.iid
                                             item.name = cartEl.item.name
                                             item.sku = cartEl.sku
-                                            item.selling_price = parseInt(cartEl.price * (1 - (di / 100)))
+                                            if (cartEl.item.sale == true)
+                                                item.selling_price = parseInt(cartEl.price * (1 - (cartEl.item.discount) / 100) * (1 - (di / 100)))
+                                            else
+                                                item.selling_price = parseInt(cartEl.price * (1 - (di / 100)))
 
                                             if (cartEl.item.cod == false) allowCOD = false
                                             cartlist.push(item)
                                             itemArray.push(cartEl.item)
-                                            var itemprice = cartEl.price * (1 - (di / 100))
-                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax / 200)* 2 : itemprice * cartEl.quantity * (cartEl.tax / 100)
+
+                                            var itemprice = cartEl.price
+                                            if (cartEl.item.sale == true)
+                                                itemprice = cartEl.price * (1 - (cartEl.item.discount) / 100) * (1 - (di / 100))
+                                            else
+                                                itemprice = cartEl.price * (1 - (di / 100))
+                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax / 100)
                                             tax += temptax
                                             total = total + (itemprice * cartEl.quantity) + temptax
                                         });
@@ -518,12 +526,19 @@ class cart {
                                             item.iid = cartEl.iid
                                             item.name = cartEl.item.name
                                             item.sku = cartEl.sku
-                                            item.selling_price = parseInt(cartEl.price * (1 - (di / 100)))
+                                            if (cartEl.item.sale == true)
+                                                item.selling_price = parseInt(cartEl.price * (1 - (cartEl.item.discount) / 100) * (1 - (di / 100)))
+                                            else
+                                                item.selling_price = parseInt(cartEl.price * (1 - (di / 100)))
 
                                             if (cartEl.item.cod == false) allowCOD = false
                                             cartlist.push(item)
                                             itemArray.push(cartEl.item)
-                                            var itemprice = cartEl.price * (1 - (di / 100))
+                                            var itemprice = cartEl.price
+                                            if (cartEl.item.sale == true)
+                                                itemprice = cartEl.price * (1 - (cartEl.item.discount) / 100) * (1 - (di / 100))
+                                            else
+                                                itemprice = cartEl.price * (1 - (di / 100))
                                             var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax / 100)
                                             tax += temptax
                                             total = total + (itemprice * cartEl.quantity) + temptax
@@ -554,12 +569,19 @@ class cart {
                         item.iid = cartEl.iid
                         item.name = cartEl.item.name
                         item.sku = cartEl.sku
-                        item.selling_price = parseInt(cartEl.price * (1 - (di / 100)))
+                        if (cartEl.item.sale == true)
+                            item.selling_price = parseInt(cartEl.price * (1 - (cartEl.item.discount) / 100) * (1 - (di / 100)))
+                        else
+                            item.selling_price = parseInt(cartEl.price * (1 - (di / 100)))
 
                         if (cartEl.item.cod == false) allowCOD = false
                         cartlist.push(item)
                         itemArray.push(cartEl.item)
-                        var itemprice = cartEl.price * (1 - (di / 100))
+                        var itemprice = cartEl.price
+                        if (cartEl.item.sale == true)
+                            itemprice = cartEl.price * (1 - (cartEl.item.discount) / 100) * (1 - (di / 100))
+                        else
+                            itemprice = cartEl.price * (1 - (di / 100))
                         var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax / 100)
                         tax += temptax
                         total = total + (itemprice * cartEl.quantity) + temptax
@@ -619,7 +641,7 @@ class cart {
                                 var valid = true
                                 if (offer.items.length > 0) {
 
-                                    for (var i = 0; i < cartList.length; i++) {
+                                    for (var i = 0; i < cartItem.length; i++) {
                                         if (offer.items.includes(cartItem[i].iid) == false) {
                                             valid = false
                                             break;
@@ -639,13 +661,18 @@ class cart {
                                         var tax = 0
                                         cartItem.forEach(cartEl => {
                                             if (cartEl.item.cod == false) allowCOD = false
-                                            var itemprice = cartEl.price[0] * (1 - (di / 100));
-                                            console.log("items price",itemprice);
+                                            var itemprice = cartEl.price[0];
+                                            if (cartEl.item.sale == true)
+                                                itemprice = itemprice * (1 - (cartEl.item.discount / 100)) * (1 - (di / 100))
+                                            else
+                                                itemprice = itemprice * (1 - (di / 100))
+                                            console.log("items price", itemprice);
+
                                             var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax[0] / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax[0] / 100)
-                                            console.log("temptax",temptax);
+                                            console.log("temptax", temptax);
                                             tax += temptax
                                             total = total + (itemprice * cartEl.quantity) + temptax
-                                            console.log("tot",total);
+                                            console.log("tot", total);
                                             // total = total + parseInt((parseInt(cartEl.price[0]) * cartEl.quantity))
                                         });
                                         // console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax });
@@ -662,7 +689,11 @@ class cart {
                                         var tax = 0
                                         cartItem.forEach(cartEl => {
                                             if (cartEl.item.cod == false) allowCOD = false
-                                            var itemprice = cartEl.price[0]* (1 - (di / 100));
+                                            var itemprice = cartEl.price[0]
+                                            if (cartEl.item.sale == true)
+                                                itemprice = itemprice * (1 - (cartEl.item.discount / 100)) * (1 - (di / 100))
+                                            else
+                                                itemprice = itemprice * (1 - (di / 100))
                                             var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax[0] / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax[0] / 100)
                                             tax += temptax
                                             total = total + (itemprice * cartEl.quantity) + temptax
@@ -691,10 +722,16 @@ class cart {
                     var tax = 0
                     cartItem.forEach(cartEl => {
                         if (cartEl.item.cod == false) allowCOD = false
-                        var itemprice = cartEl.price[0] * (1 - (di / 100));
+                        var itemprice = cartEl.price[0]
+                        if (cartEl.item.sale == true)
+                            itemprice = itemprice * (1 - (cartEl.item.discount / 100)) * (1 - (di / 100))
+                        else
+                            itemprice = itemprice * (1 - (di / 100))
+                            console.log("items price", itemprice);
                         var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax[0] / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax[0] / 100)
                         tax += temptax
                         total = total + (itemprice * cartEl.quantity) + temptax
+
 
                     });
                     console.log({ success: true, cartList: cartItem, total: total, codAllowed: allowCOD, tax: tax });
@@ -702,7 +739,7 @@ class cart {
                         callback({ success: false, message: "cant checkout with empty cart" })
                     }
                     else
-                        callback({ success: true, cartList: cartItem, total:parseInt(total), codAllowed: allowCOD, tax: tax, code: null, discount: 0, isPercent: false })
+                        callback({ success: true, cartList: cartItem, total: parseInt(total), codAllowed: allowCOD, tax: tax, code: null, discount: 0, isPercent: false })
 
                 }
 
@@ -715,10 +752,10 @@ class cart {
     getItemForList(iid, qty, uuid) {
         return new Promise((resolve, reject) => {
             itemmodel.findOne({ iid: iid }, function (err, foundItem) {
-                if (err||foundItem==null||functions.isEmpty(foundItem))
-                    {
-                        console.log(iid);
-                        reject({ success: false, item: {} })}
+                if (err || foundItem == null || functions.isEmpty(foundItem)) {
+                    console.log(iid);
+                    reject({ success: false, item: {} })
+                }
                 else {
                     var itemdata = {
                         itemID: foundItem.iid,

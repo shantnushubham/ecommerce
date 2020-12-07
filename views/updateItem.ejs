@@ -70,6 +70,28 @@
                             <input type="number" placeholder="Stock Count" min="0" name="stock" value="<%=item.stock%>"
                                 required>
                         </div>
+                        <div class="field">
+                            <label>Additional Discount</label>
+                            <input type="number" placeholder="Discount" name="discount"  value="<%=item.discount%>" required>
+                        </div>
+                        <div class="inline fields">
+                            <label for="fruit">Switch on the discount?</label>
+                            <div class="field">
+                                <input type="radio" name="sale" <% if (item.sale) { %> checked="" <% } %>
+                                    value="true" tabindex="0" class="hidden" required>
+                                <label>Yes</label>
+
+                            </div>
+                            <div class="field">
+                                <input type="radio" name="sale" <% if (!item.sale) { %> checked="" <% } %>
+                                    value="false" tabindex="0" class="hidden">
+                                <label>No</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Slashed Price</label>
+                            <input type="number" placeholder="Slashed Price" name="slashedPrice" value="<%=item.slashedPrice%>" required>
+                        </div>
                         <div class="inline fields">
                             <label for="fruit">Is this a Service?</label>
                             <div class="field">
@@ -87,7 +109,7 @@
                         <div class="inline fields">
                             <label for="fruit">Is COD Allowed?</label>
                             <div class="field">
-                                <input type="radio" name="cod" <% if (!item.cod) { %> checked="" <% } %> value="true"
+                                <input type="radio" name="cod" <% if (item.cod) { %> checked="" <% } %> value="true"
                                     tabindex="0" class="hidden" required>
                                 <label>Yes</label>
                             </div>
@@ -122,7 +144,7 @@
                             </div>
                             <div class="field">
                                 <input type="radio" name="isBusiness" value="false" tabindex="0" class="hidden"
-                                    <% if (!item.isService) { %> checked="" <% } %>>
+                                    <% if (!item.isBusiness) { %> checked="" <% } %>>
                                 <label>No</label>
                             </div>
                         </div>

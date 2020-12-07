@@ -345,11 +345,17 @@ exports.codPath = function (req, res) {
                                                     mailer.orderReceived(req.user.email, data, function (mailed) {
                                                         console.log(mailed);
                                                     })
+                                                    cartServices.clearCart(req.user.uuid,function(cleared){
+                                                        console.log(cleared);
+                                                    })
                                                 }).catch(err => {
                                                     console.log(err);
-                                    
+                                                    cartServices.clearCart(req.user.uuid,function(cleared){
+                                                        console.log(cleared);
+                                                    })
                                                 })
                                             }
+
                                         }
                                     })
 
@@ -601,6 +607,42 @@ exports.savedToCod = function (req, res) {
                                     console.log("stock update status:", stocks.success);
                                 })
                                 res.render('successpage', { order: updatedOrder.order, failure: false, failureMessage: null })
+                                if (req.user) {
+                                    var promiseArr=[]
+                                    
+                                    for( var i=0;i< updatedOrder.order.orderedItems.length;i++){
+                                        
+                                        if(updatedOrder.order.orderedItems[i].iid!=undefined)
+                                        promiseArr.push(cartServices.getItemForList(updatedOrder.order.orderedItems[i].iid, updatedOrder.order.orderedItems[i].quantity, req.user.uuid))
+                                    };
+                                    Promise.all(promiseArr).then((respo) => {
+                                        var data = {
+                                            mail:req.user.email,
+                                            user: req.user,
+                                            items: respo,
+                                            order: updatedOrder.order
+                                        }
+                                        // console.log(respo);
+                                        console.log("maildata",data);
+                                        mailer.sendPerforma(req.user.email, data, function (mailed) {
+                                            console.log(mailed);
+                                        })
+                                        mailer.orderReceived(req.user.email, data, function (mailed) {
+                                            console.log(mailed);
+                                        })
+                                        cartServices.clearCart(req.user.uuid,function(cleared){
+                                            console.log(cleared);
+                                        })
+                                    }).catch(err => {
+                                        console.log(err);
+                                        cartServices.clearCart(req.user.uuid,function(cleared){
+                                            console.log(cleared);
+                                        })
+                                    })
+                                }
+                                cartServices.clearCart(req.user.uuid,function(cleared){
+                                    console.log(cleared);
+                                })
                             }
                         })
                     }
@@ -873,11 +915,11 @@ exports.confirmOrder = function (req, res) {
     orderServices.acceptOrder(req.params.orderId, d, function (order) {
         if (order.success == false) {
             req.flash('error', 'error ' + order.message)
-            res.redirect('/admin/orders-filter')
+            res.redirect('back');
         }
         else {
             req.flash('success', 'success ' + order.message)
-            res.redirect('/admin/orders-filter')
+            res.redirect('back');
         }
     })
 }
@@ -890,11 +932,11 @@ exports.allowCred = function (req, res) {
     orderServices.allowCredit(req.params.orderId, req.body.credPerc, req.body.days, function (order) {
         if (order.success == false) {
             req.flash('error', 'error')
-            res.redirect('/admin/orders-filter')
+            res.redirect('back');
         }
         else {
             req.flash('success', 'success')
-            res.redirect('/admin/orders-filter')
+            res.redirect('back');
         }
     })
 }
@@ -1008,7 +1050,7 @@ exports.authorizeOrder = function (req, res) {
     orderServices.authorizeOrder(req.params.orderId, function (updated) {
         if (updated.success == false)
             req.flash('error', 'error')
-        res.redirect('/admin/orders-filter-paymentStatus/authorized')
+            res.redirect('back');
     })
 }
 
@@ -1016,7 +1058,7 @@ exports.setShipmentStatus = function (req, res) {
     orderServices.setShipStatus(req.params.orderId, req.params.status, function (updated) {
         if (updated.success == false)
             req.flash('error', 'error')
-        res.redirect('/admin/orders-filter')
+            res.redirect('back');
     })
 }
 //------------------------------------------------------------------------------------------------------------
@@ -1166,7 +1208,7 @@ exports.serviceQuoteStatus = function (req, res) {
             req.flash('error', 'error')
         else
             req.flash('success', 'success')
-        res.redirect('/admin/service')
+            res.redirect('back');
     })
 }
 
@@ -1207,7 +1249,7 @@ exports.sendInvoice = function (req, res) {
     orderServices.checkOrderDetails(req.params.orderId, function (foundOrder) {
         if (foundOrder.success == false || foundOrder.found == false) {
             req.flash('error', 'error in getting order details')
-            res.redirect('/admin/orders-filter')
+            res.redirect('back');
 
         }
         else {
@@ -1228,7 +1270,7 @@ exports.sendInvoice = function (req, res) {
                             console.log(mailed);
                             if (mailed.success == false) {
                                 req.flash('error', 'error in sending mail')
-                                res.redirect('/admin/orders-filter')
+                                res.redirect('back');
 
                             }
                             else {
@@ -1236,14 +1278,14 @@ exports.sendInvoice = function (req, res) {
                                     console.log(updated);
                                 })
                                 req.flash('success', 'success')
-                                res.redirect('/admin/orders-filter')
+                                res.redirect('back');
                             }
                         })
                     }
                     else {
                         req.flash('error', 'error in sending mail')
 
-                        res.redirect('/admin/orders-filter')
+                        res.redirect('back');
 
                     }
 
@@ -1252,7 +1294,7 @@ exports.sendInvoice = function (req, res) {
                 console.log(error);
                 req.flash('error', 'error in sending mail')
 
-                res.redirect('/admin/orders-filter')
+                res.redirect('back');
 
             })
 

@@ -1,5 +1,17 @@
 <%- include("partials/newHeader.ejs") %>
 
+<style>
+    #form {
+        width: 60%;
+    }
+
+    @media (max-width: 600px) {
+        #form {
+            width: 100%;
+        }
+    }
+</style>
+
 <div data-content-region="header_bottom"></div>
 <div class="body" data-currency-code="INR">
 
@@ -18,13 +30,12 @@
                     <ul class="breadcrumbs" itemscope itemtype="http://schema.org/BreadcrumbList">
                         <li class="breadcrumb " itemprop="itemListElement" itemscope
                             itemtype="http://schema.org/ListItem">
-                            <a href="https://theme-payeeshop.mybigcommerce.com/" class="breadcrumb-label"
-                                itemprop="item"><span itemprop="name">Home</span></a>
+                            <a href="/" class="breadcrumb-label" itemprop="item"><span itemprop="name">Home</span></a>
                             <meta itemprop="position" content="1" />
                         </li>
                         <li class="breadcrumb is-active" itemprop="itemListElement" itemscope
                             itemtype="http://schema.org/ListItem">
-                            <meta itemprop="item" content="https://theme-payeeshop.mybigcommerce.com/contact-us/">
+                            <meta itemprop="item" content="/contact-us/">
                             <span class="breadcrumb-label" itemprop="name">Contact Us</span>
                             <meta itemprop="position" content="2" />
                         </li>
@@ -41,14 +52,40 @@
                 </p>
                 <div style="text-align: center;">
                     <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14654.128905517891!2d85.3169966!3d23.3327249!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x19a328c30043cb21!2sEylex%20Cinemas%2C%20Ranchi!5e0!3m2!1sen!2sin!4v1605963129729!5m2!1sen!2sin"
+                        width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen=""
+                        aria-hidden="false" tabindex="0"></iframe>
+
+                    <div uk-grid style="margin-top: 2vh; margin-bottom: 2vh;">
+                        <div class="uk-width-1-3@m">
+                            <span uk-icon="icon: mail"></span><a href="mailto:support@112cart.com">&nbsp;
+                                support@112cart.com</a>
+                            <br><br>
+                            <b><span uk-icon="icon: receiver; ratio: 1.5"></span><a href="tel:8797056054"
+                                    style="font-size: large;">
+                                    +91-8797056054</a></b>
+                        </div>
+                        <div class="uk-width-1-3@m">
+                            <span uk-icon="icon:  location; ratio: 0.75"></span> &nbsp; <b>COLLEGE OF PURITY (P) LTD.</b><br>
+                            Lower Ground Floor, Eylex Cinemas,<br>
+                            Hinoo Main Road, <br>
+                            Ranchi - 834002 (JH)
+                        </div>
+                        <div class="uk-width-1-3@m">
+                            <span uk-icon="icon: location; ratio: 0.75"></span> &nbsp; <b>REGISTERED OFFICE</b><br>
+                            College of Purity (P) Limited, Panchvati Apartments<br>
+                            Kanke Road, <br>
+                            Ranchi - 834001 (JH)
+                        </div>
+                    </div>
+
+                    <iframe id="form"
                         src="https://docs.google.com/forms/d/e/1FAIpQLScpiinebapXODJXBDBHLL1zdORHEkxQW1hwfi6gpxlHfvNB6g/viewform?embedded=true"
                         width="640" height="641" frameborder="0" marginheight="0" marginwidth="0">
                         Loading…
                     </iframe>
                 </div>
-
             </div>
-
         </main>
 
 

@@ -75,16 +75,18 @@
                                 <td class="uk-table-link">
                                     <%=order.shipmentStatus.toUpperCase() %></a>
                                 </td>
-                                <td class="uk-text-nowrap">₹ <%=parseInt(el.quantity * el.item.price * (1 + el.item.tax/100)) %>
+                                <td class="uk-text-nowrap">₹
+                                    <%=parseInt(el.quantity * el.item.price * (1 + el.item.tax/100)) %>
                                 </td>
                             </tr>
                             <% }) %>
                         </tbody>
                     </table>
-
+                    <%if(order.shipmentStatus!=="cancelled"){%>
                     <div style="text-align: center; margin: 15px">
                         <a class="default-btn" href="/cancellation/request/<%=order.orderId%>">Cancel This Order</a>
                     </div>
+                    <%}%>
                 </div>
             </div>
         </div>

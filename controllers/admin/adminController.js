@@ -18,7 +18,7 @@ exports.showItemsSection = (req, res) => {
 }
 
 exports.getAllItems = function (req, res) {
-    itemservices.getAllItems( function (itemlist) {
+    itemservices.getAllItems(function (itemlist) {
         // console.log({ itemlist: itemlist.foundItems });
         res.render('itemsAdmin', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag })
     })
@@ -72,7 +72,10 @@ exports.createItem = function (req, res) {
         cod: data.cod == "true" ? true : false,
         measurementUnit: data.measurementUnit,
         isBusiness: data.isBusiness,
-        tax: data.gstPercent
+        tax: data.gstPercent,
+        slashedPrice: data.slashedPrice,
+        discount:data.discount,
+        sale:data.sale=="true"?true:false
 
 
 
@@ -110,7 +113,10 @@ exports.updateItem = function (req, res) {
         cod: data.cod == "true" ? true : false,
         tax: data.gstPercent,
         sku: data.sku,
-        measurementUnit: data.measurementUnit
+        measurementUnit: data.measurementUnit,
+        slashedPrice: data.slashedPrice,
+        discount:data.discount,
+        sale:data.sale=="true"?true:false
 
     }, function (createdItem) {
         if (createdItem.success == false) req.flash('error', 'error in update')
@@ -159,20 +165,19 @@ exports.downloadSingleInvoice = function (req, res) {
 }
 
 exports.getCSVDownloadPagePayment = (req, res) => {
-    res.render("csvDownload", {filterType: "payment"});
+    res.render("csvDownload", { filterType: "payment" });
 }
 
 exports.getCSVDownloadPageShipment = (req, res) => {
-    res.render("csvDownloadShip", { filterType: "shipment"});
+    res.render("csvDownloadShip", { filterType: "shipment" });
 }
 
 exports.downloadInvoiceByRangePayment = function (req, res) {
-    if(req.body){
-        orderServices.getOrdersByDateRangePayment(req.body.from, req.body.to,req.body.payment, function (foundOrder) {
+    if (req.body) {
+        orderServices.getOrdersByDateRangePayment(req.body.from, req.body.to, req.body.payment, function (foundOrder) {
             console.log(foundOrder);
-            if (foundOrder.success == false)
-                {return res.redirect('/admin/orders-filter')}
-            if(foundOrder.success) {
+            if (foundOrder.success == false) { return res.redirect('/admin/orders-filter') }
+            if (foundOrder.success) {
                 const fields = [
                     {
                         label: 'Order ID',
@@ -197,7 +202,7 @@ exports.downloadInvoiceByRangePayment = function (req, res) {
                     {
                         label: 'city',
                         value: 'city'
-    
+
                     },
                     {
                         label: 'state',
@@ -207,7 +212,7 @@ exports.downloadInvoiceByRangePayment = function (req, res) {
                         label: 'pincode',
                         value: 'pincode'
                     },
-    
+
                     {
                         label: 'date',
                         value: 'purchaseTime'
@@ -252,8 +257,8 @@ exports.downloadInvoiceByRangePayment = function (req, res) {
                         label: 'offerUsed',
                         value: 'offerUsed'
                     },
-    
-    
+
+
                 ];
                 const json2csv = new Parser({ fields });
                 const csv = json2csv.parse(foundOrder.data);
@@ -263,22 +268,21 @@ exports.downloadInvoiceByRangePayment = function (req, res) {
                 return res.send(csv)
             }
         })
-    
+
     }
     else
-    res.redirect('/downloads/invoice')
+        res.redirect('/downloads/invoice')
 
 }
 exports.getCSVDownloadPageShipment = (req, res) => {
     res.render("csvDownloadShip");
 }
 exports.downloadInvoiceByRangeShipment = function (req, res) {
-    if(req.body){
-        orderServices.getOrdersByDateRangeShipment(req.body.from, req.body.to,req.body.shipment, function (foundOrder) {
+    if (req.body) {
+        orderServices.getOrdersByDateRangeShipment(req.body.from, req.body.to, req.body.shipment, function (foundOrder) {
             console.log(foundOrder);
-            if (foundOrder.success == false)
-                {return res.redirect('/admin/orders-filter')}
-            if(foundOrder.success) {
+            if (foundOrder.success == false) { return res.redirect('/admin/orders-filter') }
+            if (foundOrder.success) {
                 const fields = [
                     {
                         label: 'Order ID',
@@ -303,7 +307,7 @@ exports.downloadInvoiceByRangeShipment = function (req, res) {
                     {
                         label: 'city',
                         value: 'city'
-    
+
                     },
                     {
                         label: 'state',
@@ -313,7 +317,7 @@ exports.downloadInvoiceByRangeShipment = function (req, res) {
                         label: 'pincode',
                         value: 'pincode'
                     },
-    
+
                     {
                         label: 'date',
                         value: 'purchaseTime'
@@ -358,8 +362,8 @@ exports.downloadInvoiceByRangeShipment = function (req, res) {
                         label: 'offerUsed',
                         value: 'offerUsed'
                     },
-    
-    
+
+
                 ];
                 const json2csv = new Parser({ fields });
                 const csv = json2csv.parse(foundOrder.data);
@@ -369,28 +373,27 @@ exports.downloadInvoiceByRangeShipment = function (req, res) {
                 return res.send(csv)
             }
         })
-    
+
     }
     else
-    res.redirect('/downloads/invoice')
+        res.redirect('/downloads/invoice')
 
 }
 
 exports.downloadUserList = function (req, res) {
-   var filter={
+    var filter = {
 
-   }
-   if(req.params.type=="individual")
-   {
-       filter.isBusiness=false
-       filter.premium=false
-   }
-   if(req.params.type==="business")
-   filter.isBusiness=true
-   if(req.params.type==="premium")
-   {filter.isBusiness=true
-    filter.premium=true
-}
+    }
+    if (req.params.type == "individual") {
+        filter.isBusiness = false
+        filter.premium = false
+    }
+    if (req.params.type === "business")
+        filter.isBusiness = true
+    if (req.params.type === "premium") {
+        filter.isBusiness = true
+        filter.premium = true
+    }
     userModel.find(filter, function (err, foundUsers) {
         console.log(foundUsers);
         if (err) {

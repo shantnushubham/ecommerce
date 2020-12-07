@@ -66,8 +66,10 @@ exports.search = function (req, res) {
         }
         else {
             // console.log('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
-
-            res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
+            if (itemlist.foundItems.length > 0)
+                res.render('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
+            else
+                res.redirect('/items')
         }
     })
 }
@@ -134,4 +136,33 @@ exports.activateItem = function (req, res) {
     })
 }
 
+exports.getItemsByCategoryAndSubCategory = (req, res) => {
+    let category = req.params.category;
+    let subCategory = req.query['sub-category'];
+    console.log(category, subCategory)
+    itemModel.find({ $and: [{ category: category }, { subCategory: subCategory }] }).then((foundItems) => {
+        var cat = new Set()
+        var subCat = new Set()
+        var tag = new Set()
+        foundItems.forEach(el => {
+            cat.add(el.category)
+            subCat.add(el.subCategory)
+            tag.add(el.tag)
+        })
+        res.render('items', { itemlist: foundItems, category: Array.from(cat), subCategory: Array.from(subCat), tag: Array.from(tag), s_cat: [category], s_sub: [subCategory], s_tag: [] })
 
+    }).catch((err) => {
+        res.redirect('/items')
+    })
+}
+
+
+exports.inc=function(req,res){
+    itemModel.updateMany({category:req.body.category,subCategory:req.body.subCategory},{$mul:{price:(1-(10/100))}},function(err,founditems){
+        if(err)
+        req.flash('error','error')
+        else
+        req.flash('success','success')
+        res.redirect('back')
+    })
+}

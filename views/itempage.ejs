@@ -119,7 +119,7 @@
 
 				<section class="productView-details col-7">
 					<div class="productView-product">
-						<h1 class="productView-title" itemprop="name"><%=item.name%>></h1>
+						<h1 class="productView-title" itemprop="name"><%=item.name%></h1>
 						<p><%=item.shortDesc%></p>
 						<h2 class="productView-brand" itemprop="brand" itemscope itemtype="http://schema.org/Brand">
 						</h2>
@@ -129,12 +129,25 @@
 								<span class="price-label">
 
 								</span>
+
 								<span class="price-now-label" style="display: none;">
+
 								</span>
+								<% if (item.sale == true && typeof item.discount == 'number' && isNaN(item.discount) == false) {%>
+								<span data-product-price-with-tax class="price price--withTax">₹
+									<%=(item.price * (1 - (item.discount/100))).toFixed(2) %> +
+									GST (<%=item.tax%>% =
+									<%=Math.ceil(item.price * (1 - (item.discount/100)) * item.tax/100)%>) = ₹
+									<%=Math.ceil(item.price * (1 - (item.discount/100)) + (item.price * (1 - (item.discount/100)) * item.tax/100))%></span>
+								<span class="showDiscount" style="color: green;"> (Additional <%=item.discount%>%
+									discount Applied!)</span>
+								<% } else { %>
 								<span data-product-price-with-tax class="price price--withTax">₹ <%=item.price%> +
 									GST (<%=item.tax%>% = <%=Math.ceil(item.price * item.tax/100)%>) = ₹
 									<%=Math.ceil(item.price + (item.price * item.tax/100))%></span>
-								<meta itemprop="availability" itemtype="http://schema.org/ItemAvailability"
+								<% } %>
+								
+									<meta itemprop="availability" itemtype="http://schema.org/ItemAvailability"
 									content="http://schema.org/InStock">
 								<meta itemprop="itemCondition" itemtype="http://schema.org/OfferItemCondition"
 									content="http://schema.org/Condition">
@@ -192,8 +205,8 @@
 						<dl class="productView-info">
 							<%- item.content %>
 
-						</dl>
-					</div>
+								</dl>
+							</div>
 				</section>
 				<section class="productView-btn col-7">
 					<div class="productView-options">

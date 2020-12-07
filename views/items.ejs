@@ -3,7 +3,7 @@
 <div data-content-region="header_bottom"></div>
 <div class="body" data-currency-code="INR">
 
-	<% function changeCase(string) { var newString = string.replace("_", " "); return newString; } %>
+	<% function changeCase(string) { var newString = string.replace(/_/g, " "); return newString; } %>
 
 	<div class="home-content">
 
@@ -163,7 +163,7 @@
 										<% if (!(tag.length == 1 && tag[0] == '')) { %>
 										<div class="accordion-block">
 											<div class="accordion-navigation toggleLink" role="button"
-												data-collapsible="#facetedSearch-content--Color">
+												data-collapsible="#facetedSearch-content--Color1">
 												<h5 class="accordion-title">
 													Tags
 												</h5>
@@ -180,9 +180,9 @@
 												</div>
 											</div>
 
-											<div id="facetedSearch-content--Color" class="accordion-content  is-open ">
-												<ul id="facetedSearch-navList--Color" data-facet="Color" class="navList"
-													data-has-more-results="false">
+											<div id="facetedSearch-content--Color" class="accordion-content">
+												<ul id="facetedSearch-navList--Color1" data-facet="Color1"
+													class="navList" data-has-more-results="false">
 													<% tag.forEach(element => { %>
 													<li class="navList-item">
 														<input type="checkbox" name="tag" value="<%=element%>">&nbsp;
@@ -226,10 +226,22 @@
 								display: none
 							}
 						}
+
+						span.discount {
+							color: red;
+							font-size: small;
+							text-decoration: none;
+						}
+
+						span.showDiscount {
+							color: green;
+						}
 					</style>
 
 					<ul class="productGrid">
 						<% itemlist.forEach(el => { %>
+						<% var itemWithTax = el.price * (1 + el.tax/100) %>
+						<% var slashedWithTax = el.slashedPrice * (1 + el.tax/100) %>
 						<% if (el.active) { %>
 						<li class="product">
 							<article class="card ">
@@ -285,18 +297,37 @@
 
 										<div class="price-section price-section--withTax">
 											<span class="price-label" style="display: none;">
-
 											</span>
 											<span class="price-now-label">
 											</span>
 											<span data-product-price-with-tax
-												class="price price--withTax">₹<%=el.price%></span>
+												class="price price--withTax">₹<%=Math.ceil(itemWithTax)%></span>
 										</div>
 										<div class="price-section price-section--withTax non-sale-price--withTax">
-											<span data-product-non-sale-price-with-tax class="price price--non-sale">
-												₹<%=(1.20) * el.price%>
+											<span data-product-non-sale-price-with-tax>
+												<% if (el.slashedPrice > itemWithTax) { %>
+												<span
+													style="text-decoration: line-through;">₹<%=Math.ceil(el.slashedPrice)%></span>
+												<span
+													class="discount">(<%=Math.ceil(((el.slashedPrice - itemWithTax) * 100)/el.slashedPrice)%>%
+													off)</span>
+												<% } else { %>
+												<% var slashedPrice = 1.20 * ((el.price) * (1 + el.tax/100)) %>
+												<span
+													style="text-decoration: line-through;">₹<%=Math.ceil(slashedPrice)%>
+												</span>
+												<span
+													class="discount">(<%=Math.ceil(((slashedPrice - itemWithTax) * 100)/slashedPrice) %>%
+													off)</span>
+												<% } %>
+												<br>
 											</span>
 										</div>
+										<br>
+										<% if (el.sale == true && typeof el.discount == 'number' && isNaN(el.discount) == false) {%>
+										<span class="showDiscount"> Additional <%=el.discount%>% off </span>
+										<% } %>
+
 									</div>
 
 									<div class="tt-cart-btn">
@@ -336,6 +367,8 @@
 				</main>
 				<div class="uk-child-width-1-2 uk-text-center" uk-grid="masonry: true" id="forPhone">
 					<% itemlist.forEach(el => { %>
+					<% var itemWithTax = el.price * (1 + el.tax/100) %>
+					<% var slashedWithTax = el.slashedPrice * (1 + el.tax/100) %>
 					<div>
 						<!-- <div class="uk-card uk-card-default uk-card-body">
 							<div> -->
@@ -390,10 +423,26 @@
 												class="price price--withTax">₹<%=el.price%></span>
 										</div>
 										<div class="price-section price-section--withTax non-sale-price--withTax">
-											<span data-product-non-sale-price-with-tax class="price price--non-sale">
-												₹<%=(1.20) * el.price%>
+											<span data-product-non-sale-price-with-tax>
+												<% if (el.slashedPrice > itemWithTax) { %>
+												<span
+													style="text-decoration: line-through;">₹<%=Math.ceil(el.slashedPrice)%></span>
+												<span
+													class="discount">(<%=Math.ceil(((el.slashedPrice - itemWithTax) * 100)/el.slashedPrice)%>%
+													off)</span>
+												<% } else { %>
+												<% var slashedPrice = 1.20 * ((el.price) * (1 + el.tax/100)) %>
+												<span
+													style="text-decoration: line-through;">₹<%=Math.ceil(slashedPrice)%>
+												</span> <span
+													class="discount">(<%=Math.ceil(((slashedPrice - itemWithTax) * 100)/slashedPrice) %>%
+													off)</span>
+												<% } %>
 											</span>
 										</div>
+										<% if (el.sale == true && typeof el.discount == 'number' && isNaN(el.discount) == false) {%>
+										<span class="showDiscount"> Additional <%=el.discount%>% off </span>
+										<% } %>
 									</div>
 								</div>
 							</div>

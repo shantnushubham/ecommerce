@@ -205,7 +205,7 @@ exports.getAllUsers = function (req, res) {
 }
 
 exports.getAllIndividual = function (req, res) {
-    User.find({ isBusiness: false, isPremium: false }, function (err, foundUser) {
+    User.find({ isBusiness: false, premium: false }, function (err, foundUser) {
         if (err) {
             req.flash('error', 'could not fetch')
             res.redirect('/admin/userNotFound')
@@ -703,14 +703,14 @@ exports.allowCredit = function (req, res) {
     User.findOne({ uuid: req.params.uuid, isBusiness: true }, function (err, foundBiz) {
         if (err || functions.isEmpty(foundBiz)) {
             req.flash('error', 'error in fetching user')
-            res.redirect('/admin')
+            res.redirect('back');
         }
         else {
             User.findOneAndUpdate({ uuid: req.params.uuid }, { creditAllowed: true }, function (err, updated) {
                 if (err) { req.flash('error', 'error in updating') }
                 else
                     req.flash('success', 'success')
-                res.redirect('/admin')
+                    res.redirect('back');
             })
         }
 
