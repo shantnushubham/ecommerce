@@ -14,7 +14,8 @@ exports.postCreateVendor = function (req, res) {
         phone: req.body.phone,
         address: req.body.address,
         email: req.body.email,
-        pickup_location:req.body.pickup_location
+        pickup_location:req.body.pickup_location,
+        vendorId:req.body.vendorId
 
     }
     vendorServices.createVendor(data, function (createdVendor) {

@@ -456,6 +456,9 @@ exports.saveOrder = function (req, res) {
                                 }
                                 else {
                                     res.redirect('/saved-orders')
+                                    cartServices.clearCart(req.user.uuid,function(cleared){
+                                        console.log(cleared);
+                                    })
                                 }
                             })
 

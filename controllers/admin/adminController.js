@@ -18,7 +18,7 @@ exports.showItemsSection = (req, res) => {
 }
 
 exports.getAllItems = function (req, res) {
-    itemservices.getAllItems(function (itemlist) {
+    itemservices.itemListAdmin(function (itemlist) {
         // console.log({ itemlist: itemlist.foundItems });
         res.render('itemsAdmin', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag })
     })
@@ -441,6 +441,10 @@ exports.downloadUserList = function (req, res) {
                     value: 'credPerc'
                 },
                 {
+                    label:'Credit Period',
+                    value:'daysToRemind'
+                },
+                {
                     label: 'balance',
                     value: 'credBalance'
                 },
@@ -509,6 +513,10 @@ exports.downloadBizAccList = function (req, res) {
                 {
                     label: 'credit Percent',
                     value: 'credPerc'
+                },
+                {
+                    label:'Credit Period',
+                    value:'daysToRemind'
                 },
                 {
                     label: 'balance',

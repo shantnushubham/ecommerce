@@ -594,7 +594,13 @@ exports.acceptedBusinessAccounts = function (req, res) {
 }
 
 exports.getAdminPA = function (req, res) {
-    res.render('premiumAccount', { uuid: req.params.uuid })
+    User.findOne({uuid:req.params.uuid},function(err,foundUser){
+        if(err||functions.isEmpty(foundUser))
+        res.redirect('/admin')
+        else
+        res.render('premiumAccount', { uuid: req.params.uuid,user:foundUser })
+    })
+    
 }
 
 exports.postAdminPA = function (req, res) {
