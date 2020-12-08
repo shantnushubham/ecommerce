@@ -309,15 +309,15 @@
 												<span
 													style="text-decoration: line-through;">₹<%=Math.ceil(el.slashedPrice)%></span>
 												<span
-													class="discount">(<%=Math.ceil(((el.slashedPrice - itemWithTax) * 100)/el.slashedPrice)%>%
+													class="discount">(<%=(((el.slashedPrice - itemWithTax) * 100)/el.slashedPrice).toFixed(3)%>%
 													off)</span>
 												<% } else { %>
-												<% var slashedPrice = 1.20 * ((el.price) * (1 + el.tax/100)) %>
+												<% var slashedPrice = 1.25 * ((el.price) * (1 + el.tax/100)) %>
 												<span
 													style="text-decoration: line-through;">₹<%=Math.ceil(slashedPrice)%>
 												</span>
 												<span
-													class="discount">(<%=Math.ceil(((slashedPrice - itemWithTax) * 100)/slashedPrice) %>%
+													class="discount">(<%=(((slashedPrice - itemWithTax) * 100)/slashedPrice).toFixed(3) %>%
 													off)</span>
 												<% } %>
 												<br>
@@ -428,14 +428,14 @@
 												<span
 													style="text-decoration: line-through;">₹<%=Math.ceil(el.slashedPrice)%></span>
 												<span
-													class="discount">(<%=Math.ceil(((el.slashedPrice - itemWithTax) * 100)/el.slashedPrice)%>%
+													class="discount">(<%=(((el.slashedPrice - itemWithTax) * 100)/el.slashedPrice).toFixed(3)%>%
 													off)</span>
 												<% } else { %>
-												<% var slashedPrice = 1.20 * ((el.price) * (1 + el.tax/100)) %>
+												<% var slashedPrice = 1.25 * ((el.price) * (1 + el.tax/100)) %>
 												<span
 													style="text-decoration: line-through;">₹<%=Math.ceil(slashedPrice)%>
 												</span> <span
-													class="discount">(<%=Math.ceil(((slashedPrice - itemWithTax) * 100)/slashedPrice) %>%
+													class="discount">(<%=(((slashedPrice - itemWithTax) * 100)/slashedPrice).toFixed(3) %>%
 													off)</span>
 												<% } %>
 											</span>
