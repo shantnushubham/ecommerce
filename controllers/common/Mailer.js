@@ -2,6 +2,7 @@
 require('dotenv').config()
 const envData = process.env
 const axios = require('axios')
+// axios.defaults.withCredentials=true
 const orderServices = require('../../openServices/order')
 // var clientId = process.env.CLIENTID
 // var clientSecret = process.env.CLIENTSECRET

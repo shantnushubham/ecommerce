@@ -29,3 +29,4 @@ package-json.json
 *.swp
 
 config/auth.js
+temporary.js

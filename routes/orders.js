@@ -14,7 +14,7 @@ const uniq = require('generate-unique-id')
 const mailer = require('../controllers/common/Mailer')
 const { route } = require('./admin')
 const userModel = require('../models/User/User')
-
+const FormData=require('form-data')
 router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
     orderServices.findOrderById(req.params.id, req.user.uuid, function (foundOrder) {
@@ -46,17 +46,17 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                     }
                     else {
                         var payload = {
-                            key: "RhPPuiIm",
+                            key: "7rnFly",
                             txnid: tx,
                             amount: parseInt(totAmt),
                             productinfo: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
                             firstname: req.user.name,
-                            purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
+                            // purpose: 'Auth Trx for order with order ID ' + foundOrder.order.orderId,
                             phone: req.user.phone,
-                            buyer_name: req.user.name,
+                            // buyer_name: req.user.name,
                             surl: envData.surl,
                             furl: envData.furl,
-                            service_provider: "payu_paisa",
+                            // service_provider: "payu_paisa",
                             // send_email: true,
                             // webhook: '',
                             // send_sms: true,
@@ -64,20 +64,20 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
                             // allow_repeated_payments: false
                         }
 
-                        const hashString = 'RhPPuiIm' //store in in different file
+                        const hashString = "7rnFly" //store in in different file
                             + '|' + payload.txnid
                             + '|' + payload.amount
                             + '|' + payload.productinfo
                             + '|' + payload.firstname
                             + '|' + payload.email
                             + '|' + '||||||||||'
-                            + 'AXU18HEr7j' //store in in different file
+                            + "pjVQAWpA" //store in in different file
                         const sha = new jssha('SHA-512', "TEXT");
                         sha.update(hashString);
                         //Getting hashed value from sha module
                         const hash = sha.getHash("HEX");
                         payload.hash = hash
-                        request.post('https://sandboxsecure.payu.in/_payment', { form: payload, headers: headers }, function (error, response, body) {
+                        request.post('https://test.payu.in/_payment', { form: payload, headers: headers }, function (error, response, body) {
                             // console.log(response);
                             console.log(error);
                             console.log(response.statusCode);
@@ -125,6 +125,38 @@ router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 router.post('/payment/success', (req, res) => {
     //Payumoney will send Success Transaction data to req body. 
     //Based on the response Implement UI as per you want
+    var p = "7rnFly" + '|' + 'verify_payment' + '|' + req.body.txnid + '|' + "pjVQAWpA";
+    const sha = new jssha('SHA-512', "TEXT");
+    sha.update(p);
+    //Getting hashed value from sha module
+    const hash = sha.getHash("HEX");
+    var pl = {
+        key: "7rnFly",
+        hash: hash,
+        var1: req.body.txnid,
+        command: 'verify_payment'
+    }
+    const formData = new FormData()
+    Object.keys(pl).forEach((key) => {
+        formData.append(key, pl[key])
+    })
+    const options = {
+        method: 'POST',
+        url: 'https://test.payu.in/merchant/postservice.php?form=2',
+        headers: { 'Content-Type': 'multipart/form-data' },
+        data: pl,
+
+    };
+    axios.post('https://test.payu.in/merchant/postservice.php?form=2', formData, {
+        // You need to use `getHeaders()` in Node.js because Axios doesn't
+        // automatically set the multipart form boundary in Node.
+        headers: formData.getHeaders()
+    }).then(res => {
+        console.log("verified",res.data)
+    }).catch(err => {
+        console.log(err)
+    })
+    console.log(req.body);
     orderServices.updatePaymentByTransactionId(req.body.txnid, req.body.status, function (updatedOtx) {
         orderServices.updateStockList(updatedOtx.order.orderedItems, function (stocks) {
             console.log("stock update status:", stocks.success);
@@ -158,8 +190,8 @@ router.post('/payment/success', (req, res) => {
                     console.log(err);
 
                 })
-                
-                cartServices.clearCart(user.uuid,function(cleared){
+
+                cartServices.clearCart(user.uuid, function (cleared) {
                     console.log(cleared);
                 })
             }
@@ -167,7 +199,7 @@ router.post('/payment/success', (req, res) => {
 
         console.log('redirect to success page');
         res.render('successpage', { order: updatedOtx.order, failure: false, failureMessage: null })
-        
+
     })
 
 })
