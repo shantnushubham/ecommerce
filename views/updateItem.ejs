@@ -31,7 +31,12 @@
                         </div>
                         <div class="field">
                             <label>GST Percentage</label>
-                            <input type="text" placeholder="GST Percent" name="gstPercent" value="<%=item.tax%>">
+                            <select name="gstPercent">
+                                <option value="5" <% if (item.tax == "5") { %> selected <% } %>>5%</option>
+                                <option value="12" <% if (item.tax == "12") { %> selected <% } %>>12%</option>
+                                <option value="18" <% if (item.tax == "18") { %> selected <% } %>>18%</option>
+                                <option value="28" <% if (item.tax == "28") { %> selected <% } %>>28%</option>
+                            </select>
                         </div>
                         <div class="field">
                             <label>Weight</label>
@@ -72,25 +77,27 @@
                         </div>
                         <div class="field">
                             <label>Additional Discount</label>
-                            <input type="number" placeholder="Discount" name="discount"  value="<%=item.discount%>" required>
+                            <input type="number" placeholder="Discount" name="discount" value="<%=item.discount%>"
+                                required>
                         </div>
                         <div class="inline fields">
                             <label for="fruit">Switch on the discount?</label>
                             <div class="field">
-                                <input type="radio" name="sale" <% if (item.sale) { %> checked="" <% } %>
-                                    value="true" tabindex="0" class="hidden" required>
+                                <input type="radio" name="sale" <% if (item.sale) { %> checked="" <% } %> value="true"
+                                    tabindex="0" class="hidden" required>
                                 <label>Yes</label>
 
                             </div>
                             <div class="field">
-                                <input type="radio" name="sale" <% if (!item.sale) { %> checked="" <% } %>
-                                    value="false" tabindex="0" class="hidden">
+                                <input type="radio" name="sale" <% if (!item.sale) { %> checked="" <% } %> value="false"
+                                    tabindex="0" class="hidden">
                                 <label>No</label>
                             </div>
                         </div>
                         <div class="field">
                             <label>Slashed Price</label>
-                            <input type="number" placeholder="Slashed Price" name="slashedPrice" value="<%=item.slashedPrice%>" required>
+                            <input type="number" placeholder="Slashed Price" name="slashedPrice"
+                                value="<%=item.slashedPrice%>" required>
                         </div>
                         <div class="inline fields">
                             <label for="fruit">Is this a Service?</label>

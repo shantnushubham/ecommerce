@@ -70,6 +70,20 @@
 									aria-required="true" data-field-type="ConfirmPassword" required>
 							</div>
 
+							<div class="form-field" id="FormField_11"
+								data-validation="{&quot;type&quot;:&quot;singleselect&quot;,&quot;label&quot;:&quot;Country&quot;,&quot;required&quot;:true,&quot;prefix&quot;:&quot;Choose a Country&quot;}"
+								data-type="Country">
+								<label class="form-label" for="FormField_11_select">Prefix
+									<small>Required</small>
+								</label>
+								<select class=" form-select" id="FormField_11_select" data-label="Prefix"
+									aria-required="true" name="prefix" data-field-type="Country">
+									<option value="Mr.">Mr.</option>
+									<option value="Ms.">Ms.</option>
+									<option value="Mrs.">Mrs.</option>
+								</select>
+							</div>
+
 							<div class="form-field" id="FormField_4"
 								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;First Name&quot;,&quot;required&quot;:true,&quot;maxlength&quot;:0}"
 								data-type="FirstName">
@@ -84,21 +98,21 @@
 								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Phone Number&quot;,&quot;required&quot;:false,&quot;maxlength&quot;:0}"
 								data-type="Phone">
 								<label class="form-label" for="FormField_7_input">Phone Number
-
+									<small>Required</small>
 								</label>
 								<input type="number" id="FormField_7_input" data-label="Phone Number" name="phone"
-									class="form-input" aria-required="false" data-field-type="Phone">
+									class="form-input" aria-required="false" data-field-type="Phone" required>
 							</div>
 
 							<div class="form-field" id="FormField_9"
 								data-validation="{&quot;type&quot;:&quot;singleline&quot;,&quot;label&quot;:&quot;Address Line 2&quot;,&quot;required&quot;:false,&quot;maxlength&quot;:0}"
 								data-type="AddressLine2">
 								<label class="form-label" for="FormField_9_input">Full Address
-
+									<small>Required</small>
 								</label>
 								<input type="text" id="FormField_9_input" data-label="Full Address"
 									name="address[fullAddress]" class="form-input" aria-required="false"
-									data-field-type="AddressLine2">
+									data-field-type="AddressLine2" required>
 							</div>
 
 							<div class="form-field" id="FormField_8"
@@ -198,8 +212,7 @@
 									<small>Required</small>
 								</label>
 								<select class=" form-select" id="FormField_11_select" data-label="State" value
-									aria-required="true"  data-field-type="Country" required
-									disabled>
+									aria-required="true" data-field-type="Country" required disabled>
 									<option value="Afganistan">Afghanistan</option>
 									<option value="Albania">Albania</option>
 									<option value="Algeria">Algeria</option>
