@@ -58,6 +58,10 @@ var itemsSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    packageData:{
+        type:String,
+        default:''
+    },
     dateCreated: {
         type: Date,
         required: true,

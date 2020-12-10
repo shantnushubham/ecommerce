@@ -40,7 +40,7 @@ exports.register = (req, res) => {
                 req.body.user['email'] = req.body.email;
                 req.body.user['phone'] = req.body.phone;
                 req.body.user['active'] = true;
-
+                req.body.user['prefix']=req.body.prefix
                 req.body.address['email'] = req.body.email;
                 req.body.address['phone'] = req.body.phone;
                 req.body.address['isDefault'] = true;
