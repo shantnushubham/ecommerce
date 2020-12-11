@@ -21,6 +21,7 @@ exports.getCreatePackage = (req, res) => {
             $project: {
                 "quantity": "$quantity",
                 "uuid": "$uuid",
+                "iid":"$iid",
                 "item": { "$arrayElemAt": ["$item", 0] }
             }
         }]).exec(function (err, found) {
@@ -38,8 +39,8 @@ exports.getCreatePackage = (req, res) => {
                         codAllowed = false
                     }
                     total += found[i].item.price * found[i].quantity
-                    var temp = { iid: found.iid, quantity: found[i].quantity }
-                    pData[iid] = temp
+                    var temp = { iid: found[i].iid, quantity: found[i].quantity }
+                    pData[found[i].iid] = temp
 
                 }
                 res.render('createPackageItem', { cartlisting: found, total: total, packageData: JSON.stringify(pData), codAllowed: codAllowed, })
@@ -71,13 +72,16 @@ exports.postCreatePackage = (req, res) => {
         slashedPrice: data.slashedPrice,
         discount: data.discount,
         sale: data.sale == "true" ? true : false,
-        packageData: Object.values(data.packageData)
+        packageData: data.packageData
     }, function (createdPackage) {
         if (createdPackage.success == false) {
-
+            req.flash('error','error')
+            console.log(err);
+            res.redirect('back')
         }
         else {
-
+            req.flash('success','success')
+            res.redirect('back')
         }
     })
 }

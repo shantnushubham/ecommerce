@@ -14,7 +14,7 @@ const uniq = require('generate-unique-id')
 const mailer = require('../controllers/common/Mailer')
 const { route } = require('./admin')
 const userModel = require('../models/User/User')
-const FormData=require('form-data')
+const FormData = require('form-data')
 router.get("/order/:id/payment", ensureAuthenticated, function (req, res) {
 
     orderServices.findOrderById(req.params.id, req.user.uuid, function (foundOrder) {
@@ -151,56 +151,72 @@ router.post('/payment/success', (req, res) => {
         // You need to use `getHeaders()` in Node.js because Axios doesn't
         // automatically set the multipart form boundary in Node.
         headers: formData.getHeaders()
-    }).then(res => {
-        console.log("verified",res.data)
-    }).catch(err => {
-        console.log(err)
-    })
-    console.log(req.body);
-    orderServices.updatePaymentByTransactionId(req.body.txnid, req.body.status, function (updatedOtx) {
-        orderServices.updateStockList(updatedOtx.order.orderedItems, function (stocks) {
-            console.log("stock update status:", stocks.success);
-        })
-        var promiseArr = []
-        userModel.findOne({ uuid: updatedOtx.order.uuid }, function (err, user) {
-            if (!err && user != null && user != undefined) {
+    }).then(paymentResponse => {
+        console.log("verified", paymentResponse.data)
+        if (paymentResponse.data.status == 1 && 
+            functions.isEmpty(paymentResponse.data.transaction_details) == false &&
+            functions.isEmpty(paymentResponse.data.transaction_details[req.body.txnid]) == false &&
+            paymentResponse.data.transaction_details[req.body.txnid].field7 == 'AUTHPOSITIVE' && req.body.field7 == 'AUTHPOSITIVE' &&
+            req.body.mihpayid == paymentResponse.data.transaction_details[req.body.txnid].mihpayid) {
+            //success
+            orderServices.updatePaymentByTransactionId(req.body.txnid, req.body.status, function (updatedOtx) {
+                orderServices.updateStockList(updatedOtx.order.orderedItems, function (stocks) {
+                    console.log("stock update status:", stocks.success);
+                })
+                var promiseArr = []
+                userModel.findOne({ uuid: updatedOtx.order.uuid }, function (err, user) {
+                    if (!err && user != null && user != undefined) {
 
 
-                for (var i = 0; i < updatedOtx.order.orderedItems.length; i++) {
-                    // console.log("foreach",createOrder.order.orderedItems[i]);
-                    if (updatedOtx.order.orderedItems[i].iid != undefined)
-                        promiseArr.push(cartServices.getItemForList(updatedOtx.order.orderedItems[i].iid, updatedOtx.order.orderedItems[i].quantity, user.uuid))
-                };
-                Promise.all(promiseArr).then((respo) => {
-                    var data = {
-                        mail: user.email,
-                        user: user,
-                        items: respo,
-                        order: updatedOtx.order
+                        for (var i = 0; i < updatedOtx.order.orderedItems.length; i++) {
+                            // console.log("foreach",createOrder.order.orderedItems[i]);
+                            if (updatedOtx.order.orderedItems[i].iid != undefined)
+                                promiseArr.push(cartServices.getItemForList(updatedOtx.order.orderedItems[i].iid, updatedOtx.order.orderedItems[i].quantity, user.uuid))
+                        };
+                        Promise.all(promiseArr).then((respo) => {
+                            var data = {
+                                mail: user.email,
+                                user: user,
+                                items: respo,
+                                order: updatedOtx.order
+                            }
+                            // console.log(respo);
+                            // console.log("maildata", data);
+                            mailer.sendPerforma(user.email, data, function (mailed) {
+                                console.log(mailed);
+                            })
+                            mailer.orderReceived(user.email, data, function (mailed) {
+                                console.log(mailed);
+                            })
+                        }).catch(err => {
+                            console.log(err);
+
+                        })
+
+                        cartServices.clearCart(user.uuid, function (cleared) {
+                            console.log(cleared);
+                        })
                     }
-                    // console.log(respo);
-                    console.log("maildata", data);
-                    mailer.sendPerforma(user.email, data, function (mailed) {
-                        console.log(mailed);
-                    })
-                    mailer.orderReceived(user.email, data, function (mailed) {
-                        console.log(mailed);
-                    })
-                }).catch(err => {
-                    console.log(err);
-
                 })
 
-                cartServices.clearCart(user.uuid, function (cleared) {
-                    console.log(cleared);
-                })
-            }
-        })
+                console.log('redirect to success page');
+                res.render('successpage', { order: updatedOtx.order, failure: false, failureMessage: null })
 
-        console.log('redirect to success page');
-        res.render('successpage', { order: updatedOtx.order, failure: false, failureMessage: null })
+            })
+
+
+        }
+        else {
+            orderServices.updatePaymentByTransactionId(req.body.txnid, 'failure', function (updatedOtx) {
+                res.render('paymentFailurePage',{data:req.body,message:'Payment verification failed from the server side',order: updatedOtx.order, failure: true, failureMessage: req.body.error_Message})
+            })
+        }
+    }).catch(err => {
+        
+        res.render('paymentFailurePage',{message:'server side failure for payment',data:req.body,failure:true,})
 
     })
+    
 
 })
 router.post('/payment/failure', (req, res) => {
@@ -208,7 +224,7 @@ router.post('/payment/failure', (req, res) => {
     // Based on the response Implement UI as per you want
     orderServices.updatePaymentByTransactionId(req.body.txnid, req.body.status, function (updatedOtx) {
 
-        console.log('redirect to success page');
+        console.log('redirect to failure page');
         res.render('failurepage', { order: updatedOtx.order, failure: true, failureMessage: req.body.error_Message })
     })
 

@@ -367,12 +367,17 @@ class packs {
                               {
                                   if(packagemapper.hasOwnProperty(foundS[i].iid))
                                   {
-                                    packageMapper.foundS[i].iid.quantity=foundS[i].quantity+packageMapper.foundS[i].iid.quantity
+                                    packageMapper[foundS[i].iid].quantity=foundS[i].quantity+packageMapper[foundS[i].iid].quantity
 
+                                  }
+                                  else
+                                  {
+                                      packageMapper[foundS[i].iid]={iid:foundS[i].iid,quantity:foundS[i].quantity}
                                   }
                                     
                                   
                               }
+                              console.log(packageMapper);
                               var cartArray=[]
                               for(var i in Object.values(packageMapper))
                               {
