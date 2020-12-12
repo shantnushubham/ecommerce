@@ -81,11 +81,13 @@
 								<% var taxPerItem = 0 %>
 								<% var totalTax = 0 %>
 								<% var totalPerItem = 0 %>
+								<% var discPerc = 0%>
 
 
 								<% cart.forEach(cartItem => { %>
+								<% if (cartItem.item.sale) { discPerc = cartItem.item.discount } else { discPerc = 0} %>
 
-								<% itemAmount = ((cartItem.quantity) * (cartItem.price[0])) %></a>
+								<% itemAmount = ((cartItem.quantity) * (cartItem.price[0] * (1 - discPerc/100))) %></a>
 								<% discountPerItem = (cartItem.price[0] * (discount/100)) %>
 								<% totalDiscountPerItem = discountPerItem * cartItem.quantity %>
 								<% payForItem = (itemAmount - totalDiscountPerItem) %>
@@ -108,12 +110,12 @@
 										<a class="uk-link-reset" href="">₹ <%=parseInt(payForItem)%>
 									</td>
 									<td class="uk-table-link">
-										<a class="uk-link-reset" href="">₹ <%= parseInt(taxPerItem)%>
+										<a class="uk-link-reset" href="">₹ <%= Math.ceil(taxPerItem)%>
 											<span
-												class="uk-text-small uk-text-success">(<%=parseInt(cartItem.tax[0])%>%)</span></a>
+												class="uk-text-small uk-text-success">(<%=Math.ceil(cartItem.tax[0])%>%)</span></a>
 									</td>
 									<td class="uk-text-nowrap">
-										₹ <%=(parseInt(totalPerItem))%>
+										₹ <%=(Math.ceil(totalPerItem))%>
 									</td>
 
 									<td></td>
@@ -125,7 +127,7 @@
 									<td></td>
 									<td></td>
 									<td><b id="orange">Cart Subtotal</b></td>
-									<td>₹ <%=parseInt(totalAmount)%></td>
+									<td>₹ <%=Math.ceil(totalAmount)%></td>
 								</tr>
 								<% if (isJH) { %>
 								<tr>
@@ -189,7 +191,7 @@
 									<td></td>
 									<td></td>
 									<td><b id="orange">Total</b></td>
-									<td>₹ <%=parseInt(totalAmount + fee) %></td>
+									<td>₹ <%=Math.ceil(totalAmount + fee) %></td>
 								</tr>
 							</tbody>
 						</table>
