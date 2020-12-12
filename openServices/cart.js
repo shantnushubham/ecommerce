@@ -192,7 +192,7 @@ class cart {
     }
 
     addToCart(iid, uuid, quantity, callback) {
-        itemmodel.findOne({ iid: iid, active: true }, function (err, founditem) {
+        itemmodel.findOne({ iid: iid, active: true,isPackage:false }, function (err, founditem) {
             if (err) {
                 console.log(err);
                 callback({ success: false, message: 'could not find any item by that name' })

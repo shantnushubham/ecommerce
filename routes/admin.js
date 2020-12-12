@@ -48,7 +48,7 @@ app.get("/downloads/invoice/payment", functions.isAdmin, adminController.getCSVD
 app.post('/downloads/invoice/payment',functions.isAdmin,adminController.downloadInvoiceByRangePayment)
 app.get("/downloads/invoice/shipment", functions.isAdmin, adminController.getCSVDownloadPageShipment)
 app.post('/downloads/invoice/shipment',functions.isAdmin,adminController.downloadInvoiceByRangeShipment)
-app.get('/downloads/users/:type',adminController.downloadUserList)
+app.get('/downloads/users/:type',functions.isAdmin,adminController.downloadUserList)
 
 
 module.exports = app
