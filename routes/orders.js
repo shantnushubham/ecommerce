@@ -140,13 +140,7 @@ router.post('/payment/success', (req, res) => {
     Object.keys(pl).forEach((key) => {
         formData.append(key, pl[key])
     })
-    const options = {
-        method: 'POST',
-        url: 'https://test.payu.in/merchant/postservice.php?form=2',
-        headers: { 'Content-Type': 'multipart/form-data' },
-        data: pl,
-
-    };
+    console.log(req.body);
     axios.post('https://test.payu.in/merchant/postservice.php?form=2', formData, {
         // You need to use `getHeaders()` in Node.js because Axios doesn't
         // automatically set the multipart form boundary in Node.
@@ -208,12 +202,14 @@ router.post('/payment/success', (req, res) => {
         }
         else {
             orderServices.updatePaymentByTransactionId(req.body.txnid, 'failure', function (updatedOtx) {
-                res.render('paymentFailurePage',{data:req.body,message:'Payment verification failed from the server side',order: updatedOtx.order, failure: true, failureMessage: req.body.error_Message})
+                res.render('paymentFailed',{data:req.body,message:'Payment verification failed from the server side',order: updatedOtx.order, failure: true, failureMessage: req.body.error_Message})
             })
         }
     }).catch(err => {
-        
-        res.render('paymentFailurePage',{message:'server side failure for payment',data:req.body,failure:true,})
+        orderServices.updatePaymentByTransactionId(req.body.txnid, 'failure', function (updatedOtx) {
+            res.render('paymentFailed',{message:'server side failure for payment',data:req.body,failure:true,})
+
+        })
 
     })
     

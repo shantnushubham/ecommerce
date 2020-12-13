@@ -211,6 +211,7 @@ class order {
 
     updatePaymentByTransactionId(transaction_id, status, callback) {
         var st = status === "success" ? "authorized" : "initiated"
+        if(status==="failure")st="failure"
         ordermodel.findOneAndUpdate({ transaction_id: transaction_id }, { '$set': { status: st,shipmentStatus:"processing" } }, (err, updatedOrder) => {
             if (err) {
                 console.log(err);

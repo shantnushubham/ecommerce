@@ -59,30 +59,30 @@
                                 <div class="uk-form-label">
                                     <h1 style="text-align: center; margin-bottom: 0;">
                                         <span uk-icon="icon: close; ratio: 2.5" style="color: rgb(255, 2, 2);">
-                                        </span> Transaction ID:
-                                        //Transaction ID
+                                        </span> Transaction ID:<%=data.txnid%>
                                     </h1>
                                     <h1 style="text-align: center; color: #fa7725 !important;">
 
-                                        Total: //Order Value//
+                                        Total: <%=data.amount%>
 
                                     </h1>
-                                    <h5>Shipping Address:</h5>
+                                    
                                     <label>
                                         <br>
 
                                         </span>
                                     </label><br><br>
-                                    <span style="color: #fa7725; text-transform: uppercase; font-size: medium;">Shipment
-                                        Status: <%=(order.shipmentStatus).toUpperCase()%></span>
+                                    
                                     <br>
                                     <br>
-                                    Payment Method: <%=order.paymentType.toUpperCase()%><br>
+                                   
                                 </div>
                                 <div>
                                     <div class="uk-form-label">
                                         <h6>Please contact customer care for further details</h6>
-                                        <h6>Message from PAYU : //Show why Payment Failed//
+                                        <h6>Please Note down the Transaction ID.</h6>
+
+                                        <h6>Message from PAYU : <%=message%>
                                         </h6>
                                     </div>
                                 </div>
