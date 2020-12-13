@@ -190,6 +190,16 @@
 							title="Click here to proceed to checkout">Check
 							out</button>
 					</div>
+					<%if(currentUser.isAdmin){%>
+					<div>
+						<a class="button button--primary" href="/admin/create-package" title="Click here to create package">
+							Create Package</a>
+					</div>
+					<div>
+						<a class="button button--primary" href="/admin/update-package" title="Click here to update package">
+							Update Package</a>
+					</div>
+					<%}%>
 				</div>
 			</form>
 			<% } %>

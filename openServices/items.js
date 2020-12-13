@@ -119,7 +119,8 @@ class items {
                                 stock: foundItem.stock,
                                 cod: foundItem.cod,
                                 isBusiness: foundItem.isBusiness,
-                                slashedPrice:foundItem.slashedPrice
+                                slashedPrice:foundItem.slashedPrice,
+                                isPackage:foundItem.isPackage
 
                             }
 

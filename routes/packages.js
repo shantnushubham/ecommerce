@@ -19,9 +19,9 @@ var app = express();
 app.get('/admin/create-package',functions.isAdmin,packageController.getCreatePackage)
 app.post('/admin/create-package',functions.isAdmin,packageController.postCreatePackage)
 app.get('/admin/update-package',functions.isAdmin,packageController.getUpdatePackage)
-app.post('/admin/update-package',ensureAuthenticated,packageController.postUpdatePackage)
+app.post('/admin/update-package',functions.isAdmin,packageController.postUpdatePackage)
 app.get('/admin/get-packageitems/:iid',functions.isAdmin,packageController.getPackageItems)
-app.get('/add/package/:iid',ensureAuthenticated,packageController.addToCart)
+app.post('/add/package/:iid',ensureAuthenticated,packageController.addToCart)
 
 
 

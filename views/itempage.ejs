@@ -219,8 +219,12 @@
 				</section>
 				<section class="productView-btn col-7">
 					<div class="productView-options">
+						<%if(item.isPackage==false){%>
 						<form class="form" method="POST" action="/add/<%=item.iid%>">
-
+							<%}else{%>
+						<form class="form" method="POST" action="/add/package/<%=item.iid%>">
+								
+								<%}%>
 							<div data-product-option-change style="display:none;">
 							</div>
 

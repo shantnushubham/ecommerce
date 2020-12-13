@@ -159,7 +159,7 @@ exports.postUpdatePackage = (req, res) => {
 }
 
 exports.addToCart = (req, res) => {
-    packageServices.addPackageToCart(req.params.iid, req.user.uuid, 1, function (createdCart) {
+    packageServices.addPackageToCart(req.params.iid, req.user.uuid, req.body.quantity, function (createdCart) {
         if (createdCart.success == false) {
             req.flash('error', 'error:' + createdCart.message)
             res.redirect('/items')

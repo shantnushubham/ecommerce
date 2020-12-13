@@ -137,14 +137,17 @@ class packs {
                             }
                             else {
                               var packageMapper=JSON.parse(founditem.packageData)
+                              Object.keys(packageMapper).forEach((i)=>{
+                                packageMapper[i].quantity=packageMapper[i].quantity*quantity
+                              })
                               for(var i=0;i<foundS.length;i++)
                               {
-                                  if(packageMapper.hasOwnProperty(foundS[i].iid))
+                                  if(packageMapper.hasOwnProperty(foundS[i].iid))//if item is already in cart then update
                                   {
-                                    packageMapper[foundS[i].iid].quantity=foundS[i].quantity+packageMapper[foundS[i].iid].quantity
+                                    packageMapper[foundS[i].iid].quantity=foundS[i].quantity+packageMapper[foundS[i].iid].quantity*quantity
 
                                   }
-                                  else
+                                  else//add old item as it is
                                   {
                                       packageMapper[foundS[i].iid]={iid:foundS[i].iid,quantity:foundS[i].quantity}
                                   }
