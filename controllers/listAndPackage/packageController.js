@@ -50,6 +50,7 @@ exports.getCreatePackage = (req, res) => {
 }
 exports.postCreatePackage = (req, res) => {
     var data = req.body;
+    console.log(data);
     packageServices.createPackageItem({
         name: data.name,
         price: data.price,

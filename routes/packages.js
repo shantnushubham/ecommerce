@@ -16,11 +16,11 @@ var app = express();
 
 
 
-// app.get('/admin/create-package',functions.isAdmin,)
-// app.post('/admin/create-package',functions.isAdmin,)
+app.get('/admin/create-package',functions.isAdmin,packageController.getCreatePackage)
+app.post('/admin/create-package',functions.isAdmin,packageController.postCreatePackage)
 // app.post('/admin/update-package',functions.isAdmin,)
 // app.get('/admin/get-package',functions.isAdmin,)
-// app.get('/add/package/:iid',ensureAuthenticated,)
+app.get('/add/package/:iid',ensureAuthenticated,packageController.addToCart)
 
 
 
