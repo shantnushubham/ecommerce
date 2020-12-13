@@ -201,10 +201,12 @@ class packs {
             throw({message:'item not found'})
             else
             {
-                var packageMapper=founditem.packageData
+                var packageMapper=JSON.parse(founditem.packageData)
                 var iidarr=[]
-                Object.values(packageMapper).forEach((i)=>iidarr.push(i.iid))
+                Object.keys(packageMapper).forEach((i)=>iidarr.push(i))
+                console.log(iidarr);
                 itemmodel.find({iid:{$in:iidarr}}).then(itemlist=>{
+                  console.log(itemlist);
                     callback({success:true,itemlist:itemlist})
                 }).catch(error=>{
                     callback({success:false,message:'database error'})
@@ -214,10 +216,17 @@ class packs {
             callback({success:false,message:err.message})
         })
     }
-    updatePackage(data,callback)
-    {
         
-    }      
+    updatePackageItemsData(data,callback)
+    {
+        itemmodel.findOneAndUpdate({iid:data.iid,isPackage:true},{packageData:data.packageData,price:data.total,codAllowed:data.codAllowed},(err,updatedItem)=>{
+            console.log(updatedItem);
+            if(err||functions.isEmpty(updatedItem))
+            callback({success:false})
+            else
+            callback({success:true})
+        })
+    }
 
 }
 

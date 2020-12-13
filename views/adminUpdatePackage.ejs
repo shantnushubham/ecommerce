@@ -1,0 +1,49 @@
+<%- include('partials/adminHeader'); -%>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Update Package</li>
+        </ol>
+        <div class="box_general padding_bottom">
+            <div class="header_box version_2">
+                <h2><i class="fa fa-file"></i>Update Package</h2>
+            </div>
+
+            <div class="container">
+                <br>
+                <h1>Update Item/Service</h1>
+                <br>
+                <br>
+                <form action="/admin/update-package" method="POST">
+                    <div class="ui form">
+                    
+                        <div class="field">
+                            <label>Enter Item ID to update(The items in your cartwill be made the new item list for this package )</label>
+                            <input type="text" placeholder="ID" name="iid" >
+                        </div>
+                        <div class="field" readonly>
+                            <label>Total</label>
+                            <input type="text" placeholder="total" name="total" value=<%=total%> readonly>
+                        </div> 
+                        <div class="field" hidden>
+                            <label>cart items</label>
+                            <input type="text" placeholder="packageData" name="packageData" value=<%=packageData%>>
+                        </div>
+                        
+                       
+                       
+                    </div>
+                    <button class="ui button" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<%- include('partials/adminFooter'); -%>
