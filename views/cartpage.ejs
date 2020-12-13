@@ -58,7 +58,9 @@
 						<tbody class="cart-list">
 							<% var totalWithoutTax = 0 %>
 							<% var totalTax = 0 %>
+							<% var discPerc = 0 %>
 							<% cartlisting.forEach((cartItem, index) => { %>
+							<% if (cartItem.item.sale) {discPerc = cartItem.item.discount} else { discPerc = 0 } %>
 							<tr class="cart-item" data-item-row>
 								<td class="cart-item-block cart-item-figure">
 									<img src="<%=cartItem.item.image[0]%>" alt="<%=cartItem.item.name%>"
@@ -72,7 +74,7 @@
 								</td>
 								<td class="cart-item-block cart-item-info tt-full-price">
 									<span class="cart-item-label">Price</span>
-									<span class="cart-item-value ">₹ <%=cartItem.item.price%></span>
+									<span class="cart-item-value ">₹ <%=cartItem.item.price * (1 - discPerc/100)%></span>
 								</td>
 
 								<td class="cart-item-block cart-item-info cart-item-quantity">
@@ -86,19 +88,19 @@
 									</div>
 
 								</td>
-								<% totalWithoutTax = totalWithoutTax + parseInt(cartItem.quantity) * parseInt(cartItem.item.price) %>
+								<% totalWithoutTax = totalWithoutTax + (cartItem.quantity) * (cartItem.item.price * (1 - discPerc/100)) %>
 
 								<td class="cart-item-block cart-item-info tt-full-price">
 									<span class="cart-item-label">Total</span>
 									<strong class="cart-item-value ">₹
-										<%=parseInt(cartItem.quantity) * parseInt(cartItem.item.price)%></strong>
+										<%=(cartItem.quantity) * (cartItem.item.price * (1 - discPerc/100))%></strong>
 								</td>
 
 								<td class="cart-item-block cart-item-info">
 									<span class="cart-item-label">Tax</span>
 									<span class="cart-item-value ">₹
-										<%=Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) * parseInt(cartItem.quantity)))%>
-										<% totalTax = totalTax + Math.ceil(parseInt((cartItem.item.tax/100) * parseInt((cartItem.item.price)) * parseInt(cartItem.quantity))) %>
+										<%=Math.ceil(((cartItem.item.tax/100) * ((cartItem.item.price * (1- discPerc/100))) * (cartItem.quantity)))%>
+										<% totalTax = totalTax + Math.ceil(((cartItem.item.tax/100) * ((cartItem.item.price * (1 - discPerc/100))) * (cartItem.quantity))) %>
 										(<%=cartItem.item.tax%>%) </span>
 								</td>
 							</tr>
@@ -149,7 +151,7 @@
 								<strong>Convenience Fee</strong>
 							</div>
 							<div class="cart-total-value">
-								<span>₹ <%=fee%></span>
+								<span>+ ₹ <%=fee%></span>
 							</div>
 						</li>
 						<li class="cart-total">
