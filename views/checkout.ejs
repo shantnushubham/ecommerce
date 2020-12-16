@@ -110,12 +110,12 @@
 										<a class="uk-link-reset" href="">₹ <%=parseInt(payForItem)%>
 									</td>
 									<td class="uk-table-link">
-										<a class="uk-link-reset" href="">₹ <%= Math.ceil(taxPerItem)%>
+										<a class="uk-link-reset" href="">₹ <%= parseInt(taxPerItem)%>
 											<span
-												class="uk-text-small uk-text-success">(<%=Math.ceil(cartItem.tax[0])%>%)</span></a>
+												class="uk-text-small uk-text-success">(<%=parseInt(cartItem.tax[0])%>%)</span></a>
 									</td>
 									<td class="uk-text-nowrap">
-										₹ <%=(Math.ceil(totalPerItem))%>
+										₹ <%=(parseInt(totalPerItem))%>
 									</td>
 
 									<td></td>
@@ -127,7 +127,7 @@
 									<td></td>
 									<td></td>
 									<td><b id="orange">Cart Subtotal</b></td>
-									<td>₹ <%=Math.ceil(totalAmount)%></td>
+									<td>₹ <%=parseInt(totalAmount)%></td>
 								</tr>
 								<% if (isJH) { %>
 								<tr>
@@ -191,7 +191,7 @@
 									<td></td>
 									<td></td>
 									<td><b id="orange">Total</b></td>
-									<td>₹ <%=Math.ceil(totalAmount + fee) %></td>
+									<td>₹ <%=parseInt(totalAmount + fee) %></td>
 								</tr>
 							</tbody>
 						</table>

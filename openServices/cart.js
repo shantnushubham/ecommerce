@@ -501,7 +501,7 @@ class cart {
                                                 itemprice = cartEl.price * (1 - (cartEl.item.discount) / 100) * (1 - (di / 100))
                                             else
                                                 itemprice = cartEl.price * (1 - (di / 100))
-                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax / 100)
+                                            var temptax = user.state.toLowerCase() === "jharkhand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax / 100)
                                             tax += temptax
                                             total = total + (itemprice * cartEl.quantity) + temptax
                                         });
@@ -539,7 +539,7 @@ class cart {
                                                 itemprice = cartEl.price * (1 - (cartEl.item.discount) / 100) * (1 - (di / 100))
                                             else
                                                 itemprice = cartEl.price * (1 - (di / 100))
-                                            var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax / 100)
+                                            var temptax = user.state.toLowerCase() === "jharkhand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax / 100)
                                             tax += temptax
                                             total = total + (itemprice * cartEl.quantity) + temptax
                                         });

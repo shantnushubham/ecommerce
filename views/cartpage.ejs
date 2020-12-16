@@ -99,8 +99,8 @@
 								<td class="cart-item-block cart-item-info">
 									<span class="cart-item-label">Tax</span>
 									<span class="cart-item-value ">₹
-										<%=Math.ceil(((cartItem.item.tax/100) * ((cartItem.item.price * (1- discPerc/100))) * (cartItem.quantity)))%>
-										<% totalTax = totalTax + Math.ceil(((cartItem.item.tax/100) * ((cartItem.item.price * (1 - discPerc/100))) * (cartItem.quantity))) %>
+										<%=parseInt(((cartItem.item.tax/100) * ((cartItem.item.price * (1- discPerc/100))) * (cartItem.quantity)))%>
+										<% totalTax = totalTax + (((cartItem.item.tax/100) * ((cartItem.item.price * (1 - discPerc/100))) * (cartItem.quantity))) %>
 										(<%=cartItem.item.tax%>%) </span>
 								</td>
 							</tr>
@@ -125,7 +125,7 @@
 								<strong>SGST </strong>
 							</div>
 							<div class="cart-total-value">
-								<span>₹ <%=totalTax/2%></span>
+								<span>₹ <%=parseInt(totalTax/2)%></span>
 							</div>
 						</li>
 						<li class="cart-total">
@@ -133,7 +133,7 @@
 								<strong>CGST</strong>
 							</div>
 							<div class="cart-total-value">
-								<span>₹ <%=totalTax/2%></span>
+								<span>₹ <%=parseInt(totalTax/2)%></span>
 							</div>
 						</li>
 						<% } else { %>
@@ -142,7 +142,7 @@
 								<strong>IGST </strong>
 							</div>
 							<div class="cart-total-value">
-								<span>₹ <%=totalTax%></span>
+								<span>₹ <%=parseInt(totalTax)%></span>
 							</div>
 						</li>
 						<% } %>
@@ -159,7 +159,7 @@
 								<strong>Grand total:</strong>
 							</div>
 							<div class="cart-total-value cart-total-grandTotal">
-								<span>₹ <%=(totalWithoutTax + totalTax + fee)%></span>
+								<span>₹ <%=parseInt(totalWithoutTax + totalTax + fee)%></span>
 							</div>
 						</li>
 					</ul>
