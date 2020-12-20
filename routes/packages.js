@@ -14,7 +14,7 @@ var app = express();
 // app.post('/admin/publish-package/:lid', functions.isAdmin, packageController.publishPackage)//works
 // app.get('/export-package/:lid', ensureAuthenticated, packageController.addPackageToCart)//works
 
-
+app.get("/packages", packageController.getAllPackages)
 
 app.get('/admin/create-package',functions.isAdmin,packageController.getCreatePackage)
 app.post('/admin/create-package',functions.isAdmin,packageController.postCreatePackage)

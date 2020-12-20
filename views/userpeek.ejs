@@ -27,9 +27,6 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
-                                <% if (type == "all") { %>
-                                <th>Allow Credit</th>
-                                <% } %>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,10 +36,6 @@
                                 <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.name %></a></td>
                                 <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.email %></a></td>
                                 <td><a href="/admin/getUsers/<%-element.uuid%>"><%= element.phone %></a></td>
-                                <% if (type == "all") { %>
-                                <td><a class="ui green button" href="/business/allowCredit/<%=element.uuid%>">Allow
-                                        Credit</a></td>
-                                <% } %>
                             </tr>
                             <% }); %>
                         </tbody>

@@ -25,17 +25,17 @@
 
                         <div class="field">
                             <label>Credit Percent</label>
-                            <input type="number" placeholder="Credit Percent" name="credPerc" min="1" max="100">
+                            <input type="number" placeholder="Credit Percent" name="credPerc" min="1" max="100" value="<%=user.credPerc%>">
                         </div>
 
                         <div class="field">
                             <label>No of Days</label>
-                            <input type="number" placeholder="Credit Percent" name="days" min="0">
+                            <input type="number" placeholder="Credit Percent" name="days" min="0" value="<%=user.daysToRemind%>">
                         </div>
 
                         <div class="field">
                             <label>Maximum Credit Balance</label>
-                            <input type="text" placeholder="Maximum Credit Balance" name="credBalance">
+                            <input type="text" placeholder="Maximum Credit Balance" name="credBalance" value="<%=user.credBalance%>">
                         </div>
                     </div>
                     <button class="ui button" type="submit">Submit</button>

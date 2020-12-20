@@ -568,7 +568,7 @@ exports.getAllBizReq = function (req, res) {
 
 exports.acceptedBusinessAccounts = function (req, res) {
     businessReg.aggregate([
-        { $match: { isAccepted: true } },
+        { $match: { isAccepted: true, premium: false } },
         { $lookup: { from: 'User', localField: 'uuid', foreignField: 'uuid', as: 'user' } },
         {
             $project: {

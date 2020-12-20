@@ -192,7 +192,7 @@ class cart {
     }
 
     addToCart(iid, uuid, quantity, callback) {
-        itemmodel.findOne({ iid: iid, active: true,isPackage:false }, function (err, founditem) {
+        itemmodel.findOne({ iid: iid, active: true, isPackage: false }, function (err, founditem) {
             if (err) {
                 console.log(err);
                 callback({ success: false, message: 'could not find any item by that name' })
@@ -258,7 +258,7 @@ class cart {
                                         var cartelement
                                         if (functions.isEmpty(foundItem)) {
                                             if (quantity > founditem.stock)
-                                                callback({ success: false, message: "not enough items in stock" })
+                                                callback({ success: false, message: "Not enough items in stock. Only " + foundItem.stock + " items are available." })
                                             else {
 
 
@@ -284,7 +284,7 @@ class cart {
                                         }
                                         else {
                                             if (parseInt(quantity) + foundItem.quantity > founditem.stock)
-                                                callback({ success: false, message: "not enough items in stock" })
+                                                callback({ success: false, message: "Not enough items in stock. Only " + foundItem.stock + " items are available." })
                                             else {
 
 
@@ -727,7 +727,7 @@ class cart {
                             itemprice = itemprice * (1 - (cartEl.item.discount / 100)) * (1 - (di / 100))
                         else
                             itemprice = itemprice * (1 - (di / 100))
-                            console.log("items price", itemprice);
+                        console.log("items price", itemprice);
                         var temptax = user.state.toLowerCase() === "jharkand".toLowerCase() ? itemprice * cartEl.quantity * (cartEl.tax[0] / 200) * 2 : itemprice * cartEl.quantity * (cartEl.tax[0] / 100)
                         tax += temptax
                         total = total + (itemprice * cartEl.quantity) + temptax

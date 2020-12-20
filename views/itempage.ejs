@@ -138,13 +138,13 @@
 									<%=(item.price * (1 - (item.discount/100))).toFixed(2) %> +
 									GST (<%=item.tax%>% =
 									<%=(item.price * (1 - (item.discount/100)) * item.tax/100).toFixed(2)%>) = ₹
-									<%=Math.ceil(item.price * (1 - (item.discount/100)) + (item.price * (1 - (item.discount/100)) * item.tax/100))%></span>
+									<%=parseInt(item.price * (1 - (item.discount/100)) + (item.price * (1 - (item.discount/100)) * item.tax/100))%></span>
 								<span class="showDiscount" style="color: green;"> (Additional <%=item.discount%>%
 									discount Applied!)</span>
 								<% } else { %>
 								<span data-product-price-with-tax class="price price--withTax">₹ <%=item.price%> +
-									GST (<%=item.tax%>% = <%=Math.ceil(item.price * item.tax/100)%>) = ₹
-									<%=Math.ceil(item.price + (item.price * item.tax/100))%></span>
+									GST (<%=item.tax%>% = <%=parseInt(item.price * item.tax/100)%>) = ₹
+									<%=parseInt(item.price + (item.price * item.tax/100))%></span>
 								<% } %>
 								<br>
 								<span data-product-price-with-tax class="price price--withTax"
@@ -152,8 +152,12 @@
 									<% if (item.slashedPrice > item.price + (item.price * item.tax/100)) { %>
 									₹ <%=item.slashedPrice %>
 									<% } else { %>
-									₹ <%=Math.ceil(item.price * (1 + item.tax/100) * 1.25) %>
+									₹ <%=parseInt(item.price * (1 + item.tax/100) * 1.25) %>
 									<% } %>
+								</span>
+								<br />
+								<span data-product-price-with-tax class="price price--withTax">
+									SKU: <%=item.sku%>
 								</span>
 
 								<meta itemprop="availability" itemtype="http://schema.org/ItemAvailability"

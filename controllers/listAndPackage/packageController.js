@@ -8,9 +8,21 @@ var packageServices = require('../../openServices/package')
 
 var functions = require('../../Middlewares/common/functions')
 
-exports.getPackage = (req, res) => {
+exports.getAllPackages = (req, res) => {
+    packageServices.getAllPackages(function (packageListing) {
+        if (packageListing.success == false) {
+            req.flash('error', 'error in getting packages')
+            res.redirect('/')
+        }
+        else {
+            // console.log('items', { itemlist: itemlist.foundItems, category: itemlist.category, subCategory: itemlist.subCategory, tag: itemlist.tag, s_cat: [], s_sub: [], s_tag: [] })
 
+            res.render('allPackages', { packageListing: packageListing.foundItems, category: packageListing.category, subCategory: packageListing.subCategory, tag: packageListing.tag, s_cat: [], s_sub: [], s_tag: [] })
+        }
+    })
 }
+
+
 exports.getCreatePackage = (req, res) => {
     cartmodel.aggregate([
         { $match: { uuid: req.user.uuid } },
@@ -131,7 +143,7 @@ exports.postUpdatePackage = (req, res) => {
                 iid: req.body.iid,
                 total: req.body.total,
                 packageData: req.body.packageData,
-                
+
             }
             if (data.total <= 0 || data.packageData.length < 2 || Object.keys(JSON.parse(data.packageData)).length == 0) {
                 req.flash('error', 'invalid data')
@@ -139,16 +151,14 @@ exports.postUpdatePackage = (req, res) => {
                 res.redirect('back')
             }
             else {
-                packageServices.updatePackageItemsData(data,(updated)=>{
-                    if(updated.success==false)
-                    {
+                packageServices.updatePackageItemsData(data, (updated) => {
+                    if (updated.success == false) {
                         console.log('error in updating');
-                        req.flash('error','error in updating')
+                        req.flash('error', 'error in updating')
                         res.redirect('back')
                     }
-                    else
-                    {
-                        req.flash('success','success')
+                    else {
+                        req.flash('success', 'success')
                         res.redirect('back')
                     }
                 })
@@ -170,16 +180,14 @@ exports.addToCart = (req, res) => {
         }
     })
 }
-exports.getPackageItems=(req,res)=>{
-    packageServices.getPackageItems(req.params.iid,(foundItem)=>{
-        if(foundItem.success==false)
-        {
-            req.flash('error','error '+foundItem.message)
+exports.getPackageItems = (req, res) => {
+    packageServices.getPackageItems(req.params.iid, (foundItem) => {
+        if (foundItem.success == false) {
+            req.flash('error', 'error ' + foundItem.message)
             res.redirect('back')
         }
-        else
-        {
-            res.render('adminPeekPackage',{itemlist:foundItem.itemlist})
+        else {
+            res.render('adminPeekPackage', { itemlist: foundItem.itemlist })
         }
     })
 }

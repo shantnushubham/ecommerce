@@ -32,7 +32,7 @@ class items {
     }
     getAllItems(callback) {
 
-        itemModel.find({ active: true }, function (err, foundItems) {
+        itemModel.find({ active: true, isPackage: false }, function (err, foundItems) {
             if (err) {
                 console.log(err)
                 callback({ success: false, err: err })

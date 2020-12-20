@@ -5405,8 +5405,13 @@ h6 {
     -ms-transition: all 0.4s ease-in-out;
 }
 .card .card-title > a {
-    /* white-space: nowrap; */
+    white-space: nowrap;
 }
+
+.card:hover .card-title > a {
+    white-space: normal;
+}
+
 @media (max-width: 991px) {
     .card {
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
@@ -10537,8 +10542,15 @@ body.hasAdminBar .navPages-container.is-open {
     -webkit-box-shadow: none;
     background: #f5f5f5;
 }
+
+.quickSearchResults ul li .card:hover .card-title > a {
+    white-space: normal;
+}
+
 .quickSearchResults ul li .card:hover .card-title > a {
     color: #111;
+    white-space: normal;
+
 }
 .quickSearchResults ul li .card:hover .card-figcaption,
 .quickSearchResults ul li .card:hover .rating-block,

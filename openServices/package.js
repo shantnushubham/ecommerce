@@ -1,6 +1,6 @@
 var itemMetaModel = require("../models/Items/ItemMetadata")
 var itemmodel = require('../models/Items/Items')
-var vendorModel=require('../models/Items/vendor')
+var vendorModel = require('../models/Items/vendor')
 var itemServices = require('../openServices/items')
 var cartmodel = require('../models/cart/cart')
 var listmodel = require('../models/lists/list')
@@ -14,6 +14,27 @@ var mongoose = require("mongoose")
 class packs {
     constructor() {
 
+    }
+
+    getAllPackages(callback) {
+        itemmodel.find({ active: true, isPackage: true }, function (err, foundItems) {
+            if (err) {
+                console.log(err)
+                callback({ success: false, err: err })
+            } else {
+                var category = new Set()
+                var subCategory = new Set()
+                var tag = new Set()
+                foundItems.forEach(el => {
+                    category.add(el.category)
+                    subCategory.add(el.subCategory)
+                    tag.add(el.tag)
+
+                })
+                // console.log({ success: true, foundItems, err: null, category: Array.from(category), subCategory: Array.from(subCategory), tag: Array.from(tag) });
+                callback({ success: true, foundItems, err: null, category: Array.from(category), subCategory: Array.from(subCategory), tag: Array.from(tag) })
+            }
+        })
     }
 
     createPackageItem(data, callback) {
@@ -35,10 +56,10 @@ class packs {
             sku: data.sku,
             isBusiness: data.isBusiness == '' ? false : true,
             slashedPrice: data.slashedPrice == '' || data.slashedPrice == undefined ? 0 : data.slashedPrice,
-            discount:data.discount,
-            sale:data.sale,
-            isPackage:true,
-            packageData:data.packageData
+            discount: data.discount,
+            sale: data.sale,
+            isPackage: true,
+            packageData: data.packageData
 
         }
         console.log('itemdata=', item_data);
@@ -79,8 +100,8 @@ class packs {
 
     }
 
-    addPackageToCart(iid, uuid, quantity=1, callback) {
-        itemmodel.findOne({ iid: iid, active: true,isPackage:true }, function (err, founditem) {
+    addPackageToCart(iid, uuid, quantity = 1, callback) {
+        itemmodel.findOne({ iid: iid, active: true, isPackage: true }, function (err, founditem) {
             if (err) {
                 console.log(err);
                 callback({ success: false, message: 'could not find any item by that name' })
@@ -136,55 +157,52 @@ class packs {
                                 callback({ success: false, message: 'cannot add a product with a service to cart' })
                             }
                             else {
-                              var packageMapper=JSON.parse(founditem.packageData)
-                              Object.keys(packageMapper).forEach((i)=>{
-                                packageMapper[i].quantity=packageMapper[i].quantity*quantity
-                              })
-                              for(var i=0;i<foundS.length;i++)
-                              {
-                                  if(packageMapper.hasOwnProperty(foundS[i].iid))//if item is already in cart then update
-                                  {
-                                    packageMapper[foundS[i].iid].quantity=foundS[i].quantity+packageMapper[foundS[i].iid].quantity*quantity
+                                var packageMapper = JSON.parse(founditem.packageData)
+                                Object.keys(packageMapper).forEach((i) => {
+                                    packageMapper[i].quantity = packageMapper[i].quantity * quantity
+                                })
+                                for (var i = 0; i < foundS.length; i++) {
+                                    if (packageMapper.hasOwnProperty(foundS[i].iid))//if item is already in cart then update
+                                    {
+                                        packageMapper[foundS[i].iid].quantity = foundS[i].quantity + packageMapper[foundS[i].iid].quantity * quantity
 
-                                  }
-                                  else//add old item as it is
-                                  {
-                                      packageMapper[foundS[i].iid]={iid:foundS[i].iid,quantity:foundS[i].quantity}
-                                  }
-                                    
-                                  
-                              }
-                              console.log(packageMapper);
-                              var cartArray=[]
-                              Object.values(packageMapper).forEach((i)=>{
-                                var t={
-                                    iid:i.iid,
-                                    quantity:i.quantity,
-                                    uuid:uuid
+                                    }
+                                    else//add old item as it is
+                                    {
+                                        packageMapper[foundS[i].iid] = { iid: foundS[i].iid, quantity: foundS[i].quantity }
+                                    }
+
+
                                 }
-                                cartArray.push(t)
-                              })
-                              
-                              console.log(cartArray);
-                              cartmodel.deleteMany({uuid:uuid},function(err,deletedCart){
-                                  if(err)
-                                  {
-                                      console.log(err);
-                                    callback({success:false,message:'database error'})
-                                  }
-                                  else
-                                  {
-                                      cartmodel.insertMany(cartArray,function(err,createdCart){
-                                        console.log(err);  
-                                        if(err)
-                                          callback({success:false,message:'database error'})
-                                          else
-                                          callback({success:true})
-                                      })
-                                  }
+                                console.log(packageMapper);
+                                var cartArray = []
+                                Object.values(packageMapper).forEach((i) => {
+                                    var t = {
+                                        iid: i.iid,
+                                        quantity: i.quantity,
+                                        uuid: uuid
+                                    }
+                                    cartArray.push(t)
+                                })
 
-                              })
-                              
+                                console.log(cartArray);
+                                cartmodel.deleteMany({ uuid: uuid }, function (err, deletedCart) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback({ success: false, message: 'database error' })
+                                    }
+                                    else {
+                                        cartmodel.insertMany(cartArray, function (err, createdCart) {
+                                            console.log(err);
+                                            if (err)
+                                                callback({ success: false, message: 'database error' })
+                                            else
+                                                callback({ success: true })
+                                        })
+                                    }
+
+                                })
+
 
                             }
 
@@ -197,37 +215,34 @@ class packs {
 
         })
     }
-    getPackageItems(iid,callback)
-    {
-        itemmodel.findOne({iid:iid}).then((founditem)=>{
-            if(functions.isEmpty(founditem))
-            throw({message:'item not found'})
-            else
-            {
-                var packageMapper=JSON.parse(founditem.packageData)
-                var iidarr=[]
-                Object.keys(packageMapper).forEach((i)=>iidarr.push(i))
+    getPackageItems(iid, callback) {
+        itemmodel.findOne({ iid: iid }).then((founditem) => {
+            if (functions.isEmpty(founditem))
+                throw ({ message: 'item not found' })
+            else {
+                var packageMapper = JSON.parse(founditem.packageData)
+                var iidarr = []
+                Object.keys(packageMapper).forEach((i) => iidarr.push(i))
                 console.log(iidarr);
-                itemmodel.find({iid:{$in:iidarr}}).then(itemlist=>{
-                  console.log(itemlist);
-                    callback({success:true,itemlist:itemlist})
-                }).catch(error=>{
-                    callback({success:false,message:'database error'})
+                itemmodel.find({ iid: { $in: iidarr } }).then(itemlist => {
+                    console.log(itemlist);
+                    callback({ success: true, itemlist: itemlist })
+                }).catch(error => {
+                    callback({ success: false, message: 'database error' })
                 })
             }
-        }).catch(err=>{
-            callback({success:false,message:err.message})
+        }).catch(err => {
+            callback({ success: false, message: err.message })
         })
     }
-        
-    updatePackageItemsData(data,callback)
-    {
-        itemmodel.findOneAndUpdate({iid:data.iid,isPackage:true},{packageData:data.packageData,price:data.total,codAllowed:data.codAllowed},(err,updatedItem)=>{
+
+    updatePackageItemsData(data, callback) {
+        itemmodel.findOneAndUpdate({ iid: data.iid, isPackage: true }, { packageData: data.packageData, price: data.total, codAllowed: data.codAllowed }, (err, updatedItem) => {
             console.log(updatedItem);
-            if(err||functions.isEmpty(updatedItem))
-            callback({success:false})
+            if (err || functions.isEmpty(updatedItem))
+                callback({ success: false })
             else
-            callback({success:true})
+                callback({ success: true })
         })
     }
 
